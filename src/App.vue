@@ -1,31 +1,128 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <p>
+    This is index file
+  </p>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+
+<script setup>
+</script>
+
+
+<style>
+/* styles for designer page */
+
+/* styles for all pages */
+.tags-enter-from {
+  opacity: 0.6;
+  transform: translateX(50px);
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+.tags-enter-active {
+  /*animation: wobble 0.5s ease;*/
+  transition: all 0.2s ease;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.tags-leave-to {
+  opacity: 0.6;
+  transform: translateX(50px);
+}
+
+.tags-leave-active {
+  transition: all 0.5s ease;
+  position: absolute; /* for move transition after item leaves */
+}
+
+.tags-move {
+  transition: all 0.5s ease;
+}
+
+@keyframes wobble {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(8px);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(-8px);
+    opacity: 1;
+  }
+  80% {
+    transform: translateX(4px);
+    opacity: 1;
+  }
+  90% {
+    transform: translateX(-4px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+/* fade transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* push transitions */
+.push-enter-from {
+  opacity: 1;
+  transform: translate(30px, 0);
+}
+
+.push-enter-active {
+  transition: 0.5s;
+}
+
+.push-leave-to {
+  opacity: 1;
+}
+
+.push-leave-active {
+  opacity: 0;
+  position: absolute; /* for move transition after item leaves */
+}
+
+.push-move {
+  transition: all 0.5s ease;
+}
+
+/* table transitions */
+/* push transitions */
+.table-enter-from {
+  opacity: 1;
+  transform: translate(30px, 0);
+}
+
+.table-enter-active {
+  transition: 0.5s;
+}
+
+.table-leave-to {
+  opacity: 1;
+}
+
+.table-leave-active {
+  opacity: 0;
+  position: absolute; /* for move transition after item leaves */
+}
+
+.table-move {
+  transition: all 0.5s ease;
 }
 </style>
