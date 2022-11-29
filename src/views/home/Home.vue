@@ -9,14 +9,16 @@
       </div>
       <div class="py-16">
         <div class="text-center">
-          <p class="text-base font-semibold text-emerald-500 mt-12">Welcome</p>
-          <h1 class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+          <p class="text-xs font-semibold text-gray-500 mt-12 mb-0 tracking-wider">
+            Welcome to our platform
+          </p>
+          <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl tracking-normal">
             Designer
           </h1>
-          <p class="mt-2 text-base text-gray-500">
+          <p class="mt-12 text-base text-gray-500 tracking-normal">
             Visit our Vue 3 website drag and drop page builder designer.</p>
-          <div class="mt-6">
-            <router-link :to="{name: 'Designer'}" class="text-2xl font-medium text-emerald-500 hover:text-gray-900">
+          <div>
+            <router-link :to="{name: 'Designer'}" class="text-2xl font-medium text-emerald-500 hover:text-emerald-600">
               Go to Designer
               <span aria-hidden="true"> &rarr;</span>
             </router-link>
