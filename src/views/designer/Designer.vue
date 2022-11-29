@@ -1,277 +1,211 @@
 <template xmlns="http://www.w3.org/1999/html">
-    <div class="w-full inset-x-0 h-screen lg:pt-0 pt-0 pb-6 -z-10 overflow-x-scroll">
-        <div class="relative h-full flex gap-8">
-            <aside :class="{ 'w-0' : !MenuRight, 'w-60' : !MenuRight, 'rounded-r-[0rem]' : MenuPreview }"
-                   class="h-full duration-300 flex-shrink-0 shadow-2xl rounded-r-2xl overflow-hidden"
-                   @mouseleave="MenuPreview = false">
+  <div class="w-full inset-x-0 h-screen lg:pt-0 pt-0 pb-6 -z-10 overflow-x-scroll">
+    <div class="relative h-full flex gap-8">
+      <aside :class="{ 'w-0' : !MenuRight, 'w-60' : !MenuRight, 'rounded-r-[0rem]' : MenuPreview }" class="h-full duration-300 flex-shrink-0 shadow-2xl rounded-r-2xl overflow-hidden" @mouseleave="MenuPreview = false">
 
-                <div class="sticky h-full w-60 overflow-hidden">
-                    <nav aria-label="Sidebar" class="h-full bg-white">
-                        <ul class="flex flex-col gap-4 p-4 font-semibold h-full overflow-y-scroll">
-                            <a href="/">
-                                <span class="sr-only">Workflow</span>
-                                <img class="h-6 w-auto sm:h-8"
-                                     src="https://www.meeshop.dk/zeus-assets/images//Logo-gron.svg"
-                                     alt="">
-                            </a>
-                            <hr>
-                            <a href="/"
-                               class="flex flex-row items-center gap-2 text-gray-900 font-semibold mb-4">
-                                <ArrowLeftIcon class="w-4 h-4 text-gray-900"/>
-                                <p class="text-xs">Back to Dashboard</p>
-                            </a>
+        <div class="sticky h-full w-60 overflow-hidden">
+          <nav aria-label="Sidebar" class="h-full bg-white">
+            <ul class="flex flex-col gap-4 p-4 font-semibold h-full overflow-y-scroll">
+              <a href="/">
+                <span class="sr-only">Workflow</span>
+                <img class="h-6 w-auto sm:h-8" src="https://www.meeshop.dk/zeus-assets/images//Logo-gron.svg" alt="">
+              </a>
+              <hr>
+              <a href="/" class="flex flex-row items-center gap-2 text-gray-900 font-semibold mb-4">
+                <ArrowLeftIcon class="w-4 h-4 text-gray-900" />
+                <p class="text-xs">Back to Home</p>
+              </a>
 
-                            <li class="font-bold text-xs">Components</li>
-                            <li v-for="category in categories"
-                                :key="category"
-                                :class="{ 'bg-gray-100 text-gray-900' : activeLibrary === category && MenuPreview === true }"
-                                class="text-xs text-gray-900 p-2 capitalize cursor-pointer font-medium rounded-md"
-                                @mouseover="activeLibrary = category; MenuPreview = true">
-                                {{ category }}
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <!--preview - start-->
-                <aside
-                    :class="[!MenuPreview ? '-left-[30rem]' : 'left-60']"
-                    class="absolute z-10 w-[30rem] h-full duration-300 bg-gray-50 top-0 rounded-r-2xl shadow-2xl bg-gray-50">
-                    <div
-                        class="flex flex-col gap-4 p-4 h-full font-semibold">
-                        <p class="font-bold text-xs capitalize">{{ activeLibrary }}</p>
-                        <draggable
-                            :clone="cloneComponent"
-                            :group="{ name: 'components', pull: 'clone', put: false }"
-                            :list="componentsMenu"
-                            :sort="false"
-                            class="flex flex-col gap-4 pr-4 overflow-y-auto"
-                            item-key="id">
-                            <template #item="{ element }">
-                                <div v-if="element">
-                                    <img :alt="element.name"
-                                         :src="element.imageSrc"
-                                         class="border-2 hover:border-emerald-500 rounded-md cursor-grab duration-200">
-                                </div>
-                            </template>
-                        </draggable>
-                    </div>
-                </aside>
-            </aside>
-            <!--preview - end-->
-
-            <main class="flex flex-col h-full grow rounded-2xl duration-300 shadow-2xl">
-
-                <div class="flex items-center justify-between primary-gap rounded-t-2xl bg-gray-200 py-2 px-4">
-                    <div>
-                        <div class="flex gap-2">
-                            <span class="w-2 h-2 rounded-full bg-red-400"></span>
-                            <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
-                            <span class="w-2 h-2 rounded-full bg-green-400"></span>
-                        </div>
-                    </div>
-                    <div class="flex gap-3">
-                        <SelectedPage class="text-center my-auto"></SelectedPage>
-                        <OptionsDropdown @previewCurrentDesign="previewCurrentDesign"></OptionsDropdown>
-                    </div>
-
-                    <div class="flex items-center gap-2">
-                        <div class="flex gap-1 items-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="1.5"
-                                stroke="currentColor"
-                                class="w-4 h-4 cursor-pointer">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-
-                            <p class="text-xs cursor-pointer">
-                                unsaved changes
-                            </p>
-                        </div>
-                        <SaveDesign
-                            @click="saveCurrentDesignInDB">
-                        </SaveDesign>
-                    </div>
-                </div>
-
-                <Draggable
-                    id="pagebuilder"
-                    :list="allComponentsAddedToDom"
-                    animation="200"
-                    class="bg-white grow overflow-y-auto"
-                    drag-class="opacity-0"
-                    group="components"
-                    handle=".cursor-grab"
-                    item-key="id"
-                    :onDrop="onDrop"
-                    @change="addEditorListener">
-                    <template #item="{ element }">
-
-                        <div class="relative overflow-hidden group"
-                             id="min-designer">
-                            <div
-                                class="absolute z-10 overflow-hidden w-full top-0 bg-emerald-500 text-white duration-100 transform -translate-y-full group-hover:translate-y-0">
-                                <div class="flex flex-row justify-between mx-auto p-3 max-w-6xl">
-                                    <div>
-                                        <PencilIcon class="inline-block h-6 w-6 mx-2 cursor-pointer"/>
-                                        <TrashIcon class="inline-block h-6 w-6 mx-2 cursor-pointer"
-                                                   @click="removeComponent($event)"/>
-                                    </div>
-                                    <div>
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="currentColor"
-                                            class="inline-block h-6 w-6 mx-2 cursor-grab">
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/>
-                                        </svg>
-                                        <ArrowDownIcon class="inline-block h-6 w-6 cursor-pointer"
-                                                       @click="moveComponent($event, 1)"/>
-                                        <ArrowUpIcon class="inline-block h-6 w-6 cursor-pointer"
-                                                     @click="moveComponent($event, -1)"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <section v-html="element.html">
-                            </section>
-                        </div>
-
-                    </template>
-                </Draggable>
-
-                <div
-                    class="h-8 bg-gray-200 flex-shrink-0 rounded-b-2xl">
-                </div>
-            </main>
-
-            <aside
-                :class="{ 'w-0' : !MenuRight, 'w-80' : MenuRight }"
-                class="h-full duration-300 z-20 flex-shrink-0 overflow-hidden shadow-2xl rounded-l-2xl bg-white">
-                <RightSidebarEditor @closeEditor="MenuRight = null">
-                </RightSidebarEditor>
-            </aside>
+              <li class="font-semibold text-xs">Components</li>
+              <li v-for="category in categories" :key="category" :class="{ 'bg-gray-100 text-gray-900' : activeLibrary === category && MenuPreview === true }" class="text-xs text-gray-900 p-2 capitalize cursor-pointer font-medium rounded-md" @mouseover="activeLibrary = category; MenuPreview = true">
+                {{ category }}
+              </li>
+            </ul>
+          </nav>
         </div>
 
-        <Spinner v-if="isPending"></Spinner>
-
-        <DynamicModal
-            :type="typeModal"
-            :id="idModal"
-            :gridColumnAmount="gridColumnModal"
-            :title="titleModal"
-            :description="descriptionModal"
-            :firstButtonText="firstButtonModal"
-            :secondButtonText="secondButtonModal"
-            :thirdButtonText="thirdButtonModal"
-            :open="openModal"
-            @firstModalButtonFunction="firstModalButtonFunction"
-            @secondModalButtonFunction="secondModalButtonFunction"
-            @thirdModalButtonFunction="thirdModalButtonFunction">
-            <div v-if="true">
-                <div v-if="false">
-                    <header>
-                    </header>
+        <!--preview - start-->
+        <aside :class="[!MenuPreview ? '-left-[30rem]' : 'left-60']" class="absolute z-10 w-[30rem] h-full duration-300 bg-gray-50 top-0 rounded-r-2xl shadow-2xl bg-gray-50">
+          <div class="flex flex-col gap-4 p-4 h-full font-semibold">
+            <p class="font-semibold text-xs capitalize">{{ activeLibrary }}</p>
+            <draggable :clone="cloneComponent" :group="{ name: 'components', pull: 'clone', put: false }" :list="componentsMenu" :sort="false" class="flex flex-col gap-4 pr-4 overflow-y-auto" item-key="id">
+              <template #item="{ element }">
+                <div v-if="element">
+                  <img :alt="element.name" :src="element.imageSrc" class="border-2 hover:border-emerald-500 rounded-md cursor-grab duration-200">
                 </div>
-                <main>
-                </main>
-            </div>
-        </DynamicModal>
+              </template>
+            </draggable>
+          </div>
+        </aside>
+      </aside>
+      <!--preview - end-->
 
+      <main class="flex flex-col h-full grow rounded-2xl duration-300 shadow-2xl">
+
+        <div class="flex items-center justify-between primary-gap rounded-t-2xl bg-gray-200 py-2 px-4">
+          <div>
+            <div class="flex gap-2">
+              <span class="w-2 h-2 rounded-full bg-red-400"></span>
+              <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+              <span class="w-2 h-2 rounded-full bg-green-400"></span>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <SelectedPage class="text-center my-auto"></SelectedPage>
+            <OptionsDropdown @previewCurrentDesign="previewCurrentDesign"></OptionsDropdown>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <div class="flex gap-1 items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 cursor-pointer">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+
+              <p class="text-xs cursor-pointer">
+                unsaved changes
+              </p>
+            </div>
+            <SaveDesign @click="saveCurrentDesignInDB">
+            </SaveDesign>
+          </div>
+        </div>
+
+        <Draggable id="pagebuilder" :list="allComponentsAddedToDom" animation="200" class="bg-white grow overflow-y-auto" drag-class="opacity-0" group="components" handle=".cursor-grab" item-key="id" :onDrop="onDrop" @change="addEditorListener">
+          <template #item="{ element }">
+
+            <div class="relative overflow-hidden group" id="min-designer">
+              <div class="absolute z-10 overflow-hidden w-full top-0 bg-emerald-500 text-white duration-100 transform -translate-y-full group-hover:translate-y-0">
+                <div class="flex flex-row justify-between mx-auto p-3 max-w-6xl">
+                  <div>
+                    <PencilIcon class="inline-block h-6 w-6 mx-2 cursor-pointer" />
+                    <TrashIcon class="inline-block h-6 w-6 mx-2 cursor-pointer" @click="removeComponent($event)" />
+                  </div>
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block h-6 w-6 mx-2 cursor-grab">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                    </svg>
+                    <ArrowDownIcon class="inline-block h-6 w-6 cursor-pointer" @click="moveComponent($event, 1)" />
+                    <ArrowUpIcon class="inline-block h-6 w-6 cursor-pointer" @click="moveComponent($event, -1)" />
+                  </div>
+                </div>
+              </div>
+              <section v-html="element.html">
+              </section>
+            </div>
+
+          </template>
+        </Draggable>
+
+        <div class="h-8 bg-gray-200 flex-shrink-0 rounded-b-2xl">
+        </div>
+      </main>
+
+      <aside :class="{ 'w-0' : !MenuRight, 'w-80' : MenuRight }" class="h-full duration-300 z-20 flex-shrink-0 overflow-hidden shadow-2xl rounded-l-2xl bg-white">
+        <RightSidebarEditor @closeEditor="MenuRight = null">
+        </RightSidebarEditor>
+      </aside>
     </div>
+
+    <Spinner v-if="isPending"></Spinner>
+
+    <DynamicModal :type="typeModal" :id="idModal" :gridColumnAmount="gridColumnModal" :title="titleModal" :description="descriptionModal" :firstButtonText="firstButtonModal" :secondButtonText="secondButtonModal" :thirdButtonText="thirdButtonModal" :open="openModal" @firstModalButtonFunction="firstModalButtonFunction" @secondModalButtonFunction="secondModalButtonFunction" @thirdModalButtonFunction="thirdModalButtonFunction">
+      <div v-if="true">
+        <div v-if="false">
+          <header>
+          </header>
+        </div>
+        <main>
+        </main>
+      </div>
+    </DynamicModal>
+
+  </div>
 </template>
 
 <script setup>
-import Draggable from 'vuedraggable';
-import {onBeforeMount, ref, onUpdated} from 'vue';
-import {computed} from 'vue';
-import {watch} from "vue";
-import {saveAllComponentsInLocalstorage} from "../../composables/save-all-components-in-localstorage";
+import Draggable from 'vuedraggable'
+import { onBeforeMount, ref, onUpdated } from 'vue'
+import { computed } from 'vue'
+import { watch } from 'vue'
+import { saveAllComponentsInLocalstorage } from '../../composables/save-all-components-in-localstorage'
 import {
-    PencilIcon,
-    ArrowUpIcon,
-    ArrowLeftIcon,
-    ArrowDownIcon,
-    MenuIcon,
-    TrashIcon
-} from '@heroicons/vue/outline';
+  PencilIcon,
+  ArrowUpIcon,
+  ArrowLeftIcon,
+  ArrowDownIcon,
+  MenuIcon,
+  TrashIcon,
+} from '@heroicons/vue/outline'
 
-import {onMounted} from 'vue';
-import {useStore} from 'vuex';
+import { onMounted } from 'vue'
+import { useStore } from 'vuex'
 
-import {useAjax} from '../../composables/use-ajax';
-import {usePromise} from '../../composables/use-promise';
+import { useAjax } from '../../composables/use-ajax'
+import { usePromise } from '../../composables/use-promise'
 
-import OptionsDropdown from '../../components/dropdowns-and-toggles/OptionsDropdown';
-import SelectedPage from "../../components/dropdowns-and-toggles/SelectedPage";
-import RightSidebarEditor from '../../components/designer/editor-menu/RightSidebarEditor'
-import Spinner from '../../components/loaders/Spinner'
-import SaveDesign from "../../components/dropdowns-and-toggles/SaveDesign";
-import DynamicModal from "../../components/modal/DynamicModal";
-import uniqid from "uniqid";
+import OptionsDropdown from '../../components/dropdowns-and-toggles/OptionsDropdown.vue'
+import SelectedPage from '../../components/dropdowns-and-toggles/SelectedPage.vue'
+import RightSidebarEditor from '../../components/designer/editor-menu/RightSidebarEditor.vue'
+import Spinner from '../../components/loaders/Spinner.vue'
+import SaveDesign from '../../components/dropdowns-and-toggles/SaveDesign.vue'
+import DynamicModal from '../../components/modal/DynamicModal.vue'
 //
 // store
-const store = useStore();
+const store = useStore()
 //
 //
 //
 // use dynamic model
-const openModal = ref(false);
+const openModal = ref(false)
 // modal content
-const typeModal = ref('');
-const idModal = ref(Number(null));
-const gridColumnModal = ref(Number(1));
-const titleModal = ref('');
-const descriptionModal = ref('');
-const firstButtonModal = ref('');
-const secondButtonModal = ref(null);
-const thirdButtonModal = ref(null);
+const typeModal = ref('')
+const idModal = ref(Number(null))
+const gridColumnModal = ref(Number(1))
+const titleModal = ref('')
+const descriptionModal = ref('')
+const firstButtonModal = ref('')
+const secondButtonModal = ref(null)
+const thirdButtonModal = ref(null)
 // set dynamic modal handle functions
-const firstModalButtonFunction = ref(null);
-const secondModalButtonFunction = ref(null);
-const thirdModalButtonFunction = ref(null);
+const firstModalButtonFunction = ref(null)
+const secondModalButtonFunction = ref(null)
+const thirdModalButtonFunction = ref(null)
 //
 // load ajax, is pending and error
-const {
-    loadData,
-    isPending,
-    error
-} = useAjax();
+const { loadData, isPending, error } = useAjax()
 
 // menu right
-const MenuRight = ref(null);
+const MenuRight = ref(null)
 // menu preview
-const MenuPreview = ref(null);
+const MenuPreview = ref(null)
 // categories
-const categories = ref(null);
+const categories = ref(null)
 // categories value
-categories.value = ['forms', 'teams', 'posts', 'features', 'headers', 'testimonials'];
+categories.value = [
+  'forms',
+  'teams',
+  'posts',
+  'features',
+  'headers',
+  'testimonials',
+]
 // current active library
-const activeLibrary = ref('forms');
+const activeLibrary = ref('forms')
 // components
-const components = ref([]);
+const components = ref([])
 // current clicked element
-const currentElement = ref({});
+const currentElement = ref({})
 //
 // get current element from store
 const getCurrentElement = computed(() => {
-    return store.getters['Designer/getCurrentElement'];
-});
+  return store.getters['Designer/getCurrentElement']
+})
 //
 //
 // get components added
 const allComponentsAddedToDom = computed(() => {
-    return store.getters['Designer/getComponentsAdded']
+  return store.getters['Designer/getComponentsAdded']
 })
 //
 // set state for "components added"
@@ -280,215 +214,218 @@ store.commit('Designer/setComponentsAdded', allComponentsAddedToDom.value)
 //
 // save current design in local storage
 const saveCurrentDesignInDB = function () {
-    console.log('save current design in DB method')
+  console.log('save current design in DB method')
 }
 //
 // components to be dragged
 const componentsMenu = computed(() => {
-    return components.value.filter((comp) => {
-        return comp.category === activeLibrary.value;
-    });
-});
+  return components.value.filter((comp) => {
+    return comp.category === activeLibrary.value
+  })
+})
 
 // for each on all added html componenets
 const addEditorListener = function () {
+  document.querySelectorAll('[render-html] *').forEach((el) => {
+    // single element
+    el.addEventListener('mouseover', (e) => {
+      // stop propagation
+      e.stopPropagation()
 
-    document.querySelectorAll('[render-html] *')
-        .forEach(el => {
+      document.querySelector('[hovered]')?.removeAttribute('hovered')
+      el.setAttribute('hovered', '')
+    })
 
-            // single element
-            el.addEventListener('mouseover', (e) => {
-                // stop propagation
-                e.stopPropagation();
+    // add event listener on clicked element
+    el.addEventListener('click', (e) => {
+      e.stopPropagation()
+      // set menu right to true
+      MenuRight.value = true
+      //
+      document.querySelector('[selected]')?.removeAttribute('selected')
+      e.currentTarget.removeAttribute('hovered')
+      e.currentTarget.setAttribute('selected', '')
 
-                document.querySelector('[hovered]')
-                    ?.removeAttribute('hovered');
-                el.setAttribute('hovered', '');
-            });
-
-            // add event listener on clicked element
-            el.addEventListener('click', (e) => {
-                e.stopPropagation();
-                // set menu right to true
-                MenuRight.value = true;
-                //
-                document.querySelector('[selected]')
-                    ?.removeAttribute('selected');
-                e.currentTarget.removeAttribute('hovered');
-                e.currentTarget.setAttribute('selected', '');
-
-                // current clicked element
-                currentElement.value = e.currentTarget;
-                // update state setCurrentElement
-                store.commit('Designer/setCurrentElement', currentElement.value);
-            });
-        });
-};
+      // current clicked element
+      currentElement.value = e.currentTarget
+      // update state setCurrentElement
+      store.commit('Designer/setCurrentElement', currentElement.value)
+    })
+  })
+}
 
 // clone component
 const cloneComponent = function (comp) {
-    // Hide slider and right menu
-    MenuPreview.value = false;
-    MenuRight.value = false;
+  // Hide slider and right menu
+  MenuPreview.value = false
+  MenuRight.value = false
 
-    // Deep clone component
-    const clonedComp = {...comp};
+  // Deep clone component
+  const clonedComp = { ...comp }
 
-    const currentDate = new Date();
-    const timestamp = currentDate.getTime();
+  const currentDate = new Date()
+  const timestamp = currentDate.getTime()
 
-    // set id of clone to timestamp giving it a unique id
-    clonedComp.id = timestamp;
+  // set id of clone to timestamp giving it a unique id
+  clonedComp.id = timestamp
 
-    // return to the cloned element to be dropped
-    return clonedComp;
-};
+  // return to the cloned element to be dropped
+  return clonedComp
+}
 
 // move component
 // runs when html componenets are rearranged
 const moveComponent = function (e, dir) {
-    console.log('test - flyt')
-    // Get index of component
-    const currentIndex = getCurrentIndex(e.currentTarget);
-    // Return if moving first element backwards or last element forwards
-    if (currentIndex === 0 && dir === -1 || currentIndex === allComponentsAddedToDom.value.length - 1 && dir === 1) return;
-    // Store chosen component
-    const currentComponent = allComponentsAddedToDom.value[currentIndex];
-    // Remove current object
-    // Move it forwards if negative dir or forward if positive dir
-    allComponentsAddedToDom.value.splice(currentIndex, 1);
-    allComponentsAddedToDom.value.splice(currentIndex + (1 * dir), 0, currentComponent);
-    // Follow element to new location
-    document.querySelector('#pagebuilder').children[currentIndex + (1 * dir)].scrollIntoView({behavior: 'smooth'});
-    //
-    // save all current added HTML components in local storage
-    saveAllComponentsInLocalstorage(allComponentsAddedToDom.value)
-    //
-    // end of method "moveComponent"
-};
+  console.log('test - flyt')
+  // Get index of component
+  const currentIndex = getCurrentIndex(e.currentTarget)
+  // Return if moving first element backwards or last element forwards
+  if (
+    (currentIndex === 0 && dir === -1) ||
+    (currentIndex === allComponentsAddedToDom.value.length - 1 && dir === 1)
+  )
+    return
+  // Store chosen component
+  const currentComponent = allComponentsAddedToDom.value[currentIndex]
+  // Remove current object
+  // Move it forwards if negative dir or forward if positive dir
+  allComponentsAddedToDom.value.splice(currentIndex, 1)
+  allComponentsAddedToDom.value.splice(
+    currentIndex + 1 * dir,
+    0,
+    currentComponent
+  )
+  // Follow element to new location
+  document
+    .querySelector('#pagebuilder')
+    .children[currentIndex + 1 * dir].scrollIntoView({ behavior: 'smooth' })
+  //
+  // save all current added HTML components in local storage
+  saveAllComponentsInLocalstorage(allComponentsAddedToDom.value)
+  //
+  // end of method "moveComponent"
+}
 //
 // remove component
 const removeComponent = function (e) {
-    // open modal to true
-    openModal.value = true
+  // open modal to true
+  openModal.value = true
 
-    // set modal standards
-    typeModal.value = 'delete';
-    gridColumnModal.value = 2;
-    titleModal.value = 'Delete component';
-    descriptionModal.value = 'Are you sure you want to delete this component?';
-    firstButtonModal.value = 'Cancel';
-    secondButtonModal.value = null;
-    thirdButtonModal.value = 'Delete';
+  // set modal standards
+  typeModal.value = 'delete'
+  gridColumnModal.value = 2
+  titleModal.value = 'Delete component'
+  descriptionModal.value = 'Are you sure you want to delete this component?'
+  firstButtonModal.value = 'Cancel'
+  secondButtonModal.value = null
+  thirdButtonModal.value = 'Delete'
 
-    // handle click
-    firstModalButtonFunction.value = function () {
-        // close model
-        openModal.value = false
-    }
-    //
-    // handle click
-    thirdModalButtonFunction.value = function () {
-        // Remove component and get index of component
-        const currentIndex = getCurrentIndex(e.currentTarget);
-        // Remove component from array
-        allComponentsAddedToDom.value.splice(currentIndex, 1);
-        // add editor event listener
-        addEditorListener();
-        // Hide editor if last component was removed
-        if (allComponentsAddedToDom.value.length === 0) MenuRight.value = false;
-        // save all current added HTML components in local storage
-        saveAllComponentsInLocalstorage(allComponentsAddedToDom.value)
+  // handle click
+  firstModalButtonFunction.value = function () {
+    // close model
+    openModal.value = false
+  }
+  //
+  // handle click
+  thirdModalButtonFunction.value = function () {
+    // Remove component and get index of component
+    const currentIndex = getCurrentIndex(e.currentTarget)
+    // Remove component from array
+    allComponentsAddedToDom.value.splice(currentIndex, 1)
+    // add editor event listener
+    addEditorListener()
+    // Hide editor if last component was removed
+    if (allComponentsAddedToDom.value.length === 0) MenuRight.value = false
+    // save all current added HTML components in local storage
+    saveAllComponentsInLocalstorage(allComponentsAddedToDom.value)
 
-        // close model
-        openModal.value = false
-    }
-// end modal
-};
+    // close model
+    openModal.value = false
+  }
+  // end modal
+}
 //
 // watch "menu preview"
 watch(MenuPreview, () => {
-    // hide  right menu
-    MenuRight.value = false;
+  // hide  right menu
+  MenuRight.value = false
 })
 //
 const removeSelected = function () {
-    document.querySelector('[selected]')
-    document.querySelector('[selected]')
-        ?.removeAttribute('selected');
-};
+  document.querySelector('[selected]')
+  document.querySelector('[selected]')?.removeAttribute('selected')
+}
 const removeHovered = function () {
-    document.querySelector('[hovered]')
-        ?.removeAttribute('hovered');
-};
+  document.querySelector('[hovered]')?.removeAttribute('hovered')
+}
 const getCurrentIndex = function (component) {
-    // Declare container of components and current component
-    const allComponents = document.querySelector('#pagebuilder').children;
-    const currentComponent = component.closest('div[data-draggable="true"]');
-    // Get index of chosen component
-    const currentIndex = Array.from(allComponents)
-        .indexOf(currentComponent);
-    return currentIndex;
-};
+  // Declare container of components and current component
+  const allComponents = document.querySelector('#pagebuilder').children
+  const currentComponent = component.closest('div[data-draggable="true"]')
+  // Get index of chosen component
+  const currentIndex = Array.from(allComponents).indexOf(currentComponent)
+  return currentIndex
+}
 // preview current design in external browser tab
 const previewCurrentDesign = function () {
-    // html array
-    const addedHtmlComponents = ref([]);
+  // html array
+  const addedHtmlComponents = ref([])
 
-    document.querySelectorAll('[render-html]')
-        .forEach(html => {
-            addedHtmlComponents.value.push(html.outerHTML);
-        });
-    //
-    store.commit('Designer/setCurrentPreview', addedHtmlComponents.value);
-    //
-    // end function
-};
+  document.querySelectorAll('[render-html]').forEach((html) => {
+    addedHtmlComponents.value.push(html.outerHTML)
+  })
+  //
+  store.commit('Designer/setCurrentPreview', addedHtmlComponents.value)
+  //
+  // end function
+}
 // when HTML component is dropped into the DOM
 const onDrop = function () {
-    // save all current added HTML components in local storage
-    saveAllComponentsInLocalstorage(allComponentsAddedToDom.value)
+  // save all current added HTML components in local storage
+  saveAllComponentsInLocalstorage(allComponentsAddedToDom.value)
 }
 //
 // get current element outer HTML
 const getCurrentElementOuterHTML = computed(() => {
-    return getCurrentElement?.value?.outerHTML
+  return getCurrentElement?.value?.outerHTML
 })
 //
 //TODO: watch any change. Even text change
 // watch for any changes in "curent element"
 watch(getCurrentElementOuterHTML, (newElement) => {
-    //console.log('getCurrentElementOuterHTML er:', newGetCurrentElementOuterHTML)
-    // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
-    //
-    //
-    //
-    //
-    //
+  //console.log('getCurrentElementOuterHTML er:', newGetCurrentElementOuterHTML)
+  // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
+  //
+  //
+  //
+  //
+  //
 })
 //
 // set all components add on before mount
 // On before mount
 onBeforeMount(async () => {
-    if (localStorage.getItem('savedCurrentDesign')) {
-        store.commit('Designer/setComponentsAdded', JSON.parse(localStorage.getItem('savedCurrentDesign')))
-    }
+  if (localStorage.getItem('savedCurrentDesign')) {
+    store.commit(
+      'Designer/setComponentsAdded',
+      JSON.parse(localStorage.getItem('savedCurrentDesign'))
+    )
+  }
 })
 // on mounted
 onMounted(async () => {
-    // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
-    addEditorListener()
-    // load all HTML components
-    try {
-        //
-        const dataComponents = await loadData('/components.json', {}, {});
-        components.value = dataComponents;
-
-    } catch (err) {
-        // use of dynamic modal
-        error.value = err.message;
-        console.log('unable to load components', err);
-    }
+  // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
+  addEditorListener()
+  // load all HTML components
+  try {
+    //
+    const dataComponents = await loadData('/components.json', {}, {})
+    components.value = dataComponents
+  } catch (err) {
+    // use of dynamic modal
+    error.value = err.message
+    console.log('unable to load components', err)
+  }
 })
 //
 </script>
@@ -496,16 +433,16 @@ onMounted(async () => {
 <style>
 #pagebuilder [hovered],
 #pagebuilder [selected] {
-    outline: #10b981 dashed 3px;
-    outline-offset: -2px;
+  outline: #10b981 dashed 3px;
+  outline-offset: -2px;
 }
 
 .sortable-ghost {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .sortable-ghost > * {
-    width: 100%;
+  width: 100%;
 }
 </style>

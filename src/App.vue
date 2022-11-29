@@ -1,12 +1,37 @@
 <template>
-  <p>
-    This is index file
-  </p>
+  <router-view />
 </template>
 
 
 <script setup>
+import { computed, ref } from 'vue'
+import { useStore } from 'vuex'
+
+// store
+const store = useStore()
+
+// set backend current user
+store.commit('user/setUser', {
+  created_at: '2022-11-24T09:59:26.000000Z',
+  email: 'qais@meeshop.dk',
+  email_verified_at: '2022-11-24T09:59:26.000000Z',
+  first_name: 'Qais',
+  id: 1,
+  updated_at: '2022-11-24T09:59:26.000000Z',
+})
+// set backend current user
+store.commit('routes/setCurrentRouteName', { currentRouteName: 'designer' })
+
+// set backend validation errors
+store.commit('user/setBackendValidationErrors', null)
+// set backend old values
+store.commit('user/setBackendOldValues', null)
+// set site id
+store.commit('user/setSiteId', '1')
+// set site name
+store.commit('user/setSiteName', { siteName: 'Keebler Inc' })
 </script>
+
 
 
 <style>

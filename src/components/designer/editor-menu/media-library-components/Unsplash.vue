@@ -1,292 +1,235 @@
 <template>
-    <div class="mt-8">
-        <form @submit.prevent="searchUnsplash">
-            <label for="default-search"
-                   class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
+  <div class="mt-8">
+    <form @submit.prevent="searchUnsplash">
+      <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
 
-            <div class="relative">
-                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none"
-                         stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                </div>
-                <input
-                    v-model="searchQuery"
-                    type="search"
-                    id="default-search"
-                    class="searchInputWithButton"
-                    autocomplete="off"
-                    placeholder="Search images...">
+      <div class="relative">
+        <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+          <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <input v-model="searchQuery" type="search" id="default-search" class="searchInputWithButton" autocomplete="off" placeholder="Search images...">
 
-                <div class="absolute right-2.5 bottom-2.5 flex gap-2 items-center">
-                    <svg
-                        @click="searchQuery = '', currentPage = 1, orientation = null"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        class="w-4 h-4 cursor-pointer">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
-                    <button type="submit"
-                            class="text-white bg-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-100 font-medium rounded-lg text-sm px-4 py-2">
-                        Search
-                    </button>
-                </div>
-            </div>
+        <div class="absolute right-2.5 bottom-2.5 flex gap-2 items-center">
+          <svg @click="searchQuery = '', currentPage = 1, orientation = null" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 cursor-pointer">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          <button type="submit" class="text-white bg-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:outline-none focus:ring-emerald-100 font-medium rounded-lg text-sm px-4 py-2">
+            Search
+          </button>
+        </div>
+      </div>
 
-            <div class="flex justify-start items-center gap-2 py-2 px-2 mt-1 mb-1">
-                <button
-                    @click="searchByOrientation('landscape')"
-                    type="button"
-                    class="rounded-xl p-2 text-white text-xs hover:bg-emerald-500"
-                    :class="{'bg-emerald-500' : orientation === 'landscape', 'bg-gray-600' : orientation !== 'landscape'}">
-                    Landscape
-                </button>
-                <button
-                    @click="searchByOrientation('portrait')"
-                    type="button"
-                    class="rounded-xl p-2 text-white text-xs hover:bg-emerald-500"
-                    :class="{'bg-emerald-500' : orientation === 'portrait', 'bg-gray-600' : orientation !== 'portrait'}">
-                    Portrait
-                </button>
-                <button
-                    @click="searchByOrientation('squarish')"
-                    type="button"
-                    class="rounded-xl p-2 text-white text-xs hover:bg-emerald-500"
-                    :class="{'bg-emerald-500' : orientation === 'squarish', 'bg-gray-600' : orientation !== 'squarish'}">
-                    Squarish
-                </button>
+      <div class="flex justify-start items-center gap-2 py-2 px-2 mt-1 mb-1">
+        <button @click="searchByOrientation('landscape')" type="button" class="rounded-xl p-2 text-white text-xs hover:bg-emerald-500" :class="{'bg-emerald-500' : orientation === 'landscape', 'bg-gray-600' : orientation !== 'landscape'}">
+          Landscape
+        </button>
+        <button @click="searchByOrientation('portrait')" type="button" class="rounded-xl p-2 text-white text-xs hover:bg-emerald-500" :class="{'bg-emerald-500' : orientation === 'portrait', 'bg-gray-600' : orientation !== 'portrait'}">
+          Portrait
+        </button>
+        <button @click="searchByOrientation('squarish')" type="button" class="rounded-xl p-2 text-white text-xs hover:bg-emerald-500" :class="{'bg-emerald-500' : orientation === 'squarish', 'bg-gray-600' : orientation !== 'squarish'}">
+          Squarish
+        </button>
 
-                <svg
-                    @click="searchByOrientation(null)"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    class="w-4 h-4 cursor-pointer">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
+        <svg @click="searchByOrientation(null)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 cursor-pointer">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
 
-            </div>
+      </div>
 
-            <div v-if="error">
-                <p class="primaryInputError">
-                    {{ error }}
-                </p>
-            </div>
-        </form>
+      <div v-if="error">
+        <p class="primaryInputError">
+          {{ error }}
+        </p>
+      </div>
+    </form>
+  </div>
+
+  <div v-if="isPending">
+    <div class="text-center mt-12">
+      <div role="status">
+        <svg class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-emerald-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+          <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+        </svg>
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <div v-if="!isPending" class="mt-8 pb-16">
+
+    <div v-if="!images">
+      <p class="primaryParagraph">Search any image.</p>
     </div>
 
-    <div v-if="isPending">
-        <div class="text-center mt-12">
-            <div role="status">
-                <svg class="inline mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-emerald-600"
-                     viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                        fill="currentColor"/>
-                    <path
-                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                        fill="currentFill"/>
-                </svg>
-                <span class="sr-only">Loading...</span>
-            </div>
+    <div v-if="images">
+      <div v-if="images.length > 0" class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-2">
+        <div v-for="image in images" :key="image.id" @click="handleImageClick(image.urls.regular)" class="cursor-pointer">
+          <img class="object-cover pointer-events-none w-full rounded-md" :src="image.urls.thumb">
+          <p class="primaryParagraph text-xs py-1 italic">By: {{ image.user.name }}</p>
         </div>
+      </div>
+
+      <div v-if="images.length < 1 && !error">
+        <p class="primaryParagraph">
+          We did not find any images. Make a new search.
+        </p>
+      </div>
     </div>
 
-    <div v-if="!isPending"
-         class="mt-8 pb-16">
+    <div v-if="images && searchQuery !== ''">
+      <div v-if="images.length > 0">
+        <nav class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4" aria-label="Pagination">
+          <div class="hidden sm:block">
+            <p class="text-sm text-gray-700">
+              <span class="font-medium">
+                Total results
+                {{ ' ' }}
+              </span>
 
-        <div v-if="!images">
-            <p class="primaryParagraph">Search any image.</p>
-        </div>
+              <span class="font-semibold">
+                {{ getUnsplashImagesData.total }}
+              </span>
 
-        <div v-if="images">
-            <div
-                v-if="images.length > 0"
-                class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-2">
-                <div v-for="image in images" :key="image.id"
-                     @click="handleImageClick(image.urls.regular)"
-                     class="cursor-pointer">
-                    <img class="object-cover pointer-events-none w-full rounded-md"
-                         :src="image.urls.thumb">
-                    <p class="primaryParagraph text-xs py-1 italic">By: {{ image.user.name }}</p>
-                </div>
-            </div>
+              <span class="font-medium">
+                {{ ' ' }}
+                — in pages
+                {{ ' ' }}
+              </span>
 
-            <div
-                v-if="images.length < 1 && !error">
-                <p class="primaryParagraph">
-                    We did not find any images. Make a new search.
-                </p>
-            </div>
-        </div>
-
-        <div v-if="images && searchQuery !== ''">
-            <div v-if="images.length > 0">
-                <nav class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4"
-                     aria-label="Pagination">
-                    <div class="hidden sm:block">
-                        <p class="text-sm text-gray-700">
-                            <span class="font-medium">
-                            Total results
-                            {{ ' ' }}
-                            </span>
-
-                            <span class="font-bold">
-                                {{ getUnsplashImagesData.total }}
-                            </span>
-
-                            <span class="font-medium">
-                            {{ ' ' }}
-                            — in pages
-                            {{ ' ' }}
-                            </span>
-
-                            <span class="font-bold">
-                             {{ getUnsplashImagesData.total_pages }}.
-                            </span>
-                        </p>
-                    </div>
-                    <div class="flex flex-1 justify-between sm:justify-end items-center gap-1">
-                        <button
-                            @click="previousPage(currentPage--)"
-                            :disabled="currentPage === 1"
-                            class="relative inline-flex items-center rounded-md border border-gray-300 bg-emerald-500 px-4 py-2 text-xs font-medium text-white hover:bg-emerald-600"
-                            :class="{'hidden' : currentPage === 1}">
-                            Page
-                            {{ currentPage > 0 ? `${currentPage - 1}` : `${currentPage - 1}` }}
-                        </button>
-                        <span
-                            class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-2 text-xs font-medium text-gray-800">
-                            {{ currentPage }}
-                        </span>
-                        <button
-                            @click="nextPage(currentPage++)"
-                            :disabled="currentPage === getUnsplashImagesData.total_pages"
-                            class="relative inline-flex items-center rounded-md border border-gray-300 bg-emerald-500 px-4 py-2 text-xs font-medium text-white hover:bg-emerald-600"
-                            :class="{'hidden' : currentPage === getUnsplashImagesData.total_pages}">
-                            Page
-                            {{ currentPage > 0 ? `${currentPage + 1}` : `${currentPage + 1}` }}
-                        </button>
-                    </div>
-                </nav>
-            </div>
-        </div>
-
+              <span class="font-semibold">
+                {{ getUnsplashImagesData.total_pages }}.
+              </span>
+            </p>
+          </div>
+          <div class="flex flex-1 justify-between sm:justify-end items-center gap-1">
+            <button @click="previousPage(currentPage--)" :disabled="currentPage === 1" class="relative inline-flex items-center rounded-md border border-gray-300 bg-emerald-500 px-4 py-2 text-xs font-medium text-white hover:bg-emerald-600" :class="{'hidden' : currentPage === 1}">
+              Page
+              {{ currentPage > 0 ? `${currentPage - 1}` : `${currentPage - 1}` }}
+            </button>
+            <span class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-2 text-xs font-medium text-gray-800">
+              {{ currentPage }}
+            </span>
+            <button @click="nextPage(currentPage++)" :disabled="currentPage === getUnsplashImagesData.total_pages" class="relative inline-flex items-center rounded-md border border-gray-300 bg-emerald-500 px-4 py-2 text-xs font-medium text-white hover:bg-emerald-600" :class="{'hidden' : currentPage === getUnsplashImagesData.total_pages}">
+              Page
+              {{ currentPage > 0 ? `${currentPage + 1}` : `${currentPage + 1}` }}
+            </button>
+          </div>
+        </nav>
+      </div>
     </div>
+
+  </div>
 </template>
 
 <script setup>
-import {ref, computed, onMounted} from 'vue';
-import {useStore} from 'vuex'
+import { ref, computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
 
 // store
-const store = useStore();
-const searchQuery = ref("")
+const store = useStore()
+const searchQuery = ref('')
 const error = ref(null)
 const isPending = ref(null)
 const currentPage = ref(1)
 const orientation = ref(null)
 
-
 // getters
 const getCurrentPageNumber = computed(() => {
-    return store.getters['unsplash/getCurrentPageNumber']
-});
+  return store.getters['unsplash/getCurrentPageNumber']
+})
 const getOrientationValue = computed(() => {
-    return store.getters['unsplash/getOrientationValue']
-});
+  return store.getters['unsplash/getOrientationValue']
+})
 const getSearchTerm = computed(() => {
-    return store.getters['unsplash/getSearchTerm']
-});
+  return store.getters['unsplash/getSearchTerm']
+})
 const images = computed(() => {
-    return store.getters['unsplash/getUnsplashImages']
-});
+  return store.getters['unsplash/getUnsplashImages']
+})
 // unspalsh images
 const getUnsplashImages = computed(() => {
-    return store.getters['unsplash/getUnsplashImages']
-});
+  return store.getters['unsplash/getUnsplashImages']
+})
 // unsplash images data
 const getUnsplashImagesData = computed(() => {
-    return store.getters['unsplash/getUnsplashImagesData']
-});
+  return store.getters['unsplash/getUnsplashImagesData']
+})
 // get current element from store
 const getCurrentElement = computed(() => {
-    return store.getters['Designer/getCurrentElement'];
-});
+  return store.getters['Designer/getCurrentElement']
+})
 //
 // get current image from store
 const getCurrentImage = computed(() => {
-    return store.getters['Designer/getCurrentImage'];
-});
+  return store.getters['Designer/getCurrentImage']
+})
 //
 const handleImageClick = function (file) {
-    // in store - update preview image
-    store.commit('Designer/setCurrentPreview', file);
+  // in store - update preview image
+  store.commit('Designer/setCurrentPreview', file)
 }
 //
 //
 // search by orientation
 const searchByOrientation = function (orientationParameter) {
-    // check if search term length is more than 0
-    if (getSearchTerm.value.length > 0 && orientation.value !== orientationParameter) {
-        orientation.value = orientationParameter
-        currentPage.value = 1
-        searchUnsplash()
-    }
+  // check if search term length is more than 0
+  if (
+    getSearchTerm.value.length > 0 &&
+    orientation.value !== orientationParameter
+  ) {
+    orientation.value = orientationParameter
+    currentPage.value = 1
+    searchUnsplash()
+  }
 }
 //
 // load images for previous page
 const previousPage = function () {
-    searchUnsplash()
+  searchUnsplash()
 }
 
 // load images for next page
 const nextPage = function () {
-    searchUnsplash()
+  searchUnsplash()
 }
 //
 //
 // on mounted
 const searchUnsplash = async function () {
-    // set value in store
-    store.commit('unsplash/setSearchTerm', searchQuery.value)
-    store.commit('unsplash/setCurrentPageNumber', currentPage.value)
-    store.commit('unsplash/setOrientationValue', orientation.value)
-    try {
-        error.value = null
-        // is pending
-        isPending.value = true
-        // await
-        await store.dispatch('unsplash/loadUnsplashImages', {
-            searchTerm: getSearchTerm.value,
-            currentPage: currentPage.value,
-            orientation: orientation.value,
-        })
-        // is pending
-        isPending.value = false
-    } catch (err) {
-        // is pending
-        isPending.value = false
-        // error
-        error.value = err
-    }
+  // set value in store
+  store.commit('unsplash/setSearchTerm', searchQuery.value)
+  store.commit('unsplash/setCurrentPageNumber', currentPage.value)
+  store.commit('unsplash/setOrientationValue', orientation.value)
+  try {
+    error.value = null
+    // is pending
+    isPending.value = true
+    // await
+    await store.dispatch('unsplash/loadUnsplashImages', {
+      searchTerm: getSearchTerm.value,
+      currentPage: currentPage.value,
+      orientation: orientation.value,
+    })
+    // is pending
+    isPending.value = false
+  } catch (err) {
+    // is pending
+    isPending.value = false
+    // error
+    error.value = err
+  }
 }
-
 
 // on mounted
 onMounted(() => {
-    // load values from store when component is mounted
-    if (getSearchTerm.value.length > 0 && searchQuery.value.length === 0) {
-        searchQuery.value = getSearchTerm.value
-        currentPage.value = getCurrentPageNumber.value
-        orientation.value = getOrientationValue.value
-    }
+  // load values from store when component is mounted
+  if (getSearchTerm.value.length > 0 && searchQuery.value.length === 0) {
+    searchQuery.value = getSearchTerm.value
+    currentPage.value = getCurrentPageNumber.value
+    orientation.value = getOrientationValue.value
+  }
 })
 </script>
