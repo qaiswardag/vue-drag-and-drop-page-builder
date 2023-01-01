@@ -73,7 +73,7 @@
       </div>
 
       <div v-if="images.length < 1 && !error">
-        <p class="primaryParagraph">
+        <p class="primaryParagraph text-emerald-500 font-semibold">
           We did not find any images. Make a new search.
         </p>
       </div>
@@ -197,7 +197,7 @@ const nextPage = function () {
 }
 //
 //
-// on mounted
+// search images
 const searchUnsplash = async function () {
   // set value in store
   store.commit('unsplash/setSearchTerm', searchQuery.value)
@@ -219,7 +219,7 @@ const searchUnsplash = async function () {
     // is pending
     isPending.value = false
     // error
-    error.value = err
+    error.value = `${err} ${error.value ? error.value : ''}`
   }
 }
 

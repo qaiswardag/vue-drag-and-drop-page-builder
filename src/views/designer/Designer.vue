@@ -107,7 +107,7 @@
       </aside>
     </div>
 
-    <Spinner v-if="isPending"></Spinner>
+    <Spinner v-if="isPendingComponents"></Spinner>
 
     <DynamicModal :type="typeModal" :id="idModal" :gridColumnAmount="gridColumnModal" :title="titleModal" :description="descriptionModal" :firstButtonText="firstButtonModal" :secondButtonText="secondButtonModal" :thirdButtonText="thirdButtonModal" :open="openModal" @firstModalButtonFunction="firstModalButtonFunction" @secondModalButtonFunction="secondModalButtonFunction" @thirdModalButtonFunction="thirdModalButtonFunction">
       <div v-if="true">
@@ -412,19 +412,58 @@ onBeforeMount(async () => {
     )
   }
 })
+
+// load ajax, is pending and error
+const {
+  loadData: loadComponents,
+  isPending: isPendingComponents,
+  error: errorloadComponents,
+} = useAjax()
+
 // on mounted
 onMounted(async () => {
   // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
   addEditorListener()
   // load all HTML components
   try {
-    //
-    const dataComponents = await loadData('/components.json', {}, {})
+    const dataComponents = await loadComponents(
+      '/components.json',
+      {},
+      {
+        pending: true,
+        additionalCallTime: 500,
+        abortTimeoutTime: 8000,
+      }
+    )
     components.value = dataComponents
   } catch (err) {
+    errorloadComponents.value = `${err} ${
+      errorloadComponents.value ? errorloadComponents.value : ''
+    }`
+
     // use of dynamic modal
-    error.value = err.message
-    console.log('unable to load components', err)
+    // set open modal
+    openModal.value = true
+    // set modal standards
+    typeModal.value = 'warning'
+    gridColumnModal.value = 2
+    titleModal.value = 'Components could not be loaded'
+    descriptionModal.value = errorloadComponents.value
+    firstButtonModal.value = 'Close'
+    secondButtonModal.value = 'Refresh page'
+    thirdButtonModal.value = null
+    //
+    // handle click
+    firstModalButtonFunction.value = function () {
+      // set open modal
+      openModal.value = false
+    }
+    // handle click
+    secondModalButtonFunction.value = function () {
+      // set open modal
+      openModal.value = false
+    }
+    // end modal
   }
 })
 //
