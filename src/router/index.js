@@ -12,15 +12,5 @@ export default createRouter({
       name: 'Home',
       component: Home,
     },
-    {
-      path: '/designer',
-      name: 'Designer',
-      component: Designer,
-    },
-    {
-      path: '/designer/preview',
-      name: 'Preview',
-      component: Preview,
-    },
   ],
 });

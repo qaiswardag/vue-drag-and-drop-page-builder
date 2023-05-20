@@ -101,6 +101,7 @@ export default {
 
         // catch errors
       } catch (err) {
+        console.log('err:', err);
         throw err;
       }
     },

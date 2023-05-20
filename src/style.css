@@ -5,23 +5,35 @@
 @layer components {
   /*
     |--------------------------------------------------------------------------
-    | Designer
+    | Main Header
     |--------------------------------------------------------------------------
     */
-  .primaryDesignerLabel {
-    @apply mt-4 mb-2 block text-xs font-medium text-gray-700 text-left;
+  .myPrimaryMainPageHeaderParagraph {
+    @apply md:py-24 py-12 md:px-8 px-4;
+  }
+  /*
+    |--------------------------------------------------------------------------
+    | Modules
+    |--------------------------------------------------------------------------
+    */
+  .myModulePyMargin {
+    @apply md:mb-0 mb-0;
+  }
+  .myModulePadding {
+    @apply md:py-28 py-16;
   }
 
-  .primaryDesignerInput {
-    @apply block w-full text-xs font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-1 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent;
+  .myPrimaryWidthScreenModule {
+    @apply myModulePyMargin myModulePadding bg-gray-200;
   }
-
-  .primaryDesignerTextArea {
-    @apply block w-full text-xs text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent;
+  .myPrimaryModule {
+    @apply max-w-7xl mx-auto myModulePyMargin myModulePadding bg-green-100;
   }
-
-  .primaryDesignerSelect {
-    @apply bg-gray-50 focus:bg-white font-normal text-gray-800 placeholder:accent-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:outline-4 focus:outline-emerald-50 text-xs;
+  .myHeaderParagraphSection {
+    @apply max-w-7xl mx-auto md:pb-10 pb-8 md:px-8 px-4;
+  }
+  .myPrimaryContentSection {
+    @apply max-w-7xl mx-auto  md:px-8 px-4;
   }
 
   /*
@@ -29,70 +41,62 @@
     | Helpers
     |--------------------------------------------------------------------------
     */
+  .myPrimarySection {
+    @apply lg:py-8 md:py-8 py-8;
+  }
+  .myPrimaryHeaderMessage {
+    @apply myPrimarySection myPrimaryHeader text-myPrimaryDarkGrayColor text-center;
+  }
+  .myPrimaryWarningAlertMessage {
+    @apply myPrimarySection myPrimaryHeader text-yellow-400 text-center;
+  }
   .myFocus {
-    @apply focus-within:border-2 focus-within:border-emerald-500;
+    @apply focus-within:border-2 focus-within:border-myPrimaryBrandColor;
   }
-
-  .active-link-color {
-    @apply text-emerald-600;
-  }
-
-  .focusWithBackground {
-    @apply focus:outline-none
-        focus:ring-2 focus:ring-emerald-500
-        focus-visible:ring-2 focus-visible:ring-emerald-500
-        appearance-none
-        hover:bg-emerald-50;
-  }
-
-  .errorFocusWithErrorBackground {
-    @apply focus:outline-none
-        focus:ring-2 focus:ring-red-500
-        focus-visible:ring-2 focus-visible:ring-red-500
-        appearance-none
-        hover:bg-red-50;
+  .myActiveLinkColor {
+    @apply text-myPrimaryBrandColor;
   }
 
   /*
     |--------------------------------------------------------------------------
-    | Sidebar menu
+    | Tags
     |--------------------------------------------------------------------------
     */
-  .current-sidebar-item {
-    @apply text-emerald-600 bg-emerald-50 w-full flex items-center pl-2 py-2 text-sm font-semibold rounded-md
-        focus:ring-offset-1 focus:outline-none focus:ring-2 focus:ring-gray-50
-        focus:outline-none
-        focus:ring-2 focus:ring-emerald-500
-        focus-visible:ring-2 focus-visible:ring-emerald-500;
+  .myPrimaryTag {
+    @apply myPrimaryParagraph bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 text-xs font-semibold shadow-sm;
   }
-
-  .sidebar-item {
-    @apply text-gray-800 hover:bg-emerald-50 hover:text-emerald-600 w-full flex items-center pl-2 py-2 text-sm font-semibold rounded-md
-        focus:ring-offset-1 focus:outline-none focus:ring-2 focus:ring-gray-50
-        focus:outline-none
-        focus:ring-2 focus:ring-emerald-500
-        focus-visible:ring-2 focus-visible:ring-emerald-500;
+  /*
+    |--------------------------------------------------------------------------
+    | Lists
+    |--------------------------------------------------------------------------
+    */
+  .myPrimaryBorderFullRoundedUsers {
+    @apply hover:bg-gray-50 px-2 border border-myPrimaryLightGrayColor hover:border-myPrimaryBrandColor divide-y  flex w-full items-center justify-between space-x-3 p-0 text-left focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 rounded-full;
   }
 
   /*
     |--------------------------------------------------------------------------
-    | Overview and action
+    | Thumbnail
     |--------------------------------------------------------------------------
     */
-  .overview-action-header {
-    @apply tertiaryHeader;
+
+  .myPrimarythumbnailLogo {
+    @apply aspect-square mx-auto block mt-2 mb-6 w-32 h-32  transition-all rounded-md object-cover object-center cursor-pointer;
+  }
+  .myPrimarythumbnailInsertPreview {
+    @apply aspect-square mx-auto block mt-2 mb-6 w-full max-h-[25rem] hover:shadow-sm transition-all rounded-md object-cover object-center cursor-pointer;
+  }
+  /*
+    |--------------------------------------------------------------------------
+    | Primary paragraphs
+    |--------------------------------------------------------------------------
+    */
+  .myPrimaryParagraph {
+    @apply font-normal text-gray-700 text-sm;
   }
 
-  .overview-menu-nav {
-    @apply flex justify-start items-center gap-4;
-  }
-
-  .overview-menu-item {
-    @apply text-gray-800 flex justify-center items-center font-semibold
-        focus:ring-0
-        focus:outline-none
-        focus:ring-0 focus:ring-emerald-500
-        focus-visible:ring-0 focus-visible:ring-emerald-500;
+  .myPrimaryParagraphError {
+    @apply myPrimaryParagraph mt-1 italic text-myPrimaryErrorColor;
   }
 
   /*
@@ -100,36 +104,28 @@
     | Headers
     |--------------------------------------------------------------------------
     */
-  .primayHeader {
-    @apply text-3xl mt-1 mb-2 font-semibold text-black;
+  .myPrimaryMainPageHeader {
+    @apply mySecondaryHeader text-left pt-12 pb-12 px-4 text-myPrimaryDarkGrayColor border-b-2 border-gray-50 bg-gray-50;
+  }
+  .myPrimaryMainPageHeaderNotLoggedIn {
+    @apply text-3xl mb-6 font-semibold text-center font-['Josefin_Sans'];
+  }
+  .myPrimaryMainPageParagraphNotLoggedIn {
+    @apply md:w-4/6 text-xl mx-auto text-center font-semibold font-['Josefin_Sans'];
+  }
+  .myPrimaryHeader {
+    @apply text-3xl mb-2 font-semibold text-black;
   }
 
-  .secondaryHeader {
-    @apply text-2xl mt-1 mb-2 font-semibold text-black;
+  .mySecondaryHeader {
+    @apply text-2xl mb-2 font-semibold text-black;
   }
 
-  .tertiaryHeader {
-    @apply text-lg mt-1 mb-2 font-semibold text-black;
+  .myTertiaryHeader {
+    @apply text-lg mb-2 font-semibold text-black;
   }
-
-  .primayHeaderWithout-pm {
-    @apply primayHeader m-0 p-0;
-  }
-
-  .secondaryHeaderWithout-pm {
-    @apply secondaryHeader m-0 p-0;
-  }
-
-  .tertiaryHeaderWithout-pm {
-    @apply tertiaryHeader m-0 p-0;
-  }
-
-  .primaryParagraph {
-    @apply text-sm text-gray-800;
-  }
-
-  .primaryParagraphWithout-pm {
-    @apply text-sm text-gray-800;
+  .myFourthHeader {
+    @apply text-base mb-2 font-semibold text-black;
   }
 
   /*
@@ -137,11 +133,18 @@
     | Links
     |--------------------------------------------------------------------------
     */
-  .primaryLink {
-    @apply text-emerald-600 font-semibold
+  .myPrimaryLink {
+    @apply text-myPrimaryBrandColor text-sm
         focus:outline-none
-        focus:ring-2 focus:ring-emerald-500
-        focus-visible:ring-2 focus-visible:ring-emerald-500;
+        focus:ring-0 focus:ring-myPrimaryBrandColor
+        focus-visible:ring-0 focus-visible:ring-myPrimaryBrandColor;
+  }
+
+  .myPrimaryActiveLink {
+    @apply text-red-600 text-sm
+        focus:outline-none
+        focus:ring-0 focus:ring-red-500
+        focus-visible:ring-0 focus-visible:ring-red-500;
   }
 
   /*
@@ -150,53 +153,43 @@
     |--------------------------------------------------------------------------
     */
   .myRadio {
-    @apply w-5 h-5 text-emerald-600 bg-gray-100 border-gray-300 focus:ring-emerald-500 dark:focus:ring-emerald-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
+    @apply w-5 h-5 text-myPrimaryBrandColor bg-gray-100 border-gray-300 focus:ring-myPrimaryBrandColor dark:focus:ring-myPrimaryBrandColor dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600;
   }
 
   .myPrimaryButton {
-    @apply inline-flex items-center justify-center rounded-md border border-transparent bg-emerald-500 px-4 py-2 sm:text-sm text-sm font-semibold text-white shadow-sm hover:bg-emerald-600 sm:w-auto
-        focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2
-        focus:outline-none
-        focus-visible:ring-2 focus-visible:ring-emerald-500;
+    @apply whitespace-nowrap break-keep font-semibold inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimarySuccessColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimarySuccessColor sm:w-auto
+        focus:outline-none focus:ring-2 focus:ring-myPrimarySuccessColor focus:ring-offset-2
+        focus-visible:ring-2 focus-visible:ring-myPrimarySuccessColor;
   }
 
-  .myPrimaryButtonNoBackground {
-    @apply inline-flex items-center justify-start py-2 sm:text-sm text-sm font-semibold text-emerald-600 hover:accent-emerald-700
-        rounded
-        focus:outline-none
-        focus-visible:ring-2 focus-visible:ring-emerald-500;
-  }
-
-  .myPrimaryButtonWithIcon {
-    @apply myPrimaryButton flex gap-1 justify-start items-center;
+  .mySecondaryButton {
+    @apply myPrimaryButton bg-gray-700 hover:bg-gray-800 focus:ring-gray-700;
   }
 
   .myPrimaryDeleteButton {
-    @apply myPrimaryButton bg-red-500 hover:bg-red-600 focus:ring-red-500;
+    @apply myPrimaryButton bg-myPrimaryErrorColor hover:bg-myPrimaryErrorColor focus:ring-myPrimaryErrorColor;
   }
 
-  .myPrimaryDeleteButtonNoBg {
-    @apply myPrimaryButton bg-white hover:bg-white shadow-none focus:ring-offset-0 focus:ring-0 text-gray-400 hover:text-gray-600 px-0;
+  .myPrimaryToggleButton {
+    @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-myPrimaryDarkGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 bg-gray-100 hover:bg-myPrimaryBrandColor hover:text-white;
+  }
+  /*
+    |--------------------------------------------------------------------------
+    | Buttons With no background
+    |--------------------------------------------------------------------------
+    */
+
+  .myPrimaryButtonNoBackground {
+    @apply myPrimaryParagraph font-semibold  text-myPrimaryBrandColor 
+        focus:outline-none cursor-pointer;
   }
 
-  .primaryToggleButton {
-    @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-semibold text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 bg-gray-100 hover:bg-emerald-500 hover:text-white;
+  .mySecondaryButtonNoBackground {
+    @apply font-semibold  text-myPrimaryDarkGrayColor;
   }
 
-  .tableEditButton {
-    @apply inline-flex justify-center text-sm font-semibold text-gray-600 hover:text-gray-800;
-  }
-
-  .tableDeleteButton {
-    @apply inline-flex justify-center text-sm font-semibold text-red-400 hover:text-red-600 rounded
-        focus:outline-none
-        focus:ring-2 focus:ring-red-400
-        focus-visible:ring-2 focus-visible:ring-red-400;
-  }
-
-  .onlyIconButton {
-    @apply inline-flex justify-end text-sm font-normal text-gray-600 hover:text-gray-800 rounded-md py-2 px-2
-        border-2 border-transparent;
+  .myPrimaryDeleteButtonNoBackground {
+    @apply myPrimaryButtonNoBackground text-myPrimaryErrorColor;
   }
 
   /*
@@ -204,8 +197,8 @@
     | Icons
     |--------------------------------------------------------------------------
     */
-  .smallIcon {
-    @apply cursor-pointer flex-shrink-0 mr-1.5 h-7 w-7 text-gray-800 transform duration-200 stroke-2;
+  .mySmallIcon {
+    @apply cursor-pointer flex-shrink-0 mr-1.5 h-7 w-7 text-myPrimaryDarkGrayColor transform duration-200 stroke-2;
   }
 
   /*
@@ -213,8 +206,28 @@
     | Grid
     |--------------------------------------------------------------------------
     */
-  .primary-gap {
+  .myPrimaryGap {
     @apply gap-4;
+  }
+
+  /*
+    |--------------------------------------------------------------------------
+    | Breadcrumbs
+    |--------------------------------------------------------------------------
+    */
+
+  .myBreadcrumbsContainer {
+    @apply flex items-center justify-start gap-1 py-2 pl-4 pr-2;
+  }
+
+  /*
+    |--------------------------------------------------------------------------
+    | Search Bars
+    |--------------------------------------------------------------------------
+    */
+
+  .mysearchBarWithOptions {
+    @apply flex gap-1  bg-gray-100 py-2 px-2 rounded;
   }
 
   /*
@@ -222,180 +235,81 @@
     | Forms
     |--------------------------------------------------------------------------
     */
+  .myPrimaryFormWithActions {
+    @apply flex flex-col myPrimaryGap md:pb-4  px-2 rounded;
+  }
   .myPrimaryForm {
-    /*@apply border-2 border-amber-700 p-12 rounded-lg*/
+    @apply md:flex md:flex-row flex flex-col myPrimaryGap;
   }
 
-  .hidden-input-fields {
+  .myPrimaryFormTitleDescription {
+    @apply flex flex-col w-full;
+  }
+
+  .myPrimaryFormMain {
+    @apply md:w-8/12 flex flex-col myPrimaryGap;
+  }
+  .myPrimaryFormSidebar {
+    @apply md:w-4/12 flex flex-col myPrimaryGap;
+  }
+  .myPrimaryActions {
+    @apply px-4 py-6 rounded bg-gray-100 shadow-sm;
+  }
+
+  .myInputsOrganization {
+    @apply px-4 pt-8 pb-8 bg-white rounded shadow-sm;
+  }
+
+  .myPrimaryFormOrganizationHeaderDescriptionSection {
+    @apply mb-6;
+  }
+  .myPrimaryFormOrganizationHeader {
+    @apply myFourthHeader m-0;
+  }
+
+  .myInputsFamily {
+    @apply flex items-center myPrimaryGap;
+  }
+
+  .myInputGroup {
+    @apply w-full self-start mb-2;
+  }
+  .myDoActionButtonSection {
+    @apply px-4 py-4 border border-myPrimaryLightGrayColor rounded sm:px-6 text-right mt-1 bg-gray-50;
+  }
+
+  .myPrimaryInputLabel {
+    @apply my-0 block text-xs font-medium text-myPrimaryDarkGrayColor text-left;
+  }
+
+  .myPrimaryInput {
+    @apply block w-full sm:text-sm font-medium text-myPrimaryDarkGrayColor placeholder:font-normal placeholder:accent-gray-400  focus:bg-white rounded-md py-3 px-3  border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
+  }
+  .myPrimaryInputReadonly {
+    @apply myPrimaryInput bg-gray-50 focus:ring-0 focus:bg-gray-100 focus:border-myPrimaryMediumGrayColor;
+  }
+
+  .myPrimarySearchInput {
+    @apply myPrimaryInput pl-10;
+  }
+
+  .myPrimaryInputError {
+    @apply mt-1 italic block text-sm font-medium text-myPrimaryErrorColor text-left;
+  }
+
+  .myPrimaryHiddenInputField {
     @apply px-0;
   }
 
-  .inputsGroup {
-    @apply pb-4 mt-0 mb-2;
+  .myPrimaryTextArea {
+    @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent;
   }
 
-  .labelInputErrorDiv {
-    @apply py-2;
+  .myPrimaryCheckbox {
+    @apply focus:ring-myPrimaryBrandColor h-5 w-5 text-myPrimaryBrandColor border-gray-400 rounded-md;
   }
 
-  .primaryInputError {
-    @apply mt-1 italic block text-sm font-medium text-red-400 text-left;
-  }
-
-  .primaryLabel {
-    @apply mt-4 mb-2 block text-sm font-medium text-gray-700 text-left;
-  }
-
-  .primaryInput {
-    @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent;
-  }
-
-  .optionalBig {
-    @apply font-light text-sm;
-  }
-
-  .tagifyDiv {
-    @apply bg-gray-50 focus-within:bg-white rounded-md py-2 px-3 border border-gray-300 focus-within:border focus-within:border-transparent focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-0 min-h-[3rem] items-center w-full;
-  }
-
-  .tagifyTag {
-    @apply flex gap-1 items-center text-sm bg-emerald-500 text-white font-semibold hover:bg-emerald-600 px-5 px-3 py-2 cursor-pointer rounded-2xl hover:bg-red-600;
-  }
-
-  .tagifyLabel {
-    @apply mt-4 mb-2 block text-xs font-medium text-gray-700 text-left;
-  }
-
-  .tagifyInputWithIcon {
-    @apply relative items-center grow flex-1 min-w-[2rem];
-  }
-
-  .tagifyInput {
-    @apply font-semibold placeholder:font-normal placeholder:accent-gray-400 border-none bg-gray-50 focus:bg-white focus:border-none text-xs focus:ring-0 w-full flex-1 flex items-center leading-8 pl-0;
-  }
-
-  #my-select {
-    @apply py-1.5 px-2 text-gray-800 bg-gray-50 rounded-md
-        border border-gray-300 focus-within:border focus-within:border-transparent
-        sm:text-sm font-normal
-        focus-within:bg-white focus:focus-within:rounded-md
-        focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-[1px];
-  }
-
-  .primaryTextArea {
-    @apply block w-full sm:text-sm font-medium text-black placeholder:font-normal placeholder:accent-gray-400 bg-gray-50 focus:bg-white rounded-md py-3 px-3 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent;
-  }
-
-  .primarySelect {
-    @apply bg-gray-50 focus:bg-white font-normal text-gray-800 placeholder:accent-gray-400 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-3 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 focus:outline-4 focus:outline-emerald-50 sm:text-sm;
-  }
-
-  .iconForLeftInput {
-    @apply inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 shadow-sm py-3 px-3 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600;
-  }
-
-  .primaryInputWithLeftIcon {
-    @apply primaryInput rounded-l-none;
-  }
-
-  .iconForRightInput {
-    @apply inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-r-md border border-l-0 border-gray-300 shadow-sm py-3 px-3 dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600;
-  }
-
-  .primaryInputWithRightIcon {
-    @apply primaryInput rounded-r-none;
-  }
-
-  .primaryCheckbox {
-    @apply focus:ring-emerald-500 h-5 w-5 text-emerald-500 border-gray-300 rounded-md;
-  }
-
-  .section-form-main {
-    @apply bg-white border border-gray-200 p-4 rounded;
-  }
-
-  .section-form-container {
-    @apply outline-8 outline-gray-300 py-4 px-4 col-span-6 overflow-x-scroll;
-  }
-
-  .section-form-box {
-    @apply min-w-[30rem];
-  }
-
-  .section-form-containerModal {
-    @apply outline-8 outline-gray-300 pb-4 px-4 col-span-6;
-  }
-
-  .section-form-boxModal {
-    @apply min-w-[30rem] min-h-[20rem];
-  }
-
-  myModal .section-form-box-sidebar {
-    @apply section-form-box md:min-w-[10rem];
-  }
-
-  /*
-    |--------------------------------------------------------------------------
-    | Search input field with button
-    |--------------------------------------------------------------------------
-    */
-  .searchInputWithButton {
-    @apply block p-4 pl-10 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white dark:bg-gray-700;
-  }
-
-  /*
-    |--------------------------------------------------------------------------
-    | Pagination Laravel Blade Div
-    |--------------------------------------------------------------------------
-    */
-  .paginationDiv {
-    @apply mt-8;
-  }
-
-  /*
-    |--------------------------------------------------------------------------
-    | Alhpine js
-    |--------------------------------------------------------------------------
-    */
-  [x-cloak] {
-    display: none !important;
-  }
-
-  /*
-    |--------------------------------------------------------------------------
-    | Vue 3 Popper - Tooltip
-    |--------------------------------------------------------------------------
-    */
-  .popperToolkitContent {
-    @apply max-w-[16rem] space-y-4 text-sm;
-  }
-
-  .popperIconBig {
-    @apply h-4 w-4;
-  }
-
-  .popperIconSmall {
-    @apply h-5 w-5;
-  }
-
-  /*
-    |--------------------------------------------------------------------------
-    | Vue 3 Popper - Tooltip
-    |--------------------------------------------------------------------------
-    */
-  :root {
-    --popper-theme-background-color: #ffffff;
-    --popper-theme-background-color-hover: #ffffff;
-    --popper-theme-text-color: #333;
-    --popper-theme-border-width: 1px;
-    --popper-theme-border-color: #aaa;
-    --popper-theme-border-style: solid;
-    --popper-theme-border-radius: 4px;
-    --popper-theme-padding: 32px;
-    --vs-search-input-bg: none;
-  }
-
-  .popper {
-    width: 100px !important;
+  .myPrimarySelect {
+    @apply relative w-full cursor-default rounded-md  border border-myPrimaryMediumGrayColor bg-white py-3 pl-3 pr-10 text-left shadow-sm focus:border-myPrimaryBrandColor focus:outline-none focus:ring-1 focus:ring-myPrimaryBrandColor text-xs;
   }
 }

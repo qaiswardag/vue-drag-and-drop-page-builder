@@ -6,7 +6,7 @@ import unsplash from './modules/unsplash';
 const store = createStore({
   modules: {
     user: user,
-    Designer: designer,
+    designer: designer,
     unsplash: unsplash,
   },
 });

@@ -5,116 +5,253 @@
       <div class="my-2">
         <div class="flex flex-row justify-between mb-2">
           <div class="flex flex-row gap-2 items-center">
-            <div :class="['bg-' + colorRefs.bg.color, { 'border' : colorRefs.bg.color === 'white' || colorRefs.bg.transparent}]" class="w-6 h-6 border-black rounded-md cursor-pointer" @click="colorRefs.bg.open = !colorRefs.bg.open" />
+            <div
+              :class="[
+                'bg-' + colorRefs.bg.color,
+                {
+                  border:
+                    colorRefs.bg.color === 'white' || colorRefs.bg.transparent,
+                },
+              ]"
+              class="w-6 h-6 border-black rounded-md cursor-pointer"
+              @click="colorRefs.bg.open = !colorRefs.bg.open"
+            />
             <p class="text-md">Background</p>
           </div>
           <div class="flex flex-row gap-1 items-center">
-            <div @click="colorRefs.bg.open = !colorRefs.bg.open" :class="{ 'bg-gray-200' : colorRefs.bg.open }" class="rounded cursor-pointer p-2">
-              <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z" />
+            <div
+              @click="colorRefs.bg.open = !colorRefs.bg.open"
+              :class="{ 'bg-gray-200': colorRefs.bg.open }"
+              class="rounded cursor-pointer p-2"
+            >
+              <svg
+                class="w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z"
+                />
               </svg>
             </div>
-            <div @click="changeTransparency('bg'); colorRefs.bg.transparent = true" :class="{ 'bg-gray-200' : colorRefs.bg.transparent }" class="rounded cursor-pointer p-2">
-              <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+            <div
+              @click="
+                changeTransparency('bg');
+                colorRefs.bg.transparent = true;
+              "
+              :class="{ 'bg-gray-200': colorRefs.bg.transparent }"
+              class="rounded cursor-pointer p-2"
+            >
+              <svg
+                class="w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"
+                />
               </svg>
             </div>
-            <div @click="removeColor('bg'); colorRefs.bg.none = true" :class="{ 'bg-gray-200' : colorRefs.bg.none }" class="rounded cursor-pointer p-2">
-
-              <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <div
+              @click="
+                removeColor('bg');
+                colorRefs.bg.none = true;
+              "
+              :class="{ 'bg-gray-200': colorRefs.bg.none }"
+              class="rounded cursor-pointer p-2"
+            >
+              <svg
+                class="w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </div>
           </div>
         </div>
 
-        <div :class="[colorRefs.bg.open ? 'max-h-96' : 'max-h-0']" class="flex flex-wrap gap-x-2 overflow-hidden duration-200">
-          <span v-for="color in colors" :key="color" :class="'bg-' + color" class="inline-block w-5 h-5 my-1 rounded-md cursor-pointer duration-200 transform hover:scale-125" @click="changeColor('bg', color)" />
+        <div
+          :class="[colorRefs.bg.open ? 'max-h-96' : 'max-h-0']"
+          class="flex flex-wrap gap-x-2 overflow-hidden duration-200"
+        >
+          <span
+            v-for="color in colors"
+            :key="color"
+            :class="'bg-' + color"
+            class="inline-block w-5 h-5 my-1 rounded-md cursor-pointer duration-200 transform hover:scale-125"
+            @click="changeColor('bg', color)"
+          />
         </div>
-
       </div>
 
       <div class="mb-2">
         <div class="flex flex-row justify-between mb-2">
           <div class="flex flex-row gap-2 items-center">
-            <div :class="['bg-' + colorRefs.text.color, { 'border' : colorRefs.text.color === 'white' || colorRefs.text.transparent}]" class="w-6 h-6 border-black rounded-md cursor-pointer" @click="colorRefs.text.open = !colorRefs.text.open" />
+            <div
+              :class="[
+                'bg-' + colorRefs.text.color,
+                {
+                  border:
+                    colorRefs.text.color === 'white' ||
+                    colorRefs.text.transparent,
+                },
+              ]"
+              class="w-6 h-6 border-black rounded-md cursor-pointer"
+              @click="colorRefs.text.open = !colorRefs.text.open"
+            />
             <p class="text-md">Text</p>
           </div>
           <div class="flex flex-row gap-1 items-center">
-            <div @click="colorRefs.text.open = !colorRefs.text.open" :class="{ 'bg-gray-200' : colorRefs.text.open }" class="rounded cursor-pointer p-2">
-              <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z" />
+            <div
+              @click="colorRefs.text.open = !colorRefs.text.open"
+              :class="{ 'bg-gray-200': colorRefs.text.open }"
+              class="rounded cursor-pointer p-2"
+            >
+              <svg
+                class="w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4.098 19.902a3.75 3.75 0 005.304 0l6.401-6.402M6.75 21A3.75 3.75 0 013 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 003.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008z"
+                />
               </svg>
             </div>
-            <div @click="changeTransparency('text'); colorRefs.text.transparent = true" :class="{ 'bg-gray-200' : colorRefs.text.transparent }" class="rounded cursor-pointer p-2">
-              <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+            <div
+              @click="
+                changeTransparency('text');
+                colorRefs.text.transparent = true;
+              "
+              :class="{ 'bg-gray-200': colorRefs.text.transparent }"
+              class="rounded cursor-pointer p-2"
+            >
+              <svg
+                class="w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"
+                />
               </svg>
             </div>
-            <div @click="removeColor('text'); colorRefs.text.none = true" :class="{ 'bg-gray-200' : colorRefs.text.none }" class="rounded cursor-pointer p-2">
-
-              <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <div
+              @click="
+                removeColor('text');
+                colorRefs.text.none = true;
+              "
+              :class="{ 'bg-gray-200': colorRefs.text.none }"
+              class="rounded cursor-pointer p-2"
+            >
+              <svg
+                class="w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </div>
           </div>
         </div>
-        <div :class="[colorRefs.text.open ? 'max-h-96' : 'max-h-0']" class="flex flex-wrap gap-x-2 overflow-hidden duration-200">
-          <span v-for="color in colors" :key="color" :class="'bg-' + color" class="inline-block w-5 h-5 my-1 rounded-md cursor-pointer duration-200 transform hover:scale-125" @click="changeColor('text', color)" />
+        <div
+          :class="[colorRefs.text.open ? 'max-h-96' : 'max-h-0']"
+          class="flex flex-wrap gap-x-2 overflow-hidden duration-200"
+        >
+          <span
+            v-for="color in colors"
+            :key="color"
+            :class="'bg-' + color"
+            class="inline-block w-5 h-5 my-1 rounded-md cursor-pointer duration-200 transform hover:scale-125"
+            @click="changeColor('text', color)"
+          />
         </div>
       </div>
-
     </template>
   </EditorAccordion>
 </template>
 
-
 <script setup>
-import { useStore } from 'vuex'
-import { computed } from 'vue'
-import EditorAccordion from '../EditorAccordion.vue'
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+import EditorAccordion from '../EditorAccordion.vue';
 
 import {
   XIcon,
   ColorSwatchIcon,
   CubeTransparentIcon,
-} from '@heroicons/vue/outline'
-import { ref, watch } from 'vue'
+} from '@heroicons/vue/outline';
+import { ref, watch } from 'vue';
 
 // store
-const store = useStore()
+const store = useStore();
 // getters: current element from store
 const getCurrentElement = computed(() => {
-  return store.getters['Designer/getCurrentElement']
-})
+  return store.getters['designer/getCurrentElement'];
+});
 
 // Update editor defaults when an element is selected
 watch(getCurrentElement, (newElement, oldElement) => {
   colorRefs.value.bg.color =
-    colors.find((color) => newElement.classList.contains(`bg-${color}`)) || ''
+    colors.find((color) => newElement.classList.contains(`bg-${color}`)) || '';
   colorRefs.value.bg.transparent = newElement.classList.contains(
     'bg-transparent'
   )
     ? true
-    : false
+    : false;
   colorRefs.value.bg.none =
     colorRefs.value.bg.color === '' && colorRefs.value.bg.transparent === false
       ? true
-      : false
+      : false;
 
   colorRefs.value.text.color =
-    colors.find((color) => newElement.classList.contains(`text-${color}`)) || ''
+    colors.find((color) => newElement.classList.contains(`text-${color}`)) ||
+    '';
   colorRefs.value.text.transparent = newElement.classList.contains(
     'text-transparent'
   )
     ? true
-    : false
+    : false;
   colorRefs.value.text.none =
     colorRefs.value.text.color === '' &&
     colorRefs.value.text.transparent === false
       ? true
-      : false
-})
+      : false;
+});
 const colorRefs = ref({
   bg: {
     color: '',
@@ -128,7 +265,7 @@ const colorRefs = ref({
     none: false,
     open: true,
   },
-})
+});
 const colors = [
   'gray-50',
   'gray-100',
@@ -212,26 +349,26 @@ const colors = [
   'pink-900',
   'white',
   'black',
-]
+];
 
 function changeColor(type, color) {
   // Remove any existing colors
-  removeColor(type)
+  removeColor(type);
   // Add tailwind class of type based on passed color
-  getCurrentElement.value.classList.add(`${type}-${color}`)
+  getCurrentElement.value.classList.add(`${type}-${color}`);
 
-  colorRefs.value[type].color = color
+  colorRefs.value[type].color = color;
 }
 
 function changeTransparency(type) {
   // Remove any existing colors
-  removeColor(type)
+  removeColor(type);
   if (colorRefs.value[type].transparent) {
     // Remove transparency class
-    getCurrentElement.value.classList.remove(`${type}-transparent`)
+    getCurrentElement.value.classList.remove(`${type}-transparent`);
   } else {
     // Add transparency class
-    getCurrentElement.value.classList.add(`${type}-transparent`)
+    getCurrentElement.value.classList.add(`${type}-transparent`);
   }
 }
 
@@ -239,11 +376,11 @@ function removeColor(type) {
   // Iterate through all tailwind color class names
   colors.forEach((color) => {
     // Remove any tailwind color class of same type
-    getCurrentElement.value.classList.remove(`${type}-${color}`)
-  })
+    getCurrentElement.value.classList.remove(`${type}-${color}`);
+  });
   // Remove transparency class
-  getCurrentElement.value.classList.remove(`${type}-transparent`)
+  getCurrentElement.value.classList.remove(`${type}-transparent`);
   // setters (mutation): set current element in store
-  store.commit('Designer/setCurrentElement', getCurrentElement.value)
+  store.commit('designer/setCurrentElement', getCurrentElement.value);
 }
 </script>
