@@ -1,18 +1,15 @@
 <template>
   <div class="block px-4 ease-linear duration-200 pb-10">
     <img
+      v-if="getCurrentImage !== undefined"
       class="object-cover object-center w-full rounded-md"
-      :src="getCurrentElement.src"
+      :src="getCurrentImage"
       @click="imageClick"
       alt="image"
     />
 
     <div class="mt-2">
-      <button
-        @click="imageClick"
-        type="button"
-        class="myPrimaryButton bg-violet-500 text-xs w-full"
-      >
+      <button @click="imageClick" type="button" class="myPrimaryButton">
         Update image
       </button>
     </div>
@@ -41,7 +38,7 @@ import MediaLibraryModal from '../../../modal/MediaLibraryModal.vue';
 // store
 const store = useStore();
 // emit
-const emit = defineEmits(['previewCurrentDesign', 'signOutClick']);
+const emit = defineEmits(['previewCurrentDesign']);
 
 //
 // use media library
@@ -75,25 +72,30 @@ const getCurrentImage = computed(() => {
 });
 //
 // array for saving existing image
-const oldExistingImage = ref([]);
+const oldExistingImage = ref(null);
 //
 //
 // use watch function to store watch new clicked element
 watch(getCurrentImage, (newClickedElement) => {
   // set "old existing image" to an empty array if new element is clicked
-  oldExistingImage.value = [];
+  oldExistingImage.value = newClickedElement;
 });
 //
 // use watch function to store existing image
 watch(getCurrentImage, (newImage, oldImage) => {
   // push all images into "old existing image" array. index 0 in the array is the saved image
-  if (oldExistingImage.value.length === 0) {
-    oldExistingImage.value.push(newImage);
+  if (oldExistingImage.value !== null) {
+    oldExistingImage.value = newImage;
   }
 });
 //
 // image click
 const imageClick = function () {
+  console.log(
+    'den bliver sat ved close! OldExistingImage.value er:',
+    oldExistingImage.value
+  );
+  console.log('getCurrentPreview er:', getCurrentPreview.value);
   // open modal to true
   openMediaModal.value = true;
 
@@ -106,6 +108,8 @@ const imageClick = function () {
 
   // handle click
   firstMediaButtonFunction.value = function () {
+    // store commit and keep existing image
+    store.commit('designer/setNewImage', oldExistingImage.value);
     // close media library modal
     openMediaModal.value = false;
   };

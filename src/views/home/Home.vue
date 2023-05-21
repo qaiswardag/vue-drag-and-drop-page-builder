@@ -4,7 +4,7 @@ import { useStore } from 'vuex';
 import DynamicModal from '../../components/modal/DynamicModal.vue';
 import DesignerModal from '../../components/modal/DesignerModal.vue';
 import Designer from '../designer/Designer.vue';
-
+import DefaultElement from '../../components/layouts/DefaultElement.vue';
 // store
 const store = useStore();
 
@@ -42,46 +42,38 @@ const handleDesigner = function () {
       <Designer></Designer>
     </main>
   </DesignerModal>
-  <div class="flex min-h-full flex-col bg-white pt-16 pb-12">
-    <main
-      class="mx-auto flex w-full max-w-7xl flex-grow flex-col justify-center px-4 sm:px-6 lg:px-8"
-    >
-      <div class="flex flex-shrink-0 justify-center">
-        <a href="/" class="inline-flex">
-          <span class="sr-only">meeshop.dk</span>
-          <img
-            class="h-12 w-auto"
-            src="https://www.meeshop.dk/zeus-assets/images//Logo-gron.svg"
-            alt=""
-          />
-        </a>
-      </div>
-      <div class="py-16">
-        <div class="text-center">
-          <p
-            class="text-xs font-semibold text-gray-500 mt-12 mb-0 tracking-wider"
-          >
-            Welcome to our platform
-          </p>
-          <h1
-            class="text-4xl font-bold text-gray-900 sm:text-5xl tracking-normal"
-          >
-            Designer
-          </h1>
-          <p class="mt-12 text-base text-gray-500 tracking-normal">
-            Visit our Vue 3 website drag and drop page builder designer.
-          </p>
 
-          <div
-            @click="handleDesigner"
-            class="text-2xl font-medium text-emerald-500 hover:text-emerald-600"
-          >
-            Handle Designer
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
+  <DefaultElement :descriptionArea="true" class="bg-gray-100">
+    <template #title>Number four</template>
+    <template #description>
+      As new users join, they bring innovative ideas, unique skills, and diverse
+      experiences that enrich our platform. Connect with them, explore their
+      work, and celebrate the fresh energy they contribute to our collaborative
+      space.
+    </template>
+    <template #content>
+      <p class="myPrimaryParagraph">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti
+        suscipit adipisci mollitia odit dolore voluptate voluptatibus eum libero
+        explicabo, optio nostrum perspiciatis enim tenetur? Nobis inventore
+        minus provident eveniet quidem natus quae possimus quam soluta, vitae,
+        reprehenderit delectus eaque ab iste, voluptas enim debitis veritatis
+        deserunt assumenda nisi.
+      </p>
+      <br />
+      <p class="myPrimaryParagraph">
+        Qui, quidem, expedita itaque harum dolores enim autem recusandae atque
+        cumque accusamus delectus obcaecati corporis in reiciendis cum.
+        Perferendis cupiditate porro at libero asperiores officiis explicabo?
+        Sit dicta id ipsum aliquam quasi. Dolor repudiandae minus laborum
+        recusandae quaerat nam sed debitis harum accusantium necessitatibus
+        neque omnis, ut impedit? Unde dolorum maxime asperiores.
+      </p>
+      <button @click="handleDesigner" class="myPrimaryButton mt-8">
+        Handle Designer
+      </button>
+    </template>
+  </DefaultElement>
 </template>
 
 <style>

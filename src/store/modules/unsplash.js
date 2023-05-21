@@ -82,7 +82,7 @@ export default {
         }
 
         const data = await loadData(
-          `https://api.unsplash.com/search/photos?page=${payload.currentPage}&per_page=16&query=${payload.searchTerm}${orientationType}`,
+          `https://api.unsplash.com/search/photos?page=${payload.currentPage}&per_page=24&query=${payload.searchTerm}${orientationType}`,
 
           {
             //TODO: the api key should not be available in frontend.

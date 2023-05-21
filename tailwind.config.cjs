@@ -2,7 +2,6 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  // npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
   content: [
     './index.html',
     './public/**/*.html',
@@ -12,7 +11,7 @@ module.exports = {
     colors: {
       //
       // brand colors
-      myPrimaryBrandColor: '#2563eb',
+      myPrimaryBrandColor: 'orange',
       //
       //
       // error color

@@ -39,7 +39,7 @@
           leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
           <div
-            class="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full sm:p-6"
+            class="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
           >
             <div
               class="flex gap-2 justify-between items-center border-b border-gray-200"
@@ -119,113 +119,126 @@
                   <!-- Main content - end-->
 
                   <!-- Details sidebar start-->
-                  <aside
-                    class="w-96 bg-white pl-8 pr-2 border-l border-gray-200 overflow-y-auto"
-                  >
-                    <div class="pb-16 space-y-6">
-                      <div>
-                        <div
-                          class="bg-gray-600 min-h-[10rem] min-w-[20rem] block w-full aspect-w-10 aspect-h-7 rounded-lg overflow-hidden"
-                        >
-                          <div
-                            class="block aspect-w-10 aspect-h-7 overflow-hidden object-cover object-center w-full rounded-md"
+                  <aside class="md:w-72 relative min-h-[55rem] max-h-[55rem]">
+                    <div
+                      class="md:w-72 h-screen overflow-y-scroll border border-gray-200 rounded"
+                    >
+                      <div class="pb-16 space-y-6">
+                        <div v-if="getCurrentPreview">
+                          <img
+                            alt="preview"
+                            class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                            :src="getCurrentPreview"
+                          />
+                        </div>
+
+                        <div v-else>
+                          <img
+                            alt="preview"
+                            class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                            :src="getCurrentElement.src"
+                          />
+                        </div>
+
+                        <div class="md:px-3 sm:px-2">
+                          <h3 class="font-medium text-gray-900">Information</h3>
+                          <dl
+                            class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
                           >
-                            <div v-if="getCurrentPreview">
-                              <img
-                                class="object-cover pointer-events-none"
-                                :src="getCurrentPreview"
-                              />
+                            <div
+                              class="py-3 flex justify-between text-sm font-medium items-center"
+                            >
+                              <dt class="text-gray-500">Dimensions</dt>
+                              <dd class="text-gray-900">640 x 668</dd>
+                            </div>
+                            <div
+                              class="py-3 flex justify-between text-sm font-medium items-center"
+                            >
+                              <dt class="text-gray-500">Size</dt>
+                              <dd class="text-gray-900">27 KB</dd>
+                            </div>
+                            <div
+                              class="py-3 flex justify-between text-sm font-medium items-center"
+                            >
+                              <dt class="text-gray-500">Extension</dt>
+                              <dd class="text-gray-900">jpg</dd>
+                            </div>
+                            <div
+                              class="py-3 flex justify-between text-sm font-medium items-center"
+                            >
+                              <dt class="text-gray-500">Image Id</dt>
+                              <dd class="text-gray-900">40</dd>
+                            </div>
+                            <div
+                              class="py-3 flex justify-between text-sm font-medium items-center"
+                            >
+                              <dt class="text-gray-500">Uploaded by</dt>
+                              <dd class="text-gray-900">Qais Wardag</dd>
+                            </div>
+                            <div
+                              class="py-3 flex justify-between text-sm font-medium items-center"
+                            >
+                              <dt class="text-myPrimaryErrorColor">Delete</dt>
+                              <dd class="text-gray-900">
+                                <form>
+                                  <div class="items-center">
+                                    <div class="">
+                                      <button
+                                        type="button"
+                                        class="myPrimaryButton min-w-auto myPrimaryDeleteButton py-1 px-1 bg-transparent shadow-none border-0 hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 text-myPrimaryErrorColor"
+                                      >
+                                        <span
+                                          ><svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="currentColor"
+                                            class="w-5 h-5"
+                                          >
+                                            <path
+                                              stroke-linecap="round"
+                                              stroke-linejoin="round"
+                                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                            ></path></svg></span
+                                        ><span
+                                          class="flex gap-2 items-center justify-center"
+                                        >
+                                          <!--v-if--></span
+                                        >
+                                      </button>
+                                    </div>
+                                  </div>
+                                </form>
+                              </dd>
+                            </div>
+                          </dl>
+                        </div>
+
+                        <div class="md:px-3 sm:px-2">
+                          <div
+                            class="absolute bottom-0 right-0 left-0 px-2 my-2 sm:flex justify-center sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
+                          >
+                            <div v-if="firstButtonText">
+                              <button
+                                ref="firstButtonRef"
+                                class="myPrimaryButton bg-gray-700 hover:bg-gray-800 text-white focus:ring-gray-700 text-sm w-full"
+                                type="button"
+                                @click="firstButton"
+                              >
+                                {{ firstButtonText }}
+                              </button>
                             </div>
 
-                            <div v-else>
-                              <img
-                                class="object-cover pointer-events-none"
-                                :src="getCurrentElement.src"
-                              />
+                            <div v-if="secondButtonText">
+                              <button
+                                class="myPrimaryButton bg-emerald-500 text-sm w-full"
+                                type="button"
+                                @click="secondButton"
+                              >
+                                {{ secondButtonText }}
+                              </button>
                             </div>
-                          </div>
-                        </div>
-                        <div class="mt-4 flex items-start justify-between">
-                          <div>
-                            <h2 class="text-lg font-medium text-gray-900">
-                              <span class="sr-only">Details for </span>
-                              Image name
-                            </h2>
-                            <p class="text-sm font-medium text-gray-500">
-                              Image size
-                            </p>
-                          </div>
-                          <button
-                            type="button"
-                            class="ml-4 bg-white rounded-full h-8 w-8 flex items-center justify-center text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                          >
-                            <HeartIcon class="h-6 w-6" aria-hidden="true" />
-                            <span class="sr-only">Favorite</span>
-                          </button>
-                        </div>
-                      </div>
-                      <div>
-                        <h3 class="font-medium text-gray-900">Information</h3>
-                        <dl
-                          class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
-                        >
-                          <div
-                            class="py-3 flex justify-between text-sm font-medium"
-                          >
-                            <dt class="text-gray-500">Dimensions</dt>
-                            <dd class="text-gray-900">4032 x 3024</dd>
-                          </div>
-                        </dl>
-                      </div>
-
-                      <div class="flex gap-2">
-                        <button
-                          type="button"
-                          class="myPrimaryButton bg-gray-600 text-white hover:bg-gray-700 hover:text-white focus:ring-gray-600 w-full"
-                        >
-                          Download
-                        </button>
-                        <button
-                          type="button"
-                          class="myPrimaryDeleteButton bg-red-500 w-full"
-                        >
-                          Delete
-                        </button>
-                      </div>
-
-                      <div class="border-t border-gray-200 mt-2 sm:mt-2 pt-4">
-                        <div
-                          class="sm:flex justify-center sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
-                        >
-                          <div v-if="firstButtonText && false" class="w-full">
-                            <button
-                              ref="firstButtonRef"
-                              class="myPrimaryButton bg-gray-700 hover:bg-gray-800 text-white focus:ring-gray-700 text-sm w-full"
-                              type="button"
-                              @click="firstButton"
-                            >
-                              {{ firstButtonText }}
-                            </button>
-                          </div>
-
-                          <div v-if="secondButtonText" class="w-full">
-                            <button
-                              class="myPrimaryButton bg-emerald-500 text-sm w-full"
-                              type="button"
-                              @click="secondButton"
-                            >
-                              {{ secondButtonText }}
-                            </button>
-                          </div>
-
-                          <div v-if="thirdButtonText" class="w-full">
-                            <button
-                              class="myPrimaryButton bg-red-500 hover:bg-red-600 text-white focus:ring-red-500 text-sm w-full"
-                              type="button"
-                              @click="thirdButton"
-                            >
-                              {{ thirdButtonText }}
-                            </button>
                           </div>
                         </div>
                       </div>
@@ -235,21 +248,6 @@
                 </div>
                 <!--content media library - end-->
               </div>
-            </div>
-
-            <div v-if="description">
-              <div
-                v-html="description"
-                class="text-sm text-gray-600 mt-4 mb-10"
-              ></div>
-              <header>
-                2
-                <slot name="header"></slot>
-              </header>
-              <main>
-                3
-                <slot></slot>
-              </main>
             </div>
           </div>
         </TransitionChild>

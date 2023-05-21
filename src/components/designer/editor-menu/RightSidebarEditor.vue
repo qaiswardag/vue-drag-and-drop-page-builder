@@ -13,10 +13,20 @@
       </div>
 
       <div class="mb-4 overflow-y-auto h-full">
-        <article v-if="getCurrentImage && !showTextArea">
+        <div class="p-2 bg-red-200 my-4">
+          <p class="py-4 text-xs">
+            <span class="font-semibold pr-3"> showTextArea: </span>
+            {{ showTextArea }}
+          </p>
+          <p class="py-4 text-xs">
+            <span class="font-semibold pr-3"> getCurrentImage: </span>
+            {{ getCurrentImage }}
+          </p>
+        </div>
+        <article v-show="getCurrentImage">
           <ImageEditor> </ImageEditor>
         </article>
-        <article v-show="!getCurrentImage && showTextArea">
+        <article v-show="!getCurrentImage && showTextArea !== false">
           <TextContent></TextContent>
         </article>
 

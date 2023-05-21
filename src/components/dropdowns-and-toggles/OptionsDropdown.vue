@@ -35,12 +35,9 @@
         class="text-xs z-50 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
       >
         <div class="px-4 py-3">
-          <p>Signed in as</p>
           <p class="font-semibold text-gray-900 truncate">
+            Signed in as:
             {{ user.name }}
-          </p>
-          <p class="font-medium text-gray-900 truncate">
-            {{ user.email }}
           </p>
         </div>
         <div class="py-1">

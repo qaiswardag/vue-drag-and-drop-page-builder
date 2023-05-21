@@ -2,6 +2,7 @@
   <div class="w-full inset-x-0 h-screen lg:pt-0 pt-0-z-10 overflow-x-scroll">
     <div class="relative h-full flex">
       <aside
+        aria-label="sidebar"
         :class="{
           'w-0': !MenuRight,
           'w-60': !MenuRight,
@@ -15,23 +16,6 @@
             <ul
               class="flex flex-col gap-4 p-4 font-semibold h-full overflow-y-scroll"
             >
-              <a href="/">
-                <span class="sr-only">Workflow</span>
-                <img
-                  class="h-6 w-auto sm:h-8"
-                  src="https://www.meeshop.dk/zeus-assets/images//Logo-gron.svg"
-                  alt=""
-                />
-              </a>
-              <hr />
-              <a
-                href="/"
-                class="flex flex-row items-center gap-2 text-gray-900 font-semibold mb-4"
-              >
-                <ArrowLeftIcon class="w-4 h-4 text-gray-900" />
-                <p class="text-xs">Back to Home</p>
-              </a>
-
               <li class="font-semibold text-xs">Components</li>
               <li
                 v-for="category in categories"
@@ -54,8 +38,9 @@
 
         <!--preview - start-->
         <aside
+          aria-label="saidebar"
           :class="[!MenuPreview ? '-left-[30rem]' : 'left-60']"
-          class="absolute z-10 w-[30rem] h-full duration-300 bg-gray-50 top-0 rounded-r-2xl shadow-2xl bg-gray-50"
+          class="absolute z-10 w-[30rem] h-full duration-200 top-0 rounded-r-2xl shadow-2xl bg-gray-50 mt-4"
         >
           <div class="flex flex-col gap-4 p-4 h-full font-semibold">
             <p class="font-semibold text-xs capitalize">{{ activeLibrary }}</p>
@@ -72,7 +57,7 @@
                   <img
                     :alt="element.name"
                     :src="element.imageSrc"
-                    class="border-2 hover:border-emerald-500 rounded-md cursor-grab duration-200"
+                    class="border-2 border-myPrimaryLightGrayColor hover:border-myPrimaryBrandColor rounded-md cursor-grab duration-200"
                   />
                 </div>
               </template>
@@ -95,8 +80,7 @@
               <span class="w-2 h-2 rounded-full bg-green-400"></span>
             </div>
           </div>
-          <div class="flex gap-3">
-            <SelectedPage class="text-center my-auto"></SelectedPage>
+          <div class="flex myPrimaryGap">
             <OptionsDropdown
               @previewCurrentDesign="previewCurrentDesign"
             ></OptionsDropdown>
@@ -244,7 +228,6 @@ import { useAjax } from '../../composables/use-ajax';
 import { usePromise } from '../../composables/use-promise';
 
 import OptionsDropdown from '../../components/dropdowns-and-toggles/OptionsDropdown.vue';
-import SelectedPage from '../../components/dropdowns-and-toggles/SelectedPage.vue';
 import RightSidebarEditor from '../../components/designer/editor-menu/RightSidebarEditor.vue';
 import Spinner from '../../components/loaders/Spinner.vue';
 import SaveDesign from '../../components/dropdowns-and-toggles/SaveDesign.vue';
@@ -376,7 +359,6 @@ const cloneComponent = function (comp) {
 // move component
 // runs when html componenets are rearranged
 const moveComponent = function (e, dir) {
-  console.log('test - flyt');
   // Get index of component
   const currentIndex = getCurrentIndex(e.currentTarget);
   // Return if moving first element backwards or last element forwards

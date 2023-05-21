@@ -23,7 +23,7 @@
           placeholder="Type class"
           @keydown="addClass"
         />
-        <button class="myPrimaryButton text-xs" @click="addClass">Add</button>
+        <button class="myPrimaryButton" @click="addClass">Add</button>
       </div>
       <p
         :class="[containsSpace ? 'max-h-5' : 'max-h-0']"

@@ -77,7 +77,7 @@ const firstButton = function () {
               class="relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full bg-white"
             >
               <div
-                class="flex items-center justify-end border-b border-gray-200 py-2 pr-4"
+                class="flex items-center justify-end border-b border-gray-200 py-2 pr-4 bg-green-400"
               >
                 <div @click="firstButton">
                   <svg
@@ -97,7 +97,9 @@ const firstButton = function () {
                   </svg>
                 </div>
               </div>
-              <slot></slot>
+              <div class="bg-red-300 overflow-y-auto">
+                <slot></slot>
+              </div>
             </div>
           </TransitionChild>
         </div>

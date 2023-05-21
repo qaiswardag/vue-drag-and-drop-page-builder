@@ -126,10 +126,13 @@
 
   <div v-if="!isPending" class="mt-8 pb-16">
     <div v-if="!images">
-      <p class="primaryParagraph">Search any image.</p>
+      <p class="myPrimaryParagraph">Search any image.</p>
     </div>
 
-    <div v-if="images">
+    <div
+      v-if="images"
+      class="overflow-y-scroll md:min-h-[35rem] md:max-h-[35rem] min-h-[15rem] max-h-[15rem] pr-1 rounded"
+    >
       <div
         v-if="images.length > 0"
         class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-2"
@@ -138,20 +141,21 @@
           v-for="image in images"
           :key="image.id"
           @click="handleImageClick(image.urls.regular)"
-          class="cursor-pointer"
+          class="border border-myPrimaryLightGrayColor rounded px-2 p-2 cursor-pointer bg-gray-50"
         >
           <img
-            class="object-cover pointer-events-none w-full rounded-md"
+            alt="image"
+            class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer"
             :src="image.urls.thumb"
           />
-          <p class="primaryParagraph text-xs py-1 italic">
+          <p class="myPrimaryParagraph text-xs py-1 italic">
             By: {{ image.user.name }}
           </p>
         </div>
       </div>
 
       <div v-if="images.length < 1 && !error">
-        <p class="primaryParagraph text-emerald-500 font-semibold">
+        <p class="myPrimaryParagraph">
           We did not find any images. Make a new search.
         </p>
       </div>
@@ -191,7 +195,7 @@
             <button
               @click="previousPage(currentPage--)"
               :disabled="currentPage === 1"
-              class="relative inline-flex items-center rounded-md border border-gray-300 bg-emerald-500 px-4 py-2 text-xs font-medium text-white hover:bg-emerald-600"
+              class="myPrimaryButton"
               :class="{ hidden: currentPage === 1 }"
             >
               Page
@@ -199,15 +203,13 @@
                 currentPage > 0 ? `${currentPage - 1}` : `${currentPage - 1}`
               }}
             </button>
-            <span
-              class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-2 py-2 text-xs font-medium text-gray-800"
-            >
-              {{ currentPage }}
+            <span class="myPrimaryTag rounded-full p-3">
+              Page {{ currentPage }}
             </span>
             <button
               @click="nextPage(currentPage++)"
               :disabled="currentPage === getUnsplashImagesData.total_pages"
-              class="relative inline-flex items-center rounded-md border border-gray-300 bg-emerald-500 px-4 py-2 text-xs font-medium text-white hover:bg-emerald-600"
+              class="myPrimaryButton"
               :class="{
                 hidden: currentPage === getUnsplashImagesData.total_pages,
               }"
@@ -268,7 +270,6 @@ const getCurrentImage = computed(() => {
 });
 //
 const handleImageClick = function (file) {
-  console.log('og:', file);
   // in store - update preview image
   store.commit('designer/setCurrentPreview', file);
 };

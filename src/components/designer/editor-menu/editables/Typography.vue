@@ -189,7 +189,6 @@ const fontAttributes = {
 
 // update editor selected and default when an element is selected
 watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
-  console.log('den er:', newElement);
   // set new element back to currrent element as new element is html string
   newElement = getCurrentElement.value;
   // set text value

@@ -88,6 +88,7 @@ export default {
 
     // set current preview
     setCurrentPreview(state, payload) {
+      console.log('setCurrentPreview i store er:', payload);
       localStorage.setItem('preview', payload);
       state.currentPreview = payload;
     },
