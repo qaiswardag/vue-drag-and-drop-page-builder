@@ -87,7 +87,7 @@
           href="https://github.com/qaiswardag"
           target="_blank"
           class="myPrimaryLink text-gray-50"
-          >Qais Wardag
+          >Qais Wardag / GitHub
         </a>
         . All rights reserved.
       </p>

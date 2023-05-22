@@ -72,9 +72,19 @@ const firstButton = function () {
               class="relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full"
             >
               <div
-                class="flex items-center justify-end h-8 px-2 mb-2 bg-gray-200"
+                class="flex items-center justify-between h-8 pl-4 pr-2 bg-gray-200"
               >
-                <div @click="firstButton">
+                <p
+                  class="-m-1.5 p-1.5 myPrimaryParagraph text-sm sm:text-md font-semibold text-black cursor-pointer"
+                >
+                  <span class="sr-only">Your Company</span>
+                  myDesigner
+                </p>
+                <div
+                  @click="firstButton"
+                  class="flex items-center justify-center gap-1"
+                >
+                  <span class="text-xs cursor-pointer"> Close </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -82,7 +92,7 @@ const firstButton = function () {
                     stroke-width="2"
                     stroke="currentColor"
                     aria-hidden="true"
-                    class="h-5 w-5 text-black self-center cursor-pointer"
+                    class="h-4 w-4 text-black self-center cursor-pointer"
                   >
                     <path
                       stroke-linecap="round"
