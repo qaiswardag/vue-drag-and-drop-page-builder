@@ -18,11 +18,6 @@ defineProps({
     default: false,
     required: true,
   },
-
-  title: {
-    type: String,
-    required: true,
-  },
 });
 
 const emit = defineEmits(['firstDesignerPreviewModalButtonFunction']);
@@ -38,11 +33,11 @@ const firstButton = function () {
     <TransitionRoot :show="show" as="template">
       <Dialog
         as="div"
-        class="fixed z-30 inset-0 overflow-y-auto rounded-lg m-8"
+        class="fixed z-30 inset-0 overflow-y-auto"
         @close="firstButton"
       >
         <div
-          class="flex items-end justify-center pb-20 text-center sm:block sm:p-0"
+          class="flex items-end justify-center pb-20 text-center sm:block sm:p-0 bg-white"
         >
           <TransitionChild
             as="template"
@@ -54,7 +49,7 @@ const firstButton = function () {
             leave-to="opacity-0"
           >
             <DialogOverlay
-              class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+              class="fixed inset-0 bg-white bg-opacity-75 transition-opacity"
             />
           </TransitionChild>
 
@@ -74,20 +69,20 @@ const firstButton = function () {
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              class="relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full bg-white"
+              class="relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full"
             >
               <div
-                class="flex items-center justify-end border-b border-gray-200 py-2 pr-4 bg-green-400"
+                class="flex items-center justify-end h-8 px-2 mb-2 bg-gray-200"
               >
                 <div @click="firstButton">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
+                    stroke-width="2"
                     stroke="currentColor"
                     aria-hidden="true"
-                    class="h-6 w-6 text-myPrimaryDarkGrayColor self-center cursor-pointer"
+                    class="h-5 w-5 text-black self-center cursor-pointer"
                   >
                     <path
                       stroke-linecap="round"
@@ -97,9 +92,7 @@ const firstButton = function () {
                   </svg>
                 </div>
               </div>
-              <div class="bg-red-300 overflow-y-auto">
-                <slot></slot>
-              </div>
+              <slot></slot>
             </div>
           </TransitionChild>
         </div>

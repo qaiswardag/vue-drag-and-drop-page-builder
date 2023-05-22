@@ -1,4 +1,15 @@
-import { useAjax } from '../../composables/use-ajax';
+import { vueFetch } from 'use-lightweight-fetch';
+
+// get images
+const {
+  handleData: handleGetComponents,
+  fetchedData: fetchedComponents,
+  isError: isErrorComponents,
+  error: errorComponents,
+  errors: errorsComponents,
+  isLoading: isLoadingComponents,
+  isSuccess: isSuccessComponents,
+} = vueFetch();
 
 export default {
   namespaced: true,
@@ -6,11 +17,12 @@ export default {
   // state
   state: {
     currentElement: null,
-    currentImage: null,
+    currentImagePreview: null,
+    currentClickedImage: null,
     currentPreview: null,
     componentsAdded: [],
     currentComponent: null,
-    media: [],
+    fetchedComponents: [],
   },
 
   // getters
@@ -27,9 +39,15 @@ export default {
     getCurrentComponent(state) {
       return state.currentComponent;
     },
+    getCurrentClickedImage(state) {
+      return state.currentClickedImage;
+    },
+    getCurrentPreview(state) {
+      return state.currentComponent;
+    },
     //
     // current image
-    getCurrentImage(state) {
+    getCurrentImagePreview(state) {
       // create a new HTML div
       let currentImage = document.createElement('div');
       // set the new HTML div equal to state and current element
@@ -51,14 +69,8 @@ export default {
         return null;
       }
     },
-    //
-    // current preview
-    getCurrentPreview(state) {
-      return state.currentPreview;
-    },
-    // get media
-    getMedia(state) {
-      return state.media;
+    getFetchedComponents(state) {
+      return state.fetchedComponents;
     },
   },
 
@@ -68,56 +80,56 @@ export default {
       state.currentElement = {};
       state.currentElement = payload;
     },
-    // set current element
+    // set components added
     setComponentsAdded(state, payload) {
       state.componentsAdded = {};
       state.componentsAdded = payload;
     },
-    // set current element
+    // set current compoenent
     setCurrentComponent(state, payload) {
       state.currentComponent = payload;
     },
-    // set new image
-    setNewImage(state, payload) {
+    setCurrentClickedImage(state, payload) {
+      state.currentClickedImage = payload;
+    },
+
+    setCurrentImagePreview(state, payload) {
       // set clicked element (which is the image & select the image src) to equal payload
       // payload source is the new image src
       state.currentElement.src = payload;
       // set currebt image
-      state.currentImage = payload;
+      state.currentImagePreview = payload;
     },
-
-    // set current preview
     setCurrentPreview(state, payload) {
-      console.log('setCurrentPreview i store er:', payload);
       localStorage.setItem('preview', payload);
-      state.currentPreview = payload;
     },
-    // set media
-    setMedia(state, payload) {
-      state.media = payload;
+    setFetchedComponents(state, payload) {
+      state.fetchedComponents = payload;
     },
   },
 
   // actions
   actions: {
-    // load media library images
-    async loadMediaLibrary(context, page) {
-      // use ajax
-      const { loadData } = useAjax();
-      // try
-      try {
-        const data = await loadData(
-          `/api/media-library?page=${page}`,
-          {},
-          { additionalCallTime: 0 }
-        );
-        // context & send to mutation
-        context.commit('setMedia', data);
+    // load products
+    loadComponents(context, payload) {
+      handleGetComponents(
+        '/components.json',
+        {},
+        {
+          additionalCallTime: 300,
+          abortTimeoutTime: 8000,
+        }
+      );
 
-        // catch errors
-      } catch (err) {
-        throw err;
-      }
+      // context & send to mutation
+      context.commit('setFetchedComponents', {
+        fetchedData: fetchedComponents,
+        isError: isErrorComponents,
+        error: errorComponents,
+        errors: errorsComponents,
+        isLoading: isLoadingComponents,
+        isSuccess: isSuccessComponents,
+      });
     },
   },
 };

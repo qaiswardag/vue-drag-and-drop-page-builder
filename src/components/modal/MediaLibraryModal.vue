@@ -110,9 +110,7 @@
                       </div>
 
                       <div v-if="selected === 'Unsplash.com'">
-                        <div v-if="true">
-                          <Unsplash> </Unsplash>
-                        </div>
+                        <Unsplash> </Unsplash>
                       </div>
                     </div>
                   </main>
@@ -124,15 +122,20 @@
                       class="md:w-72 h-screen overflow-y-scroll border border-gray-200 rounded"
                     >
                       <div class="pb-16 space-y-6">
-                        <div v-if="getCurrentPreview">
+                        <div v-if="getCurrentClickedImage !== null">
                           <img
                             alt="preview"
                             class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
-                            :src="getCurrentPreview"
+                            :src="getCurrentClickedImage"
                           />
                         </div>
-
-                        <div v-else>
+                        <div
+                          v-if="
+                            getCurrentElement &&
+                            getCurrentElement.src !== undefined &&
+                            getCurrentClickedImage === null
+                          "
+                        >
                           <img
                             alt="preview"
                             class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
@@ -351,12 +354,13 @@ export default {
     const store = useStore();
     //
     //
-    // get current preview
-    const getCurrentPreview = computed(() => {
-      return store.getters['designer/getCurrentPreview'];
+    const getCurrentClickedImage = computed(() => {
+      return store.getters['designer/getCurrentClickedImage'];
+    });
+    const getCurrentImagePreview = computed(() => {
+      return store.getters['designer/getCurrentImagePreview'];
     });
     //
-    // get current element from store
     const getCurrentElement = computed(() => {
       return store.getters['designer/getCurrentElement'];
     });
@@ -390,8 +394,9 @@ export default {
       tabs,
       selected,
       getCurrentElement,
-      getCurrentPreview,
+      getCurrentImagePreview,
       changeSelected,
+      getCurrentClickedImage,
     };
   },
 };

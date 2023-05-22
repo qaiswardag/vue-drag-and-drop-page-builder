@@ -24,7 +24,7 @@
   }
 
   .myPrimaryWidthScreenModule {
-    @apply myModulePyMargin myModulePadding bg-gray-200;
+    @apply myModulePyMargin myModulePadding;
   }
   .myPrimaryModule {
     @apply max-w-7xl mx-auto myModulePyMargin myModulePadding bg-green-100;
@@ -92,7 +92,7 @@
     |--------------------------------------------------------------------------
     */
   .myPrimaryParagraph {
-    @apply font-normal text-gray-700 text-sm;
+    @apply font-normal text-gray-700 text-base;
   }
 
   .myPrimaryParagraphError {
@@ -108,7 +108,7 @@
     @apply mySecondaryHeader text-left pt-12 pb-12 px-4 text-myPrimaryDarkGrayColor border-b-2 border-gray-50 bg-gray-50;
   }
   .myPrimaryMainPageHeaderNotLoggedIn {
-    @apply text-3xl mb-6 font-semibold text-center font-['Josefin_Sans'];
+    @apply text-6xl leading-normal mb-6 font-semibold text-center font-['Josefin_Sans'];
   }
   .myPrimaryMainPageParagraphNotLoggedIn {
     @apply md:w-4/6 text-xl mx-auto text-center font-semibold font-['Josefin_Sans'];
@@ -134,7 +134,7 @@
     |--------------------------------------------------------------------------
     */
   .myPrimaryLink {
-    @apply text-myPrimaryBrandColor text-sm
+    @apply text-myPrimaryBrandColor myPrimaryParagraph
         focus:outline-none
         focus:ring-0 focus:ring-myPrimaryBrandColor
         focus-visible:ring-0 focus-visible:ring-myPrimaryBrandColor;

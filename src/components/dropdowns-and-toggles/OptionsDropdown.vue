@@ -99,7 +99,6 @@
 
           <MenuItem v-slot="{ active }">
             <div
-              @click="handleHistory"
               class="cursor-pointer"
               :class="[
                 active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -129,63 +128,13 @@
       </MenuItems>
     </transition>
   </Menu>
-
-  <DynamicModal
-    :type="typeModal"
-    :id="idModal"
-    :gridColumnAmount="gridColumnModal"
-    :title="titleModal"
-    :description="descriptionModal"
-    :firstButtonText="firstButtonModal"
-    :secondButtonText="secondButtonModal"
-    :thirdButtonText="thirdButtonModal"
-    :open="openModal"
-    @firstModalButtonFunction="firstModalButtonFunction"
-    @secondModalButtonFunction="secondModalButtonFunction"
-    @thirdModalButtonFunction="thirdModalButtonFunction"
-  >
-    <div v-if="designerHistory">
-      <header></header>
-      <main>
-        <div>
-          <ul role="list">
-            <li
-              v-for="history in pageHistory"
-              :key="history.id"
-              class="relative bg-gray-50 my-2 py-4 px-4 focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-500 hover:bg-gray-100 rounded-xl"
-            >
-              <div class="flex justify-between space-x-3">
-                <div class="min-w-0 flex-1">
-                  <a href="#" class="block focus:outline-none">
-                    <span class="absolute inset-0" aria-hidden="true" />
-                    <p class="truncate text-sm text-gray-500">
-                      {{ history.info }}
-                    </p>
-                  </a>
-                </div>
-                <time
-                  :datetime="history.datetime"
-                  class="flex-shrink-0 whitespace-nowrap text-sm text-gray-500"
-                >
-                  {{ history.time }}
-                </time>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </main>
-    </div>
-  </DynamicModal>
   <DesignerPreviewModal
     :show="openDesignerPreviewModal"
-    :title="titleModal"
     @firstDesignerPreviewModalButtonFunction="
       firstDesignerPreviewModalButtonFunction
     "
   >
-    <main>
-      <Preview></Preview>
-    </main>
+    <Preview></Preview>
   </DesignerPreviewModal>
 </template>
 
@@ -193,7 +142,6 @@
 import { saveAllComponentsInLocalstorage } from '../../composables/save-all-components-in-localstorage';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 import { ChevronDownIcon } from '@heroicons/vue/solid';
-import DynamicModal from '../modal/DynamicModal.vue';
 import { ref, computed } from 'vue';
 import DesignerPreviewModal from '../modal/DesignerPreviewModal.vue';
 import Preview from '../../views/designer/Preview.vue';
@@ -236,22 +184,6 @@ const user = computed(() => {
 //
 //
 //
-// use dynamic model
-const openModal = ref(false);
-// modal content
-const typeModal = ref('');
-const idModal = ref(Number(null));
-const gridColumnModal = ref(Number(1));
-const titleModal = ref('');
-const descriptionModal = ref('');
-const firstButtonModal = ref('');
-const secondButtonModal = ref(null);
-const thirdButtonModal = ref(null);
-// set dynamic modal handle functions
-const firstModalButtonFunction = ref(null);
-const secondModalButtonFunction = ref(null);
-const thirdModalButtonFunction = ref(null);
-//
 // components added
 const componentsAdded = ref([]);
 // designer history content - default false
@@ -259,118 +191,9 @@ const designerHistory = ref(null);
 //
 //
 const deleteAllElements = function () {
-  // open modal to true
-  openModal.value = true;
-  // set modal standards
-  typeModal.value = 'delete';
-  gridColumnModal.value = 2;
-  titleModal.value = `Delete all added sections`;
-  descriptionModal.value =
-    'Are you sure you want to delete all added sections?';
-  firstButtonModal.value = 'Close';
-  //secondButtonModal.value = '';
-  thirdButtonModal.value = 'Delete';
-
-  // handle click
-  firstModalButtonFunction.value = function () {
-    // close modal
-    openModal.value = false;
-  };
-  //
-  // handle click
-  thirdModalButtonFunction.value = function () {
-    componentsAdded.value = [];
-    // set state for "components added"
-    store.commit('designer/setComponentsAdded', componentsAdded.value);
-
-    // save all current added HTML components in local storage
-    saveAllComponentsInLocalstorage(componentsAdded.value);
-    // close modal
-    openModal.value = false;
-  };
+  console.log('delete all elements');
+  saveAllComponentsInLocalstorage(componentsAdded.value);
 };
 //
-const pageHistory = [
-  {
-    id: 1,
-    info: 'Velit placeat sit ducimus non sed',
-    time: '1d ago',
-    datetime: '2021-01-27T16:35',
-  },
-  {
-    id: 2,
-    info: 'Velit placeat sit ducimus non sed',
-    time: '1d ago',
-    datetime: '2021-01-27T16:35',
-  },
-  {
-    id: 3,
-    info: 'Velit placeat sit ducimus non sed',
-    time: '1d ago',
-    datetime: '2021-01-27T16:35',
-  },
-  {
-    id: 4,
-    info: 'Velit placeat sit ducimus non sed',
-    time: '1d ago',
-    datetime: '2021-01-27T16:35',
-  },
-  {
-    id: 5,
-    info: 'Velit placeat sit ducimus non sed',
-    time: '1d ago',
-    datetime: '2021-01-27T16:35',
-  },
-  {
-    id: 6,
-    info: 'Velit placeat sit ducimus non sed',
-    time: '1d ago',
-    datetime: '2021-01-27T16:35',
-  },
-  {
-    id: 6,
-    info: 'Velit placeat sit ducimus non sed',
-    time: '1d ago',
-    datetime: '2021-01-27T16:35',
-  },
-  {
-    id: 7,
-    info: 'Velit placeat sit ducimus non sed',
-    time: '1d ago',
-    datetime: '2021-01-27T16:35',
-  },
-];
-
 //
-//
-const handleHistory = function () {
-  // designer history set to true
-  designerHistory.value = true;
-  // open modal to true
-  openModal.value = true;
-  // set modal standards
-  typeModal.value = 'success';
-  gridColumnModal.value = 2;
-  titleModal.value = `Page history`;
-  descriptionModal.value = 'Choose page history from table below';
-  firstButtonModal.value = 'Close';
-  secondButtonModal.value = null;
-  thirdButtonModal.value = 'Save changes';
-
-  // handle click
-  firstModalButtonFunction.value = function () {
-    // set designer history
-    designerHistory.value = false;
-    // close modal
-    openModal.value = false;
-  };
-  //
-  // handle click
-  thirdModalButtonFunction.value = function () {
-    // set designer history
-    designerHistory.value = false;
-    // close modal
-    openModal.value = false;
-  };
-};
 </script>

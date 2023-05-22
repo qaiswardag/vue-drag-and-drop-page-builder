@@ -40,7 +40,7 @@
         <aside
           aria-label="saidebar"
           :class="[!MenuPreview ? '-left-[30rem]' : 'left-60']"
-          class="absolute z-10 w-[30rem] h-full duration-200 top-0 rounded-r-2xl shadow-2xl bg-gray-50 mt-4"
+          class="absolute z-10 w-[30rem] h-full duration-200 top-0 rounded-r-2xl shadow-2xl bg-gray-50"
         >
           <div class="flex flex-col gap-4 p-4 h-full font-semibold">
             <p class="font-semibold text-xs capitalize">{{ activeLibrary }}</p>
@@ -178,6 +178,7 @@
       </main>
 
       <aside
+        aria-label="Menu"
         :class="{ 'w-0': !MenuRight, 'w-80 ml-4': MenuRight }"
         class="h-full duration-300 z-20 flex-shrink-0 overflow-hidden shadow-2xl rounded-l-2xl bg-white"
       >
@@ -185,8 +186,14 @@
         </RightSidebarEditor>
       </aside>
     </div>
-
-    <Spinner v-if="isPendingComponents"></Spinner>
+    <Spinner
+      v-if="
+        getFetchedComponents &&
+        getFetchedComponents.isLoading === true &&
+        getFetchedComponents.isError === false
+      "
+    >
+    </Spinner>
     <DynamicModal
       :show="openModal"
       :type="typeModal"
@@ -252,8 +259,6 @@ const firstModalButtonFunction = ref(null);
 const secondModalButtonFunction = ref(null);
 const thirdModalButtonFunction = ref(null);
 //
-// load ajax, is pending and error
-const { loadData, isPending, error } = useAjax();
 //
 //
 //
@@ -275,8 +280,6 @@ categories.value = [
 ];
 // current active library
 const activeLibrary = ref('forms');
-// components
-const components = ref([]);
 // current clicked element
 const currentElement = ref({});
 //
@@ -300,12 +303,6 @@ const saveCurrentDesignInDB = function () {
   console.log('save current design in DB method');
 };
 //
-// components to be dragged
-const componentsMenu = computed(() => {
-  return components.value.filter((comp) => {
-    return comp.category === activeLibrary.value;
-  });
-});
 
 // for each on all added html componenets
 const addEditorListener = function () {
@@ -464,9 +461,11 @@ const previewCurrentDesign = function () {
   });
   // stringify added html components
   addedHtmlComponents.value = JSON.stringify(addedHtmlComponents.value);
+
   // commit
   store.commit('designer/setCurrentPreview', addedHtmlComponents.value);
   // set added html components back to empty array
+
   addedHtmlComponents.value = [];
 };
 //
@@ -507,60 +506,26 @@ onBeforeMount(async () => {
   }
 });
 
-// load ajax, is pending and error
-const {
-  loadData: loadComponents,
-  isPending: isPendingComponents,
-  error: errorloadComponents,
-} = useAjax();
-
+// get fetched components
+const getFetchedComponents = computed(() => {
+  return store.getters['designer/getFetchedComponents'];
+});
+// menu for fetched components filtered after category
+const componentsMenu = computed(() => {
+  return getFetchedComponents.value?.fetchedData?.filter((comp) => {
+    return comp.category === activeLibrary.value;
+  });
+});
+//
 // on mounted
 onMounted(async () => {
   // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
   addEditorListener();
-  // load all HTML components
-  try {
-    const dataComponents = await loadComponents(
-      '/components.json',
-      {},
-      {
-        pending: true,
-        additionalCallTime: 500,
-        abortTimeoutTime: 8000,
-      }
-    );
-    components.value = dataComponents;
-  } catch (err) {
-    errorloadComponents.value = `${err} ${
-      errorloadComponents.value ? errorloadComponents.value : ''
-    }`;
 
-    // use of dynamic modal
-    // set open modal
-    openModal.value = true;
-    // set modal standards
-    typeModal.value = 'warning';
-    gridColumnModal.value = 2;
-    titleModal.value = 'Components could not be loaded';
-    descriptionModal.value = errorloadComponents.value;
-    firstButtonModal.value = 'Close';
-    secondButtonModal.value = 'Refresh page';
-    thirdButtonModal.value = null;
-    //
-    // handle click
-    firstModalButtonFunction.value = function () {
-      // set open modal
-      openModal.value = false;
-    };
-    // handle click
-    secondModalButtonFunction.value = function () {
-      // set open modal
-      openModal.value = false;
-    };
-    // end modal
-  }
+  // load all HTML components
+  store.dispatch('designer/loadComponents');
+  // end get componenets
 });
-//
 </script>
 
 <style>

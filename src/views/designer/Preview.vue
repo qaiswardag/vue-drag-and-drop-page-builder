@@ -1,5 +1,7 @@
 <template>
-  <div v-html="htmlPage"></div>
+  <div class="w-full inset-x-0 h-screen lg:pt-0 pt-0-z-10 overflow-x-scroll">
+    <div v-html="htmlPage"></div>
+  </div>
 </template>
 
 <script>

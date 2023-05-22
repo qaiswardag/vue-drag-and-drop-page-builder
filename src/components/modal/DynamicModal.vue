@@ -1,6 +1,10 @@
 <script setup>
 import Modal from '../modal/Modal.vue';
-import { CheckIcon, ExclamationIcon, BellIcon } from '@heroicons/vue/outline';
+import {
+  CheckIcon,
+  ExclamationCircleIcon,
+  BellIcon,
+} from '@heroicons/vue/outline';
 
 import {} from '@headlessui/vue';
 

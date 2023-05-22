@@ -13,20 +13,10 @@
       </div>
 
       <div class="mb-4 overflow-y-auto h-full">
-        <div class="p-2 bg-red-200 my-4">
-          <p class="py-4 text-xs">
-            <span class="font-semibold pr-3"> showTextArea: </span>
-            {{ showTextArea }}
-          </p>
-          <p class="py-4 text-xs">
-            <span class="font-semibold pr-3"> getCurrentImage: </span>
-            {{ getCurrentImage }}
-          </p>
-        </div>
-        <article v-show="getCurrentImage">
+        <article v-show="getCurrentImagePreview">
           <ImageEditor> </ImageEditor>
         </article>
-        <article v-show="!getCurrentImage && showTextArea !== false">
+        <article v-show="!getCurrentImagePreview && showTextArea !== false">
           <TextContent></TextContent>
         </article>
 
@@ -57,7 +47,7 @@ import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import ClassEditor from '../../designer/editor-menu/editables/ClassEditor.vue';
 import ImageEditor from '../../designer/editor-menu/editables/ImageEditor.vue';
-import ColorEditor from '../../designer/editor-menu/editables/ColorEditor.vue';
+import ColorsEditor from '../../designer/editor-menu/editables/ColorEditor.vue';
 import TextContent from '../../designer/editor-menu/editables/TextContent.vue';
 import Typography from '../../designer/editor-menu/editables/Typography.vue';
 import PaddingEditor from './editables/PaddingEditor.vue';
@@ -75,8 +65,8 @@ const emit = defineEmits([
 const showTextArea = ref(false);
 
 // getters: current element from store
-const getCurrentImage = computed(() => {
-  return store.getters['designer/getCurrentImage'];
+const getCurrentImagePreview = computed(() => {
+  return store.getters['designer/getCurrentImagePreview'];
 });
 
 // get current element tag

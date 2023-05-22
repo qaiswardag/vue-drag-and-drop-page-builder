@@ -18,11 +18,6 @@ defineProps({
     default: false,
     required: true,
   },
-
-  title: {
-    type: String,
-    required: true,
-  },
 });
 
 const emit = defineEmits(['firstDesignerModalButtonFunction']);
@@ -76,6 +71,27 @@ const firstButton = function () {
             <div
               class="relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full"
             >
+              <div
+                class="flex items-center justify-end h-8 px-2 mb-2 bg-gray-200"
+              >
+                <div @click="firstButton">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                    class="h-5 w-5 text-black self-center cursor-pointer"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
               <slot></slot>
             </div>
           </TransitionChild>

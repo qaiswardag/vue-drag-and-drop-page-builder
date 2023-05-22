@@ -1,15 +1,15 @@
 <template>
   <div class="block px-4 ease-linear duration-200 pb-10">
     <img
-      v-if="getCurrentImage !== undefined"
+      v-if="getCurrentImagePreview !== undefined"
       class="object-cover object-center w-full rounded-md"
-      :src="getCurrentImage"
+      :src="getCurrentImagePreview"
       @click="imageClick"
       alt="image"
     />
 
     <div class="mt-2">
-      <button @click="imageClick" type="button" class="myPrimaryButton">
+      <button @click="imageClick" type="button" class="myPrimaryButton w-full">
         Update image
       </button>
     </div>
@@ -61,14 +61,13 @@ const getCurrentElement = computed(() => {
 });
 //
 //
-// get current preview
-const getCurrentPreview = computed(() => {
-  return store.getters['designer/getCurrentPreview'];
-});
 //
 // get current image from store
-const getCurrentImage = computed(() => {
-  return store.getters['designer/getCurrentImage'];
+const getCurrentImagePreview = computed(() => {
+  return store.getters['designer/getCurrentImagePreview'];
+});
+const getCurrentClickedImage = computed(() => {
+  return store.getters['designer/getCurrentClickedImage'];
 });
 //
 // array for saving existing image
@@ -76,13 +75,13 @@ const oldExistingImage = ref(null);
 //
 //
 // use watch function to store watch new clicked element
-watch(getCurrentImage, (newClickedElement) => {
+watch(getCurrentImagePreview, (newClickedElement) => {
   // set "old existing image" to an empty array if new element is clicked
   oldExistingImage.value = newClickedElement;
 });
 //
 // use watch function to store existing image
-watch(getCurrentImage, (newImage, oldImage) => {
+watch(getCurrentImagePreview, (newImage, oldImage) => {
   // push all images into "old existing image" array. index 0 in the array is the saved image
   if (oldExistingImage.value !== null) {
     oldExistingImage.value = newImage;
@@ -91,11 +90,6 @@ watch(getCurrentImage, (newImage, oldImage) => {
 //
 // image click
 const imageClick = function () {
-  console.log(
-    'den bliver sat ved close! OldExistingImage.value er:',
-    oldExistingImage.value
-  );
-  console.log('getCurrentPreview er:', getCurrentPreview.value);
   // open modal to true
   openMediaModal.value = true;
 
@@ -104,23 +98,21 @@ const imageClick = function () {
   descriptionMedia.value = null;
   firstButtonMedia.value = 'Close';
   secondButtonMedia.value = 'Save changes';
-  thirdButtonMedia.value = null;
 
   // handle click
   firstMediaButtonFunction.value = function () {
     // store commit and keep existing image
-    store.commit('designer/setNewImage', oldExistingImage.value);
+    // store.commit('designer/setNewImage', oldExistingImage.value);
     // close media library modal
     openMediaModal.value = false;
   };
   //
   // handle click
   secondMediaButtonFunction.value = function () {
-    // // store
-    store.commit('designer/setNewImage', getCurrentPreview.value);
-    //
-    // // setters (mutation): current element from store
-    store.commit('designer/setCurrentElement', getCurrentElement.value);
+    store.commit(
+      'designer/setCurrentImagePreview',
+      getCurrentClickedImage.value
+    );
 
     // close media library modal
     openMediaModal.value = false;

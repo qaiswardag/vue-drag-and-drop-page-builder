@@ -10,7 +10,7 @@ defineProps({
 
 <template>
   <!-- chimp start -->
-  <div class="myPrimaryModule">
+  <div class="myPrimaryWidthScreenModule">
     <div class="myHeaderParagraphSection">
       <h2 class="myPrimaryHeader">
         <slot name="title" />
