@@ -42,7 +42,7 @@
             class="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
           >
             <div
-              class="flex gap-2 justify-between items-center border-b border-gray-200"
+              class="flex gap-2 justify-between items-center border-b border-gray-200 pb-2"
             >
               <DialogTitle as="h3" class="tertiaryHeader my-0 py-0">
                 {{ title }}
@@ -64,20 +64,19 @@
                   <main class="flex-1 overflow-y-auto">
                     <div class="max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8">
                       <!-- Tabs -->
-                      <div class="mt-3 sm:mt-2">
-                        <div class="sm:hidden">
-                          <label for="tabs" class="sr-only">Select a tab</label>
-                          <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
+                      <div class="sm:hidden">
+                        <label for="tabs" class="sr-only">Select a tab</label>
+                        <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
 
-                          <select
-                            v-model="selected"
-                            @change="yPaddingChange"
-                            id="tabs"
-                            class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md"
-                          >
-                            <option>Unsplash.com</option>
-                          </select>
-                        </div>
+                        <select
+                          v-model="selected"
+                          @change="yPaddingChange"
+                          id="tabs"
+                          class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md"
+                        >
+                          <option>Unsplash.com</option>
+                        </select>
+
                         <div class="hidden sm:block">
                           <div
                             class="flex items-center border border-gray-200 py-1 px-2 rounded"
@@ -117,11 +116,11 @@
                   <!-- Main content - end-->
 
                   <!-- Details sidebar start-->
-                  <aside class="md:w-72 relative min-h-[55rem] max-h-[55rem]">
+                  <aside class="md:w-72 relative min-h-[58rem] max-h-[58rem]">
                     <div
                       class="md:w-72 h-screen overflow-y-scroll border border-gray-200 rounded"
                     >
-                      <div class="pb-16 space-y-6">
+                      <div class="pb-6 space-y-6">
                         <div v-if="getCurrentClickedImage !== null">
                           <img
                             alt="preview"
@@ -144,42 +143,42 @@
                         </div>
 
                         <div class="md:px-3 sm:px-2">
-                          <h3 class="font-medium text-gray-900">Information</h3>
+                          <h3 class="font-normal text-gray-900">Information</h3>
                           <dl
                             class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
                           >
                             <div
-                              class="py-3 flex justify-between text-sm font-medium items-center"
+                              class="py-3 flex justify-between text-sm font-normal items-center"
                             >
                               <dt class="text-gray-500">Dimensions</dt>
                               <dd class="text-gray-900">640 x 668</dd>
                             </div>
                             <div
-                              class="py-3 flex justify-between text-sm font-medium items-center"
+                              class="py-3 flex justify-between text-sm font-normal items-center"
                             >
                               <dt class="text-gray-500">Size</dt>
                               <dd class="text-gray-900">27 KB</dd>
                             </div>
                             <div
-                              class="py-3 flex justify-between text-sm font-medium items-center"
+                              class="py-3 flex justify-between text-sm font-normal items-center"
                             >
                               <dt class="text-gray-500">Extension</dt>
                               <dd class="text-gray-900">jpg</dd>
                             </div>
                             <div
-                              class="py-3 flex justify-between text-sm font-medium items-center"
+                              class="py-3 flex justify-between text-sm font-normal items-center"
                             >
                               <dt class="text-gray-500">Image Id</dt>
                               <dd class="text-gray-900">40</dd>
                             </div>
                             <div
-                              class="py-3 flex justify-between text-sm font-medium items-center"
+                              class="py-3 flex justify-between text-sm font-normal items-center"
                             >
                               <dt class="text-gray-500">Uploaded by</dt>
                               <dd class="text-gray-900">Qais Wardag</dd>
                             </div>
                             <div
-                              class="py-3 flex justify-between text-sm font-medium items-center"
+                              class="py-3 flex justify-between text-sm font-normal items-center"
                             >
                               <dt class="text-myPrimaryErrorColor">Delete</dt>
                               <dd class="text-gray-900">

@@ -85,11 +85,11 @@ const faqs = [
     </a>
 
     <div class="flex lg:gap-x-12 myPrimaryGap">
-      <a href="#" class="text-sm font-semibold text-white">Home</a>
+      <a href="#" class="text-sm font-normal text-white">Home</a>
 
       <p
         @click="handleDesigner"
-        class="text-sm font-semibold text-white flex gap-2 items-center cursor-pointer"
+        class="text-sm font-normal text-white flex gap-2 items-center cursor-pointer"
       >
         Start Designer
       </p>
@@ -187,7 +187,7 @@ const faqs = [
             <DisclosureButton
               class="py-6 flex w-full items-center justify-between text-left myPrimaryParagraph"
             >
-              <span class="myPrimaryParagraph font-semibold"
+              <span class="myPrimaryParagraph font-normal"
                 >{{ faq.question }}
               </span>
               <span class="ml-6 flex h-7 items-center">

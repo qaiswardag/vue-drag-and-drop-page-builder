@@ -101,18 +101,21 @@ const imageClick = function () {
 
   // handle click
   firstMediaButtonFunction.value = function () {
-    // store commit and keep existing image
-    // store.commit('designer/setNewImage', oldExistingImage.value);
     // close media library modal
     openMediaModal.value = false;
   };
   //
   // handle click
   secondMediaButtonFunction.value = function () {
-    store.commit(
-      'designer/setCurrentImagePreview',
-      getCurrentClickedImage.value
-    );
+    if (getCurrentClickedImage.value === null) {
+      store.commit('designer/setCurrentImagePreview', oldExistingImage.value);
+    }
+    if (getCurrentClickedImage.value !== null) {
+      store.commit(
+        'designer/setCurrentImagePreview',
+        getCurrentClickedImage.value
+      );
+    }
 
     // close media library modal
     openMediaModal.value = false;

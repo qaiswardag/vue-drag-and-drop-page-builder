@@ -94,7 +94,7 @@ const thirdButton = function () {
             >
               <CheckIcon
                 aria-hidden="true"
-                class="h-4 w-4 text-myPrimarySuccessColor"
+                class="h-4 w-4 text-myPrimaryLinkColor"
               />
             </div>
 
@@ -246,7 +246,7 @@ const thirdButton = function () {
           <div v-if="type === 'default'">
             <div v-if="disabled && disabledWhichButton === 'thirdButton'">
               <button
-                class="flex items-center gap-2 myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor w-full"
+                class="flex items-center gap-2 myPrimaryButton bg-myPrimaryLinkColor focus-visible:ring-myPrimaryLinkColor focus:ring-myPrimaryLinkColor hover:bg-myPrimaryLinkColor w-full"
                 :class="{
                   'opacity-25 cursor-default': disabled,
                 }"
@@ -282,7 +282,7 @@ const thirdButton = function () {
 
             <div v-if="!disabled || disabledWhichButton !== 'thirdButton'">
               <button
-                class="myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor w-full"
+                class="myPrimaryButton bg-myPrimaryLinkColor focus-visible:ring-myPrimaryLinkColor focus:ring-myPrimaryLinkColor hover:bg-myPrimaryLinkColor w-full"
                 type="button"
                 @click="thirdButton"
               >
@@ -293,7 +293,7 @@ const thirdButton = function () {
           <div v-if="type === 'success'">
             <div v-if="disabled && disabledWhichButton === 'thirdButton'">
               <button
-                class="flex items-center gap-2 myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor w-full"
+                class="flex items-center gap-2 myPrimaryButton bg-myPrimaryLinkColor focus-visible:ring-myPrimaryLinkColor focus:ring-myPrimaryLinkColor hover:bg-myPrimaryLinkColor w-full"
                 :class="{
                   'opacity-25 cursor-default': disabled,
                 }"
@@ -329,7 +329,7 @@ const thirdButton = function () {
 
             <div v-if="!disabled || disabledWhichButton !== 'thirdButton'">
               <button
-                class="myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor w-full"
+                class="myPrimaryButton bg-myPrimaryLinkColor focus-visible:ring-myPrimaryLinkColor focus:ring-myPrimaryLinkColor hover:bg-myPrimaryLinkColor w-full"
                 type="button"
                 @click="thirdButton"
               >
@@ -341,7 +341,7 @@ const thirdButton = function () {
           <div v-if="type === 'warning'">
             <div v-if="disabled && disabledWhichButton === 'thirdButton'">
               <button
-                class="flex items-center gap-2 myPrimaryButton bg-myPrimarySuccessColor focus-visible:ring-myPrimarySuccessColor focus:ring-myPrimarySuccessColor hover:bg-myPrimarySuccessColor w-full"
+                class="flex items-center gap-2 myPrimaryButton bg-myPrimaryLinkColor focus-visible:ring-myPrimaryLinkColor focus:ring-myPrimaryLinkColor hover:bg-myPrimaryLinkColor w-full"
                 :class="{
                   'opacity-25 cursor-default': disabled,
                 }"

@@ -80,9 +80,9 @@ const firstButton = function () {
                 </p>
                 <div
                   @click="firstButton"
-                  class="flex items-center justify-center gap-1"
+                  class="flex items-center justify-center gap-1 cursor-pointer hover:underline"
                 >
-                  <span class="text-xs cursor-pointer"> Close </span>
+                  <span class="text-xs"> Close Designer </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -90,7 +90,7 @@ const firstButton = function () {
                     stroke-width="2"
                     stroke="currentColor"
                     aria-hidden="true"
-                    class="h-4 w-4 text-black self-center cursor-pointer"
+                    class="h-4 w-4 text-black self-center"
                   >
                     <path
                       stroke-linecap="round"

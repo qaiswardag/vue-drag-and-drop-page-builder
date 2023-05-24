@@ -2,7 +2,7 @@
   <Menu as="div" class="text-xs relative inline-block text-left">
     <div>
       <MenuButton
-        class="inline-flex items-center gap-2 justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-xs font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-emerald-600"
+        class="inline-flex items-center gap-2 justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-xs font-normal text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-emerald-600"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@
         class="text-xs z-50 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
       >
         <div class="px-4 py-3">
-          <p class="font-semibold text-gray-900 truncate">
+          <p class="font-normal text-gray-900 truncate">
             Signed in as:
             {{ user.name }}
           </p>

@@ -14,9 +14,9 @@
         <div class="sticky h-full w-60 overflow-hidden">
           <nav aria-label="Sidebar" class="h-full bg-white">
             <ul
-              class="flex flex-col gap-4 p-4 font-semibold h-full overflow-y-scroll"
+              class="flex flex-col gap-4 p-4 font-normal h-full overflow-y-scroll"
             >
-              <li class="font-semibold text-xs">Components</li>
+              <li class="font-normal text-xs">Components</li>
               <li
                 v-for="category in categories"
                 :key="category"
@@ -24,7 +24,7 @@
                   'bg-gray-100 text-gray-900':
                     activeLibrary === category && MenuPreview === true,
                 }"
-                class="text-xs text-gray-900 p-2 capitalize cursor-pointer font-medium rounded-md"
+                class="text-xs text-gray-900 p-2 capitalize cursor-pointer font-normal rounded-md"
                 @mouseover="
                   activeLibrary = category;
                   MenuPreview = true;
@@ -42,8 +42,8 @@
           :class="[!MenuPreview ? '-left-[30rem]' : 'left-60']"
           class="absolute z-10 w-[30rem] h-full duration-200 top-0 rounded-r-2xl shadow-2xl bg-gray-50"
         >
-          <div class="flex flex-col gap-4 p-4 h-full font-semibold">
-            <p class="font-semibold text-xs capitalize">{{ activeLibrary }}</p>
+          <div class="flex flex-col gap-4 p-4 h-full font-normal">
+            <p class="font-normal text-xs capitalize">{{ activeLibrary }}</p>
             <draggable
               :clone="cloneComponent"
               :group="{ name: 'components', pull: 'clone', put: false }"

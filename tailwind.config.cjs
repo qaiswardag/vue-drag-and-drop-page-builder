@@ -11,12 +11,12 @@ module.exports = {
     colors: {
       //
       // brand colors
-      myPrimaryBrandColor: 'orange',
+      myPrimaryBrandColor: 'purple',
       //
       //
       // error color
       myPrimaryErrorColor: '#d60000',
-      myPrimarySuccessColor: '#16a34a',
+      myPrimaryLinkColor: '#6a5acd',
       // gray colors
       myPrimaryLightGrayColor: '#e2e8f0',
       myPrimaryMediumGrayColor: '#9ca3af',

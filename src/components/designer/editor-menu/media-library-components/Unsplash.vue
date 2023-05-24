@@ -1,99 +1,97 @@
 <template>
-  <div class="mt-8">
-    <form @submit.prevent="searchUnsplash">
-      <label
-        for="default-search"
-        class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
-        >Search</label
-      >
+  <form @submit.prevent="searchUnsplash">
+    <label
+      for="default-search"
+      class="mb-2 text-sm font-normal text-gray-900 sr-only dark:text-gray-300"
+      >Search</label
+    >
 
-      <div class="mysearchBarWithOptions">
-        <div class="relative w-full">
-          <div
-            class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+    <div class="mysearchBarWithOptions">
+      <div class="relative w-full">
+        <div
+          class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
+        >
+          <svg
+            aria-hidden="true"
+            class="w-5 h-5 text-gray-500 dark:text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              aria-hidden="true"
-              class="w-5 h-5 text-gray-500 dark:text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              ></path>
-            </svg>
-          </div>
-          <input
-            type="search"
-            id="search_query"
-            v-model="searchQuery"
-            class="myPrimarySearchInput"
-            autocomplete="off"
-            placeholder="Search..."
-          />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            ></path>
+          </svg>
         </div>
-
-        <button type="submit" class="myPrimaryButton">Search</button>
+        <input
+          type="search"
+          id="search_query"
+          v-model="searchQuery"
+          class="myPrimarySearchInput"
+          autocomplete="off"
+          placeholder="Search..."
+        />
       </div>
 
-      <div class="flex justify-start items-center gap-2 py-2 px-2 mt-1 mb-1">
-        <button
-          @click="searchByOrientation('landscape')"
-          type="button"
-          class="myPrimaryTag"
-          :class="{
-            'bg-myPrimaryBrandColor text-white': orientation === 'landscape',
-            '': orientation !== 'landscape',
-          }"
-        >
-          Landscape
-        </button>
-        <button
-          @click="searchByOrientation('portrait')"
-          type="button"
-          class="myPrimaryTag"
-          :class="{
-            'bg-myPrimaryBrandColor text-white': orientation === 'portrait',
-            '': orientation !== 'portrait',
-          }"
-        >
-          Portrait
-        </button>
-        <button
-          @click="searchByOrientation('squarish')"
-          type="button"
-          class="myPrimaryTag"
-          :class="{
-            'bg-myPrimaryBrandColor text-white': orientation === 'squarish',
-            '': orientation !== 'squarish',
-          }"
-        >
-          Squarish
-        </button>
+      <button type="submit" class="myPrimaryButton">Search</button>
+    </div>
 
-        <svg
-          @click="searchByOrientation(null)"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="2"
-          stroke="currentColor"
-          class="w-4 h-4 cursor-pointer"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </div>
-    </form>
-  </div>
+    <div class="flex justify-start items-center gap-2 py-2 mb-1">
+      <button
+        @click="searchByOrientation('landscape')"
+        type="button"
+        class="myPrimaryTag"
+        :class="{
+          'bg-myPrimaryBrandColor text-white': orientation === 'landscape',
+          '': orientation !== 'landscape',
+        }"
+      >
+        Landscape
+      </button>
+      <button
+        @click="searchByOrientation('portrait')"
+        type="button"
+        class="myPrimaryTag"
+        :class="{
+          'bg-myPrimaryBrandColor text-white': orientation === 'portrait',
+          '': orientation !== 'portrait',
+        }"
+      >
+        Portrait
+      </button>
+      <button
+        @click="searchByOrientation('squarish')"
+        type="button"
+        class="myPrimaryTag"
+        :class="{
+          'bg-myPrimaryBrandColor text-white': orientation === 'squarish',
+          '': orientation !== 'squarish',
+        }"
+      >
+        Squarish
+      </button>
+
+      <svg
+        @click="searchByOrientation(null)"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="w-4 h-4 cursor-pointer"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </div>
+  </form>
 
   <div
     v-if="
@@ -114,15 +112,14 @@
       getUnsplashImages.isLoading === false &&
       getUnsplashImages.isError === false
     "
-    class="mt-8 pb-16"
+    class="mt-2 pb-16"
   >
     <nav
-      v-if="getUnsplashImages.fetchedMedia.results.length !== 0"
-      class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4"
+      class="flex items-center justify-around border-t border-gray-200 bg-white py-3 mt-4 gap-2"
       aria-label="Pagination"
     >
       <p class="myPrimaryTag">
-        <span class="font-medium">
+        <span class="font-normal">
           Images {{ getUnsplashImages.fetchedMedia.total }}
         </span>
       </p>
@@ -130,30 +127,31 @@
         Pages {{ getUnsplashImages.fetchedMedia.total_pages }}
       </p>
       <div
-        class="flex flex-1 justify-between sm:justify-end items-center myPrimaryGap"
+        class="flex flex-1 justify-between sm:justify-end items-center gap-2"
       >
-        <SubmitButton
-          :ButtonStyleDelete="false"
-          :disabled="getUnsplashImages.isLoading === true"
-          @firstButtonClick="nextPage(currentPage++)"
-          :buttonText="`Page ${
-            currentPage > 0 ? currentPage - 1 : currentPage - 1
-          }`"
+        <button
+          v-if="currentPage > 1"
+          :disabled="currentPage < 1"
+          class="myPrimaryButton text-xs"
+          @click="previousPage(currentPage--)"
         >
-        </SubmitButton>
+          {{ `Prev ${currentPage > 0 ? currentPage - 1 : currentPage - 1}` }}
+        </button>
 
-        <span class="myPrimaryTag rounded-full p-3">
-          Page {{ currentPage }}
+        <span class="rounded-full text-xs myPrimaryTag p-2.5 font-medium">
+          {{ currentPage }}
         </span>
-        <SubmitButton
-          :ButtonStyleDelete="false"
-          :disabled="getUnsplashImages.isLoading === true"
-          @firstButtonClick="nextPage(currentPage++)"
-          :buttonText="`Page ${
-            currentPage > 0 ? currentPage + 1 : currentPage + 1
-          }`"
+        <button
+          :disabled="currentPage >= getUnsplashImages.fetchedMedia.total_pages"
+          class="myPrimaryButton text-xs"
+          :class="{
+            'opacity-50':
+              currentPage >= getUnsplashImages.fetchedMedia.total_pages,
+          }"
+          @click="nextPage(currentPage++)"
         >
-        </SubmitButton>
+          {{ `Next ${currentPage > 0 ? currentPage + 1 : currentPage + 1}` }}
+        </button>
       </div>
     </nav>
     <div
@@ -179,7 +177,16 @@
 
       <div v-if="getUnsplashImages.fetchedMedia.results.length < 1">
         <p class="myPrimaryParagraph">
-          We did not find any images. Make a new search.
+          <span v-if="currentPage === 1">
+            We did not find any images. Make a new search.
+          </span>
+          <span
+            v-if="currentPage > 1"
+            @click="nextPage(1)"
+            class="myPrimaryLink"
+          >
+            No results on current page. Navigate to First Page.
+          </span>
         </p>
       </div>
     </div>
@@ -209,7 +216,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import SubmitButton from '../../../buttons/SubmitButton.vue';
 
 // store
 const store = useStore();
@@ -266,7 +272,20 @@ const nextPage = function () {
 //
 // search images
 const searchUnsplash = function () {
-  // set value in store
+  // current page number logic
+  console.log('current page:', currentPage.value);
+  console.log('items:', getUnsplashImages.value?.fetchedMedia);
+  if (
+    getUnsplashImages.value &&
+    getUnsplashImages.value.fetchedMedia &&
+    Array.isArray(getUnsplashImages.value.fetchedMedia.results) &&
+    getUnsplashImages.value.fetchedMedia.results.length === 0
+  ) {
+    console.log('skal komme her!');
+    currentPage.value = 1;
+  }
+  // set values in store
+  store.commit('unsplash/setSearchTerm', searchQuery.value);
   store.commit('unsplash/setSearchTerm', searchQuery.value);
   store.commit('unsplash/setCurrentPageNumber', currentPage.value);
   store.commit('unsplash/setOrientationValue', orientation.value);
