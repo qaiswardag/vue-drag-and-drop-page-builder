@@ -1,6 +1,6 @@
 <script setup>
 import Modal from '../modal/Modal.vue';
-import { CheckIcon, ExclamationIcon, BellIcon } from '@heroicons/vue/outline';
+import { CheckIcon, BellIcon } from '@heroicons/vue/20/solid';
 import {
   Dialog,
   DialogOverlay,
@@ -49,7 +49,7 @@ const firstButton = function () {
             leave-to="opacity-0"
           >
             <DialogOverlay
-              class="fixed inset-0 bg-white bg-opacity-75 transition-opacity"
+              class="fixed inset-0 bg-opacity-75 transition-opacity"
             />
           </TransitionChild>
 
@@ -69,22 +69,22 @@ const firstButton = function () {
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div
-              class="relative inline-block align-bottom text-left overflow-hidden transform transition-all sm:align-middle w-full"
+              class="inline-block align-bottom text-left transform transition-all sm:align-middle w-full overflow-hidden h-[100vh] top-0 left-0 right-0 absolute"
             >
               <div
-                class="flex items-center justify-between h-8 pl-4 pr-2 bg-gray-200"
+                class="flex items-center justify-between px-4 bg-gray-200 h-[6vh]"
               >
                 <p
-                  class="-m-1.5 p-1.5 myPrimaryParagraph text-sm sm:text-md font-semibold text-black cursor-pointer"
+                  class="-m-1.5 p-1.5 myPrimaryParagraph text-xl sm:text-xl font-semibold text-black cursor-pointer"
                 >
-                  <span class="sr-only">Your Company</span>
-                  myDesigner
+                  <span class="sr-only">myself</span>
+                  myself
                 </p>
                 <div
                   @click="firstButton"
                   class="flex items-center justify-center gap-1 cursor-pointer hover:underline"
                 >
-                  <span class="text-xs"> Close Preview </span>
+                  <span class="text-xs font-medium"> Close Preview </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

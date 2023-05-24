@@ -19,7 +19,7 @@
           />
         </svg>
         Options
-        <ChevronDownIcon class="h-3 w-3" aria-hidden="true" />
+        <ChevronDownIcon class="h-4 w-4" aria-hidden="true" />
       </MenuButton>
     </div>
 
@@ -141,7 +141,7 @@
 <script setup>
 import { saveAllComponentsInLocalstorage } from '../../composables/save-all-components-in-localstorage';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-import { ChevronDownIcon } from '@heroicons/vue/solid';
+import { ChevronDownIcon } from '@heroicons/vue/20/solid';
 import { ref, computed } from 'vue';
 import DesignerPreviewModal from '../modal/DesignerPreviewModal.vue';
 import Preview from '../../views/designer/Preview.vue';

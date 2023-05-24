@@ -1,10 +1,6 @@
 <script setup>
 import Modal from '../modal/Modal.vue';
-import {
-  CheckIcon,
-  ExclamationCircleIcon,
-  BellIcon,
-} from '@heroicons/vue/outline';
+import { CheckIcon, XMarkIcon, BellIcon } from '@heroicons/vue/20/solid';
 
 import {} from '@headlessui/vue';
 
@@ -132,10 +128,7 @@ const thirdButton = function () {
               v-if="type === 'danger'"
               class="flex items-center justify-center h-6 w-6 rounded-full bg-red-100"
             >
-              <ExclamationCircleIcon
-                aria-hidden="true"
-                class="h-4 w-4 text-red-600"
-              />
+              <XMarkIcon aria-hidden="true" class="h-4 w-4 text-red-600" />
             </div>
 
             <h3 as="h3" class="myTertiaryHeader my-0 py-0">

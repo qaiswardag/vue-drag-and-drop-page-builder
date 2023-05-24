@@ -8,15 +8,15 @@
       <p class="text-xs my-0 py-0 font-normal">
         <slot name="title" />
       </p>
-      <ChevronDownIcon
-        class="-rotate-90 h-5 w-5 transform duration-200"
-        :class="{ 'rotate-0': expanded }"
+      <ChevronRightIcon
+        class="rotate-0 h-5 w-5 transform duration-75"
+        :class="{ 'rotate-90': expanded }"
       >
-      </ChevronDownIcon>
+      </ChevronRightIcon>
     </div>
     <div
       :class="[expanded ? 'block' : 'hidden']"
-      class="px-4 ease-linear duration-200 bg-white"
+      class="px-4 ease-linear duration-75 bg-white"
     >
       <slot name="content" />
     </div>
@@ -25,18 +25,18 @@
 
 <script>
 import { ref } from 'vue';
-import { ChevronDownIcon } from '@heroicons/vue/outline';
+import { ChevronRightIcon } from '@heroicons/vue/20/solid';
 
 export default {
   components: {
-    ChevronDownIcon,
+    ChevronRightIcon,
   },
 
   setup() {
     const expanded = ref(false);
 
     return {
-      ChevronDownIcon,
+      ChevronRightIcon,
       expanded,
     };
   },

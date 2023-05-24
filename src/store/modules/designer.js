@@ -90,6 +90,7 @@ export default {
       state.currentComponent = payload;
     },
     setCurrentClickedImage(state, payload) {
+      console.log('payload er:', payload);
       state.currentClickedImage = payload;
     },
 

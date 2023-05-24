@@ -49,10 +49,10 @@
               </DialogTitle>
 
               <div class="flex-end">
-                <XIcon
+                <XMarkIcon
                   class="h-6 w-6 text-gray-700 self-center cursor-pointer"
                   @click="firstButton"
-                ></XIcon>
+                ></XMarkIcon>
               </div>
             </div>
 
@@ -118,7 +118,7 @@
                   <!-- Details sidebar start-->
                   <aside class="md:w-72 relative min-h-[58rem] max-h-[58rem]">
                     <div
-                      class="md:w-72 h-screen overflow-y-scroll border border-gray-200 rounded"
+                      class="md:w-72 md:min-h-[53rem] md:max-h-[53rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
                     >
                       <div class="pb-6 space-y-6">
                         <div v-if="getCurrentClickedImage !== null">
@@ -175,7 +175,9 @@
                               class="py-3 flex justify-between text-sm font-normal items-center"
                             >
                               <dt class="text-gray-500">Uploaded by</dt>
-                              <dd class="text-gray-900">Qais Wardag</dd>
+                              <dd class="text-gray-900">
+                                {{ JSON.stringify(getCurrentElement) }}
+                              </dd>
                             </div>
                             <div
                               class="py-3 flex justify-between text-sm font-normal items-center"
@@ -261,7 +263,7 @@
 <script>
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
-import { CheckIcon, ExclamationIcon, BellIcon } from '@heroicons/vue/outline';
+
 import {
   Dialog,
   DialogOverlay,
@@ -273,24 +275,22 @@ import {
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 
 import {
-  CogIcon,
-  CollectionIcon,
+  BellIcon,
+  CheckIcon,
+  Square3Stack3DIcon,
   HeartIcon,
   HomeIcon,
-  MenuAlt2Icon,
-  PhotographIcon,
-  PlusSmIcon as PlusSmIconOutline,
+  Bars2Icon,
+  PhotoIcon,
+  PlusIcon,
   UserGroupIcon,
-  ViewGridIcon as ViewGridIconOutline,
-  XIcon,
-} from '@heroicons/vue/outline';
-import {
+  XMarkIcon,
   PencilIcon,
-  PlusSmIcon as PlusSmIconSolid,
-  SearchIcon,
-  ViewGridIcon as ViewGridIconSolid,
-  ViewListIcon,
-} from '@heroicons/vue/solid';
+  MagnifyingGlassIcon,
+  RectangleStackIcon,
+  QueueListIcon,
+} from '@heroicons/vue/20/solid';
+
 import Unsplash from '../designer/editor-menu/media-library-components/Unsplash.vue';
 
 const selected = ref('Unsplash.com');
@@ -312,14 +312,13 @@ export default {
     MenuItem,
     MenuItems,
     HeartIcon,
-    MenuAlt2Icon,
+    Bars2Icon,
     PencilIcon,
-    PlusSmIconOutline,
-    PlusSmIconSolid,
-    SearchIcon,
-    ViewGridIconSolid,
-    ViewListIcon,
-    XIcon,
+    PlusIcon,
+    MagnifyingGlassIcon,
+    RectangleStackIcon,
+    QueueListIcon,
+    XMarkIcon,
     DialogOverlay,
     DialogTitle,
     TransitionChild,

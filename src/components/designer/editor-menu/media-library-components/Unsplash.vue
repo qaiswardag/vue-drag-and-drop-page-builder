@@ -155,13 +155,13 @@
       </div>
     </nav>
     <div
-      class="overflow-y-scroll md:min-h-[35rem] md:max-h-[35rem] min-h-[15rem] max-h-[15rem] pr-1 rounded"
+      class="overflow-y-scroll md:min-h-[38.6rem] md:max-h-[38.6rem] min-h-[15rem] max-h-[15rem] pr-1 rounded"
     >
       <div class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-2">
         <div
           v-for="image in getUnsplashImages.fetchedMedia.results"
           :key="image.id"
-          @click="handleImageClick(image.urls.regular)"
+          @click="handleImageClick(image.urls.regular, image)"
           class="border border-myPrimaryLightGrayColor rounded px-2 p-2 cursor-pointer bg-gray-50"
         >
           <img
@@ -239,10 +239,10 @@ const getUnsplashImages = computed(() => {
 });
 //
 //
-const handleImageClick = function (file) {
+const handleImageClick = function (file, imageDetails) {
   console.log('ok, click:', file);
   // in store - update preview image
-  store.commit('designer/setCurrentClickedImage', file);
+  store.commit('designer/setCurrentClickedImage', { file, imageDetails });
 };
 //
 //

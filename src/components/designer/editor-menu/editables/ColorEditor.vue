@@ -211,10 +211,10 @@ import { computed } from 'vue';
 import EditorAccordion from '../EditorAccordion.vue';
 
 import {
-  XIcon,
-  ColorSwatchIcon,
+  XMarkIcon,
+  SwatchIcon,
   CubeTransparentIcon,
-} from '@heroicons/vue/outline';
+} from '@heroicons/vue/20/solid';
 import { ref, watch } from 'vue';
 
 // store

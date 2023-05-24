@@ -224,9 +224,9 @@ import {
   ArrowUpIcon,
   ArrowLeftIcon,
   ArrowDownIcon,
-  MenuIcon,
+  Bars3Icon,
   TrashIcon,
-} from '@heroicons/vue/outline';
+} from '@heroicons/vue/20/solid';
 
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';

@@ -63,7 +63,7 @@
     |--------------------------------------------------------------------------
     */
   .myPrimaryTag {
-    @apply myPrimaryParagraph bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 text-xs font-normal shadow-sm;
+    @apply myPrimaryParagraph bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 text-xs font-medium shadow-sm;
   }
   /*
     |--------------------------------------------------------------------------
@@ -157,13 +157,13 @@
   }
 
   .myPrimaryButton {
-    @apply whitespace-nowrap break-keep font-normal inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryLinkColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
+    @apply whitespace-nowrap break-keep font-medium inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryLinkColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
         focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2
         focus-visible:ring-2 focus-visible:ring-myPrimaryLinkColor;
   }
 
   .mySecondaryButton {
-    @apply myPrimaryButton bg-gray-700 hover:bg-gray-800 focus:ring-gray-700;
+    @apply myPrimaryButton bg-gray-600 hover:bg-gray-700 focus:ring-gray-700;
   }
 
   .myPrimaryDeleteButton {
@@ -172,24 +172,6 @@
 
   .myPrimaryToggleButton {
     @apply w-full inline-flex items-center justify-center px-4 py-2 sm:text-sm text-sm font-bold text-myPrimaryDarkGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:ring-offset-2 bg-gray-100 hover:bg-myPrimaryBrandColor hover:text-white;
-  }
-  /*
-    |--------------------------------------------------------------------------
-    | Buttons With no background
-    |--------------------------------------------------------------------------
-    */
-
-  .myPrimaryButtonNoBackground {
-    @apply myPrimaryParagraph font-normal  text-myPrimaryBrandColor 
-        focus:outline-none cursor-pointer;
-  }
-
-  .mySecondaryButtonNoBackground {
-    @apply font-normal  text-myPrimaryDarkGrayColor;
-  }
-
-  .myPrimaryDeleteButtonNoBackground {
-    @apply myPrimaryButtonNoBackground text-myPrimaryErrorColor;
   }
 
   /*
@@ -313,3 +295,35 @@
     @apply relative w-full cursor-default rounded-md  border border-myPrimaryMediumGrayColor bg-white py-3 pl-3 pr-10 text-left shadow-sm focus:border-myPrimaryBrandColor focus:outline-none focus:ring-1 focus:ring-myPrimaryBrandColor text-xs;
   }
 }
+
+/* Scrollbar Styles  - start */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: gray;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px; /* Add height for horizontal scrollbar */
+}
+
+*::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 4px;
+  border: 2px solid gray;
+}
+
+/* Add overflow-x property to enable horizontal scrollbar */
+.scrollable {
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Add any other desired styles for the scrollable element */
+}
+/* Scrollbar Styles  - end */

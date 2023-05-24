@@ -6,10 +6,10 @@
           Editing
           <span class="lowercase">&lt;{{ elementTag }}&gt;</span>
         </p>
-        <XIcon
+        <XMarkIcon
           class="h-6 w-6 text-gray-500 self-center cursor-pointer"
           @click.esc="$emit('closeEditor')"
-        ></XIcon>
+        ></XMarkIcon>
       </div>
 
       <div class="mb-4 overflow-y-auto h-full">
@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { XIcon } from '@heroicons/vue/outline';
+import { XMarkIcon } from '@heroicons/vue/20/solid';
 import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import ClassEditor from '../../designer/editor-menu/editables/ClassEditor.vue';
