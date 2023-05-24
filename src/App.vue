@@ -5,7 +5,7 @@ import DynamicModal from './components/modal/DynamicModal.vue';
 import DesignerModal from './components/modal/DesignerModal.vue';
 import Designer from './views/designer/Designer.vue';
 import FullWidthElement from './components/layouts/FullWidthElement.vue';
-import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/vue/20/solid';
+import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/vue/24/outline';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
 // store
 const store = useStore();

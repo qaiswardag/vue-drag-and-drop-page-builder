@@ -1,6 +1,6 @@
 <script setup>
 import Modal from '../modal/Modal.vue';
-import { CheckIcon, XMarkIcon, BellIcon } from '@heroicons/vue/20/solid';
+import { CheckIcon, XMarkIcon, BellIcon } from '@heroicons/vue/24/outline';
 
 import {} from '@headlessui/vue';
 

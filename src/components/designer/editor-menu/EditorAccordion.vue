@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col">
     <div
-      class="border-t border-gray-200 flex flex-row justify-between items-center px-4 py-2 cursor-pointer duration-200 hover:bg-emerald-200"
+      class="border-t border-gray-200 flex flex-row justify-between items-center px-4 py-2 cursor-pointer duration-200 hover:bg-myPrimaryLightGrayColor"
       :class="{ 'bg-white': expanded }"
       @click="expanded = !expanded"
     >
@@ -25,7 +25,7 @@
 
 <script>
 import { ref } from 'vue';
-import { ChevronRightIcon } from '@heroicons/vue/20/solid';
+import { ChevronRightIcon } from '@heroicons/vue/24/outline';
 
 export default {
   components: {

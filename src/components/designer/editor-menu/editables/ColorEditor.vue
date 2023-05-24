@@ -214,7 +214,7 @@ import {
   XMarkIcon,
   SwatchIcon,
   CubeTransparentIcon,
-} from '@heroicons/vue/20/solid';
+} from '@heroicons/vue/24/outline';
 import { ref, watch } from 'vue';
 
 // store

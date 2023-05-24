@@ -121,18 +121,72 @@
                       class="md:w-72 md:min-h-[53rem] md:max-h-[53rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
                     >
                       <div class="pb-6 space-y-6">
-                        <div v-if="getCurrentClickedImage !== null">
+                        <div
+                          v-if="
+                            getCurrentClickedImage &&
+                            getCurrentClickedImage.file !== null
+                          "
+                          class="pb-6 space-y-6"
+                        >
                           <img
                             alt="preview"
                             class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
-                            :src="getCurrentClickedImage"
+                            :src="getCurrentClickedImage.file"
                           />
+
+                          <div class="md:px-3 sm:px-2">
+                            <h3 class="font-normal text-gray-900">
+                              Information
+                            </h3>
+                            <dl
+                              class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
+                            >
+                              <div
+                                class="py-3 flex justify-between text-sm font-normal items-center"
+                              >
+                                <dt class="text-gray-500">Dimensions</dt>
+                                <dd class="text-gray-900">
+                                  {{
+                                    getCurrentClickedImage?.imageDetails?.width
+                                  }}
+                                  x
+                                  {{
+                                    getCurrentClickedImage?.imageDetails?.height
+                                  }}
+                                </dd>
+                              </div>
+                              <div
+                                class="py-3 flex justify-between text-sm font-normal items-center"
+                              >
+                                <dt class="text-gray-500">By</dt>
+                                <dd class="text-gray-900">
+                                  {{
+                                    getCurrentClickedImage?.imageDetails?.user
+                                      ?.name
+                                  }}
+                                </dd>
+                              </div>
+
+                              <div
+                                class="py-3 flex justify-between text-sm font-normal items-center"
+                              >
+                                <dt class="text-gray-500">Image ID</dt>
+                                <dd class="text-gray-900">
+                                  {{
+                                    getCurrentClickedImage.imageDetails &&
+                                    getCurrentClickedImage.imageDetails?.id
+                                  }}
+                                </dd>
+                              </div>
+                            </dl>
+                          </div>
                         </div>
                         <div
                           v-if="
-                            getCurrentElement &&
-                            getCurrentElement.src !== undefined &&
-                            getCurrentClickedImage === null
+                            (getCurrentElement &&
+                              getCurrentElement.src !== undefined &&
+                              getCurrentClickedImage === null) ||
+                            getCurrentClickedImage.file === null
                           "
                         >
                           <img
@@ -143,106 +197,29 @@
                         </div>
 
                         <div class="md:px-3 sm:px-2">
-                          <h3 class="font-normal text-gray-900">Information</h3>
-                          <dl
-                            class="mt-2 border-t border-b border-gray-200 divide-y divide-gray-200"
-                          >
-                            <div
-                              class="py-3 flex justify-between text-sm font-normal items-center"
-                            >
-                              <dt class="text-gray-500">Dimensions</dt>
-                              <dd class="text-gray-900">640 x 668</dd>
-                            </div>
-                            <div
-                              class="py-3 flex justify-between text-sm font-normal items-center"
-                            >
-                              <dt class="text-gray-500">Size</dt>
-                              <dd class="text-gray-900">27 KB</dd>
-                            </div>
-                            <div
-                              class="py-3 flex justify-between text-sm font-normal items-center"
-                            >
-                              <dt class="text-gray-500">Extension</dt>
-                              <dd class="text-gray-900">jpg</dd>
-                            </div>
-                            <div
-                              class="py-3 flex justify-between text-sm font-normal items-center"
-                            >
-                              <dt class="text-gray-500">Image Id</dt>
-                              <dd class="text-gray-900">40</dd>
-                            </div>
-                            <div
-                              class="py-3 flex justify-between text-sm font-normal items-center"
-                            >
-                              <dt class="text-gray-500">Uploaded by</dt>
-                              <dd class="text-gray-900">
-                                {{ JSON.stringify(getCurrentElement) }}
-                              </dd>
-                            </div>
-                            <div
-                              class="py-3 flex justify-between text-sm font-normal items-center"
-                            >
-                              <dt class="text-myPrimaryErrorColor">Delete</dt>
-                              <dd class="text-gray-900">
-                                <form>
-                                  <div class="items-center">
-                                    <div class="">
-                                      <button
-                                        type="button"
-                                        class="myPrimaryButton min-w-auto myPrimaryDeleteButton py-1 px-1 bg-transparent shadow-none border-0 hover:bg-transparent focus:outline-none focus:ring-0 focus:ring-offset-0 text-myPrimaryErrorColor"
-                                      >
-                                        <span
-                                          ><svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke-width="1.5"
-                                            stroke="currentColor"
-                                            class="w-5 h-5"
-                                          >
-                                            <path
-                                              stroke-linecap="round"
-                                              stroke-linejoin="round"
-                                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                            ></path></svg></span
-                                        ><span
-                                          class="flex gap-2 items-center justify-center"
-                                        >
-                                          <!--v-if--></span
-                                        >
-                                      </button>
-                                    </div>
-                                  </div>
-                                </form>
-                              </dd>
-                            </div>
-                          </dl>
-                        </div>
-
-                        <div class="md:px-3 sm:px-2">
                           <div
-                            class="absolute bottom-0 right-0 left-0 px-2 my-2 sm:flex justify-center sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
+                            class="absolute bottom-0 right-0 left-0 px-2 my-2 sm:flex justify-between sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
                           >
-                            <div v-if="firstButtonText">
+                            <template v-if="firstButtonText">
                               <button
                                 ref="firstButtonRef"
-                                class="myPrimaryButton bg-gray-700 hover:bg-gray-800 text-white focus:ring-gray-700 text-sm w-full"
+                                class="myPrimaryButton bg-gray-700 hover:bg-gray-800 text-white focus:ring-gray-700 text-sm"
                                 type="button"
                                 @click="firstButton"
                               >
                                 {{ firstButtonText }}
                               </button>
-                            </div>
+                            </template>
 
-                            <div v-if="secondButtonText">
+                            <template v-if="secondButtonText">
                               <button
-                                class="myPrimaryButton bg-emerald-500 text-sm w-full"
+                                class="myPrimaryButton bg-emerald-500 text-sm"
                                 type="button"
                                 @click="secondButton"
                               >
                                 {{ secondButtonText }}
                               </button>
-                            </div>
+                            </template>
                           </div>
                         </div>
                       </div>
@@ -289,7 +266,7 @@ import {
   MagnifyingGlassIcon,
   RectangleStackIcon,
   QueueListIcon,
-} from '@heroicons/vue/20/solid';
+} from '@heroicons/vue/24/outline';
 
 import Unsplash from '../designer/editor-menu/media-library-components/Unsplash.vue';
 

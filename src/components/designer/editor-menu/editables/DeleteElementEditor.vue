@@ -6,7 +6,7 @@
         <button
           @click="deleteElement"
           type="button"
-          class="myPrimaryDeleteButton bg-red-500 text-xs w-full"
+          class="myPrimaryDeleteButton w-full"
         >
           Delete element
         </button>

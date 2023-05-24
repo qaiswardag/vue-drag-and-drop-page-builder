@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { XMarkIcon } from '@heroicons/vue/20/solid';
+import { XMarkIcon } from '@heroicons/vue/24/outline';
 import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import ClassEditor from '../../designer/editor-menu/editables/ClassEditor.vue';

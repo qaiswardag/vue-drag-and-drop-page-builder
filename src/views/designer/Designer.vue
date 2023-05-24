@@ -16,6 +16,7 @@
             <ul
               class="flex flex-col gap-4 p-4 font-normal h-full overflow-y-scroll"
             >
+              <hr />
               <li class="font-normal text-xs">Components</li>
               <li
                 v-for="category in categories"
@@ -139,7 +140,7 @@
                       class="inline-block h-6 w-6 mx-2 cursor-pointer"
                     />
                     <TrashIcon
-                      class="inline-block h-6 w-6 mx-2 cursor-pointer"
+                      class="inline-block h-6 w-6 mx-2 stroke-2 cursor-pointer"
                       @click="removeComponent($event)"
                     />
                   </div>
@@ -220,13 +221,12 @@ import { computed } from 'vue';
 import { watch } from 'vue';
 import { saveAllComponentsInLocalstorage } from '../../composables/save-all-components-in-localstorage';
 import {
-  PencilIcon,
   ArrowUpIcon,
   ArrowLeftIcon,
   ArrowDownIcon,
   Bars3Icon,
-  TrashIcon,
-} from '@heroicons/vue/20/solid';
+} from '@heroicons/vue/24/outline';
+import { PencilIcon, TrashIcon } from '@heroicons/vue/24/outline';
 
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';

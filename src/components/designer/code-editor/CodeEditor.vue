@@ -79,7 +79,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue';
-import { XMarkIcon } from '@heroicons/vue/20/solid';
+import { XMarkIcon } from '@heroicons/vue/24/outline';
 
 import { PrismEditor } from 'vue-prism-editor';
 import 'vue-prism-editor/dist/prismeditor.min.css';

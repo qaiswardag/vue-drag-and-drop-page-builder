@@ -48,7 +48,7 @@
                 'block px-4 py-2 text-xs',
               ]"
             >
-              <div class="flex items-center justify-left gap-1">
+              <div class="flex items-center justify-left gap-1 cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -141,7 +141,7 @@
 <script setup>
 import { saveAllComponentsInLocalstorage } from '../../composables/save-all-components-in-localstorage';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-import { ChevronDownIcon } from '@heroicons/vue/20/solid';
+import { ChevronDownIcon } from '@heroicons/vue/24/outline';
 import { ref, computed } from 'vue';
 import DesignerPreviewModal from '../modal/DesignerPreviewModal.vue';
 import Preview from '../../views/designer/Preview.vue';

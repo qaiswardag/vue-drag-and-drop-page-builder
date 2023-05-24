@@ -1,5 +1,5 @@
 <template>
-  <div class="block px-4 ease-linear duration-200 pb-10">
+  <div class="block px-4 ease-linear duration-200 pb-10 cursor-pointer">
     <img
       v-if="getCurrentImagePreview !== undefined"
       class="object-cover object-center w-full rounded-md"
@@ -97,7 +97,7 @@ const imageClick = function () {
   titleMedia.value = 'Update image';
   descriptionMedia.value = null;
   firstButtonMedia.value = 'Close';
-  secondButtonMedia.value = 'Save changes';
+  secondButtonMedia.value = 'Select image';
 
   // handle click
   firstMediaButtonFunction.value = function () {
@@ -107,13 +107,19 @@ const imageClick = function () {
   //
   // handle click
   secondMediaButtonFunction.value = function () {
-    if (getCurrentClickedImage.value === null) {
+    if (
+      getCurrentClickedImage.value &&
+      getCurrentClickedImage.value.file === null
+    ) {
       store.commit('designer/setCurrentImagePreview', oldExistingImage.value);
     }
-    if (getCurrentClickedImage.value !== null) {
+    if (
+      getCurrentClickedImage.value &&
+      getCurrentClickedImage.value.file !== null
+    ) {
       store.commit(
         'designer/setCurrentImagePreview',
-        getCurrentClickedImage.value
+        getCurrentClickedImage.value.file
       );
     }
 

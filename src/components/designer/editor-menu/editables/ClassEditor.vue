@@ -15,16 +15,33 @@
         </p>
       </div>
 
-      <div class="flex flex-row justify-between gap-2 mb-4">
-        <input
-          v-model="inputClass"
-          type="text"
-          class="myPrimaryInput"
-          placeholder="Type class"
-          @keydown="addClass"
-        />
-        <button class="myPrimaryButton" @click="addClass">Add</button>
+      <div class="flex gap-2 item-center flex-col">
+        <div class="flex gap-2 item-center">
+          <div
+            class="mt-1 relative flex items-center w-full border myPrimaryInput py-0 p-0"
+          >
+            <input
+              v-model="inputClass"
+              type="text"
+              placeholder="Type class"
+              @keydown="addClass"
+              autocomplete="off"
+              class="myPrimaryInput border-none rounded-r-none ml-0 w-full"
+            />
+            <div
+              class="border border-gray-200 border-none rounded flex items-center justify-center h-full w-8"
+            >
+              <kbd
+                class="text-xs font-sans font-normal text-gray-400 border-none"
+              >
+                ⏎
+              </kbd>
+            </div>
+          </div>
+        </div>
+        <p class="myPrimaryInputError"></p>
       </div>
+
       <p
         :class="[containsSpace ? 'max-h-5' : 'max-h-0']"
         class="text-red-500 text-sm mb-4 overflow-hidden duration-200"

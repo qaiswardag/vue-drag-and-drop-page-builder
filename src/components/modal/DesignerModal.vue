@@ -1,6 +1,6 @@
 <script setup>
 import Modal from '../modal/Modal.vue';
-import { CheckIcon, BellIcon } from '@heroicons/vue/20/solid';
+import { CheckIcon, BellIcon } from '@heroicons/vue/24/outline';
 import {
   Dialog,
   DialogOverlay,
