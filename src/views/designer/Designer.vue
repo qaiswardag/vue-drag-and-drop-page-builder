@@ -1,6 +1,6 @@
 <template xmlns="http://www.w3.org/1999/html">
   <div class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 bg-white">
-    <div class="relative h-full flex bg-red-400">
+    <div class="relative h-full flex">
       <aside
         aria-label="sidebar"
         :class="{
@@ -130,7 +130,7 @@
           <template #item="{ element }">
             <div class="relative overflow-hidden group" id="min-designer">
               <div
-                class="absolute z-10 overflow-hidden left-0 right-0 top-0 text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor duration-100 transform group-hover:block hidden max-w-[100rem] mx-auto rounded-full"
+                class="absolute z-10 overflow-hidden left-0 right-0 top-0 text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor duration-100 transform group-hover:block hidden max-w-[80%] mx-auto mt-2 rounded-sm shadow-sm"
               >
                 <div
                   class="flex flex-row justify-between mx-auto p-3 max-w-6xl"
