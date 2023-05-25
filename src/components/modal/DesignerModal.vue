@@ -84,7 +84,7 @@ const firstButton = function () {
                   @click="firstButton"
                   class="flex items-center justify-center gap-1 cursor-pointer hover:underline"
                 >
-                  <span class="text-xs font-medium"> Close Designer </span>
+                  <span class="font-medium"> Close Designer </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

@@ -132,18 +132,18 @@
         <button
           v-if="currentPage > 1"
           :disabled="currentPage < 1"
-          class="myPrimaryButton text-xs"
+          class="myPrimaryButton"
           @click="previousPage(currentPage--)"
         >
           {{ `Prev ${currentPage > 0 ? currentPage - 1 : currentPage - 1}` }}
         </button>
 
-        <span class="rounded-full text-xs myPrimaryTag p-2.5 font-medium">
+        <span class="rounded-full myPrimaryTag p-2.5">
           {{ currentPage }}
         </span>
         <button
           :disabled="currentPage >= getUnsplashImages.fetchedMedia.total_pages"
-          class="myPrimaryButton text-xs"
+          class="myPrimaryButton"
           :class="{
             'opacity-50':
               currentPage >= getUnsplashImages.fetchedMedia.total_pages,
@@ -169,9 +169,7 @@
             class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer"
             :src="image.urls.thumb"
           />
-          <p class="myPrimaryParagraph text-xs py-1 italic">
-            By: {{ image.user.name }}
-          </p>
+          <p class="myPrimaryParagraph">By: {{ image.user.name }}</p>
         </div>
       </div>
 

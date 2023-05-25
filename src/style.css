@@ -92,7 +92,7 @@
     |--------------------------------------------------------------------------
     */
   .myPrimaryParagraph {
-    @apply font-normal text-gray-700 text-base;
+    @apply font-medium text-gray-700 text-base;
   }
 
   .myPrimaryParagraphError {

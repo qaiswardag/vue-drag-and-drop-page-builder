@@ -1,5 +1,5 @@
 <template xmlns="http://www.w3.org/1999/html">
-  <div class="w-full inset-x-0 h-screen lg:pt-0 pt-0-z-10 overflow-x-scroll">
+  <div class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 overflow-x-scroll">
     <div class="relative h-full flex">
       <aside
         aria-label="sidebar"
@@ -17,7 +17,7 @@
               class="flex flex-col gap-4 p-4 font-normal h-full overflow-y-scroll"
             >
               <hr />
-              <li class="font-normal text-xs">Components</li>
+              <li class="myPrimaryParagraph">Components</li>
               <li
                 v-for="category in categories"
                 :key="category"
@@ -25,7 +25,7 @@
                   'bg-gray-100 text-gray-900':
                     activeLibrary === category && MenuPreview === true,
                 }"
-                class="text-xs text-gray-900 p-2 capitalize cursor-pointer font-normal rounded-md"
+                class="myPrimaryParagrap font-medium p-2 capitalize cursor-pointer rounded-md"
                 @mouseover="
                   activeLibrary = category;
                   MenuPreview = true;
@@ -44,7 +44,7 @@
           class="absolute z-10 w-[30rem] h-full duration-200 top-0 rounded-r-2xl shadow-2xl bg-gray-50"
         >
           <div class="flex flex-col gap-4 p-4 h-full font-normal">
-            <p class="font-normal text-xs capitalize">{{ activeLibrary }}</p>
+            <p class="myPrimaryParagraph capitalize">{{ activeLibrary }}</p>
             <draggable
               :clone="cloneComponent"
               :group="{ name: 'components', pull: 'clone', put: false }"
@@ -72,7 +72,7 @@
         class="flex flex-col h-full grow rounded-2xl duration-300 shadow-2xl"
       >
         <div
-          class="flex items-center justify-between primary-gap rounded-t-2xl bg-gray-200 py-2 px-4"
+          class="flex items-center justify-between primary-gap rounded-t-2xl bg-myPrimaryLightGrayColor py-2 px-4"
         >
           <div>
             <div class="flex gap-2">
@@ -109,7 +109,7 @@
                 />
               </svg>
 
-              <p class="text-xs cursor-pointer">unsaved changes</p>
+              <p class="myPrimaryParagraph cursor-pointer">unsaved changes</p>
             </div>
             <SaveDesign @click="saveCurrentDesignInDB"> </SaveDesign>
           </div>
@@ -130,7 +130,7 @@
           <template #item="{ element }">
             <div class="relative overflow-hidden group" id="min-designer">
               <div
-                class="absolute z-10 overflow-hidden w-full top-0 bg-emerald-500 text-white duration-100 transform -translate-y-full group-hover:translate-y-0"
+                class="absolute z-10 overflow-hidden w-full top-0 text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor duration-100 transform -translate-y-full group-hover:translate-y-0"
               >
                 <div
                   class="flex flex-row justify-between mx-auto p-3 max-w-6xl"
@@ -175,7 +175,9 @@
           </template>
         </Draggable>
 
-        <div class="h-8 bg-gray-200 flex-shrink-0 rounded-b-2xl"></div>
+        <div
+          class="h-8 bg-myPrimaryLightGrayColor flex-shrink-0 rounded-b-2xl"
+        ></div>
       </main>
 
       <aside

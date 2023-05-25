@@ -1,8 +1,8 @@
 <template>
-  <Menu as="div" class="text-xs relative inline-block text-left">
+  <Menu as="div" class="myPrimaryParagraph relative inline-block text-left">
     <div>
       <MenuButton
-        class="inline-flex items-center gap-2 justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-xs font-normal text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-emerald-600"
+        class="inline-flex items-center gap-2 justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-emerald-600"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@
       leave-to-class="transform opacity-0 scale-95"
     >
       <MenuItems
-        class="text-xs z-50 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+        class="z-50 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
       >
         <div class="px-4 py-3">
           <p class="font-normal text-gray-900 truncate">
@@ -45,7 +45,7 @@
             <div
               :class="[
                 active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                'block px-4 py-2 text-xs',
+                'block px-4 py-2',
               ]"
             >
               <div class="flex items-center justify-left gap-1 cursor-pointer">
@@ -74,7 +74,7 @@
               class="cursor-pointer"
               :class="[
                 active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                'block px-4 py-2 text-xs',
+                'block px-4 py-2',
               ]"
             >
               <div class="flex items-center justify-left gap-1">
@@ -102,7 +102,7 @@
               class="cursor-pointer"
               :class="[
                 active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                'block px-4 py-2 text-xs',
+                'block px-4 py-2',
               ]"
             >
               <div class="flex items-center justify-left gap-1">

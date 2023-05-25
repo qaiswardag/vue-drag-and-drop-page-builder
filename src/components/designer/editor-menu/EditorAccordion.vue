@@ -1,11 +1,10 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col" :class="{ 'pb-8': expanded }">
     <div
-      class="border-t border-gray-200 flex flex-row justify-between items-center px-4 py-2 cursor-pointer duration-200 hover:bg-myPrimaryLightGrayColor"
-      :class="{ 'bg-white': expanded }"
+      class="border-t border-myPrimaryLightGrayColor flex flex-row justify-between items-center px-4 py-5 cursor-pointer duration-200 hover:bg-myPrimaryLightGrayColor"
       @click="expanded = !expanded"
     >
-      <p class="text-xs my-0 py-0 font-normal">
+      <p class="myPrimaryParagraph font-medium my-0 py-0">
         <slot name="title" />
       </p>
       <ChevronRightIcon
@@ -16,7 +15,7 @@
     </div>
     <div
       :class="[expanded ? 'block' : 'hidden']"
-      class="px-4 ease-linear duration-75 bg-white"
+      class="px-4 ease-linear duration-75 bg-white mt-8"
     >
       <slot name="content" />
     </div>

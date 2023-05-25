@@ -4,7 +4,7 @@
     <template #content>
       <!-- FONT SIZES -->
       <hr />
-      <p class="text-xs py-0 font-normal my-4">Font sizes</p>
+      <p class="myPrimaryParagraph py-0 my-4">Font sizes</p>
       <div class="mb-4">
         <label for="meta_title" class="myPrimaryInputLabel">
           Font base size
@@ -71,7 +71,7 @@
 
       <!-- STOP STYLES -->
       <hr />
-      <p class="text-xs my-0 py-0 font-normal my-4">Font styles</p>
+      <p class="myPrimaryParagraph py-0 my-4">Font styles</p>
 
       <div class="mb-4">
         <label for="meta_title" class="myPrimaryInputLabel">

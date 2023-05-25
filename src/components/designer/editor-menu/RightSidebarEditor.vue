@@ -1,6 +1,6 @@
 <template>
   <div class="h-full w-80 bg-white">
-    <div class="h-full flex flex-col">
+    <div class="h-screen flex flex-col">
       <div class="flex flex-row justify-between p-4">
         <p class="font-bold text-sm">
           Editing
@@ -12,7 +12,7 @@
         ></XMarkIcon>
       </div>
 
-      <div class="mb-4 overflow-y-auto h-full">
+      <div class="mb-4 overflow-y-scroll md:pb-24 pb-12">
         <article v-show="getCurrentImagePreview">
           <ImageEditor> </ImageEditor>
         </article>
@@ -36,6 +36,7 @@
         <article>
           <DeleteElementEditor> </DeleteElementEditor>
         </article>
+        <article class="min-h-[30em]"></article>
       </div>
     </div>
   </div>

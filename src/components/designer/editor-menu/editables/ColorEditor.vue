@@ -21,7 +21,7 @@
           <div class="flex flex-row gap-1 items-center">
             <div
               @click="colorRefs.bg.open = !colorRefs.bg.open"
-              :class="{ 'bg-gray-200': colorRefs.bg.open }"
+              :class="{ 'bg-myPrimaryLightGrayColor': colorRefs.bg.open }"
               class="rounded cursor-pointer p-2"
             >
               <svg
@@ -44,7 +44,9 @@
                 changeTransparency('bg');
                 colorRefs.bg.transparent = true;
               "
-              :class="{ 'bg-gray-200': colorRefs.bg.transparent }"
+              :class="{
+                'bg-myPrimaryLightGrayColor': colorRefs.bg.transparent,
+              }"
               class="rounded cursor-pointer p-2"
             >
               <svg
@@ -67,7 +69,7 @@
                 removeColor('bg');
                 colorRefs.bg.none = true;
               "
-              :class="{ 'bg-gray-200': colorRefs.bg.none }"
+              :class="{ 'bg-myPrimaryLightGrayColor': colorRefs.bg.none }"
               class="rounded cursor-pointer p-2"
             >
               <svg
@@ -122,7 +124,7 @@
           <div class="flex flex-row gap-1 items-center">
             <div
               @click="colorRefs.text.open = !colorRefs.text.open"
-              :class="{ 'bg-gray-200': colorRefs.text.open }"
+              :class="{ 'bg-myPrimaryLightGrayColor': colorRefs.text.open }"
               class="rounded cursor-pointer p-2"
             >
               <svg
@@ -145,7 +147,9 @@
                 changeTransparency('text');
                 colorRefs.text.transparent = true;
               "
-              :class="{ 'bg-gray-200': colorRefs.text.transparent }"
+              :class="{
+                'bg-myPrimaryLightGrayColor': colorRefs.text.transparent,
+              }"
               class="rounded cursor-pointer p-2"
             >
               <svg
@@ -168,7 +172,7 @@
                 removeColor('text');
                 colorRefs.text.none = true;
               "
-              :class="{ 'bg-gray-200': colorRefs.text.none }"
+              :class="{ 'bg-myPrimaryLightGrayColor': colorRefs.text.none }"
               class="rounded cursor-pointer p-2"
             >
               <svg

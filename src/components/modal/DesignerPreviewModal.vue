@@ -72,7 +72,7 @@ const firstButton = function () {
               class="inline-block align-bottom text-left transform transition-all sm:align-middle w-full overflow-hidden h-[100vh] top-0 left-0 right-0 absolute"
             >
               <div
-                class="flex items-center justify-between px-4 bg-gray-200 h-[6vh]"
+                class="flex items-center justify-between px-4 bg-myPrimaryLightGrayColor h-[6vh]"
               >
                 <p
                   class="-m-1.5 p-1.5 myPrimaryParagraph text-xl sm:text-xl font-semibold text-black cursor-pointer"
@@ -84,7 +84,7 @@ const firstButton = function () {
                   @click="firstButton"
                   class="flex items-center justify-center gap-1 cursor-pointer hover:underline"
                 >
-                  <span class="text-xs font-medium"> Close Preview </span>
+                  <span class="myPrimaryParagraph"> Close Preview </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
