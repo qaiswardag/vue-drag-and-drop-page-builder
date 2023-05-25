@@ -75,7 +75,7 @@ const firstButton = function () {
                 class="flex items-center justify-between px-4 bg-white h-[6vh]"
               >
                 <p
-                  class="-m-1.5 p-1.5 myPrimaryParagraph text-xl sm:text-xl font-semibold text-black cursor-pointer"
+                  class="-m-1.5 p-1.5 myPrimaryParagraph text-2xl sm:text-3xl font-semibold text-black cursor-pointer"
                 >
                   <span class="sr-only">myself</span>
                   myself

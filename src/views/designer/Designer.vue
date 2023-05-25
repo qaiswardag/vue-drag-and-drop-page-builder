@@ -1,6 +1,6 @@
 <template xmlns="http://www.w3.org/1999/html">
-  <div class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 overflow-x-scroll">
-    <div class="relative h-full flex">
+  <div class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 bg-white">
+    <div class="relative h-full flex bg-red-400">
       <aside
         aria-label="sidebar"
         :class="{

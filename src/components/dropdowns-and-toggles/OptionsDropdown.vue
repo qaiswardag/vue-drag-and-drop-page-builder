@@ -48,7 +48,7 @@
                 'block px-4 py-2',
               ]"
             >
-              <div class="flex items-center justify-left gap-1 cursor-pointer">
+              <div class="flex items-center justify-left gap-2 cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -77,7 +77,7 @@
                 'block px-4 py-2',
               ]"
             >
-              <div class="flex items-center justify-left gap-1">
+              <div class="flex items-center justify-left gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -105,7 +105,7 @@
                 'block px-4 py-2',
               ]"
             >
-              <div class="flex items-center justify-left gap-1">
+              <div class="flex items-center justify-left gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

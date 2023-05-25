@@ -3,7 +3,6 @@
     <template #title> Typography </template>
     <template #content>
       <!-- FONT SIZES -->
-      <hr />
       <p class="myPrimaryParagraph py-0 my-4">Font sizes</p>
       <div class="mb-4">
         <label for="meta_title" class="myPrimaryInputLabel">

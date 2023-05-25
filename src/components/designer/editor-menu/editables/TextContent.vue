@@ -1,18 +1,14 @@
 <template>
-  <div>
-    <div class="my-2">
-      <div class="block px-4 ease-linear duration-200 bg-white">
-        <label for="meta_title" class="myPrimaryInputLabel">
-          Text content
-        </label>
+  <div class="my-2 pb-8">
+    <div class="block px-4 ease-linear duration-200 bg-white">
+      <label for="meta_title" class="myPrimaryInputLabel"> Text content </label>
 
-        <textarea
-          v-model="textContentElement"
-          rows="12"
-          class="myPrimaryTextArea"
-          @input="changeText"
-        />
-      </div>
+      <textarea
+        v-model="textContentElement"
+        rows="12"
+        class="myPrimaryTextArea"
+        @input="changeText"
+      />
     </div>
   </div>
 </template>

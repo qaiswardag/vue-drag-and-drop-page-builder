@@ -79,7 +79,7 @@ const faqs = [
   >
     <a
       href="/"
-      class="-m-1.5 p-1.5 myPrimaryParagraph text-xl sm:text-md font-semibold text-white"
+      class="-m-1.5 p-1.5 myPrimaryParagraph text-2xl sm:text-3xl font-semibold text-white"
     >
       <span class="sr-only">myself</span>
       myself
