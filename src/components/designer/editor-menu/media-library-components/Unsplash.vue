@@ -169,7 +169,9 @@
             class="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 cursor-pointer"
             :src="image.urls.thumb"
           />
-          <p class="myPrimaryParagraph">By: {{ image.user.name }}</p>
+          <p class="myPrimaryParagraph text-xs font-normal mt-2">
+            By: {{ image.user.name }}
+          </p>
         </div>
       </div>
 

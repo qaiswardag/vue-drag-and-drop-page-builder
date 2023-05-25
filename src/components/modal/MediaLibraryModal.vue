@@ -186,7 +186,7 @@
                             (getCurrentElement &&
                               getCurrentElement.src !== undefined &&
                               getCurrentClickedImage === null) ||
-                            getCurrentClickedImage.file === null
+                            getCurrentClickedImage?.file === null
                           "
                         >
                           <img

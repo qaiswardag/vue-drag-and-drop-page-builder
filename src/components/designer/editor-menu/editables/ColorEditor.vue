@@ -3,6 +3,9 @@
     <template #title>Color settings</template>
     <template #content>
       <div class="my-2">
+        <button @click="handleColorsSlideOver" class="my-8 myPrimaryButton">
+          Slide over
+        </button>
         <div class="flex flex-row justify-between mb-2">
           <div class="flex flex-row gap-2 items-center">
             <div
@@ -205,6 +208,12 @@
           />
         </div>
       </div>
+      <SlideOverRight
+        :open="showColorsSlideOverRight"
+        :title="titleSlideOverRight"
+        @colorsSlideOverButton="colorsSlideOverButton"
+      >
+      </SlideOverRight>
     </template>
   </EditorAccordion>
 </template>
@@ -213,6 +222,7 @@
 import { useStore } from 'vuex';
 import { computed } from 'vue';
 import EditorAccordion from '../EditorAccordion.vue';
+import SlideOverRight from '../../../slidebars/SlideOverRight.vue';
 
 import {
   XMarkIcon,
@@ -223,6 +233,19 @@ import { ref, watch } from 'vue';
 
 // store
 const store = useStore();
+const showColorsSlideOverRight = ref(false);
+const titleSlideOverRight = ref(null);
+
+// handle notifications window
+const handleColorsSlideOver = function () {
+  titleSlideOverRight.value = 'Manage colors';
+  showColorsSlideOverRight.value = true;
+};
+// handle notifications window
+const colorsSlideOverButton = function () {
+  showColorsSlideOverRight.value = false;
+};
+
 // getters: current element from store
 const getCurrentElement = computed(() => {
   return store.getters['designer/getCurrentElement'];

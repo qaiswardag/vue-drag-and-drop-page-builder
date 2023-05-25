@@ -130,7 +130,7 @@
           <template #item="{ element }">
             <div class="relative overflow-hidden group" id="min-designer">
               <div
-                class="absolute z-10 overflow-hidden w-full top-0 text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor duration-100 transform -translate-y-full group-hover:translate-y-0"
+                class="absolute z-10 overflow-hidden left-0 right-0 top-0 text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor duration-100 transform group-hover:block hidden max-w-[100rem] mx-auto rounded-full"
               >
                 <div
                   class="flex flex-row justify-between mx-auto p-3 max-w-6xl"
