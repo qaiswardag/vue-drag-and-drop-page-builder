@@ -16,6 +16,7 @@ export default {
 
   // state
   state: {
+    currentElementBackgroundColor: null,
     currentElement: null,
     currentImagePreview: null,
     currentClickedImage: null,
@@ -28,6 +29,9 @@ export default {
   // getters
   getters: {
     // current element
+    getCurrentElementBackgroundColor(state) {
+      return state.currentElementBackgroundColor;
+    },
     getCurrentElement(state) {
       return state.currentElement;
     },
@@ -75,6 +79,10 @@ export default {
   },
 
   mutations: {
+    // set current element
+    setCurrentElementBackgroundColor(state, payload) {
+      state.currentElementBackgroundColor = payload;
+    },
     // set current element
     setCurrentElement(state, payload) {
       state.currentElement = {};

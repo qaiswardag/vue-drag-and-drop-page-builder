@@ -233,9 +233,6 @@ import { PencilIcon, TrashIcon } from '@heroicons/vue/24/outline';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 
-import { useAjax } from '../../composables/use-ajax';
-import { usePromise } from '../../composables/use-promise';
-
 import OptionsDropdown from '../../components/dropdowns-and-toggles/OptionsDropdown.vue';
 import RightSidebarEditor from '../../components/designer/editor-menu/RightSidebarEditor.vue';
 import Spinner from '../../components/loaders/Spinner.vue';
@@ -528,6 +525,28 @@ onMounted(async () => {
   store.dispatch('designer/loadComponents');
   // end get componenets
 });
+
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+//
+
+watch(
+  // The code utilizes a watch method to closely monitor the changes in the currentElement
+  // This watch method ensures that any modifications or updates to the currentElement
+  // are immediately detected
+  getCurrentElement,
+  (newValue) => {
+    console.log('utilizes a current element');
+  },
+  { immediate: true },
+  { deep: true }
+);
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
 </script>
 
 <style>

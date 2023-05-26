@@ -1,5 +1,3 @@
-import { useAjax } from '../../composables/use-ajax';
-
 export default {
   namespaced: true,
 

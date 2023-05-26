@@ -211,6 +211,15 @@
   .mysearchBarWithOptions {
     @apply flex gap-1  bg-gray-100 py-2 px-2 rounded;
   }
+  /*
+    |--------------------------------------------------------------------------
+    | Unuqie Elements
+    |--------------------------------------------------------------------------
+    */
+
+  .myPrimaryColorPreview {
+    @apply aspect-square shadow-sm cursor-pointer bg-slate-50 min-h-[1.5rem] rounded-sm;
+  }
 
   /*
     |--------------------------------------------------------------------------

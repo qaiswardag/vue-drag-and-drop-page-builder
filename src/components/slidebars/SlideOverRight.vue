@@ -1,5 +1,4 @@
 <script setup>
-import ManageColors from '../designer/editor-menu/editables/ManageColors.vue';
 import {
   Dialog,
   DialogPanel,
@@ -60,7 +59,7 @@ const colorsSlideOverButton = function () {
                 leave-from="translate-x-0"
                 leave-to="translate-x-full"
               >
-                <DialogPanel class="pointer-events-auto w-80 max-w-md">
+                <DialogPanel class="pointer-events-auto w-96 max-w-md">
                   <div
                     class="flex h-full flex-col overflow-y-scroll bg-white pt-3 pb-6 shadow-xl"
                   >
