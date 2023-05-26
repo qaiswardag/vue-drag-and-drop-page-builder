@@ -7,10 +7,6 @@ import Designer from './views/designer/Designer.vue';
 import FullWidthElement from './components/layouts/FullWidthElement.vue';
 import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/vue/24/outline';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
-onMounted(() => {
-  const script = document.createElement('script');
-  script.src = 'https://cdn.tailwindcss.com';
-});
 
 // store
 const store = useStore();
