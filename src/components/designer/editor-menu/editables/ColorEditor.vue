@@ -8,13 +8,21 @@
             class="flex flex-row justify-start items-center myPrimaryGap mb-8"
           >
             <div
-              class="myPrimaryColorPreview w-8 h-8"
-              :class="[
-                getCurrentElementBackgroundColor !== null
-                  ? getCurrentElementBackgroundColor
-                  : '',
-              ]"
+              v-if="getCurrentElementBackgroundColor !== null"
+              class="myPrimaryColorPreview w-8 h-8 cursor-default"
+              :class="[getCurrentElementBackgroundColor]"
             ></div>
+            <div
+              v-if="getCurrentElementBackgroundColor === null"
+              class="myPrimaryColorPreview w-8 h-8 cursor-default"
+              :class="[getCurrentElementBackgroundColor]"
+            >
+              <div class="myPrimaryColorPreview bg-gray-50">
+                <XMarkIcon
+                  class="text-myPrimaryErrorColor stroke-2"
+                ></XMarkIcon>
+              </div>
+            </div>
             <p class="myPrimaryParagraph font-medium">Background</p>
           </div>
         </div>

@@ -21,13 +21,19 @@ const designer = new Designer(store);
   <div class="mt-6 pt-4 pb-8">
     <div class="flex flex-row justify-start items-center myPrimaryGap mb-8">
       <div
+        v-if="getCurrentElementBackgroundColor !== null"
         class="myPrimaryColorPreview w-8 h-8 cursor-default"
-        :class="[
-          getCurrentElementBackgroundColor !== null
-            ? getCurrentElementBackgroundColor
-            : '',
-        ]"
+        :class="[getCurrentElementBackgroundColor]"
       ></div>
+      <div
+        v-if="getCurrentElementBackgroundColor === null"
+        class="myPrimaryColorPreview w-8 h-8 cursor-default"
+        :class="[getCurrentElementBackgroundColor]"
+      >
+        <div class="myPrimaryColorPreview bg-gray-50">
+          <XMarkIcon class="text-myPrimaryErrorColor stroke-2"></XMarkIcon>
+        </div>
+      </div>
       <p class="myPrimaryParagraph font-medium">Current Background</p>
     </div>
     <div class="grid grid-cols-1 gap-1">

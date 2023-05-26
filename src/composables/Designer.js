@@ -4,14 +4,11 @@ import { computed } from 'vue';
 class Designer {
   constructor(store) {
     this.colors = config.backgroundColors();
-
     this.store = store;
-
     this.getCurrentElement = computed(
       () => this.store.getters['designer/getCurrentElement']
     );
   }
-
   handleColor(userColorFromPalette) {
     // Iterate over each color in the colors array
     for (let singleColor of this.colors) {
