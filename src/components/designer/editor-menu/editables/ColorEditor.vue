@@ -24,9 +24,7 @@
         :title="titleSlideOverRight"
         @colorsSlideOverButton="colorsSlideOverButton"
       >
-        <!-- Content start -->
-        <ManageBackgroundColors></ManageBackgroundColors>
-        <!-- Content end -->
+        <ManageBackgroundColor></ManageBackgroundColor>
       </SlideOverRight>
     </template>
   </EditorAccordion>
@@ -37,7 +35,7 @@ import { useStore } from 'vuex';
 import { computed } from 'vue';
 import EditorAccordion from '../EditorAccordion.vue';
 import SlideOverRight from '../../../slidebars/SlideOverRight.vue';
-import ManageBackgroundColors from '../editables/ManageBackgroundColors.vue';
+import ManageBackgroundColor from './ManageBackgroundColor.vue';
 
 import {
   XMarkIcon,

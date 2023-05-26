@@ -1,3 +1,354 @@
+<script setup>
+import Draggable from 'vuedraggable';
+import Designer from '../../composables/Designer';
+import { onBeforeMount, ref, onUpdated } from 'vue';
+import { computed } from 'vue';
+import { watch } from 'vue';
+import { saveAllComponentsInLocalstorage } from '../../composables/save-all-components-in-localstorage';
+import {
+  ArrowUpIcon,
+  ArrowLeftIcon,
+  ArrowDownIcon,
+  Bars3Icon,
+} from '@heroicons/vue/24/outline';
+import { PencilIcon, TrashIcon } from '@heroicons/vue/24/outline';
+
+import { onMounted } from 'vue';
+import { useStore } from 'vuex';
+
+import OptionsDropdown from '../../components/dropdowns-and-toggles/OptionsDropdown.vue';
+import RightSidebarEditor from '../../components/designer/editor-menu/RightSidebarEditor.vue';
+import Spinner from '../../components/loaders/Spinner.vue';
+import SaveDesign from '../../components/dropdowns-and-toggles/SaveDesign.vue';
+import DynamicModal from '../../components/modal/DynamicModal.vue';
+
+const store = useStore();
+const designer = new Designer(store);
+
+const showModalDeleteHTMLElement = ref(false);
+//
+// use dynamic model
+const typeModal = ref('');
+const gridColumnModal = ref(Number(1));
+const titleModal = ref('');
+const descriptionModal = ref('');
+const firstButtonModal = ref('');
+const secondButtonModal = ref(null);
+const thirdButtonModal = ref(null);
+// set dynamic modal handle functions
+const firstModalButtonFunction = ref(null);
+const secondModalButtonFunction = ref(null);
+const thirdModalButtonFunction = ref(null);
+//
+//
+//
+//
+//
+// menu right
+const MenuRight = ref(null);
+// menu preview
+const MenuPreview = ref(null);
+// categories
+const categories = ref(null);
+// categories value
+categories.value = [
+  'forms',
+  'teams',
+  'posts',
+  'features',
+  'headers',
+  'testimonials',
+];
+// current active library
+const activeLibrary = ref('forms');
+// current clicked element
+const currentElement = ref({});
+//
+// get current element from store
+const getCurrentElement = computed(() => {
+  return store.getters['designer/getCurrentElement'];
+});
+//
+//
+// get components added
+const allComponentsAddedToDom = computed(() => {
+  return store.getters['designer/getComponentsAdded'];
+});
+//
+// set state for "components added"
+store.commit('designer/setComponentsAdded', allComponentsAddedToDom.value);
+//
+//
+// save current design in local storage
+const saveCurrentDesignInDB = function () {
+  console.log('save current design in DB method');
+};
+//
+
+// for each on all added html componenets
+const addEditorListener = function () {
+  document.querySelectorAll('[render-html] *').forEach((el) => {
+    // single element
+    el.addEventListener('mouseover', (e) => {
+      // stop propagation
+      e.stopPropagation();
+
+      document.querySelector('[hovered]')?.removeAttribute('hovered');
+      el.setAttribute('hovered', '');
+    });
+
+    // add event listener on clicked element
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // set menu right to true
+      MenuRight.value = true;
+      //
+      document.querySelector('[selected]')?.removeAttribute('selected');
+      e.currentTarget.removeAttribute('hovered');
+      e.currentTarget.setAttribute('selected', '');
+
+      // current clicked element
+      currentElement.value = e.currentTarget;
+      // update state setCurrentElement
+      store.commit('designer/setCurrentElement', currentElement.value);
+    });
+  });
+};
+
+// clone component
+const cloneComponent = function (comp) {
+  // Hide slider and right menu
+  MenuPreview.value = false;
+  MenuRight.value = false;
+
+  // Deep clone component
+  const clonedComp = { ...comp };
+
+  const currentDate = new Date();
+  const timestamp = currentDate.getTime();
+
+  // set id of clone to timestamp giving it a unique id
+  clonedComp.id = timestamp;
+
+  // return to the cloned element to be dropped
+  return clonedComp;
+};
+
+// move component
+// runs when html componenets are rearranged
+const moveComponent = function (e, dir) {
+  // Get index of component
+  const currentIndex = getCurrentIndex(e.currentTarget);
+  // Return if moving first element backwards or last element forwards
+  if (
+    (currentIndex === 0 && dir === -1) ||
+    (currentIndex === allComponentsAddedToDom.value.length - 1 && dir === 1)
+  )
+    return;
+  // Store chosen component
+  const currentComponent = allComponentsAddedToDom.value[currentIndex];
+  // Remove current object
+  // Move it forwards if negative dir or forward if positive dir
+  allComponentsAddedToDom.value.splice(currentIndex, 1);
+  allComponentsAddedToDom.value.splice(
+    currentIndex + 1 * dir,
+    0,
+    currentComponent
+  );
+  // Follow element to new location
+  document
+    .querySelector('#pagebuilder')
+    .children[currentIndex + 1 * dir].scrollIntoView({ behavior: 'smooth' });
+  //
+  // save all current added HTML components in local storage
+  saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
+  //
+  // end of method "moveComponent"
+};
+//
+// remove component
+// delete singular component on trach icon click
+const removeComponent = function (e) {
+  const currentIndex = getCurrentIndex(e.currentTarget);
+
+  // set modal standards
+  showModalDeleteHTMLElement.value = true;
+  typeModal.value = 'delete';
+  gridColumnModal.value = 2;
+  titleModal.value = 'Delete component';
+  descriptionModal.value = 'Are you sure you want to delete this component?';
+  firstButtonModal.value = 'Close';
+  secondButtonModal.value = null;
+  thirdButtonModal.value = 'Delete';
+
+  // handle click
+  firstModalButtonFunction.value = function () {
+    // set open modal
+    showModalDeleteHTMLElement.value = false;
+  };
+  //
+  // handle click
+  thirdModalButtonFunction.value = function () {
+    // remove component from array
+    allComponentsAddedToDom.value.splice(currentIndex, 1);
+
+    // hide right menu if last component was removed
+    if (allComponentsAddedToDom.value.length === 0) MenuRight.value = false;
+
+    // set open modal
+    showModalDeleteHTMLElement.value = false;
+  };
+  // end modal
+};
+//
+// watch "menu preview"
+watch(MenuPreview, () => {
+  // hide  right menu
+  MenuRight.value = false;
+});
+//
+const removeSelected = function () {
+  document.querySelector('[selected]');
+  document.querySelector('[selected]')?.removeAttribute('selected');
+};
+const removeHovered = function () {
+  document.querySelector('[hovered]')?.removeAttribute('hovered');
+};
+const getCurrentIndex = function (component) {
+  // Declare container of components and current component
+  const allComponents = document.querySelector('#pagebuilder').children;
+  const currentComponent = component.closest('div[data-draggable="true"]');
+  // Get index of chosen component
+  const currentIndex = Array.from(allComponents).indexOf(currentComponent);
+  return currentIndex;
+};
+//
+//
+//
+//
+//
+//
+//
+//
+// locally added html components array
+const addedHtmlComponents = ref([]);
+//
+// preview current design in external browser tab
+const previewCurrentDesign = function () {
+  // iterate over each component
+  document.querySelectorAll('[render-html]').forEach((html) => {
+    // push outer html into the array
+    addedHtmlComponents.value.push(html.outerHTML);
+  });
+  // stringify added html components
+  addedHtmlComponents.value = JSON.stringify(addedHtmlComponents.value);
+
+  // commit
+  store.commit('designer/setCurrentPreview', addedHtmlComponents.value);
+  // set added html components back to empty array
+
+  addedHtmlComponents.value = [];
+};
+//
+//
+//
+//
+// when HTML component is dropped into the DOM
+const onDrop = function () {
+  // save all current added HTML components in local storage
+  saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
+};
+//
+// get current element outer HTML
+const getCurrentElementOuterHTML = computed(() => {
+  return getCurrentElement?.value?.outerHTML;
+});
+//
+//TODO: watch any change. Even text change
+// watch for any changes in "curent element"
+watch(getCurrentElementOuterHTML, (newElement) => {
+  //console.log('getCurrentElementOuterHTML er:', newGetCurrentElementOuterHTML)
+  // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
+  //
+  //
+  //
+  //
+  //
+});
+//
+// set all components add on before mount
+// On before mount
+onBeforeMount(async () => {
+  if (localStorage.getItem('savedCurrentDesign')) {
+    store.commit(
+      'designer/setComponentsAdded',
+      JSON.parse(localStorage.getItem('savedCurrentDesign'))
+    );
+  }
+});
+
+// get fetched components
+const getFetchedComponents = computed(() => {
+  return store.getters['designer/getFetchedComponents'];
+});
+// menu for fetched components filtered after category
+const componentsMenu = computed(() => {
+  return getFetchedComponents.value?.fetchedData?.filter((comp) => {
+    return comp.category === activeLibrary.value;
+  });
+});
+//
+// on mounted
+onMounted(async () => {
+  // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
+  addEditorListener();
+
+  // load all HTML components
+  store.dispatch('designer/loadComponents');
+  // end get componenets
+});
+
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+// JUNE 2023 UPDATING THE DESIGNER - START
+//
+
+watch(
+  // The code utilizes a watch method to closely monitor the changes in the currentElement
+  // This watch method ensures that any modifications or updates to the currentElement
+  // are immediately detected
+  getCurrentElement,
+  (newHTMLElement) => {
+    if (newHTMLElement === null) return;
+
+    // handle color
+    designer.handleColor();
+  },
+  { immediate: true },
+  { deep: true }
+);
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+// JUNE 2023 UPDATING THE DESIGNER - END
+</script>
+
 <template xmlns="http://www.w3.org/1999/html">
   <div class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 bg-white">
     <div class="relative h-full flex">
@@ -198,7 +549,7 @@
     >
     </Spinner>
     <DynamicModal
-      :show="openModal"
+      :show="showModalDeleteHTMLElement"
       :type="typeModal"
       :gridColumnAmount="gridColumnModal"
       :title="titleModal"
@@ -215,339 +566,6 @@
     </DynamicModal>
   </div>
 </template>
-
-<script setup>
-import Draggable from 'vuedraggable';
-import { onBeforeMount, ref, onUpdated } from 'vue';
-import { computed } from 'vue';
-import { watch } from 'vue';
-import { saveAllComponentsInLocalstorage } from '../../composables/save-all-components-in-localstorage';
-import {
-  ArrowUpIcon,
-  ArrowLeftIcon,
-  ArrowDownIcon,
-  Bars3Icon,
-} from '@heroicons/vue/24/outline';
-import { PencilIcon, TrashIcon } from '@heroicons/vue/24/outline';
-
-import { onMounted } from 'vue';
-import { useStore } from 'vuex';
-
-import OptionsDropdown from '../../components/dropdowns-and-toggles/OptionsDropdown.vue';
-import RightSidebarEditor from '../../components/designer/editor-menu/RightSidebarEditor.vue';
-import Spinner from '../../components/loaders/Spinner.vue';
-import SaveDesign from '../../components/dropdowns-and-toggles/SaveDesign.vue';
-import DynamicModal from '../../components/modal/DynamicModal.vue';
-//
-// store
-const store = useStore();
-//
-//
-const openModal = ref(false);
-//
-// use dynamic model
-const typeModal = ref('');
-const gridColumnModal = ref(Number(1));
-const titleModal = ref('');
-const descriptionModal = ref('');
-const firstButtonModal = ref('');
-const secondButtonModal = ref(null);
-const thirdButtonModal = ref(null);
-// set dynamic modal handle functions
-const firstModalButtonFunction = ref(null);
-const secondModalButtonFunction = ref(null);
-const thirdModalButtonFunction = ref(null);
-//
-//
-//
-//
-//
-// menu right
-const MenuRight = ref(null);
-// menu preview
-const MenuPreview = ref(null);
-// categories
-const categories = ref(null);
-// categories value
-categories.value = [
-  'forms',
-  'teams',
-  'posts',
-  'features',
-  'headers',
-  'testimonials',
-];
-// current active library
-const activeLibrary = ref('forms');
-// current clicked element
-const currentElement = ref({});
-//
-// get current element from store
-const getCurrentElement = computed(() => {
-  return store.getters['designer/getCurrentElement'];
-});
-//
-//
-// get components added
-const allComponentsAddedToDom = computed(() => {
-  return store.getters['designer/getComponentsAdded'];
-});
-//
-// set state for "components added"
-store.commit('designer/setComponentsAdded', allComponentsAddedToDom.value);
-//
-//
-// save current design in local storage
-const saveCurrentDesignInDB = function () {
-  console.log('save current design in DB method');
-};
-//
-
-// for each on all added html componenets
-const addEditorListener = function () {
-  document.querySelectorAll('[render-html] *').forEach((el) => {
-    // single element
-    el.addEventListener('mouseover', (e) => {
-      // stop propagation
-      e.stopPropagation();
-
-      document.querySelector('[hovered]')?.removeAttribute('hovered');
-      el.setAttribute('hovered', '');
-    });
-
-    // add event listener on clicked element
-    el.addEventListener('click', (e) => {
-      e.stopPropagation();
-      // set menu right to true
-      MenuRight.value = true;
-      //
-      document.querySelector('[selected]')?.removeAttribute('selected');
-      e.currentTarget.removeAttribute('hovered');
-      e.currentTarget.setAttribute('selected', '');
-
-      // current clicked element
-      currentElement.value = e.currentTarget;
-      // update state setCurrentElement
-      store.commit('designer/setCurrentElement', currentElement.value);
-    });
-  });
-};
-
-// clone component
-const cloneComponent = function (comp) {
-  // Hide slider and right menu
-  MenuPreview.value = false;
-  MenuRight.value = false;
-
-  // Deep clone component
-  const clonedComp = { ...comp };
-
-  const currentDate = new Date();
-  const timestamp = currentDate.getTime();
-
-  // set id of clone to timestamp giving it a unique id
-  clonedComp.id = timestamp;
-
-  // return to the cloned element to be dropped
-  return clonedComp;
-};
-
-// move component
-// runs when html componenets are rearranged
-const moveComponent = function (e, dir) {
-  // Get index of component
-  const currentIndex = getCurrentIndex(e.currentTarget);
-  // Return if moving first element backwards or last element forwards
-  if (
-    (currentIndex === 0 && dir === -1) ||
-    (currentIndex === allComponentsAddedToDom.value.length - 1 && dir === 1)
-  )
-    return;
-  // Store chosen component
-  const currentComponent = allComponentsAddedToDom.value[currentIndex];
-  // Remove current object
-  // Move it forwards if negative dir or forward if positive dir
-  allComponentsAddedToDom.value.splice(currentIndex, 1);
-  allComponentsAddedToDom.value.splice(
-    currentIndex + 1 * dir,
-    0,
-    currentComponent
-  );
-  // Follow element to new location
-  document
-    .querySelector('#pagebuilder')
-    .children[currentIndex + 1 * dir].scrollIntoView({ behavior: 'smooth' });
-  //
-  // save all current added HTML components in local storage
-  saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
-  //
-  // end of method "moveComponent"
-};
-//
-// remove component
-// delete singular component on trach icon click
-const removeComponent = function (e) {
-  const currentIndex = getCurrentIndex(e.currentTarget);
-
-  // set modal standards
-  openModal.value = true;
-  typeModal.value = 'delete';
-  gridColumnModal.value = 2;
-  titleModal.value = 'Delete component';
-  descriptionModal.value = 'Are you sure you want to delete this component?';
-  firstButtonModal.value = 'Close';
-  secondButtonModal.value = null;
-  thirdButtonModal.value = 'Delete';
-
-  // handle click
-  firstModalButtonFunction.value = function () {
-    // set open modal
-    openModal.value = false;
-  };
-  //
-  // handle click
-  thirdModalButtonFunction.value = function () {
-    // remove component from array
-    allComponentsAddedToDom.value.splice(currentIndex, 1);
-
-    // hide right menu if last component was removed
-    if (allComponentsAddedToDom.value.length === 0) MenuRight.value = false;
-
-    // set open modal
-    openModal.value = false;
-  };
-  // end modal
-};
-//
-// watch "menu preview"
-watch(MenuPreview, () => {
-  // hide  right menu
-  MenuRight.value = false;
-});
-//
-const removeSelected = function () {
-  document.querySelector('[selected]');
-  document.querySelector('[selected]')?.removeAttribute('selected');
-};
-const removeHovered = function () {
-  document.querySelector('[hovered]')?.removeAttribute('hovered');
-};
-const getCurrentIndex = function (component) {
-  // Declare container of components and current component
-  const allComponents = document.querySelector('#pagebuilder').children;
-  const currentComponent = component.closest('div[data-draggable="true"]');
-  // Get index of chosen component
-  const currentIndex = Array.from(allComponents).indexOf(currentComponent);
-  return currentIndex;
-};
-//
-//
-//
-//
-//
-//
-//
-//
-// locally added html components array
-const addedHtmlComponents = ref([]);
-//
-// preview current design in external browser tab
-const previewCurrentDesign = function () {
-  // iterate over each component
-  document.querySelectorAll('[render-html]').forEach((html) => {
-    // push outer html into the array
-    addedHtmlComponents.value.push(html.outerHTML);
-  });
-  // stringify added html components
-  addedHtmlComponents.value = JSON.stringify(addedHtmlComponents.value);
-
-  // commit
-  store.commit('designer/setCurrentPreview', addedHtmlComponents.value);
-  // set added html components back to empty array
-
-  addedHtmlComponents.value = [];
-};
-//
-//
-//
-//
-// when HTML component is dropped into the DOM
-const onDrop = function () {
-  // save all current added HTML components in local storage
-  saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
-};
-//
-// get current element outer HTML
-const getCurrentElementOuterHTML = computed(() => {
-  return getCurrentElement?.value?.outerHTML;
-});
-//
-//TODO: watch any change. Even text change
-// watch for any changes in "curent element"
-watch(getCurrentElementOuterHTML, (newElement) => {
-  //console.log('getCurrentElementOuterHTML er:', newGetCurrentElementOuterHTML)
-  // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
-  //
-  //
-  //
-  //
-  //
-});
-//
-// set all components add on before mount
-// On before mount
-onBeforeMount(async () => {
-  if (localStorage.getItem('savedCurrentDesign')) {
-    store.commit(
-      'designer/setComponentsAdded',
-      JSON.parse(localStorage.getItem('savedCurrentDesign'))
-    );
-  }
-});
-
-// get fetched components
-const getFetchedComponents = computed(() => {
-  return store.getters['designer/getFetchedComponents'];
-});
-// menu for fetched components filtered after category
-const componentsMenu = computed(() => {
-  return getFetchedComponents.value?.fetchedData?.filter((comp) => {
-    return comp.category === activeLibrary.value;
-  });
-});
-//
-// on mounted
-onMounted(async () => {
-  // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
-  addEditorListener();
-
-  // load all HTML components
-  store.dispatch('designer/loadComponents');
-  // end get componenets
-});
-
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-//
-
-watch(
-  // The code utilizes a watch method to closely monitor the changes in the currentElement
-  // This watch method ensures that any modifications or updates to the currentElement
-  // are immediately detected
-  getCurrentElement,
-  (newValue) => {
-    console.log('utilizes a current element');
-  },
-  { immediate: true },
-  { deep: true }
-);
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-</script>
 
 <style>
 #pagebuilder [hovered],

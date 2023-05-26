@@ -80,7 +80,7 @@ export default {
 
   mutations: {
     // set current element
-    setCurrentElementBackgroundColor(state, payload) {
+    setCurrentBackgroundColor(state, payload) {
       state.currentElementBackgroundColor = payload;
     },
     // set current element

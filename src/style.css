@@ -218,7 +218,7 @@
     */
 
   .myPrimaryColorPreview {
-    @apply aspect-square shadow-sm cursor-pointer bg-slate-50 min-h-[1.5rem] rounded-sm;
+    @apply aspect-square  border border-gray-200 cursor-pointer  min-h-[1.5rem] rounded-sm;
   }
 
   /*

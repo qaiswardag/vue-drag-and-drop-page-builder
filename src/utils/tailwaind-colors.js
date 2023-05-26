@@ -1,5 +1,5 @@
 const tailwindColors = {
-  backgroundColors: [
+  backgroundColorVariables: [
     'bg-white',
     'bg-black',
     'bg-slate-50',
@@ -167,6 +167,28 @@ const tailwindColors = {
     'bg-sky-800',
     'bg-sky-900',
 
+    'bg-blue-50',
+    'bg-blue-100',
+    'bg-blue-200',
+    'bg-blue-300',
+    'bg-blue-400',
+    'bg-blue-500',
+    'bg-blue-600',
+    'bg-blue-700',
+    'bg-blue-800',
+    'bg-blue-900',
+
+    'bg-indigo-50',
+    'bg-indigo-100',
+    'bg-indigo-200',
+    'bg-indigo-300',
+    'bg-indigo-400',
+    'bg-indigo-500',
+    'bg-indigo-600',
+    'bg-indigo-700',
+    'bg-indigo-800',
+    'bg-indigo-900',
+
     'bg-violet-50',
     'bg-violet-100',
     'bg-violet-200',
@@ -222,6 +244,14 @@ const tailwindColors = {
     'bg-rose-800',
     'bg-rose-900',
   ],
+  backgroundColors() {
+    return this.backgroundColorVariables.sort((a, b) => {
+      return (
+        this.backgroundColorVariables.indexOf(a) -
+        this.backgroundColorVariables.indexOf(b)
+      );
+    });
+  },
 };
 
 export default tailwindColors;
