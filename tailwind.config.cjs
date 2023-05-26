@@ -2,17 +2,11 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  mode: 'jit',
-  // These paths are just examples, customize them to match your project structure
-  purge: [
-    './public/**/*.html',
-    './src/**/*.{js,jsx,ts,tsx,vue}',
-    './public/**/*.json',
-  ],
   content: [
     './index.html',
     './public/**/*.html',
     './src/**/*.{vue,js,ts,jsx,tsx}',
+    './public/**/*.json',
   ],
   theme: {
     colors: {
