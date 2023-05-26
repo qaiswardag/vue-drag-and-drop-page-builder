@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 import DynamicModal from './components/modal/DynamicModal.vue';
 import DesignerModal from './components/modal/DesignerModal.vue';
@@ -7,6 +7,11 @@ import Designer from './views/designer/Designer.vue';
 import FullWidthElement from './components/layouts/FullWidthElement.vue';
 import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/vue/24/outline';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
+onMounted(() => {
+  const script = document.createElement('script');
+  script.src = 'https://cdn.tailwindcss.com';
+});
+
 // store
 const store = useStore();
 
@@ -26,7 +31,7 @@ const openDesignerModal = ref(false);
 // use designer model
 const firstDesignerModalButtonFunction = ref(null);
 //
-
+//
 const handleDesigner = function () {
   // set modal standards
   openDesignerModal.value = true;
