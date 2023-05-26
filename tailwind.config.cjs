@@ -11,13 +11,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Your existing color definitions
-        myPrimaryBrandColor: 'purple',
-        myPrimaryErrorColor: '#d60000',
-        myPrimaryLinkColor: '#6a5acd',
+        // Custom colors
+        myPrimaryBrandColor: '#9F2B68',
+        myPrimaryLinkColor: '#9F2B68',
+
         myPrimaryLightGrayColor: '#e2e8f0',
         myPrimaryMediumGrayColor: '#9ca3af',
         myPrimaryDarkGrayColor: '#111827',
+
+        myPrimaryErrorColor: '#d60000',
       },
       fontFamily: {
         sans: [

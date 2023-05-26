@@ -12,9 +12,6 @@ class Designer {
   handleColor(userColorFromPalette) {
     // Iterate over each color in the colors array
     for (let singleColor of this.colors) {
-      //
-      //
-      //
       // check if user whan to remove color
       if (
         this.getCurrentElement.value.classList.contains(singleColor) === true &&

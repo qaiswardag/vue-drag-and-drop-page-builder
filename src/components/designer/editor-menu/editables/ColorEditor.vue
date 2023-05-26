@@ -2,19 +2,19 @@
   <EditorAccordion>
     <template #title>Color settings</template>
     <template #content>
-      <div @click="handleColorsSlideOver" class="mb-2 cursor-pointer">
+      <div @click="handleColorsSlideOver" class="mb-2">
         <div class="pt-0 pb-0 mb-6 border-b border-myPrimaryLightGrayColor">
           <div
-            class="flex flex-row justify-start items-center myPrimaryGap mb-8"
+            class="flex flex-row justify-start items-center myPrimaryGap mb-8 cursor-pointer"
           >
             <div
               v-if="getCurrentElementBackgroundColor !== null"
-              class="myPrimaryColorPreview w-8 h-8 cursor-default"
+              class="myPrimaryColorPreview w-8 h-8"
               :class="[getCurrentElementBackgroundColor]"
             ></div>
             <div
               v-if="getCurrentElementBackgroundColor === null"
-              class="myPrimaryColorPreview w-8 h-8 cursor-default"
+              class="myPrimaryColorPreview w-8 h-8"
               :class="[getCurrentElementBackgroundColor]"
             >
               <div class="myPrimaryColorPreview bg-gray-50">
