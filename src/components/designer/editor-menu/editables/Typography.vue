@@ -129,14 +129,12 @@ import EditorAccordion from '../EditorAccordion.vue';
 // store
 const store = useStore();
 // getter current element
-const getCurrentElement = computed(() => {
-  return store.getters['designer/getCurrentElement'];
+const getComponent = computed(() => {
+  return store.getters['designer/getComponent'];
 });
 // get outer HTML of current element
-const getCurrentElementOuterHTML = computed(() => {
-  return getCurrentElement?.value?.outerHTML
-    ? getCurrentElement?.value?.outerHTML
-    : [];
+const getComponentOuterHTML = computed(() => {
+  return getComponent?.value?.outerHTML ? getComponent?.value?.outerHTML : [];
 });
 //
 //
@@ -187,17 +185,17 @@ const fontAttributes = {
 };
 
 // update editor selected and default when an element is selected
-watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
+watch(getComponentOuterHTML, (newElement, oldElement) => {
   // set new element back to currrent element as new element is html string
-  newElement = getCurrentElement.value;
+  newElement = getComponent.value;
   // set text value
   text.value = newElement?.textContent || '';
 });
 
 // update editor selected and default when an element is selected
-watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
+watch(getComponentOuterHTML, (newElement, oldElement) => {
   // set new element back to currrent element as new element is html string
-  newElement = getCurrentElement.value;
+  newElement = getComponent.value;
   // set font attributes
   fontRefs.value.size =
     fontAttributes.size.find((size) =>
@@ -205,9 +203,9 @@ watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
     ) || '';
 });
 // update editor selected and default when an element is selected
-watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
+watch(getComponentOuterHTML, (newElement, oldElement) => {
   // set new element back to currrent element as new element is html string
-  newElement = getCurrentElement.value;
+  newElement = getComponent.value;
   // set font attributes
 
   fontRefs.value.sizeDesktop =
@@ -217,9 +215,9 @@ watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
 });
 
 // update editor selected and default when an element is selected
-watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
+watch(getComponentOuterHTML, (newElement, oldElement) => {
   // set new element back to currrent element as new element is html string
-  newElement = getCurrentElement.value;
+  newElement = getComponent.value;
   // set font attributes
 
   fontRefs.value.sizeTablet =
@@ -228,9 +226,9 @@ watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
     ) || '';
 });
 // update editor selected and default when an element is selected
-watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
+watch(getComponentOuterHTML, (newElement, oldElement) => {
   // set new element back to currrent element as new element is html string
-  newElement = getCurrentElement.value;
+  newElement = getComponent.value;
   // set font attributes
 
   fontRefs.value.sizeMobile =
@@ -240,9 +238,9 @@ watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
 });
 
 // update editor selected and default when an element is selected
-watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
+watch(getComponentOuterHTML, (newElement, oldElement) => {
   // set new element back to currrent element as new element is html string
-  newElement = getCurrentElement.value;
+  newElement = getComponent.value;
   // set font attributes
   fontRefs.value.weight =
     fontAttributes.weight.find((weight) =>
@@ -251,9 +249,9 @@ watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
 });
 
 // update editor selected and default when an element is selected
-watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
+watch(getComponentOuterHTML, (newElement, oldElement) => {
   // set new element back to currrent element as new element is html string
-  newElement = getCurrentElement.value;
+  newElement = getComponent.value;
   // set font attributes
   fontRefs.value.family =
     fontAttributes.family.find((family) =>
@@ -261,9 +259,9 @@ watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
     ) || '';
 });
 // update editor selected and default when an element is selected
-watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
+watch(getComponentOuterHTML, (newElement, oldElement) => {
   // set new element back to currrent element as new element is html string
-  newElement = getCurrentElement.value;
+  newElement = getComponent.value;
   // set font attributes
   fontRefs.value.style =
     fontAttributes.style.find((style) =>
@@ -274,7 +272,7 @@ watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
 const text = ref('');
 
 function changeText() {
-  getCurrentElement.value.textContent = text.value;
+  getComponent.value.textContent = text.value;
 }
 
 function changeFontBase(attr) {
@@ -290,14 +288,14 @@ function changeFontBase(attr) {
     // fontAttr, example: xs
 
     // remove each tailwind class of same category
-    getCurrentElement.value.classList.remove(classPrefix + fontAttr);
+    getComponent.value.classList.remove(classPrefix + fontAttr);
   });
 
   // add tailwind class based on input ref
-  getCurrentElement.value.classList.add(classPrefix + fontRefs.value[attr]);
+  getComponent.value.classList.add(classPrefix + fontRefs.value[attr]);
 
   // commit changes
-  store.commit('designer/setCurrentElement', getCurrentElement.value);
+  store.commit('designer/setComponent', getComponent.value);
 }
 
 function changeFontDesktop(attr) {
@@ -312,16 +310,16 @@ function changeFontDesktop(attr) {
     // fontAttr, example: xs
 
     // remove each tailwind class of same category
-    getCurrentElement.value.classList.remove(classPrefix + fontAttr);
+    getComponent.value.classList.remove(classPrefix + fontAttr);
   });
 
   // add tailwind class based on input ref
-  getCurrentElement.value.classList.add(
+  getComponent.value.classList.add(
     classPrefix + fontRefs.value[attr + 'Desktop']
   );
 
   // commit changes
-  store.commit('designer/setCurrentElement', getCurrentElement.value);
+  store.commit('designer/setComponent', getComponent.value);
 }
 function changeFontTablet(attr) {
   //
@@ -335,16 +333,16 @@ function changeFontTablet(attr) {
     // fontAttr, example: xs
 
     // remove each tailwind class of same category
-    getCurrentElement.value.classList.remove(classPrefix + fontAttr);
+    getComponent.value.classList.remove(classPrefix + fontAttr);
   });
 
   // add tailwind class based on input ref
-  getCurrentElement.value.classList.add(
+  getComponent.value.classList.add(
     classPrefix + fontRefs.value[attr + 'Tablet']
   );
 
   // commit changes
-  store.commit('designer/setCurrentElement', getCurrentElement.value);
+  store.commit('designer/setComponent', getComponent.value);
 }
 function changeFontMobile(attr) {
   //
@@ -358,16 +356,16 @@ function changeFontMobile(attr) {
     // fontAttr, example: xs
 
     // remove each tailwind class of same category
-    getCurrentElement.value.classList.remove(classPrefix + fontAttr);
+    getComponent.value.classList.remove(classPrefix + fontAttr);
   });
 
   // add tailwind class based on input ref
-  getCurrentElement.value.classList.add(
+  getComponent.value.classList.add(
     classPrefix + fontRefs.value[attr + 'Mobile']
   );
 
   // commit changes
-  store.commit('designer/setCurrentElement', getCurrentElement.value);
+  store.commit('designer/setComponent', getComponent.value);
 }
 
 function getFontPrefix(attr) {

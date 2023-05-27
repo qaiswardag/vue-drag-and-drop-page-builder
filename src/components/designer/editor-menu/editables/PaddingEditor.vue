@@ -57,8 +57,8 @@ import { useStore } from 'vuex';
 // store
 const store = useStore();
 // getters: current element from store
-const getCurrentElement = computed(() => {
-  return store.getters['designer/getCurrentElement'];
+const getComponent = computed(() => {
+  return store.getters['designer/getComponent'];
 });
 
 const ySelected = ref('none');
@@ -68,37 +68,35 @@ const xSelected = ref('none');
 const yPaddingChange = function () {
   // delete existing "py" padding class
   TAILWIND_NUMBER_PROPERTIES.forEach((number) => {
-    getCurrentElement.value.classList.remove(`py-${number}`);
+    getComponent.value.classList.remove(`py-${number}`);
   });
   // add "py-" padding class
-  getCurrentElement.value.classList.add(`py-${ySelected.value}`);
+  getComponent.value.classList.add(`py-${ySelected.value}`);
 
   // setters (mutation): current element from store
-  store.commit('designer/setCurrentElement', getCurrentElement.value);
+  store.commit('designer/setComponent', getComponent.value);
 };
 // update x axis
 const xPaddingChange = function () {
   // delete existing "px" padding class
   TAILWIND_NUMBER_PROPERTIES.forEach((number) => {
-    getCurrentElement.value.classList.remove(`px-${number}`);
+    getComponent.value.classList.remove(`px-${number}`);
   });
   // add "px-" padding class
-  getCurrentElement.value.classList.add(`px-${xSelected.value}`);
+  getComponent.value.classList.add(`px-${xSelected.value}`);
 
   // setters (mutation): current element from store
-  store.commit('designer/setCurrentElement', getCurrentElement.value);
+  store.commit('designer/setComponent', getComponent.value);
 };
 // get current element outer HTML
-const getCurrentElementOuterHTML = computed(() => {
-  return getCurrentElement?.value?.outerHTML
-    ? getCurrentElement?.value?.outerHTML
-    : [];
+const getComponentOuterHTML = computed(() => {
+  return getComponent?.value?.outerHTML ? getComponent?.value?.outerHTML : [];
 });
 //
 // watch for any changes in "curent element"
 // Update "py" and "px padding when an element is selected
-watch(getCurrentElementOuterHTML, (newElement, oldElement) => {
-  newElement = getCurrentElement.value;
+watch(getComponentOuterHTML, (newElement, oldElement) => {
+  newElement = getComponent.value;
 
   if (newElement.classList === undefined) {
     return;

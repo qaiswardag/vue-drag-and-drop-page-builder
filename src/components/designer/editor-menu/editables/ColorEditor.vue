@@ -8,14 +8,14 @@
             class="flex flex-row justify-start items-center myPrimaryGap mb-8 cursor-pointer"
           >
             <div
-              v-if="getCurrentElementBackgroundColor !== null"
+              v-if="getBackgroundColor !== null"
               class="myPrimaryColorPreview w-8 h-8"
-              :class="[getCurrentElementBackgroundColor]"
+              :class="[getBackgroundColor]"
             ></div>
             <div
-              v-if="getCurrentElementBackgroundColor === null"
+              v-if="getBackgroundColor === null"
               class="myPrimaryColorPreview w-8 h-8"
-              :class="[getCurrentElementBackgroundColor]"
+              :class="[getBackgroundColor]"
             >
               <div class="myPrimaryColorPreview bg-gray-50">
                 <XMarkIcon
@@ -67,7 +67,7 @@ const colorsSlideOverButton = function () {
   showColorsSlideOverRight.value = false;
 };
 
-const getCurrentElementBackgroundColor = computed(() => {
-  return store.getters['designer/getCurrentElementBackgroundColor'];
+const getBackgroundColor = computed(() => {
+  return store.getters['designer/getBackgroundColor'];
 });
 </script>

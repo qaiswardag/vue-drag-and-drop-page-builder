@@ -183,8 +183,8 @@
                         </div>
                         <div
                           v-if="
-                            (getCurrentElement &&
-                              getCurrentElement.src !== undefined &&
+                            (getComponent &&
+                              getComponent.src !== undefined &&
                               getCurrentClickedImage === null) ||
                             getCurrentClickedImage?.file === null
                           "
@@ -192,7 +192,7 @@
                           <img
                             alt="preview"
                             class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
-                            :src="getCurrentElement.src"
+                            :src="getComponent.src"
                           />
                         </div>
 
@@ -336,8 +336,8 @@ export default {
       return store.getters['designer/getCurrentImagePreview'];
     });
     //
-    const getCurrentElement = computed(() => {
-      return store.getters['designer/getCurrentElement'];
+    const getComponent = computed(() => {
+      return store.getters['designer/getComponent'];
     });
     //
     //
@@ -368,7 +368,7 @@ export default {
       thirdButton,
       tabs,
       selected,
-      getCurrentElement,
+      getComponent,
       getCurrentImagePreview,
       changeSelected,
       getCurrentClickedImage,

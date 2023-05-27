@@ -74,8 +74,8 @@ const thirdMediaButtonFunction = ref(null);
 //
 //
 // get current element from store
-const getCurrentElement = computed(() => {
-  return store.getters['designer/getCurrentElement'];
+const getComponent = computed(() => {
+  return store.getters['designer/getComponent'];
 });
 //
 //

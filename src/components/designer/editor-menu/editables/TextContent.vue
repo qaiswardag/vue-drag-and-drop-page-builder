@@ -29,19 +29,17 @@ const allComponentsAddedToDom = computed(() => {
   return store.getters['designer/getComponentsAdded'];
 });
 // getters: current element from store
-const getCurrentElement = computed(() => {
-  return store.getters['designer/getCurrentElement'];
+const getComponent = computed(() => {
+  return store.getters['designer/getComponent'];
 });
 
 // get outer HTML of current element
-const getCurrentElementInnerHTML = computed(() => {
-  return getCurrentElement?.value?.innerHTML
-    ? getCurrentElement?.value?.innerHTML
-    : [];
+const getComponentInnerHTML = computed(() => {
+  return getComponent?.value?.innerHTML ? getComponent?.value?.innerHTML : [];
 });
 
 // update editor defaults when an element is selected
-watch(getCurrentElementInnerHTML, (newElementWatch, oldElement) => {
+watch(getComponentInnerHTML, (newElementWatch, oldElement) => {
   // text content
   if (typeof newElementWatch !== 'string') {
     return;
@@ -57,7 +55,7 @@ const changeText = function () {
     '<br>'
   );
   // text change
-  getCurrentElement.value.innerHTML = textContentElementClone.value;
+  getComponent.value.innerHTML = textContentElementClone.value;
 
   allComponentsAddedToDom.value.forEach((htmlComponent) => {});
 };

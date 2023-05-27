@@ -16,8 +16,8 @@ export default {
 
   // state
   state: {
-    currentElementBackgroundColor: null,
-    currentElement: null,
+    backgroundColor: null,
+    component: null,
     currentImagePreview: null,
     currentClickedImage: null,
     currentPreview: null,
@@ -29,11 +29,11 @@ export default {
   // getters
   getters: {
     // current element
-    getCurrentElementBackgroundColor(state) {
-      return state.currentElementBackgroundColor;
+    getBackgroundColor(state) {
+      return state.backgroundColor;
     },
-    getCurrentElement(state) {
-      return state.currentElement;
+    getComponent(state) {
+      return state.component;
     },
     // current element
     getComponentsAdded(state) {
@@ -55,7 +55,7 @@ export default {
       // create a new HTML div
       let currentImage = document.createElement('div');
       // set the new HTML div equal to state and current element
-      currentImage.innerHTML = state.currentElement?.outerHTML;
+      currentImage.innerHTML = state.component?.outerHTML;
 
       // check now if the new HTML contains any images
       if (currentImage.getElementsByTagName('img').length === 0) {
@@ -80,13 +80,13 @@ export default {
 
   mutations: {
     // set current element
-    setCurrentBackgroundColor(state, payload) {
-      state.currentElementBackgroundColor = payload;
+    setBackgroundColor(state, payload) {
+      state.backgroundColor = payload;
     },
     // set current element
-    setCurrentElement(state, payload) {
-      state.currentElement = {};
-      state.currentElement = payload;
+    setComponent(state, payload) {
+      state.component = {};
+      state.component = payload;
     },
     // set components added
     setComponentsAdded(state, payload) {
@@ -105,7 +105,7 @@ export default {
     setCurrentImagePreview(state, payload) {
       // set clicked element (which is the image & select the image src) to equal payload
       // payload source is the new image src
-      state.currentElement.src = payload;
+      state.component.src = payload;
       // set currebt image
       state.currentImagePreview = payload;
     },

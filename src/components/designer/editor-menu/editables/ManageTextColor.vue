@@ -20,12 +20,12 @@ import { ref, watch } from 'vue';
 const store = useStore();
 
 // getters: current element from store
-const getCurrentElement = computed(() => {
-  return store.getters['designer/getCurrentElement'];
+const getComponent = computed(() => {
+  return store.getters['designer/getComponent'];
 });
 
 // Update editor defaults when an element is selected
-watch(getCurrentElement, (newElement, oldElement) => {
+watch(getComponent, (newElement, oldElement) => {
   colorRefs.value.bg.color =
     colors.find((color) => newElement.classList.contains(`bg-${color}`)) || '';
   colorRefs.value.bg.transparent = newElement.classList.contains(
@@ -295,7 +295,7 @@ function changeColor(type, color) {
   // Remove any existing colors
   removeColor(type);
   // Add tailwind class of type based on passed color
-  getCurrentElement.value.classList.add(`${type}-${color}`);
+  getComponent.value.classList.add(`${type}-${color}`);
 
   colorRefs.value[type].color = color;
 }
@@ -305,10 +305,10 @@ function changeTransparency(type) {
   removeColor(type);
   if (colorRefs.value[type].transparent) {
     // Remove transparency class
-    getCurrentElement.value.classList.remove(`${type}-transparent`);
+    getComponent.value.classList.remove(`${type}-transparent`);
   } else {
     // Add transparency class
-    getCurrentElement.value.classList.add(`${type}-transparent`);
+    getComponent.value.classList.add(`${type}-transparent`);
   }
 }
 
@@ -316,12 +316,12 @@ function removeColor(type) {
   // Iterate through all tailwind color class names
   colors.forEach((color) => {
     // Remove any tailwind color class of same type
-    getCurrentElement.value.classList.remove(`${type}-${color}`);
+    getComponent.value.classList.remove(`${type}-${color}`);
   });
   // Remove transparency class
-  getCurrentElement.value.classList.remove(`${type}-transparent`);
+  getComponent.value.classList.remove(`${type}-transparent`);
   // setters (mutation): set current element in store
-  store.commit('designer/setCurrentElement', getCurrentElement.value);
+  store.commit('designer/setComponent', getComponent.value);
 }
 // setup code
 </script>

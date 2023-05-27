@@ -58,12 +58,12 @@ import EditorAccordion from '../EditorAccordion.vue';
 // store
 const store = useStore();
 // getters current element from store
-const getCurrentElement = computed(() => {
-  return store.getters['designer/getCurrentElement'];
+const getComponent = computed(() => {
+  return store.getters['designer/getComponent'];
 });
 // get current class
 const currentClasses = computed(() => {
-  return getCurrentElement.value?.classList;
+  return getComponent.value?.classList;
 });
 
 // input class
@@ -75,9 +75,9 @@ const containsSpace = computed(() => {
 //
 const removeClass = function (e) {
   // remove clicked class name from selected element
-  getCurrentElement.value.classList.remove(e.currentTarget.textContent);
+  getComponent.value.classList.remove(e.currentTarget.textContent);
   // commit changes
-  store.commit('designer/setCurrentElement', getCurrentElement.value);
+  store.commit('designer/setComponent', getComponent.value);
 };
 // add class
 const addClass = function (e) {
@@ -88,9 +88,9 @@ const addClass = function (e) {
     (e.keyCode === 13 || e.type === 'click')
   ) {
     // add input field value as class
-    getCurrentElement.value.classList.add(inputClass.value);
+    getComponent.value.classList.add(inputClass.value);
     // commit changes
-    store.commit('designer/setCurrentElement', getCurrentElement.value);
+    store.commit('designer/setComponent', getComponent.value);
     // reset input value
     inputClass.value = '';
   }

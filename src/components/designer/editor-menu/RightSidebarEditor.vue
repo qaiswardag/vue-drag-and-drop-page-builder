@@ -71,20 +71,18 @@ const getCurrentImagePreview = computed(() => {
 });
 
 // get current element tag
-const getCurrentElement = computed(() => {
-  return store.getters['designer/getCurrentElement'];
+const getComponent = computed(() => {
+  return store.getters['designer/getComponent'];
 });
 
 // get outer HTML of current element
-const getCurrentElementInnerHTML = computed(() => {
-  return getCurrentElement?.value?.innerHTML
-    ? getCurrentElement?.value?.innerHTML
-    : [];
+const getComponentInnerHTML = computed(() => {
+  return getComponent?.value?.innerHTML ? getComponent?.value?.innerHTML : [];
 });
 
 // watch and show text area based "get current element" content
 // only show text area if it's include text only plus if containing <br>
-watch(getCurrentElementInnerHTML, (newElementInnerHTML, oldElement) => {
+watch(getComponentInnerHTML, (newElementInnerHTML, oldElement) => {
   // stop execution if
   if (typeof newElementInnerHTML !== 'string') {
     return;
@@ -126,7 +124,7 @@ const textTags = [
 ];
 // Get tagName of element
 const elementTag = computed(() => {
-  return getCurrentElement.value?.tagName;
+  return getComponent.value?.tagName;
 });
 // Check if text is editable
 const textEditable = computed(() => {

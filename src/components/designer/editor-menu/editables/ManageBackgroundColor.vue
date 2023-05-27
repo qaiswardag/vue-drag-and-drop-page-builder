@@ -10,8 +10,8 @@ const store = useStore();
 
 const colors = config.backgroundColors();
 
-const getCurrentElementBackgroundColor = computed(() => {
-  return store.getters['designer/getCurrentElementBackgroundColor'];
+const getBackgroundColor = computed(() => {
+  return store.getters['designer/getBackgroundColor'];
 });
 
 const designer = new Designer(store);
@@ -21,14 +21,14 @@ const designer = new Designer(store);
   <div class="mt-6 pt-4 pb-8">
     <div class="flex flex-row justify-start items-center myPrimaryGap mb-8">
       <div
-        v-if="getCurrentElementBackgroundColor !== null"
+        v-if="getBackgroundColor !== null"
         class="myPrimaryColorPreview w-8 h-8 cursor-default"
-        :class="[getCurrentElementBackgroundColor]"
+        :class="[getBackgroundColor]"
       ></div>
       <div
-        v-if="getCurrentElementBackgroundColor === null"
+        v-if="getBackgroundColor === null"
         class="w-8 h-8 cursor-default"
-        :class="[getCurrentElementBackgroundColor]"
+        :class="[getBackgroundColor]"
       >
         <div class="myPrimaryColorPreview bg-gray-50">
           <XMarkIcon class="text-myPrimaryErrorColor stroke-2"></XMarkIcon>
@@ -43,9 +43,9 @@ const designer = new Designer(store);
           :key="color"
           @click="designer.handleColor(color)"
           class="myPrimaryColorPreview flex justify-center items-center"
-          :class="[color === getCurrentElementBackgroundColor ? '' : '', color]"
+          :class="[color === getBackgroundColor ? '' : '', color]"
         >
-          <template v-if="color === getCurrentElementBackgroundColor">
+          <template v-if="color === getBackgroundColor">
             <!-- Display the checkmark icon or any other indicator -->
             <CheckIcon
               class="w-6 h-6 text-white bg-black bg-opacity-50 rounded-full"
@@ -55,9 +55,7 @@ const designer = new Designer(store);
         <div
           @click="designer.handleColor('removeColor')"
           class="myPrimaryColorPreview relative bg-gray-100"
-          :class="[
-            getCurrentElementBackgroundColor === null ? 'rounded-full' : '',
-          ]"
+          :class="[getBackgroundColor === null ? 'rounded-full' : '']"
         >
           <XMarkIcon class="text-myPrimaryErrorColor stroke-2"></XMarkIcon>
         </div>
@@ -68,9 +66,9 @@ const designer = new Designer(store);
           :key="color"
           @click="designer.handleColor(color)"
           class="myPrimaryColorPreview flex justify-center items-center"
-          :class="[color === getCurrentElementBackgroundColor ? '' : '', color]"
+          :class="[color === getBackgroundColor ? '' : '', color]"
         >
-          <template v-if="color === getCurrentElementBackgroundColor">
+          <template v-if="color === getBackgroundColor">
             <!-- Display the checkmark icon or any other indicator -->
             <CheckIcon
               class="w-6 h-6 text-white bg-black bg-opacity-50 rounded-full"

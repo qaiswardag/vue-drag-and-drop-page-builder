@@ -65,8 +65,8 @@ const activeLibrary = ref('forms');
 const currentElement = ref({});
 //
 // get current element from store
-const getCurrentElement = computed(() => {
-  return store.getters['designer/getCurrentElement'];
+const getComponent = computed(() => {
+  return store.getters['designer/getComponent'];
 });
 //
 //
@@ -109,8 +109,8 @@ const addEditorListener = function () {
 
       // current clicked element
       currentElement.value = e.currentTarget;
-      // update state setCurrentElement
-      store.commit('designer/setCurrentElement', currentElement.value);
+      // update state setComponent
+      store.commit('designer/setComponent', currentElement.value);
     });
   });
 };
@@ -260,14 +260,14 @@ const onDrop = function () {
 };
 //
 // get current element outer HTML
-const getCurrentElementOuterHTML = computed(() => {
-  return getCurrentElement?.value?.outerHTML;
+const getComponentOuterHTML = computed(() => {
+  return getComponent?.value?.outerHTML;
 });
 //
 //TODO: watch any change. Even text change
 // watch for any changes in "curent element"
-watch(getCurrentElementOuterHTML, (newElement) => {
-  //console.log('getCurrentElementOuterHTML er:', newGetCurrentElementOuterHTML)
+watch(getComponentOuterHTML, (newElement) => {
+  //console.log('getComponentOuterHTML er:', newgetComponentOuterHTML)
   // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
   //
   //
@@ -325,7 +325,7 @@ watch(
   // The code utilizes a watch method to closely monitor the changes in the currentElement
   // This watch method ensures that any modifications or updates to the currentElement
   // are immediately detected
-  getCurrentElement,
+  getComponent,
   (newHTMLElement) => {
     if (newHTMLElement === null) return;
 

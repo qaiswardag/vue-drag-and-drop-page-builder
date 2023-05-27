@@ -37,13 +37,13 @@ import { computed, ref } from 'vue';
 // store
 const store = useStore();
 // getters: current element from store
-const getCurrentElement = computed(() => {
-  return store.getters['designer/getCurrentElement'];
+const getComponent = computed(() => {
+  return store.getters['designer/getComponent'];
 });
 
 // remove current clicked element
 const deleteElement = function () {
   // remove element
-  getCurrentElement.value.remove();
+  getComponent.value.remove();
 };
 </script>
