@@ -331,6 +331,8 @@ watch(
 
     // handle color
     designer.handleColor();
+    // handle font size
+    designer.handleFontSize();
   },
   { immediate: true },
   { deep: true }

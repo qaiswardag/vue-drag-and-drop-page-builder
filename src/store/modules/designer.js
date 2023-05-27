@@ -16,6 +16,10 @@ export default {
 
   // state
   state: {
+    fontBase: null,
+    fontDesktop: null,
+    fontTablet: null,
+    fontMobile: null,
     backgroundColor: null,
     component: null,
     currentImagePreview: null,
@@ -29,6 +33,18 @@ export default {
   // getters
   getters: {
     // current element
+    getFontBase(state) {
+      return state.fontBase;
+    },
+    getFontDesktop(state) {
+      return state.fontDesktop;
+    },
+    getFontTablet(state) {
+      return state.fontTablet;
+    },
+    getFontMobile(state) {
+      return state.fontMobile;
+    },
     getBackgroundColor(state) {
       return state.backgroundColor;
     },
@@ -79,21 +95,29 @@ export default {
   },
 
   mutations: {
-    // set current element
+    setFontBase(state, payload) {
+      state.fontBase = payload;
+    },
+    setFontDesktop(state, payload) {
+      state.fontDesktop = payload;
+    },
+    setFontTablet(state, payload) {
+      state.fontTablet = payload;
+    },
+    setFontMobile(state, payload) {
+      state.fontMobile = payload;
+    },
     setBackgroundColor(state, payload) {
       state.backgroundColor = payload;
     },
-    // set current element
     setComponent(state, payload) {
       state.component = {};
       state.component = payload;
     },
-    // set components added
     setComponentsAdded(state, payload) {
       state.componentsAdded = {};
       state.componentsAdded = payload;
     },
-    // set current compoenent
     setCurrentComponent(state, payload) {
       state.currentComponent = payload;
     },

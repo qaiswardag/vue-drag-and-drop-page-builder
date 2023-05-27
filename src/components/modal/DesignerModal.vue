@@ -10,8 +10,6 @@ import {
 } from '@headlessui/vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 
-import {} from '@headlessui/vue';
-
 defineProps({
   show: {
     type: Boolean,
@@ -35,6 +33,7 @@ const firstButton = function () {
         as="div"
         class="fixed z-30 inset-0 overflow-y-auto"
         @close="firstButton"
+        tabindex="0"
       >
         <div
           class="flex items-end justify-center pb-20 text-center sm:block sm:p-0 bg-white"
@@ -84,7 +83,9 @@ const firstButton = function () {
                   @click="firstButton"
                   class="flex items-center justify-center gap-1 cursor-pointer hover:underline"
                 >
-                  <span class="font-medium"> Close Designer </span>
+                  <span class="myPrimaryParagraph font-medium">
+                    Close Designer
+                  </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

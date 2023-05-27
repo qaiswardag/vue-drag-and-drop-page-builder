@@ -1,14 +1,126 @@
-import config from '../utils/tailwaind-colors';
+import tailwindColors from '../utils/tailwaind-colors';
+import tailwindFontSizes from '../utils/tailwind-font-sizes';
 import { computed } from 'vue';
 
 class Designer {
   constructor(store) {
-    this.colors = config.backgroundColors();
+    this.colors = tailwindColors.backgroundColors();
     this.store = store;
     this.getComponent = computed(
       () => this.store.getters['designer/getComponent']
     );
   }
+  handleFontSize(userSelectedFontSize) {
+    let fontBase = tailwindFontSizes.fontBase.find((size) => {
+      return this.getComponent.value.classList.contains(size);
+    });
+    if (fontBase === undefined) {
+      fontBase = 'base:none';
+    }
+
+    let fontDesktop = tailwindFontSizes.fontDesktop.find((size) => {
+      return this.getComponent.value.classList.contains(size);
+    });
+    if (fontDesktop === undefined) {
+      fontDesktop = 'lg:none';
+    }
+
+    let fontTablet = tailwindFontSizes.fontTablet.find((size) => {
+      return this.getComponent.value.classList.contains(size);
+    });
+    if (fontTablet === undefined) {
+      fontTablet = 'md:none';
+    }
+
+    let fontMobile = tailwindFontSizes.fontMobile.find((size) => {
+      return this.getComponent.value.classList.contains(size);
+    });
+    if (fontMobile === undefined) {
+      fontMobile = 'sm:none';
+    }
+    //
+    // set fonts
+    this.store.commit('designer/setFontBase', fontBase);
+    this.store.commit('designer/setFontDesktop', fontDesktop);
+    this.store.commit('designer/setFontTablet', fontTablet);
+    this.store.commit('designer/setFontMobile', fontMobile);
+    //
+    //
+    //
+    //
+    //
+    const getFontBase = computed(() => {
+      return this.store.getters['designer/getFontBase'];
+    });
+    const getFontDesktop = computed(() => {
+      return this.store.getters['designer/getFontDesktop'];
+    });
+    const getFontTablet = computed(() => {
+      return this.store.getters['designer/getFontTablet'];
+    });
+    const getFontMobile = computed(() => {
+      return this.store.getters['designer/getFontMobile'];
+    });
+
+    if (userSelectedFontSize !== undefined) {
+      if (
+        !userSelectedFontSize.includes('sm:') &&
+        !userSelectedFontSize.includes('md:') &&
+        !userSelectedFontSize.includes('lg:')
+      ) {
+        this.getComponent.value.classList.remove(getFontBase.value);
+        if (!userSelectedFontSize.includes('base:none')) {
+          this.getComponent.value.classList.add(userSelectedFontSize);
+        }
+
+        this.store.commit('designer/setFontBase', userSelectedFontSize);
+      }
+      if (userSelectedFontSize.includes('lg:')) {
+        this.getComponent.value.classList.remove(getFontDesktop.value);
+        if (!userSelectedFontSize.includes('lg:none')) {
+          this.getComponent.value.classList.add(userSelectedFontSize);
+        }
+
+        this.store.commit('designer/setFontDesktop', userSelectedFontSize);
+      }
+      if (userSelectedFontSize.includes('md:')) {
+        this.getComponent.value.classList.remove(getFontTablet.value);
+        if (!userSelectedFontSize.includes('md:none')) {
+          this.getComponent.value.classList.add(userSelectedFontSize);
+        }
+
+        this.store.commit('designer/setFontTablet', userSelectedFontSize);
+      }
+      if (userSelectedFontSize.includes('sm:')) {
+        this.getComponent.value.classList.remove(getFontMobile.value);
+        if (!userSelectedFontSize.includes('sm:none')) {
+          this.getComponent.value.classList.add(userSelectedFontSize);
+        }
+
+        this.store.commit('designer/setFontMobile', userSelectedFontSize);
+      }
+
+      this.store.commit('designer/setComponent', this.getComponent.value);
+    }
+    //
+    //
+    //
+    //
+  }
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
   handleColor(userColorFromPalette) {
     // Iterate over each color in the colors array
     for (let singleColor of this.colors) {

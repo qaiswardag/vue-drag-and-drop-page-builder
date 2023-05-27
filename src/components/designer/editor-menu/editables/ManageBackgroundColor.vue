@@ -1,15 +1,12 @@
 <script setup>
 import { useStore } from 'vuex';
 import { computed, watch } from 'vue';
-import config from '../../../../utils/tailwaind-colors';
+import tailwindColors from '../../../../utils/tailwaind-colors';
 import Designer from '../../../../composables/Designer';
 import { CheckIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 
-// store
 const store = useStore();
-
-const colors = config.backgroundColors();
-
+const colors = tailwindColors.backgroundColors();
 const getBackgroundColor = computed(() => {
   return store.getters['designer/getBackgroundColor'];
 });

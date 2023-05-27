@@ -21,6 +21,7 @@
         </article>
 
         <article v-show="textEditable">
+          <Typographies></Typographies>
           <Typography></Typography>
         </article>
         <article>
@@ -53,6 +54,7 @@ import TextContent from '../../designer/editor-menu/editables/TextContent.vue';
 import Typography from '../../designer/editor-menu/editables/Typography.vue';
 import PaddingEditor from './editables/PaddingEditor.vue';
 import DeleteElementEditor from './editables/DeleteElementEditor.vue';
+import Typographies from './editables/Typographies.vue';
 
 // store
 const store = useStore();
