@@ -1,6 +1,6 @@
 const tailwindFontStyles = {
-  // text-xs sm:text-2xl md:text-4xl lg:text-8xl
   fontWeight: [
+    'none',
     'font-thin',
     'font-extralight',
     'font-light',
@@ -11,6 +11,8 @@ const tailwindFontStyles = {
     'font-extrabold',
     'font-black',
   ],
+  fontFamily: ['none', 'font-sans', 'font-serif', 'font-mono'],
+  fontStyle: ['none', 'italic', 'non-italic'],
 };
 
 export default tailwindFontStyles;

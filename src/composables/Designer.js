@@ -1,5 +1,6 @@
 import tailwindColors from '../utils/tailwaind-colors';
 import tailwindFontSizes from '../utils/tailwind-font-sizes';
+import tailwindFontStyles from '../utils/tailwind-font-styles';
 import { computed } from 'vue';
 
 class Designer {
@@ -10,6 +11,131 @@ class Designer {
       () => this.store.getters['designer/getComponent']
     );
   }
+  handleFontStyle(userSelectedFontStyle) {
+    let fontStyle = tailwindFontStyles.fontStyle.find((style) => {
+      return this.getComponent.value.classList.contains(style);
+    });
+
+    if (fontStyle === undefined) {
+      fontStyle = 'none';
+      this.store.commit('designer/setFontStyle', fontStyle);
+    }
+    if (fontStyle !== undefined) {
+      this.store.commit('designer/setFontStyle', fontStyle);
+    }
+
+    if (
+      userSelectedFontStyle !== undefined &&
+      userSelectedFontStyle !== 'none'
+    ) {
+      if (
+        fontStyle !== undefined &&
+        this.getComponent.value.classList.contains(fontStyle)
+      ) {
+        this.getComponent.value.classList.remove(fontStyle);
+      }
+
+      this.getComponent.value.classList.add(userSelectedFontStyle);
+      fontStyle = userSelectedFontStyle; // Update fontStyle
+      this.store.commit('designer/setFontStyle', fontStyle); // Commit updated fontStyle
+      this.store.commit('designer/setComponent', this.getComponent.value);
+    }
+
+    // Handle the case where the user selects 'none'
+    if (userSelectedFontStyle === 'none' && fontStyle !== undefined) {
+      this.getComponent.value.classList.remove(fontStyle);
+      fontStyle = userSelectedFontStyle; // Update fontStyle
+      this.store.commit('designer/setFontStyle', fontStyle); // Commit updated fontStyle
+      this.store.commit('designer/setComponent', this.getComponent.value);
+    }
+  }
+  handleFontFamily(userSelectedFontFamily) {
+    let fontFamily = tailwindFontStyles.fontFamily.find((family) => {
+      return this.getComponent.value.classList.contains(family);
+    });
+
+    if (fontFamily === undefined) {
+      fontFamily = 'none';
+      this.store.commit('designer/setFontFamily', fontFamily);
+    }
+    if (fontFamily !== undefined) {
+      this.store.commit('designer/setFontFamily', fontFamily);
+    }
+
+    if (
+      userSelectedFontFamily !== undefined &&
+      userSelectedFontFamily !== 'none'
+    ) {
+      if (
+        fontFamily !== undefined &&
+        this.getComponent.value.classList.contains(fontFamily)
+      ) {
+        this.getComponent.value.classList.remove(fontFamily);
+      }
+
+      this.getComponent.value.classList.add(userSelectedFontFamily);
+      fontFamily = userSelectedFontFamily; // Update fontFamily
+      this.store.commit('designer/setFontFamily', fontFamily); // Commit updated fontFamily
+      this.store.commit('designer/setComponent', this.getComponent.value);
+    }
+
+    // Handle the case where the user selects 'none'
+    if (userSelectedFontFamily === 'none' && fontFamily !== undefined) {
+      this.getComponent.value.classList.remove(fontFamily);
+      fontFamily = userSelectedFontFamily; // Update fontFamily
+      this.store.commit('designer/setFontFamily', fontFamily); // Commit updated fontFamily
+      this.store.commit('designer/setComponent', this.getComponent.value);
+    }
+  }
+  //
+  //
+  //
+  //
+  handleFontWeight(userSelectedFontWeight) {
+    let fontWeight = tailwindFontStyles.fontWeight.find((weight) => {
+      return this.getComponent.value.classList.contains(weight);
+    });
+
+    if (fontWeight === undefined) {
+      fontWeight = 'none';
+      this.store.commit('designer/setFontWeight', fontWeight);
+    }
+    if (fontWeight !== undefined) {
+      this.store.commit('designer/setFontWeight', fontWeight);
+    }
+
+    if (
+      userSelectedFontWeight !== undefined &&
+      userSelectedFontWeight !== 'none'
+    ) {
+      if (
+        fontWeight !== undefined &&
+        this.getComponent.value.classList.contains(fontWeight)
+      ) {
+        this.getComponent.value.classList.remove(fontWeight);
+      }
+
+      this.getComponent.value.classList.add(userSelectedFontWeight);
+      fontWeight = userSelectedFontWeight; // Update fontWeight
+      this.store.commit('designer/setFontWeight', fontWeight); // Commit updated fontWeight
+      this.store.commit('designer/setComponent', this.getComponent.value);
+    }
+
+    // Handle the case where the user selects 'none'
+    if (userSelectedFontWeight === 'none' && fontWeight !== undefined) {
+      this.getComponent.value.classList.remove(fontWeight);
+      fontWeight = userSelectedFontWeight; // Update fontWeight
+      this.store.commit('designer/setFontWeight', fontWeight); // Commit updated fontWeight
+      this.store.commit('designer/setComponent', this.getComponent.value);
+    }
+  }
+
+  //
+  //
+  //
+  //
+  //
+  //
   handleFontSize(userSelectedFontSize) {
     let fontBase = tailwindFontSizes.fontBase.find((size) => {
       return this.getComponent.value.classList.contains(size);

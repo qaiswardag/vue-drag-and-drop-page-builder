@@ -16,6 +16,9 @@ export default {
 
   // state
   state: {
+    fontStyle: null,
+    fontFamily: null,
+    fontWeight: null,
     fontBase: null,
     fontDesktop: null,
     fontTablet: null,
@@ -33,6 +36,15 @@ export default {
   // getters
   getters: {
     // current element
+    getFontStyle(state) {
+      return state.fontStyle;
+    },
+    getFontFamily(state) {
+      return state.fontFamily;
+    },
+    getFontWeight(state) {
+      return state.fontWeight;
+    },
     getFontBase(state) {
       return state.fontBase;
     },
@@ -95,6 +107,15 @@ export default {
   },
 
   mutations: {
+    setFontStyle(state, payload) {
+      state.fontStyle = payload;
+    },
+    setFontFamily(state, payload) {
+      state.fontFamily = payload;
+    },
+    setFontWeight(state, payload) {
+      state.fontWeight = payload;
+    },
     setFontBase(state, payload) {
       state.fontBase = payload;
     },

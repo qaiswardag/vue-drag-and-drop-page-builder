@@ -333,6 +333,12 @@ watch(
     designer.handleColor();
     // handle font size
     designer.handleFontSize();
+    // handle font weight
+    designer.handleFontWeight();
+    // handle font family
+    designer.handleFontFamily();
+    // handle font style
+    designer.handleFontStyle();
   },
   { immediate: true },
   { deep: true }

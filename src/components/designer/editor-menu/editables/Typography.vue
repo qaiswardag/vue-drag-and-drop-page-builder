@@ -1,381 +1,198 @@
+<script setup>
+import Designer from '../../../../composables/Designer';
+import EditorAccordion from '../EditorAccordion.vue';
+import { useStore } from 'vuex';
+import tailwindFontSizes from '../../../../utils/tailwind-font-sizes';
+import tailwindFontStyles from '../../../../utils/tailwind-font-styles';
+import { computed, ref, watch } from 'vue';
+
+const store = useStore();
+
+const designer = new Designer(store);
+
+const fontBase = ref(null);
+const fontDesktop = ref(null);
+const fontTablet = ref(null);
+const fontMobile = ref(null);
+const fontWeight = ref(null);
+const fontFamily = ref(null);
+const fontStyle = ref(null);
+
+const getFontBase = computed(() => {
+  return store.getters['designer/getFontBase'];
+});
+const getFontDesktop = computed(() => {
+  return store.getters['designer/getFontDesktop'];
+});
+const getFontTablet = computed(() => {
+  return store.getters['designer/getFontTablet'];
+});
+const getFontMobile = computed(() => {
+  return store.getters['designer/getFontMobile'];
+});
+const getFontWeight = computed(() => {
+  return store.getters['designer/getFontWeight'];
+});
+const getFontFamily = computed(() => {
+  return store.getters['designer/getFontFamily'];
+});
+const getFontStyle = computed(() => {
+  return store.getters['designer/getFontStyle'];
+});
+
+watch(getFontBase, (newValue) => {
+  fontBase.value = newValue;
+});
+watch(getFontDesktop, (newValue) => {
+  fontDesktop.value = newValue;
+});
+watch(getFontTablet, (newValue) => {
+  fontTablet.value = newValue;
+});
+watch(getFontMobile, (newValue) => {
+  fontMobile.value = newValue;
+});
+watch(getFontWeight, (newValue) => {
+  fontWeight.value = newValue;
+});
+watch(getFontFamily, (newValue) => {
+  fontFamily.value = newValue;
+});
+watch(getFontStyle, (newValue) => {
+  fontStyle.value = newValue;
+});
+</script>
+
 <template>
   <EditorAccordion>
-    <template #title> Typography </template>
+    <template #title> Typographies </template>
     <template #content>
       <!-- FONT SIZES -->
-      <p class="myPrimaryParagraph py-0 my-4">Font sizes</p>
+      <p class="myPrimaryParagraph font-medium py-0 my-4">Font sizes</p>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel">
-          Font base size
-        </label>
+        <label for="meta_title" class="myPrimaryInputLabel"> Font Base </label>
         <select
-          v-model="fontRefs.size"
+          v-model="fontBase"
           class="myPrimarySelect"
-          @change="changeFontBase('size')"
+          @change="designer.handleFontSize(fontBase)"
         >
           <option disabled value="">Select</option>
-          <option v-for="size in fontAttributes.size" :key="size">
-            {{ size }}
+          <option
+            v-for="fontSize in tailwindFontSizes.fontBase"
+            :key="fontSize"
+          >
+            {{ fontSize }}
           </option>
         </select>
       </div>
-
       <div class="mb-4">
         <label for="meta_title" class="myPrimaryInputLabel">
           Font desktop size
         </label>
         <select
-          v-model="fontRefs.sizeDesktop"
+          v-model="fontDesktop"
           class="myPrimarySelect"
-          @change="changeFontDesktop('size')"
+          @change="designer.handleFontSize(fontDesktop)"
         >
           <option disabled value="">Select</option>
-          <option v-for="size in fontAttributes.size" :key="size">
-            {{ size }}
+          <option
+            v-for="fontSize in tailwindFontSizes.fontDesktop"
+            :key="fontSize"
+          >
+            {{ fontSize }}
           </option>
         </select>
       </div>
-
       <div class="mb-4">
         <label for="meta_title" class="myPrimaryInputLabel">
           Font tablet size
         </label>
         <select
-          v-model="fontRefs.sizeTablet"
+          v-model="fontTablet"
           class="myPrimarySelect"
-          @change="changeFontTablet('size')"
+          @change="designer.handleFontSize(fontTablet)"
         >
           <option disabled value="">Select</option>
-          <option v-for="size in fontAttributes.size" :key="size">
-            {{ size }}
+          <option
+            v-for="fontSize in tailwindFontSizes.fontTablet"
+            :key="fontSize"
+          >
+            {{ fontSize }}
           </option>
         </select>
       </div>
-
       <div class="mb-4">
         <label for="meta_title" class="myPrimaryInputLabel">
           Font mobile size
         </label>
         <select
-          v-model="fontRefs.sizeMobile"
+          v-model="fontMobile"
           class="myPrimarySelect"
-          @change="changeFontMobile('size')"
+          @change="designer.handleFontSize(fontMobile)"
         >
           <option disabled value="">Select</option>
-          <option v-for="size in fontAttributes.size" :key="size">
-            {{ size }}
+          <option
+            v-for="fontSize in tailwindFontSizes.fontMobile"
+            :key="fontSize"
+          >
+            {{ fontSize }}
           </option>
         </select>
       </div>
-
-      <!-- STOP STYLES -->
       <hr />
-      <p class="myPrimaryParagraph py-0 my-4">Font styles</p>
-
+      <p class="myPrimaryParagraph font-medium py-0 my-4">Font general</p>
       <div class="mb-4">
         <label for="meta_title" class="myPrimaryInputLabel">
           Font weight
         </label>
         <select
-          v-model="fontRefs.weight"
+          v-model="fontWeight"
           class="myPrimarySelect"
-          @change="changeFontBase('weight')"
+          @change="designer.handleFontWeight(fontWeight)"
         >
           <option disabled value="">Select</option>
-          <option v-for="weight in fontAttributes.weight" :key="weight">
-            {{ weight }}
+          <option
+            v-for="fontWeight in tailwindFontStyles.fontWeight"
+            :key="fontWeight"
+          >
+            {{ fontWeight }}
           </option>
         </select>
       </div>
-
       <div class="mb-4">
         <label for="meta_title" class="myPrimaryInputLabel">
           Font family
         </label>
         <select
-          v-model="fontRefs.family"
+          v-model="fontFamily"
           class="myPrimarySelect"
-          @change="changeFontBase('family')"
+          @change="designer.handleFontFamily(fontFamily)"
         >
-          <option class="rounded-xl" disabled value="">Select</option>
-          <option v-for="family in fontAttributes.family" :key="family">
-            {{ family }}
+          <option disabled value="">Select</option>
+          <option
+            v-for="fontFamily in tailwindFontStyles.fontFamily"
+            :key="fontFamily"
+          >
+            {{ fontFamily }}
           </option>
         </select>
       </div>
-
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel"> Font style </label>
+        <label for="meta_title" class="myPrimaryInputLabel"> Font Style </label>
         <select
-          v-model="fontRefs.style"
+          v-model="fontStyle"
           class="myPrimarySelect"
-          @change="changeFontBase('style')"
+          @change="designer.handleFontStyle(fontStyle)"
         >
-          <option class="rounded-xl" disabled value="">Select</option>
-          <option v-for="style in fontAttributes.style" :key="style">
-            {{ style }}
+          <option disabled value="">Select</option>
+          <option
+            v-for="fontStyle in tailwindFontStyles.fontStyle"
+            :key="fontStyle"
+          >
+            {{ fontStyle }}
           </option>
         </select>
       </div>
     </template>
   </EditorAccordion>
 </template>
-
-<script setup>
-import { watch, ref, computed } from 'vue';
-import { useStore } from 'vuex';
-import EditorAccordion from '../EditorAccordion.vue';
-
-// store
-const store = useStore();
-// getter current element
-const getComponent = computed(() => {
-  return store.getters['designer/getComponent'];
-});
-// get outer HTML of current element
-const getComponentOuterHTML = computed(() => {
-  return getComponent?.value?.outerHTML ? getComponent?.value?.outerHTML : [];
-});
-//
-//
-//
-// reactive font values bound to v-model
-const fontRefs = ref({
-  // font sizes
-  size: '',
-  sizeDesktop: '',
-  sizeTablet: '',
-  sizeMobile: '',
-
-  // font styles
-  weight: '',
-  family: '',
-  style: '',
-});
-//
-const fontAttributes = {
-  size: [
-    'xs',
-    'sm',
-    'base',
-    'lg',
-    'xl',
-    '2xl',
-    '3xl',
-    '4xl',
-    '5xl',
-    '6xl',
-    '7xl',
-    '8xl',
-    '9xl',
-  ],
-  weight: [
-    'thin',
-    'extralight',
-    'light',
-    'normal',
-    'medium',
-    'semibold',
-    'bold',
-    'extrabold',
-    'black',
-  ],
-  family: ['sans', 'serif', 'mono'],
-  style: ['italic', 'not-italic'],
-};
-
-// update editor selected and default when an element is selected
-watch(getComponentOuterHTML, (newElement, oldElement) => {
-  // set new element back to currrent element as new element is html string
-  newElement = getComponent.value;
-  // set text value
-  text.value = newElement?.textContent || '';
-});
-
-// update editor selected and default when an element is selected
-watch(getComponentOuterHTML, (newElement, oldElement) => {
-  // set new element back to currrent element as new element is html string
-  newElement = getComponent.value;
-  // set font attributes
-  fontRefs.value.size =
-    fontAttributes.size.find((size) =>
-      newElement?.classList.contains(`text-${size}`)
-    ) || '';
-});
-// update editor selected and default when an element is selected
-watch(getComponentOuterHTML, (newElement, oldElement) => {
-  // set new element back to currrent element as new element is html string
-  newElement = getComponent.value;
-  // set font attributes
-
-  fontRefs.value.sizeDesktop =
-    fontAttributes.size.find((size) =>
-      newElement?.classList.contains(`lg:text-${size}`)
-    ) || '';
-});
-
-// update editor selected and default when an element is selected
-watch(getComponentOuterHTML, (newElement, oldElement) => {
-  // set new element back to currrent element as new element is html string
-  newElement = getComponent.value;
-  // set font attributes
-
-  fontRefs.value.sizeTablet =
-    fontAttributes.size.find((size) =>
-      newElement?.classList.contains(`md:text-${size}`)
-    ) || '';
-});
-// update editor selected and default when an element is selected
-watch(getComponentOuterHTML, (newElement, oldElement) => {
-  // set new element back to currrent element as new element is html string
-  newElement = getComponent.value;
-  // set font attributes
-
-  fontRefs.value.sizeMobile =
-    fontAttributes.size.find((size) =>
-      newElement?.classList.contains(`sm:text-${size}`)
-    ) || '';
-});
-
-// update editor selected and default when an element is selected
-watch(getComponentOuterHTML, (newElement, oldElement) => {
-  // set new element back to currrent element as new element is html string
-  newElement = getComponent.value;
-  // set font attributes
-  fontRefs.value.weight =
-    fontAttributes.weight.find((weight) =>
-      newElement?.classList.contains(`font-${weight}`)
-    ) || '';
-});
-
-// update editor selected and default when an element is selected
-watch(getComponentOuterHTML, (newElement, oldElement) => {
-  // set new element back to currrent element as new element is html string
-  newElement = getComponent.value;
-  // set font attributes
-  fontRefs.value.family =
-    fontAttributes.family.find((family) =>
-      newElement?.classList.contains(`font-${family}`)
-    ) || '';
-});
-// update editor selected and default when an element is selected
-watch(getComponentOuterHTML, (newElement, oldElement) => {
-  // set new element back to currrent element as new element is html string
-  newElement = getComponent.value;
-  // set font attributes
-  fontRefs.value.style =
-    fontAttributes.style.find((style) =>
-      newElement?.classList.contains(style)
-    ) || '';
-});
-
-const text = ref('');
-
-function changeText() {
-  getComponent.value.textContent = text.value;
-}
-
-function changeFontBase(attr) {
-  // get tailwind class prefix
-
-  //
-  const classPrefix = getFontPrefix(attr);
-  // attr, example: size
-  // prefix, example: text-
-
-  // iterate through the given tailwind class category
-  fontAttributes[attr].forEach((fontAttr) => {
-    // fontAttr, example: xs
-
-    // remove each tailwind class of same category
-    getComponent.value.classList.remove(classPrefix + fontAttr);
-  });
-
-  // add tailwind class based on input ref
-  getComponent.value.classList.add(classPrefix + fontRefs.value[attr]);
-
-  // commit changes
-  store.commit('designer/setComponent', getComponent.value);
-}
-
-function changeFontDesktop(attr) {
-  //
-  let classPrefix = getFontPrefix(attr);
-  classPrefix = 'lg:' + classPrefix;
-  // attr, example: size
-  // prefix, example: text-
-
-  // iterate through the given tailwind class category
-  fontAttributes[attr].forEach((fontAttr) => {
-    // fontAttr, example: xs
-
-    // remove each tailwind class of same category
-    getComponent.value.classList.remove(classPrefix + fontAttr);
-  });
-
-  // add tailwind class based on input ref
-  getComponent.value.classList.add(
-    classPrefix + fontRefs.value[attr + 'Desktop']
-  );
-
-  // commit changes
-  store.commit('designer/setComponent', getComponent.value);
-}
-function changeFontTablet(attr) {
-  //
-  let classPrefix = getFontPrefix(attr);
-  classPrefix = 'md:' + classPrefix;
-  // attr, example: size
-  // prefix, example: text-
-
-  // iterate through the given tailwind class category
-  fontAttributes[attr].forEach((fontAttr) => {
-    // fontAttr, example: xs
-
-    // remove each tailwind class of same category
-    getComponent.value.classList.remove(classPrefix + fontAttr);
-  });
-
-  // add tailwind class based on input ref
-  getComponent.value.classList.add(
-    classPrefix + fontRefs.value[attr + 'Tablet']
-  );
-
-  // commit changes
-  store.commit('designer/setComponent', getComponent.value);
-}
-function changeFontMobile(attr) {
-  //
-  let classPrefix = getFontPrefix(attr);
-  classPrefix = 'sm:' + classPrefix;
-  // attr, example: size
-  // prefix, example: text-
-
-  // iterate through the given tailwind class category
-  fontAttributes[attr].forEach((fontAttr) => {
-    // fontAttr, example: xs
-
-    // remove each tailwind class of same category
-    getComponent.value.classList.remove(classPrefix + fontAttr);
-  });
-
-  // add tailwind class based on input ref
-  getComponent.value.classList.add(
-    classPrefix + fontRefs.value[attr + 'Mobile']
-  );
-
-  // commit changes
-  store.commit('designer/setComponent', getComponent.value);
-}
-
-function getFontPrefix(attr) {
-  let classPrefix;
-
-  attr === 'size' ? (classPrefix = 'text-') : classPrefix;
-  attr === 'weight' ? (classPrefix = 'font-') : classPrefix;
-  attr === 'family' ? (classPrefix = 'font-') : classPrefix;
-  attr === 'style' ? (classPrefix = '') : classPrefix;
-
-  return classPrefix;
-}
-</script>
