@@ -70,12 +70,12 @@ watch(getEnabledCustomColorBG, (newValue) => {
   }
 });
 
-function rgbToHex(r, g, b) {
+const rgbToHex = function rgbToHex(r, g, b) {
   return (
     '#' +
     ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()
   );
-}
+};
 
 onMounted(() => {
   if (
@@ -90,11 +90,20 @@ onMounted(() => {
     error.value = null;
   }
 });
+
+const getBackgroundColorCustomHex = computed(() => {
+  let rgbValues = getBackgroundColorCustom.value.match(/\d+/g).map(Number);
+  return rgbToHex(...rgbValues);
+});
+
 const designer = new Designer(store);
 </script>
 
 <template>
   <div class="mt-6 pt-4 pb-8">
+    <label for="meta_title" class="myPrimaryInputLabel">
+      Current Background:
+    </label>
     <div class="flex flex-row justify-start items-center myPrimaryGap mb-8">
       <div
         v-if="getBackgroundColor !== 'none'"
@@ -116,7 +125,12 @@ const designer = new Designer(store);
           ></XMarkIcon>
         </div>
       </div>
-      <p class="myPrimaryParagraph font-medium">Current Background</p>
+      <p v-if="getBackgroundColorCustom" class="myPrimaryParagraph">
+        {{ getBackgroundColorCustomHex }}
+      </p>
+      <p v-if="!getBackgroundColorCustom" class="myPrimaryParagraph">
+        {{ getBackgroundColor }}
+      </p>
     </div>
 
     <!-- Custom color - start -->

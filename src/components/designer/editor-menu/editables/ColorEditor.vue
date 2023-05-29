@@ -4,6 +4,9 @@
     <template #content>
       <div @click="handleColorsSlideOver" class="mb-2">
         <div class="pt-0 pb-0 mb-6 border-b border-myPrimaryLightGrayColor">
+          <label for="meta_title" class="myPrimaryInputLabel">
+            Background:
+          </label>
           <div
             class="flex flex-row justify-start items-center myPrimaryGap mb-8 cursor-pointer"
           >
@@ -30,7 +33,12 @@
                 ></XMarkIcon>
               </div>
             </div>
-            <p class="myPrimaryParagraph font-medium">Background</p>
+            <p v-if="getBackgroundColorCustom" class="myPrimaryParagraph">
+              {{ getBackgroundColorCustomHex }}
+            </p>
+            <p v-if="!getBackgroundColorCustom" class="myPrimaryParagraph">
+              {{ getBackgroundColor }}
+            </p>
           </div>
         </div>
       </div>
@@ -79,5 +87,17 @@ const getBackgroundColor = computed(() => {
 });
 const getBackgroundColorCustom = computed(() => {
   return store.getters['designer/getBackgroundColorCustom'];
+});
+
+const rgbToHex = function rgbToHex(r, g, b) {
+  return (
+    '#' +
+    ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()
+  );
+};
+
+const getBackgroundColorCustomHex = computed(() => {
+  let rgbValues = getBackgroundColorCustom.value.match(/\d+/g).map(Number);
+  return rgbToHex(...rgbValues);
 });
 </script>
