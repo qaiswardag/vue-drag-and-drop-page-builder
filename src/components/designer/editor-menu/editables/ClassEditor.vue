@@ -40,7 +40,6 @@ const inputClass = ref('');
   <EditorAccordion>
     <template #title>Classes</template>
     <template #content>
-      <p class="my-12">getCurrentClasses er: {{ currentClasses }}</p>
       <div class="flex flex-row flex-wrap gap-2 mt-2 mb-4">
         <p
           v-for="className in currentClasses"

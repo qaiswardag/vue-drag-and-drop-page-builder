@@ -258,23 +258,6 @@ const onDrop = function () {
   designer.saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
 };
 //
-// get current element outer HTML
-const getComponentOuterHTML = computed(() => {
-  return getComponent?.value?.outerHTML;
-});
-//
-//TODO: watch any change. Even text change
-// watch for any changes in "curent element"
-watch(getComponentOuterHTML, (newElement) => {
-  //console.log('getComponentOuterHTML er:', newgetComponentOuterHTML)
-  // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
-  //
-  //
-  //
-  //
-  //
-});
-//
 // set all components add on before mount
 // On before mount
 onBeforeMount(async () => {
@@ -319,41 +302,48 @@ onMounted(async () => {
 // JUNE 2023 UPDATING THE DESIGNER - START
 // JUNE 2023 UPDATING THE DESIGNER - START
 //
+const designerMethods = function () {
+  // handle color
+  designer.handleColor();
+  // handle font size
+  designer.handleFontSize();
+  // handle font weight
+  designer.handleFontWeight();
+  // handle font family
+  designer.handleFontFamily();
+  // handle font style
+  designer.handleFontStyle();
+  // handle vertical padding
+  designer.handleVerticalPadding();
+  // handle horizontal padding
+  designer.handleHorizontalPadding();
+  // handle vertical margin
+  designer.handleVerticalMargin();
+  // handle horizontal margin
+  designer.handleHorizontalMargin();
+  // handle classes
+  designer.currentClasses();
+};
 
-watch(
-  // The code utilizes a watch method to closely monitor the changes in the currentElement
-  // This watch method ensures that any modifications or updates to the currentElement
-  // are immediately detected
-  getComponent,
-  (newHTMLElement) => {
-    if (newHTMLElement === null) return;
-    console.log('1 RAN');
+onMounted(() => {
+  if (getComponent.value === null) return;
+  designerMethods();
+});
 
-    // handle color
-    // TODO: handle color is making right sidebar slow
-    designer.handleColor();
-    // handle font size
-    designer.handleFontSize();
-    // handle font weight
-    designer.handleFontWeight();
-    // handle font family
-    designer.handleFontFamily();
-    // handle font style
-    designer.handleFontStyle();
-    // handle vertical padding
-    designer.handleVerticalPadding();
-    // handle horizontal padding
-    designer.handleHorizontalPadding();
-    // handle vertical margin
-    designer.handleVerticalMargin();
-    // handle horizontal margin
-    designer.handleHorizontalMargin();
-    // handle classes
-    designer.currentClasses();
-  },
-  { immediate: true },
-  { deep: true }
-);
+// get current element outer HTML
+const getComponentOuterHTML = computed(() => {
+  if (getComponent.value === null) return;
+  return getComponent.value.outerHTML ? getComponent.value.outerHTML : [];
+});
+//
+// watch for any changes in "curent element"
+// Update "py" and "px padding when an element is selected
+watch(getComponentOuterHTML, (newComponent) => {
+  newComponent = getComponent.value;
+  console.log('ELEMENT HABE BEEN UPDATED:', newComponent);
+
+  designerMethods();
+});
 
 // JUNE 2023 UPDATING THE DESIGNER - END
 // JUNE 2023 UPDATING THE DESIGNER - END

@@ -42,7 +42,6 @@ export default {
   getters: {
     // current element
     getCurrentClasses(state) {
-      console.log('2 SHOULD RUN');
       return state.currentClasses;
     },
     getFontStyle(state) {
