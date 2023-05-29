@@ -16,23 +16,6 @@ watch(getCurrentClasses, (newValue) => {
   currentClasses.value = newValue;
 });
 
-// const getComponent = computed(() => {
-//   return store.getters['designer/getComponent'];
-// });
-
-// watch(
-//   // The code utilizes a watch method to closely monitor the changes in the currentElement
-//   // This watch method ensures that any modifications or updates to the currentElement
-//   // are immediately detected
-//   getComponent,
-//   (newHTMLElement) => {
-//     if (newHTMLElement === null) return;
-//     console.log('it ran');
-//   },
-//   { immediate: true },
-//   { deep: true }
-// );
-
 const inputClass = ref('');
 </script>
 

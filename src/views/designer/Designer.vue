@@ -340,7 +340,7 @@ const getComponentOuterHTML = computed(() => {
 // Update "py" and "px padding when an element is selected
 watch(getComponentOuterHTML, (newComponent) => {
   newComponent = getComponent.value;
-  console.log('ELEMENT HABE BEEN UPDATED:', newComponent);
+  console.log('GET COMPONENET HAVE BEEN UPDATED:', newComponent);
 
   designerMethods();
 });
