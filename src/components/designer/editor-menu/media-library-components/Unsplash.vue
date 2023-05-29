@@ -240,7 +240,6 @@ const getUnsplashImages = computed(() => {
 //
 //
 const handleImageClick = function (file, imageDetails) {
-  console.log('ok, click:', file);
   // in store - update preview image
   store.commit('designer/setCurrentClickedImage', { file, imageDetails });
 };
@@ -272,16 +271,12 @@ const nextPage = function () {
 //
 // search images
 const searchUnsplash = function () {
-  // current page number logic
-  console.log('current page:', currentPage.value);
-  console.log('items:', getUnsplashImages.value?.fetchedMedia);
   if (
     getUnsplashImages.value &&
     getUnsplashImages.value.fetchedMedia &&
     Array.isArray(getUnsplashImages.value.fetchedMedia.results) &&
     getUnsplashImages.value.fetchedMedia.results.length === 0
   ) {
-    console.log('skal komme her!');
     currentPage.value = 1;
   }
   // set values in store

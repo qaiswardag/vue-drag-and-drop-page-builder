@@ -52,10 +52,10 @@ const colorsSlideOverButton = function () {
             >
               <TransitionChild
                 as="template"
-                enter="transform transition ease-in-out duration-200 sm:duration-200"
+                enter="transform transition ease-in-out duration-100 sm:duration-100"
                 enter-from="translate-x-full"
                 enter-to="translate-x-0"
-                leave="transform transition ease-in-out duration-200 sm:duration-200"
+                leave="transform transition ease-in-out duration-100 sm:duration-100"
                 leave-from="translate-x-0"
                 leave-to="translate-x-full"
               >

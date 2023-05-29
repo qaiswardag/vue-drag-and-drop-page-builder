@@ -16,6 +16,11 @@ export default {
 
   // state
   state: {
+    currentClasses: [],
+    fontVerticalPadding: null,
+    fontHorizontalPadding: null,
+    fontVerticalMargin: null,
+    fontHorizontalMargin: null,
     fontStyle: null,
     fontFamily: null,
     fontWeight: null,
@@ -36,8 +41,24 @@ export default {
   // getters
   getters: {
     // current element
+    getCurrentClasses(state) {
+      console.log('2 SHOULD RUN');
+      return state.currentClasses;
+    },
     getFontStyle(state) {
       return state.fontStyle;
+    },
+    getFontVerticalPadding(state) {
+      return state.fontVerticalPadding;
+    },
+    getFontHorizontalPadding(state) {
+      return state.fontHorizontalPadding;
+    },
+    getFontVerticalMargin(state) {
+      return state.fontVerticalMargin;
+    },
+    getFontHorizontalMargin(state) {
+      return state.fontHorizontalMargin;
     },
     getFontFamily(state) {
       return state.fontFamily;
@@ -107,6 +128,30 @@ export default {
   },
 
   mutations: {
+    setClass(state, payload) {
+      state.currentClasses = [...state.currentClasses, payload];
+    },
+    removeClass(state, payload) {
+      state.currentClasses = state.currentClasses.filter(
+        (cls) => cls !== payload
+      );
+    },
+    setCurrentClasses(state, payload) {
+      state.currentClasses = Array.from(payload);
+    },
+
+    setFontVerticalPadding(state, payload) {
+      state.fontVerticalPadding = payload;
+    },
+    setFontHorizontalPadding(state, payload) {
+      state.fontHorizontalPadding = payload;
+    },
+    setFontVerticalMargin(state, payload) {
+      state.fontVerticalMargin = payload;
+    },
+    setFontHorizontalMargin(state, payload) {
+      state.fontHorizontalMargin = payload;
+    },
     setFontStyle(state, payload) {
       state.fontStyle = payload;
     },
@@ -143,7 +188,6 @@ export default {
       state.currentComponent = payload;
     },
     setCurrentClickedImage(state, payload) {
-      console.log('payload er:', payload);
       state.currentClickedImage = payload;
     },
 

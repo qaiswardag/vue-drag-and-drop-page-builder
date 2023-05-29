@@ -1,3 +1,45 @@
+<script setup>
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
+import { ChevronDownIcon } from '@heroicons/vue/24/outline';
+import Designer from '../../composables/Designer';
+import { ref, computed } from 'vue';
+import DesignerPreviewModal from '../modal/DesignerPreviewModal.vue';
+import Preview from '../../views/designer/Preview.vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+const designer = new Designer(store);
+const emit = defineEmits(['previewCurrentDesign', 'signOutClick']);
+
+const openDesignerPreviewModal = ref(false);
+const firstDesignerPreviewModalButtonFunction = ref(null);
+const handleDesignerPreview = function () {
+  emit('previewCurrentDesign');
+  //
+  // set modal standards
+  openDesignerPreviewModal.value = true;
+
+  // handle click
+  firstDesignerPreviewModalButtonFunction.value = function () {
+    // set open modal
+    openDesignerPreviewModal.value = false;
+  };
+  // end modal
+};
+
+const user = computed(() => {
+  return store.getters['user/getUser'];
+});
+const componentsAdded = ref([]);
+const designerHistory = ref(null);
+
+const deleteAllElements = function () {
+  console.log('delete all elements');
+  designer.saveAllComponentsInLocalstorage([]);
+  store.commit('designer/setComponentsAdded', []);
+};
+</script>
+
 <template>
   <Menu as="div" class="myPrimaryParagraph relative inline-block text-left">
     <div>
@@ -137,63 +179,3 @@
     <Preview></Preview>
   </DesignerPreviewModal>
 </template>
-
-<script setup>
-import { saveAllComponentsInLocalstorage } from '../../composables/save-all-components-in-localstorage';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
-import { ChevronDownIcon } from '@heroicons/vue/24/outline';
-import { ref, computed } from 'vue';
-import DesignerPreviewModal from '../modal/DesignerPreviewModal.vue';
-import Preview from '../../views/designer/Preview.vue';
-// store
-import { useStore } from 'vuex';
-
-// store
-const store = useStore();
-// emit preview current design
-const emit = defineEmits(['previewCurrentDesign', 'signOutClick']);
-
-const openDesignerPreviewModal = ref(false);
-// use designer model
-const firstDesignerPreviewModalButtonFunction = ref(null);
-//
-
-const handleDesignerPreview = function () {
-  emit('previewCurrentDesign');
-  //
-  // set modal standards
-  openDesignerPreviewModal.value = true;
-
-  // handle click
-  firstDesignerPreviewModalButtonFunction.value = function () {
-    // set open modal
-    openDesignerPreviewModal.value = false;
-  };
-  // end modal
-};
-//
-//
-//
-// const preview = function () {
-//   emit('previewCurrentDesign');
-// };
-// current user
-const user = computed(() => {
-  return store.getters['user/getUser'];
-});
-//
-//
-//
-// components added
-const componentsAdded = ref([]);
-// designer history content - default false
-const designerHistory = ref(null);
-//
-//
-const deleteAllElements = function () {
-  console.log('delete all elements');
-  saveAllComponentsInLocalstorage(componentsAdded.value);
-};
-//
-//
-</script>

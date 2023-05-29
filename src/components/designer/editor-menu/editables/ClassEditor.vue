@@ -1,13 +1,52 @@
+<script setup>
+import { computed, ref, watch } from 'vue';
+import { useStore } from 'vuex';
+import EditorAccordion from '../EditorAccordion.vue';
+import Designer from '../../../../composables/Designer';
+
+const store = useStore();
+const designer = new Designer(store);
+
+const currentClasses = ref(null);
+const getCurrentClasses = computed(() => {
+  return store.getters['designer/getCurrentClasses'];
+});
+
+watch(getCurrentClasses, (newValue) => {
+  currentClasses.value = newValue;
+});
+
+// const getComponent = computed(() => {
+//   return store.getters['designer/getComponent'];
+// });
+
+// watch(
+//   // The code utilizes a watch method to closely monitor the changes in the currentElement
+//   // This watch method ensures that any modifications or updates to the currentElement
+//   // are immediately detected
+//   getComponent,
+//   (newHTMLElement) => {
+//     if (newHTMLElement === null) return;
+//     console.log('it ran');
+//   },
+//   { immediate: true },
+//   { deep: true }
+// );
+
+const inputClass = ref('');
+</script>
+
 <template>
   <EditorAccordion>
     <template #title>Classes</template>
     <template #content>
+      <p class="my-12">getCurrentClasses er: {{ currentClasses }}</p>
       <div class="flex flex-row flex-wrap gap-2 mt-2 mb-4">
         <p
           v-for="className in currentClasses"
           :key="className"
           class="myPrimaryTag cursor-pointer hover:bg-myPrimaryErrorColor hover:text-white"
-          @click="removeClass($event)"
+          @click="designer.handleRemoveClasses(className)"
         >
           <span class="mr-1">
             {{ className }}
@@ -24,7 +63,7 @@
               v-model="inputClass"
               type="text"
               placeholder="Type class"
-              @keydown="addClass"
+              @keydown.enter="designer.handleAddClasses(inputClass)"
               autocomplete="off"
               class="myPrimaryInput border-none rounded-r-none ml-0 w-full"
             />
@@ -39,60 +78,6 @@
         </div>
         <p class="myPrimaryInputError"></p>
       </div>
-
-      <p
-        :class="[containsSpace ? 'max-h-5' : 'max-h-0']"
-        class="text-red-500 text-sm mb-4 overflow-hidden duration-200"
-      >
-        Class may not contain spaces*
-      </p>
     </template>
   </EditorAccordion>
 </template>
-
-<script setup>
-import { computed, ref } from 'vue';
-import { useStore } from 'vuex';
-import EditorAccordion from '../EditorAccordion.vue';
-
-// store
-const store = useStore();
-// getters current element from store
-const getComponent = computed(() => {
-  return store.getters['designer/getComponent'];
-});
-// get current class
-const currentClasses = computed(() => {
-  return getComponent.value?.classList;
-});
-
-// input class
-const inputClass = ref('');
-// check if input contains spaces
-const containsSpace = computed(() => {
-  return inputClass.value.includes(' ');
-});
-//
-const removeClass = function (e) {
-  // remove clicked class name from selected element
-  getComponent.value.classList.remove(e.currentTarget.textContent);
-  // commit changes
-  store.commit('designer/setComponent', getComponent.value);
-};
-// add class
-const addClass = function (e) {
-  if (
-    inputClass.value !== '' &&
-    !containsSpace.value &&
-    !inputClass.value.includes(' ') &&
-    (e.keyCode === 13 || e.type === 'click')
-  ) {
-    // add input field value as class
-    getComponent.value.classList.add(inputClass.value);
-    // commit changes
-    store.commit('designer/setComponent', getComponent.value);
-    // reset input value
-    inputClass.value = '';
-  }
-};
-</script>

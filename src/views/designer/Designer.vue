@@ -4,7 +4,6 @@ import Designer from '../../composables/Designer';
 import { onBeforeMount, ref, onUpdated } from 'vue';
 import { computed } from 'vue';
 import { watch } from 'vue';
-import { saveAllComponentsInLocalstorage } from '../../composables/save-all-components-in-localstorage';
 import {
   ArrowUpIcon,
   ArrowLeftIcon,
@@ -161,7 +160,7 @@ const moveComponent = function (e, dir) {
     .children[currentIndex + 1 * dir].scrollIntoView({ behavior: 'smooth' });
   //
   // save all current added HTML components in local storage
-  saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
+  designer.saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
   //
   // end of method "moveComponent"
 };
@@ -256,7 +255,7 @@ const previewCurrentDesign = function () {
 // when HTML component is dropped into the DOM
 const onDrop = function () {
   // save all current added HTML components in local storage
-  saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
+  designer.saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
 };
 //
 // get current element outer HTML
@@ -328,8 +327,10 @@ watch(
   getComponent,
   (newHTMLElement) => {
     if (newHTMLElement === null) return;
+    console.log('1 RAN');
 
     // handle color
+    // TODO: handle color is making right sidebar slow
     designer.handleColor();
     // handle font size
     designer.handleFontSize();
@@ -339,10 +340,21 @@ watch(
     designer.handleFontFamily();
     // handle font style
     designer.handleFontStyle();
+    // handle vertical padding
+    designer.handleVerticalPadding();
+    // handle horizontal padding
+    designer.handleHorizontalPadding();
+    // handle vertical margin
+    designer.handleVerticalMargin();
+    // handle horizontal margin
+    designer.handleHorizontalMargin();
+    // handle classes
+    designer.currentClasses();
   },
   { immediate: true },
   { deep: true }
 );
+
 // JUNE 2023 UPDATING THE DESIGNER - END
 // JUNE 2023 UPDATING THE DESIGNER - END
 // JUNE 2023 UPDATING THE DESIGNER - END

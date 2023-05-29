@@ -24,14 +24,13 @@
           <Typography></Typography>
         </article>
         <article>
-          <ClassEditor></ClassEditor>
-        </article>
-
-        <article>
           <ColorsEditor> </ColorsEditor>
         </article>
         <article>
-          <PaddingEditor> </PaddingEditor>
+          <Spacing> </Spacing>
+        </article>
+        <article>
+          <ClassEditor></ClassEditor>
         </article>
         <article>
           <DeleteElementEditor> </DeleteElementEditor>
@@ -51,7 +50,7 @@ import ImageEditor from '../../designer/editor-menu/editables/ImageEditor.vue';
 import ColorsEditor from '../../designer/editor-menu/editables/ColorEditor.vue';
 import TextContent from '../../designer/editor-menu/editables/TextContent.vue';
 import Typography from '../../designer/editor-menu/editables/Typography.vue';
-import PaddingEditor from './editables/PaddingEditor.vue';
+import Spacing from './editables/Spacing.vue';
 import DeleteElementEditor from './editables/DeleteElementEditor.vue';
 
 // store
