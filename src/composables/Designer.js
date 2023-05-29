@@ -209,56 +209,46 @@ class Designer {
     }
   }
 
-  handleColor(userColorFromPalette) {
-    // Iterate over each color in the colors array
-    for (let singleColor of this.colors) {
-      // has color
-      const hasColor = this.getComponent.value.classList.contains(singleColor);
+  handleCustomColor(userSelectedColor, enabledCustomColor) {
+    // if user is selecting a custom HEX color
+    if (userSelectedColor === undefined && enabledCustomColor === undefined) {
+      // Get the style property
+      let bgColor = this.getComponent.value.style.backgroundColor;
 
-      // check if user whan to remove color
-      if (hasColor === true && userColorFromPalette === 'removeColor') {
-        this.getComponent.value.classList.remove(singleColor);
-        this.store.commit('designer/setBackgroundColor', null);
-        return;
+      // Check for inline background color
+      if (typeof bgColor === 'string' && bgColor.length !== 0) {
+        this.store.commit('designer/setEnabledCustomColorBG', true);
+        this.store.commit('designer/setBackgroundColorCustom', bgColor);
       }
-      // Check if the current element has the CSS color class
-      // and check of user color from palette is undefined
-      if (
-        hasColor === true &&
-        userColorFromPalette === undefined &&
-        userColorFromPalette !== 'removeColor'
-      ) {
-        // If color is undefined as user have not clicked on any color from color palette
-        this.store.commit('designer/setBackgroundColor', singleColor);
-        return;
-      }
-      //
-      if (
-        hasColor === false &&
-        userColorFromPalette === undefined &&
-        userColorFromPalette !== 'removeColor'
-      ) {
-        this.store.commit('designer/setBackgroundColor', null);
-      }
-      // Check if the current element has the CSS color class
-      if (hasColor === true && userColorFromPalette !== 'removeColor') {
-        // Remove class
-        this.getComponent.value.classList.remove(singleColor);
-      }
-      // Check if the current element does not have the CSS color class
-      if (
-        hasColor === false &&
-        userColorFromPalette !== undefined &&
-        userColorFromPalette !== 'removeColor'
-      ) {
-        // Add class
-        this.getComponent.value.classList.add(userColorFromPalette);
 
-        // Update the current element in the store
-        this.store.commit('designer/setBackgroundColor', userColorFromPalette);
-        this.store.commit('designer/setComponent', this.getComponent.value);
+      // Check for inline background color
+      if (typeof bgColor === 'string' && bgColor.length === 0) {
+        this.store.commit('designer/setEnabledCustomColorBG', false);
+        this.store.commit('designer/setBackgroundColorCustom', null);
       }
     }
+    //
+    //
+    //
+    //
+    // if user is selecting a custom HEX color
+    if (enabledCustomColor === true) {
+      // this.getComponent.value.classList.add(`bg-[${userSelectedColor}]`);
+
+      this.getComponent.value.style.backgroundColor = userSelectedColor;
+      // this.store.commit('designer/setBackgroundColor', userSelectedColor);
+      this.store.commit('designer/setComponent', this.getComponent.value);
+      return;
+    }
+  }
+  removeCustomColor() {
+    this.getComponent.value.style.removeProperty('background-color');
+    this.store.commit('designer/setEnabledCustomColorBG', null);
+    this.store.commit('designer/setBackgroundColorCustom', null);
+    this.store.commit('designer/setComponent', this.getComponent.value);
+  }
+  handleColor(userSelectedColor) {
+    this.#updateStyle(userSelectedColor, this.colors, 'setBackgroundColor');
   }
 
   saveAllComponentsInLocalstorage(allComponentsAddedToDom) {

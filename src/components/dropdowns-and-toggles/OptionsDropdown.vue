@@ -34,7 +34,6 @@ const componentsAdded = ref([]);
 const designerHistory = ref(null);
 
 const deleteAllElements = function () {
-  console.log('delete all elements');
   designer.saveAllComponentsInLocalstorage([]);
   store.commit('designer/setComponentsAdded', []);
 };

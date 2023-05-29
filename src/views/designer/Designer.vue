@@ -302,9 +302,19 @@ onMounted(async () => {
 // JUNE 2023 UPDATING THE DESIGNER - START
 // JUNE 2023 UPDATING THE DESIGNER - START
 //
-const designerMethods = function () {
-  // handle color
-  designer.handleColor();
+
+// get current element outer HTML
+const getComponentOuterHTML = computed(() => {
+  if (getComponent.value === null) return;
+  return getComponent.value.outerHTML ? getComponent.value.outerHTML : [];
+});
+//
+// watch for any changes in "curent element"
+// Update "py" and "px padding when an element is selected
+watch(getComponentOuterHTML, (newComponent) => {
+  console.log('COMPONENT HAVE BEEN UPDATED');
+  newComponent = getComponent.value;
+
   // handle font size
   designer.handleFontSize();
   // handle font weight
@@ -321,28 +331,12 @@ const designerMethods = function () {
   designer.handleVerticalMargin();
   // handle horizontal margin
   designer.handleHorizontalMargin();
+  // handle custom color
+  designer.handleCustomColor();
+  // handle color
+  designer.handleColor();
   // handle classes
   designer.currentClasses();
-};
-
-onMounted(() => {
-  if (getComponent.value === null) return;
-  designerMethods();
-});
-
-// get current element outer HTML
-const getComponentOuterHTML = computed(() => {
-  if (getComponent.value === null) return;
-  return getComponent.value.outerHTML ? getComponent.value.outerHTML : [];
-});
-//
-// watch for any changes in "curent element"
-// Update "py" and "px padding when an element is selected
-watch(getComponentOuterHTML, (newComponent) => {
-  newComponent = getComponent.value;
-  console.log('GET COMPONENET HAVE BEEN UPDATED:', newComponent);
-
-  designerMethods();
 });
 
 // JUNE 2023 UPDATING THE DESIGNER - END

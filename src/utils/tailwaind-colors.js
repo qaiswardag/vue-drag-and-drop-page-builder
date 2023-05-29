@@ -1,7 +1,9 @@
 const tailwindColors = {
   backgroundColorVariables: [
+    'none',
     'bg-white',
     'bg-black',
+
     'bg-slate-50',
     'bg-slate-100',
     'bg-slate-200',

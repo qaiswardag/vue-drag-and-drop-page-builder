@@ -8,17 +8,24 @@
             class="flex flex-row justify-start items-center myPrimaryGap mb-8 cursor-pointer"
           >
             <div
-              v-if="getBackgroundColor !== null"
+              v-if="getBackgroundColor !== 'none'"
               class="myPrimaryColorPreview w-8 h-8"
               :class="[getBackgroundColor]"
+              :style="{ backgroundColor: getBackgroundColorCustom }"
             ></div>
             <div
-              v-if="getBackgroundColor === null"
-              class="myPrimaryColorPreview w-8 h-8"
-              :class="[getBackgroundColor]"
+              v-if="getBackgroundColor === 'none'"
+              class="w-8 h-8 cursor-default"
             >
-              <div class="myPrimaryColorPreview bg-gray-50">
+              <div
+                class="myPrimaryColorPreview bg-gray-50"
+                :style="{ backgroundColor: getBackgroundColorCustom }"
+              >
                 <XMarkIcon
+                  v-if="
+                    getBackgroundColorCustom === null ||
+                    getBackgroundColorCustom.length === 0
+                  "
                   class="text-myPrimaryErrorColor stroke-2"
                 ></XMarkIcon>
               </div>
@@ -69,5 +76,8 @@ const colorsSlideOverButton = function () {
 
 const getBackgroundColor = computed(() => {
   return store.getters['designer/getBackgroundColor'];
+});
+const getBackgroundColorCustom = computed(() => {
+  return store.getters['designer/getBackgroundColorCustom'];
 });
 </script>

@@ -28,6 +28,8 @@ export default {
     fontDesktop: null,
     fontTablet: null,
     fontMobile: null,
+    enabledCustomColorBG: null,
+    backgroundColorCustom: null,
     backgroundColor: null,
     component: null,
     currentImagePreview: null,
@@ -79,6 +81,12 @@ export default {
     },
     getBackgroundColor(state) {
       return state.backgroundColor;
+    },
+    getEnabledCustomColorBG(state) {
+      return state.enabledCustomColorBG;
+    },
+    getBackgroundColorCustom(state) {
+      return state.backgroundColorCustom;
     },
     getComponent(state) {
       return state.component;
@@ -138,7 +146,6 @@ export default {
     setCurrentClasses(state, payload) {
       state.currentClasses = Array.from(payload);
     },
-
     setFontVerticalPadding(state, payload) {
       state.fontVerticalPadding = payload;
     },
@@ -174,6 +181,12 @@ export default {
     },
     setBackgroundColor(state, payload) {
       state.backgroundColor = payload;
+    },
+    setBackgroundColorCustom(state, payload) {
+      state.backgroundColorCustom = payload;
+    },
+    setEnabledCustomColorBG(state, payload) {
+      state.enabledCustomColorBG = payload;
     },
     setComponent(state, payload) {
       state.component = {};
