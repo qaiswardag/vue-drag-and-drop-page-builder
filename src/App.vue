@@ -142,12 +142,35 @@ const handleDesigner = function () {
     </h1>
     <p class="myPrimaryMainPageParagraphNotLoggedIn">
       Power your vision and build impressive pages with ease using an intuitive
-      Vue.js drag-and-drop page builder, and achieve stunning results.
+      Vue.js drag-and-drop page builder.
+      <br />
+      Contact me to request access to the code. You can reach me through
+      <a class="text-myPrimaryLinkColor" href="mailto:qais.wardag@outlook.com"
+        >Email</a
+      >
+      or
+      <a
+        class="text-myPrimaryLinkColor"
+        href="https://www.linkedin.com/in/qaiswardag"
+        target="_blank"
+        >LinkedIn.</a
+      >
     </p>
-    <div class="flex justify-center">
-      <button @click="handleDesigner" class="myPrimaryButton my-8">
-        Start Designer
-      </button>
+    <div class="flex justify-center gap-2 my-8">
+      <div>
+        <button @click="handleDesigner" class="myPrimaryButton">
+          Start Designer
+        </button>
+      </div>
+
+      <div>
+        <a
+          class="myPrimaryButton"
+          href="https://www.myself.myissue.io"
+          target="_blank"
+          >Try Admin Panel</a
+        >
+      </div>
     </div>
   </div>
   <FullWidthElement :descriptionArea="true" class="bg-red-50">
@@ -159,9 +182,22 @@ const handleDesigner = function () {
         vision and effortlessly create pages using an intuitive Vue.js
         drag-and-drop page builder.
       </span>
-      <button @click="handleDesigner" class="myPrimaryButton my-8">
-        Start Designer
-      </button>
+      <div class="flex justify-start gap-2 my-8">
+        <div>
+          <button @click="handleDesigner" class="myPrimaryButton">
+            Start Designer
+          </button>
+        </div>
+
+        <div>
+          <a
+            class="myPrimaryButton"
+            href="https://www.myself.myissue.io"
+            target="_blank"
+            >Try Admin Panel</a
+          >
+        </div>
+      </div>
     </template>
     <template #content>
       <div class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-3">
