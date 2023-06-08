@@ -214,10 +214,8 @@ const handleDesigner = function () {
   <FullWidthElement :descriptionArea="true" class="bg-red-50">
     <template #title>Frequently asked questions</template>
     <template #description>
-      As new users join, they bring innovative ideas, unique skills, and diverse
-      experiences that enrich our platform. Connect with them, explore their
-      work, and celebrate the fresh energy they contribute to our collaborative
-      space.
+      Power your vision and build impressive pages with ease using an intuitive
+      Vue drag-and-drop page builder, and achieve stunning results.
     </template>
     <template #content>
       <div class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-12">
