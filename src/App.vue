@@ -11,44 +11,64 @@ import { CheckIcon } from '@heroicons/vue/20/solid';
 
 const features = [
   {
-    name: 'Invite team members',
+    name: 'Live Drag & Drop Builder',
     description:
-      'Rerum repellat labore necessitatibus reprehenderit molestiae praesentium.',
+      'Drag-and-drop content on a page and watch your pages come to life.',
   },
   {
-    name: 'Teamwork & collaboration',
+    name: 'Technologies and Frameworks',
     description:
-      'Corporis asperiores ea nulla temporibus asperiores non tempore assumenda aut.',
+      'Cutting-Edge Technologies and Frameworks. Developed with Vue 3, Vuex, Composition API, and Tailwind CSS.',
   },
   {
-    name: 'Keyboard shortcuts',
+    name: 'Set Brand and Link Colors one place',
     description:
-      'In sit qui aliquid deleniti et. Ad nobis sunt omnis. Quo sapiente dicta laboriosam.',
+      'Set Brand and Link Colors once and apply them across the entire Platform with ease.',
   },
   {
-    name: 'Calendars',
-    description:
-      'Sed rerum sunt dignissimos ullam. Iusto iure occaecati voluptate eligendi fugiat sequi.',
+    name: 'Mobile-First Approach',
+    description: 'Developed with Mobile-First approach.',
   },
   {
-    name: 'Notifications',
+    name: 'Media Library',
     description:
-      'Quos inventore harum enim nesciunt. Aut repellat rerum omnis adipisci.',
+      'A beautiful and user-friendly media library that allows you to effortlessly change and update images.',
   },
   {
-    name: 'Boards',
+    name: 'Minimal and Intuitive Design',
     description:
-      'Quae sit sunt excepturi fugit veniam voluptatem ipsum commodi.',
+      'Beautiful, elegant and intuitive design. Enhance user engagement with amazing visual experience.',
+  },
+];
+const faqs = [
+  {
+    question: 'Live Drag & Drop Builder?',
+    answer:
+      'Drag-and-drop content on a page and watch your pages come to life.',
   },
   {
-    name: 'Reporting',
-    description:
-      'Eos laudantium repellat sed architecto earum unde incidunt. Illum sit dolores voluptatem.',
+    question: 'Technologies and Frameworks?',
+    answer:
+      'Cutting-Edge Technologies and Frameworks. Developed with Vue 3, Vuex, Composition API, and Tailwind CSS.',
   },
   {
-    name: 'Mobile app',
-    description:
-      'Nulla est saepe accusamus nostrum est est. Fugit voluptatum omnis quidem voluptatem.',
+    question: 'Set Brand and Link Colors one place?',
+    answer:
+      'Set Brand and Link Colors once and apply them across the entire Platform with ease.',
+  },
+  {
+    question: 'Media Library?',
+    answer:
+      'A beautiful and user-friendly media library that allows you to effortlessly change and update images.',
+  },
+  {
+    question: 'Mobile-First Approach?',
+    answer: 'Developed with Mobile-First approach.',
+  },
+  {
+    question: 'Minimal and Intuitive Design?',
+    answer:
+      'Beautiful, elegant and intuitive design. Enhance user engagement with amazing visual experience.',
   },
 ];
 
@@ -83,32 +103,6 @@ const handleDesigner = function () {
   };
   // end modal
 };
-//
-//
-//
-//
-const faqs = [
-  {
-    question: "What's the best thing about Switzerland?",
-    answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat. I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat. I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
-  },
-  {
-    question: "What's the best thing about Switzerland?",
-    answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat. I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat. I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
-  },
-  {
-    question: "What's the best thing about Switzerland?",
-    answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat. I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat. I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
-  },
-  {
-    question: "What's the best thing about Switzerland?",
-    answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat. I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat. I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
-  },
-];
 </script>
 
 <template>
@@ -142,35 +136,41 @@ const faqs = [
 
   <div class="myPrimaryMainPageHeaderParagraph">
     <h1 class="myPrimaryMainPageHeaderNotLoggedIn">
-      Build Stunning Pages
+      Build stunning pages with Vue
       <br />
-      with Easy Drag & Drop Designer
+      using an easy interface
     </h1>
     <p class="myPrimaryMainPageParagraphNotLoggedIn">
-      Power your vision and build impressive pages with ease using our intuitive
-      drag and drop page builder to achieve stunning results.
+      Power your vision and build impressive pages with ease using an intuitive
+      Vue.js drag-and-drop page builder, and achieve stunning results.
     </p>
+    <div class="flex justify-center">
+      <button @click="handleDesigner" class="myPrimaryButton my-8">
+        Start Designer
+      </button>
+    </div>
   </div>
   <FullWidthElement :descriptionArea="true" class="bg-red-50">
-    <template #title>All-in-one platform</template>
+    <template #title>All-in-one Designer</template>
     <template #description>
       <span class="block">
-        Minimalist app empowered with advanced team management capabilities and
-        a state-of-the-art media library, it offers unrivaled control and
-        efficiency. Seamlessly manage and organize your media assets. Take your
-        administrative prowess to new heights with this powerful solution
-        designed to streamline your operations and enhance productivity.
+        Build responsive pages and manage content easily pages with ease using
+        an intuitive Vue drag-and-drop page builder. Elevate your creative
+        vision and effortlessly create pages using an intuitive Vue.js
+        drag-and-drop page builder.
       </span>
-      <p @click="handleDesigner" class="myPrimaryButton my-8">Start Designer</p>
+      <button @click="handleDesigner" class="myPrimaryButton my-8">
+        Start Designer
+      </button>
     </template>
     <template #content>
       <div class="grid grid-cols-1 lg:gap-16 gap-24 lg:grid-cols-3">
         <div>
           <h2 class="myTertiaryHeader">Everything you need</h2>
           <p class="mt-2 myPrimaryParagraph font-medium">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
-            impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis
-            ratione.
+            Power your vision and build impressive pages with ease using an
+            intuitive Vue drag-and-drop page builder, and achieve stunning
+            results.
           </p>
         </div>
         <dl
@@ -198,33 +198,16 @@ const faqs = [
   </FullWidthElement>
 
   <FullWidthElement :descriptionArea="true">
-    <template #title>All-in-one platform</template>
-    <template #description>
-      Elevate your creative vision and effortlessly create pages using our
-      intuitive drag and drop page builder. Break free from design limitations
-      and turn your visions into reality - zero coding required.
-      <br />
-      Build your website pages with hundreds of ready-made componenets. Designed
-      to fit your every need, fully customizable & always responsive.
-    </template>
+    <template #title>Break free from design limitations</template>
+    <template #description> Elevate your creativity to new heights.</template>
     <template #content>
-      <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates,
-        obcaecati veniam consectetur ullam nobis quasi, sed dolorum odit
-        voluptas pariatur quos.
-        <br />
-        Natus, animi eaque! Ipsam magni dolorum rem, incidunt excepturi aliquid
-        quis consectetur, obcaecati distinctio quas fugit officiis animi
-        delectus, enim fugiat aliquam explicabo eum consequuntur adipisci.
-        Labore facere vitae nam, illo distinctio explicabo hic illum omnis amet
-        doloremque autem quidem reprehenderit totam, inventore commodi!
-        <br />
-        <br />
-        Accusamus asperiores libero, earum quos illum excepturi necessitatibus
-        unde sapiente? Hic ipsum quam, enim minus earum exercitationem odit
-        fugiat magnam, sit veritatis facilis consectetur numquam incidunt in?
-        Officiis impedit porro laborum! Distinctio minus earum commodi.
-      </div>
+      <p class="myPrimaryPragraph">
+        Build your website pages with hundreds of ready-made componenets.
+        Designed to fit your every need, fully customizable & always responsive.
+        Elevate your creative vision and effortlessly create pages using an
+        intuitive Vue.js drag-and-drop page builder. Break free from design
+        limitations and turn your visions into reality.
+      </p>
     </template>
   </FullWidthElement>
 
@@ -280,8 +263,21 @@ const faqs = [
 
   <!-- Footer start -->
   <div
-    class="mx-auto px-6 py-4 md:flex md:items-center md:justify-between lg:px-8 bg-myPrimaryLightGrayColor"
+    class="space-y-6 mx-auto px-6 py-4 md:flex md:items-center md:justify-between lg:px-8 bg-myPrimaryLightGrayColor"
   >
+    <div
+      class="flex justify-center space-x-6 md:order-2 text-gray-600 hover:text-gray-700"
+    >
+      <p class="myPrimaryParagraph text-gray-600">
+        ©
+        <a
+          href="https://github.com/qaiswardag"
+          target="_blank"
+          class="myPrimaryLink text-gray-600"
+          >Qais Wardag / GitHub
+        </a>
+      </p>
+    </div>
     <div
       class="flex justify-center space-x-6 md:order-2 text-gray-600 hover:text-gray-700"
     >
@@ -300,17 +296,6 @@ const faqs = [
           ></path>
         </svg>
       </a>
-    </div>
-    <div class="mt-8 md:order-1 md:mt-0">
-      <p class="myPrimaryParagraph text-gray-600">
-        ©
-        <a
-          href="https://github.com/qaiswardag"
-          target="_blank"
-          class="myPrimaryLink text-gray-600"
-          >Qais Wardag / GitHub
-        </a>
-      </p>
     </div>
   </div>
   <!-- Footer end -->
