@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Rdirect the request to www from non-www
+    RewriteCond %{HTTP_HOST} ^designer\.myissue\.io [NC]
+    RewriteRule ^(.*)$ https://www.designer.myissue.io/$1 [L,R=301]
+</IfModule>

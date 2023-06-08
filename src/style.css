@@ -209,7 +209,7 @@
     */
 
   .mysearchBarWithOptions {
-    @apply flex gap-1  bg-gray-100 py-2 px-2 rounded;
+    @apply flex gap-2 bg-myPrimaryLightGrayColor py-2 px-2 rounded;
   }
   /*
     |--------------------------------------------------------------------------
