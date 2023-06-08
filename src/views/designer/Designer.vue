@@ -354,7 +354,9 @@ watch(getComponentOuterHTML, (newComponent) => {
 </script>
 
 <template xmlns="http://www.w3.org/1999/html">
-  <div class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 bg-white">
+  <div
+    class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
+  >
     <div class="relative h-full flex">
       <aside
         aria-label="sidebar"
@@ -367,12 +369,12 @@ watch(getComponentOuterHTML, (newComponent) => {
         @mouseleave="MenuPreview = false"
       >
         <div class="sticky h-full w-60 overflow-hidden">
-          <nav aria-label="Sidebar" class="h-full bg-white">
+          <nav aria-label="Sidebar" class="h-full bg-white p-4">
+            <hr />
+            <p class="myPrimaryParagraph font-medium p-4">COMPONENTS</p>
             <ul
               class="flex flex-col gap-4 p-4 font-normal h-full overflow-y-scroll"
             >
-              <hr />
-              <li class="myPrimaryParagraph">Components</li>
               <li
                 v-for="category in categories"
                 :key="category"

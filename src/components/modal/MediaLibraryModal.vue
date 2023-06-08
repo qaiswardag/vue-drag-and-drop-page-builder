@@ -32,11 +32,11 @@
         <TransitionChild
           as="template"
           enter="ease-out duration-300"
-          enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          enter-to="opacity-100 translate-y-0 sm:scale-100"
+          enter-from="opacity-0 scale-95"
+          enter-to="opacity-100 scale-100"
           leave="ease-in duration-200"
-          leave-from="opacity-100 translate-y-0 sm:scale-100"
-          leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          leave-from="opacity-100 scale-100"
+          leave-to="opacity-0 scale-95"
         >
           <div
             class="relative inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:w-full sm:p-6"
@@ -59,24 +59,27 @@
             <div class="flex items-center pb-2 mb-2">
               <div class="flex-1">
                 <!--content media library - start-->
-                <div class="flex-1 flex items-stretch overflow-hidden mt-2">
+                <div
+                  class="h-full flex md:flex-row flex-col myPrimaryGap mt-2 p-2 overflow-y-scroll"
+                >
                   <!-- Main content - start-->
-                  <main class="flex-1 overflow-y-auto">
-                    <div class="max-w-7xl mx-auto px-4 sm:pr-6 lg:pr-8">
+                  <main class="flex-1 relativ">
+                    <div class="pb-4 max-w-7xl mx-auto">
                       <!-- Tabs -->
-                      <div class="sm:hidden">
-                        <label for="tabs" class="sr-only">Select a tab</label>
-                        <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
+                      <div class="mb-2">
+                        <!-- Tabs Mobile -->
+                        <div class="sm:hidden">
+                          <label for="tabs" class="sr-only">Select a tab</label>
+                          <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
 
-                        <select
-                          v-model="selected"
-                          @change="yPaddingChange"
-                          id="tabs"
-                          class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm rounded-md"
-                        >
-                          <option>Unsplash.com</option>
-                        </select>
-
+                          <select
+                            v-model="selected"
+                            id="tabs"
+                            class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-myPrimaryLinkColor focus:border-myPrimaryLinkColor sm:text-sm rounded-md"
+                          >
+                            <option>Unsplash</option>
+                          </select>
+                        </div>
                         <div class="hidden sm:block">
                           <div
                             class="flex items-center border border-gray-200 py-1 px-2 rounded"
@@ -86,29 +89,26 @@
                               aria-label="Tabs"
                             >
                               <div
+                                @click="changeSelectedMenuTab(tab.name)"
                                 v-for="tab in tabs"
                                 :key="tab.name"
                                 :aria-current="tab.current ? 'page' : undefined"
+                                class="py-2 px-3 my-1 text-xs cursor-pointer"
                                 :class="[
                                   tab.name === selected
-                                    ? 'text-white'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-                                  'py-2 px-3 my-1  rounded cursor-pointer bg-myPrimaryBrandColor text-white whitespace-nowrap',
+                                    ? 'myPrimaryButton'
+                                    : 'text-gray-500 hover:text-gray-700 ',
+                                  'whitespace-nowrap',
                                 ]"
                               >
-                                <span
-                                  class="cursor-pointer"
-                                  @click="changeSelected(tab.name)"
-                                >
-                                  {{ tab.name }}
-                                </span>
+                                {{ tab.name }}
                               </div>
                             </nav>
                           </div>
                         </div>
                       </div>
 
-                      <div v-if="selected === 'Unsplash.com'">
+                      <div v-if="selected === 'Unsplash'">
                         <Unsplash> </Unsplash>
                       </div>
                     </div>
@@ -130,11 +130,11 @@
                         >
                           <img
                             alt="preview"
-                            class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                            class="mx-auto block w-full rounded-t-sm object-cover object-center cursor-pointer hover:shadow-sm"
                             :src="getCurrentClickedImage.file"
                           />
 
-                          <div class="md:px-3 sm:px-2">
+                          <div class="md:px-2 px-2">
                             <h3 class="font-normal text-gray-900">
                               Information
                             </h3>
@@ -191,14 +191,14 @@
                         >
                           <img
                             alt="preview"
-                            class="mx-auto block w-full rounded-sm object-cover object-center cursor-pointer hover:shadow-sm"
+                            class="mx-auto block w-full rounded-t-sm object-cover object-center cursor-pointer hover:shadow-sm"
                             :src="getComponent.src"
                           />
                         </div>
 
-                        <div class="md:px-3 sm:px-2">
+                        <div class="md:px-2 px-2">
                           <div
-                            class="absolute bottom-0 right-0 left-0 px-2 my-2 sm:flex justify-between sm:gap-3 grid gap-4 sm:grid-flow-row-dense md:w-full md:float-right"
+                            class="absolute bottom-0 right-0 left-0 px-2 my-2 flex justify-end gap-2"
                           >
                             <template v-if="firstButtonText">
                               <button
@@ -270,11 +270,11 @@ import {
 
 import Unsplash from '../designer/editor-menu/media-library-components/Unsplash.vue';
 
-const selected = ref('Unsplash.com');
+const selected = ref('Unsplash');
 
 const tabs = [
   {
-    name: 'Unsplash.com',
+    name: 'Unsplash',
     href: '#',
     current: false,
   },
@@ -357,7 +357,7 @@ export default {
     };
     //
     //
-    const changeSelected = function (clicked) {
+    const changeSelectedMenuTab = function (clicked) {
       selected.value = clicked;
     };
     //
@@ -370,7 +370,7 @@ export default {
       selected,
       getComponent,
       getCurrentImagePreview,
-      changeSelected,
+      changeSelectedMenuTab,
       getCurrentClickedImage,
     };
   },

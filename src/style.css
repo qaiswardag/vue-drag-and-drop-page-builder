@@ -333,6 +333,7 @@
 .scrollable {
   overflow-x: auto;
   overflow-y: hidden;
+  padding: 10px 4px;
   /* Add any other desired styles for the scrollable element */
 }
 /* Scrollbar Styles  - end */
