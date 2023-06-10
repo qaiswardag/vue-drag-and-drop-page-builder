@@ -7,7 +7,7 @@
           <span class="lowercase">&lt;{{ elementTag }}&gt;</span>
         </p>
         <XMarkIcon
-          class="h-6 w-6 text-gray-500 self-center cursor-pointer"
+          class="shrink-0 w-5 h-5 cursor-pointer"
           @click.esc="$emit('closeEditor')"
         ></XMarkIcon>
       </div>

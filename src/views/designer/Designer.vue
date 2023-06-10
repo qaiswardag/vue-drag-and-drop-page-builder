@@ -9,6 +9,8 @@ import {
   ArrowLeftIcon,
   ArrowDownIcon,
   Bars3Icon,
+  Square3Stack3DIcon,
+  XMarkIcon,
 } from '@heroicons/vue/24/outline';
 import { PencilIcon, TrashIcon } from '@heroicons/vue/24/outline';
 
@@ -20,6 +22,7 @@ import RightSidebarEditor from '../../components/designer/editor-menu/RightSideb
 import Spinner from '../../components/loaders/Spinner.vue';
 import SaveDesign from '../../components/dropdowns-and-toggles/SaveDesign.vue';
 import DynamicModal from '../../components/modal/DynamicModal.vue';
+import { Square2StackIcon } from '@heroicons/vue/20/solid';
 
 const store = useStore();
 const designer = new Designer(store);
@@ -44,6 +47,7 @@ const thirdModalButtonFunction = ref(null);
 //
 //
 // menu right
+const MenuLeft = ref(false);
 const MenuRight = ref(null);
 // menu preview
 const MenuPreview = ref(null);
@@ -83,7 +87,13 @@ const saveCurrentDesignInDB = function () {
   console.log('save current design in DB method');
 };
 //
-
+//
+const toggleMenuLeft = function () {
+  MenuLeft.value = !MenuLeft.value;
+};
+//
+//
+//
 // for each on all added html componenets
 const addEditorListener = function () {
   document.querySelectorAll('[render-html] *').forEach((el) => {
@@ -361,17 +371,34 @@ watch(getComponentOuterHTML, (newComponent) => {
       <aside
         aria-label="sidebar"
         :class="{
-          'w-0': !MenuRight,
-          'w-60': !MenuRight,
+          'w-0': !MenuLeft,
+          'w-60': MenuLeft,
           'rounded-r-[0rem]': MenuPreview,
         }"
-        class="h-full duration-300 flex-shrink-0 shadow-2xl rounded-r-2xl overflow-hidden mr-4"
+        class="h-full duration-150 flex-shrink-0 shadow-2xl rounded-r-2xl overflow-hidden mr-4"
         @mouseleave="MenuPreview = false"
       >
         <div class="sticky h-full w-60 overflow-hidden">
           <nav aria-label="Sidebar" class="h-full bg-white p-4">
-            <hr />
-            <p class="myPrimaryParagraph font-medium p-4">COMPONENTS</p>
+            <div
+              class="flex flex-row justify-between border-b border-myPrimaryMediumGrayColor"
+            >
+              <XMarkIcon
+                @click="toggleMenuLeft"
+                class="shrink-0 w-5 h-5 cursor-pointer"
+              >
+              </XMarkIcon>
+              <p
+                @click="toggleMenuLeft"
+                class="font-bold text-sm cursor-pointer"
+              >
+                Close
+              </p>
+            </div>
+
+            <p class="myPrimaryParagraph font-medium pl-4 pt-4 pr-4">
+              COMPONENTS
+            </p>
             <ul
               class="flex flex-col gap-4 p-4 font-normal h-full overflow-y-scroll"
             >
@@ -424,6 +451,19 @@ watch(getComponentOuterHTML, (newComponent) => {
         </aside>
       </aside>
       <!--preview - end-->
+
+      <!-- Bars - start -->
+      <div
+        v-if="MenuLeft === false"
+        class="pt-4 mr-4 h-full duration-150 flex-shrink-0 overflow-hidden"
+      >
+        <Bars3Icon
+          @click="toggleMenuLeft"
+          class="shrink-0 w-6 h-6 cursor-pointer"
+        >
+        </Bars3Icon>
+      </div>
+      <!-- Bars - end -->
 
       <main
         class="flex flex-col h-full grow rounded-2xl duration-300 shadow-2xl"
