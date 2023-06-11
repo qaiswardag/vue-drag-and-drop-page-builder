@@ -300,7 +300,7 @@ class Designer {
    * The attachElementEventListeners function is responsible for dynamically adding event listeners
    * to elements within the [render-html] component in the Vue template.
    */
-  attachElementMouseoverListener(el) {
+  attachElementMouseoverListener = (el) => {
     // Stop propagation to prevent the event from bubbling up the DOM tree
     el.addEventListener('mouseover', (e) => {
       e.stopPropagation();
@@ -311,13 +311,13 @@ class Designer {
       // Set the 'hovered' attribute on the currently hovered element
       el.setAttribute('hovered', '');
     });
-  }
+  };
 
-  attachElementClickListener(el) {
+  attachElementClickListener = (el) => {
     // Stop propagation to prevent the event from bubbling up the DOM tree
     el.addEventListener('click', (e) => {
       if (this.getComponent.value !== null) {
-        // handleDesignerMethods();
+        this.handleDesignerMethods();
       }
 
       e.stopPropagation();
@@ -342,9 +342,9 @@ class Designer {
       // store.commit('designer/setComponent', currentElement.value);
       this.store.commit('designer/setComponent', this.currentElement.value);
     });
-  }
+  };
 
-  attachElementEventListeners() {
+  attachElementEventListeners = () => {
     // Iterate over all descendant elements of the [render-html] component
     document.querySelectorAll('[render-html] *').forEach((el) => {
       // If the element already has the 'hasListeners' class, it means that event listeners
@@ -360,6 +360,36 @@ class Designer {
       this.attachElementMouseoverListener(el);
       this.attachElementClickListener(el);
     });
+  };
+
+  handleDesignerMethods() {
+    console.log('SWITCHED TO NEW COMPONENT / COMPONENT OUTHTML UPDATED');
+
+    // invoke methods
+    // handle clear restore element
+    this.handleClearRestoreElement();
+    // handle font size
+    this.handleFontSize();
+    // handle font weight
+    this.handleFontWeight();
+    // handle font family
+    this.handleFontFamily();
+    // handle font style
+    this.handleFontStyle();
+    // handle vertical padding
+    this.handleVerticalPadding();
+    // handle horizontal padding
+    this.handleHorizontalPadding();
+    // handle vertical margin
+    this.handleVerticalMargin();
+    // handle horizontal margin
+    this.handleHorizontalMargin();
+    // handle custom color
+    this.handleCustomColor();
+    // handle color
+    this.handleColor();
+    // handle classes
+    this.currentClasses();
   }
 }
 

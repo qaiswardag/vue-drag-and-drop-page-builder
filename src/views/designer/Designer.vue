@@ -13,16 +13,13 @@ import {
   XMarkIcon,
 } from '@heroicons/vue/24/outline';
 import { PencilIcon, TrashIcon } from '@heroicons/vue/24/outline';
-
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
-
 import OptionsDropdown from '../../components/dropdowns-and-toggles/OptionsDropdown.vue';
 import RightSidebarEditor from '../../components/designer/editor-menu/RightSidebarEditor.vue';
 import Spinner from '../../components/loaders/Spinner.vue';
 import SaveDesign from '../../components/dropdowns-and-toggles/SaveDesign.vue';
 import DynamicModal from '../../components/modal/DynamicModal.vue';
-import { Square2StackIcon } from '@heroicons/vue/20/solid';
 
 const store = useStore();
 const designer = new Designer(store);
@@ -94,7 +91,7 @@ const toggleMenuLeft = function () {
 const cloneComponent = function (comp) {
   // Hide slider and right menu
   MenuPreview.value = false;
-  MenuRight.value = false;
+  // MenuRight.value = false;
 
   // Deep clone component
   const clonedComp = { ...comp };
@@ -107,6 +104,15 @@ const cloneComponent = function (comp) {
 
   // return to the cloned element to be dropped
   return clonedComp;
+};
+
+const getCurrentIndex = function (component) {
+  // Declare container of components and current component
+  const allComponents = document.querySelector('#pagebuilder').children;
+  const currentComponent = component.closest('div[data-draggable="true"]');
+  // Get index of chosen component
+  const currentIndex = Array.from(allComponents).indexOf(currentComponent);
+  return currentIndex;
 };
 
 // move component
@@ -176,12 +182,6 @@ const removeComponent = function (e) {
   // end modal
 };
 //
-// watch "menu preview"
-watch(MenuPreview, () => {
-  // hide  right menu
-  MenuRight.value = false;
-});
-//
 //
 //
 //
@@ -212,11 +212,6 @@ const previewCurrentDesign = function () {
 //
 //
 //
-// when HTML component is dropped into the DOM
-const onDrop = function () {
-  // save all current added HTML components in local storage
-  designer.saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
-};
 //
 // set all components add on before mount
 // On before mount
@@ -254,61 +249,26 @@ const componentsMenu = computed(() => {
 // JUNE 2023 UPDATING THE DESIGNER - START
 //
 //
-//
-// get current element from store
+// when HTML component is dropped into the DOM
+const onDrop = function () {
+  // save all current added HTML components in local storage
+  designer.saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
+};
 const getComponent = computed(() => {
   return store.getters['designer/getComponent'];
 });
-//
-// get current element outer HTML
 const getComponentOuterHTML = computed(() => {
   if (getComponent.value === null) return;
   return getComponent.value.outerHTML ? getComponent.value.outerHTML : null;
 });
-//
-const handleDesignerMethods = function () {
-  console.log('SWITCHED TO NEW COMPONENT / COMPONENT OUTHTML UPDATED');
-  // handle clear restore element
-  designer.handleClearRestoreElement();
-  // handle font size
-  designer.handleFontSize();
-  // handle font weight
-  designer.handleFontWeight();
-  // handle font family
-  designer.handleFontFamily();
-  // handle font style
-  designer.handleFontStyle();
-  // handle vertical padding
-  designer.handleVerticalPadding();
-  // handle horizontal padding
-  designer.handleHorizontalPadding();
-  // handle vertical margin
-  designer.handleVerticalMargin();
-  // handle horizontal margin
-  designer.handleHorizontalMargin();
-  // handle custom color
-  designer.handleCustomColor();
-  // handle color
-  designer.handleColor();
-  // handle classes
-  designer.currentClasses();
-};
-//
-// watch for any changes in "curent element" or selecting a new element
-// Update "py" and "px padding when an element is selected
 watch(getComponentOuterHTML, (newComponent) => {
-  handleDesignerMethods();
+  designer.handleDesignerMethods();
 });
-//
-//
-//
-//
 //
 // on mounted
 onMounted(async () => {
   // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
   designer.attachElementEventListeners();
-
   // load all HTML components
   store.dispatch('designer/loadComponents');
   // end get componenets
