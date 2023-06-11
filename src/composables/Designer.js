@@ -2,14 +2,19 @@ import tailwindColors from '../utils/tailwaind-colors';
 import tailwindFontSizes from '../utils/tailwind-font-sizes';
 import tailwindFontStyles from '../utils/tailwind-font-styles';
 import tailwindSpacing from '../utils/tailwind-spacing';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 class Designer {
   constructor(store) {
+    // current clicked element
+    this.currentElement = ref({});
     this.colors = tailwindColors.backgroundColors();
     this.store = store;
     this.getComponent = computed(
       () => this.store.getters['designer/getComponent']
+    );
+    this.getRestoredElement = computed(
+      () => this.store.getters['designer/getRestoredElement']
     );
   }
   #updateStyle(userSelectedStyle, styleArray, mutationName) {
@@ -66,6 +71,32 @@ class Designer {
       this.store.commit('designer/setComponent', this.getComponent.value);
       this.store.commit('designer/removeClass', userSelectedClass);
     }
+  }
+  handleDeleteElement() {
+    console.log('this ran');
+
+    this.store.commit('designer/setRestoredElement', this.getComponent.value);
+    this.getComponent.value.remove();
+  }
+
+  handleDeleteElement() {
+    console.log('handleDeleteElement ran');
+
+    const element = this.getComponent.value; // Get the element to be deleted
+
+    this.store.commit('designer/setRestoredElement', element.outerHTML); // Store the outerHTML of the deleted element
+
+    element.remove(); // Remove the element from the DOM
+  }
+  handleRestoreElement() {
+    console.log('handleRestoreElement ran');
+
+    // Clear the stored deleted element in the Vuex store
+    this.store.commit('designer/setComponent', null);
+    this.store.commit('designer/setRestoredElement', null);
+  }
+  handleClearRestoreElement() {
+    this.store.commit('designer/setRestoredElement', null);
   }
 
   handleFontWeight(userSelectedFontWeight) {
@@ -261,6 +292,74 @@ class Designer {
         JSON.stringify(allComponentsAddedToDom)
       );
     }, 100);
+  }
+
+  // DOM Event listener
+  // for each on all added html componenets
+  /**
+   * The attachElementEventListeners function is responsible for dynamically adding event listeners
+   * to elements within the [render-html] component in the Vue template.
+   */
+  attachElementMouseoverListener(el) {
+    // Stop propagation to prevent the event from bubbling up the DOM tree
+    el.addEventListener('mouseover', (e) => {
+      e.stopPropagation();
+
+      // If there is an element with the 'hovered' attribute, remove this attribute
+      document.querySelector('[hovered]')?.removeAttribute('hovered');
+
+      // Set the 'hovered' attribute on the currently hovered element
+      el.setAttribute('hovered', '');
+    });
+  }
+
+  attachElementClickListener(el) {
+    // Stop propagation to prevent the event from bubbling up the DOM tree
+    el.addEventListener('click', (e) => {
+      if (this.getComponent.value !== null) {
+        // handleDesignerMethods();
+      }
+
+      e.stopPropagation();
+
+      // Set menu right to true. This likely triggers the display of a contextual menu
+      // MenuRight.value = true;
+
+      // If there is an element with the 'selected' attribute, remove this attribute
+      document.querySelector('[selected]')?.removeAttribute('selected');
+
+      // Remove the 'hovered' attribute from the clicked element (if it exists)
+      e.currentTarget.removeAttribute('hovered');
+
+      // Set the 'selected' attribute on the clicked element
+      e.currentTarget.setAttribute('selected', '');
+
+      // Update the 'currentElement' reference to point to the clicked element
+      this.currentElement.value = e.currentTarget;
+
+      // Commit the selected component state to the Vuex store, effectively marking this
+      // component as the currently active or "selected" one in the application state
+      // store.commit('designer/setComponent', currentElement.value);
+      this.store.commit('designer/setComponent', this.currentElement.value);
+    });
+  }
+
+  attachElementEventListeners() {
+    // Iterate over all descendant elements of the [render-html] component
+    document.querySelectorAll('[render-html] *').forEach((el) => {
+      // If the element already has the 'hasListeners' class, it means that event listeners
+      // are already attached to this element. In this case, we should skip this element
+      // to prevent multiple instances of the same listener being attached.
+      if (el.classList.contains('hasListeners')) {
+        return;
+      }
+
+      // Add the 'hasListeners' class to indicate that this element now has event listeners attached
+      el.classList.add('hasListeners');
+
+      this.attachElementMouseoverListener(el);
+      this.attachElementClickListener(el);
+    });
   }
 }
 

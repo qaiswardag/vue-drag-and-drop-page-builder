@@ -47,10 +47,10 @@ const thirdModalButtonFunction = ref(null);
 //
 //
 // menu right
-const MenuLeft = ref(false);
-const MenuRight = ref(null);
+const MenuLeft = ref(true);
+const MenuRight = ref(true);
 // menu preview
-const MenuPreview = ref(null);
+const MenuPreview = ref(false);
 // categories
 const categories = ref(null);
 // categories value
@@ -64,13 +64,8 @@ categories.value = [
 ];
 // current active library
 const activeLibrary = ref('forms');
-// current clicked element
-const currentElement = ref({});
+
 //
-// get current element from store
-const getComponent = computed(() => {
-  return store.getters['designer/getComponent'];
-});
 //
 //
 // get components added
@@ -94,35 +89,6 @@ const toggleMenuLeft = function () {
 //
 //
 //
-// for each on all added html componenets
-const addEditorListener = function () {
-  document.querySelectorAll('[render-html] *').forEach((el) => {
-    // single element
-    el.addEventListener('mouseover', (e) => {
-      // stop propagation
-      e.stopPropagation();
-
-      document.querySelector('[hovered]')?.removeAttribute('hovered');
-      el.setAttribute('hovered', '');
-    });
-
-    // add event listener on clicked element
-    el.addEventListener('click', (e) => {
-      e.stopPropagation();
-      // set menu right to true
-      MenuRight.value = true;
-      //
-      document.querySelector('[selected]')?.removeAttribute('selected');
-      e.currentTarget.removeAttribute('hovered');
-      e.currentTarget.setAttribute('selected', '');
-
-      // current clicked element
-      currentElement.value = e.currentTarget;
-      // update state setComponent
-      store.commit('designer/setComponent', currentElement.value);
-    });
-  });
-};
 
 // clone component
 const cloneComponent = function (comp) {
@@ -216,22 +182,6 @@ watch(MenuPreview, () => {
   MenuRight.value = false;
 });
 //
-const removeSelected = function () {
-  document.querySelector('[selected]');
-  document.querySelector('[selected]')?.removeAttribute('selected');
-};
-const removeHovered = function () {
-  document.querySelector('[hovered]')?.removeAttribute('hovered');
-};
-const getCurrentIndex = function (component) {
-  // Declare container of components and current component
-  const allComponents = document.querySelector('#pagebuilder').children;
-  const currentComponent = component.closest('div[data-draggable="true"]');
-  // Get index of chosen component
-  const currentIndex = Array.from(allComponents).indexOf(currentComponent);
-  return currentIndex;
-};
-//
 //
 //
 //
@@ -290,15 +240,6 @@ const componentsMenu = computed(() => {
   });
 });
 //
-// on mounted
-onMounted(async () => {
-  // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
-  addEditorListener();
-
-  // load all HTML components
-  store.dispatch('designer/loadComponents');
-  // end get componenets
-});
 
 // JUNE 2023 UPDATING THE DESIGNER - START
 // JUNE 2023 UPDATING THE DESIGNER - START
@@ -312,19 +253,23 @@ onMounted(async () => {
 // JUNE 2023 UPDATING THE DESIGNER - START
 // JUNE 2023 UPDATING THE DESIGNER - START
 //
-
+//
+//
+// get current element from store
+const getComponent = computed(() => {
+  return store.getters['designer/getComponent'];
+});
+//
 // get current element outer HTML
 const getComponentOuterHTML = computed(() => {
   if (getComponent.value === null) return;
-  return getComponent.value.outerHTML ? getComponent.value.outerHTML : [];
+  return getComponent.value.outerHTML ? getComponent.value.outerHTML : null;
 });
 //
-// watch for any changes in "curent element"
-// Update "py" and "px padding when an element is selected
-watch(getComponentOuterHTML, (newComponent) => {
-  console.log('COMPONENT HAVE BEEN UPDATED');
-  newComponent = getComponent.value;
-
+const handleDesignerMethods = function () {
+  console.log('SWITCHED TO NEW COMPONENT / COMPONENT OUTHTML UPDATED');
+  // handle clear restore element
+  designer.handleClearRestoreElement();
   // handle font size
   designer.handleFontSize();
   // handle font weight
@@ -347,6 +292,26 @@ watch(getComponentOuterHTML, (newComponent) => {
   designer.handleColor();
   // handle classes
   designer.currentClasses();
+};
+//
+// watch for any changes in "curent element" or selecting a new element
+// Update "py" and "px padding when an element is selected
+watch(getComponentOuterHTML, (newComponent) => {
+  handleDesignerMethods();
+});
+//
+//
+//
+//
+//
+// on mounted
+onMounted(async () => {
+  // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
+  designer.attachElementEventListeners();
+
+  // load all HTML components
+  store.dispatch('designer/loadComponents');
+  // end get componenets
 });
 
 // JUNE 2023 UPDATING THE DESIGNER - END
@@ -375,7 +340,7 @@ watch(getComponentOuterHTML, (newComponent) => {
           'w-60': MenuLeft,
           'rounded-r-[0rem]': MenuPreview,
         }"
-        class="h-full duration-150 flex-shrink-0 shadow-2xl rounded-r-2xl overflow-hidden mr-4"
+        class="h-full flex-shrink-0 shadow-2xl rounded-r-2xl overflow-hidden mr-4 duration-150"
         @mouseleave="MenuPreview = false"
       >
         <div class="sticky h-full w-60 overflow-hidden">
@@ -392,7 +357,7 @@ watch(getComponentOuterHTML, (newComponent) => {
                 @click="toggleMenuLeft"
                 class="font-bold text-sm cursor-pointer"
               >
-                Close
+                Hide
               </p>
             </div>
 
@@ -454,8 +419,8 @@ watch(getComponentOuterHTML, (newComponent) => {
 
       <!-- Bars - start -->
       <div
-        v-if="MenuLeft === false"
-        class="pt-4 mr-4 h-full duration-150 flex-shrink-0 overflow-hidden"
+        v-show="MenuLeft === false"
+        class="pt-4 mr-4 h-full flex-shrink-0 overflow-hidden"
       >
         <Bars3Icon
           @click="toggleMenuLeft"
@@ -522,10 +487,10 @@ watch(getComponentOuterHTML, (newComponent) => {
           handle=".cursor-grab"
           item-key="id"
           :onDrop="onDrop"
-          @change="addEditorListener"
+          @change="designer.attachElementEventListeners"
         >
           <template #item="{ element }">
-            <div class="relative overflow-hidden group" id="min-designer">
+            <div class="relative overflow-hidden group">
               <div
                 class="absolute z-10 overflow-hidden left-0 right-0 top-0 text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor duration-100 transform group-hover:block hidden max-w-[80%] mx-auto mt-2 rounded-sm shadow-sm"
               >
@@ -541,21 +506,8 @@ watch(getComponentOuterHTML, (newComponent) => {
                       @click="removeComponent($event)"
                     />
                   </div>
+
                   <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="inline-block h-6 w-6 mx-2 cursor-grab"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
-                      />
-                    </svg>
                     <ArrowDownIcon
                       class="inline-block h-6 w-6 cursor-pointer"
                       @click="moveComponent($event, 1)"

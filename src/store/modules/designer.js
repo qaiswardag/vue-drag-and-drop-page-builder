@@ -16,6 +16,7 @@ export default {
 
   // state
   state: {
+    restoredElement: null,
     currentClasses: [],
     fontVerticalPadding: null,
     fontHorizontalPadding: null,
@@ -42,7 +43,9 @@ export default {
 
   // getters
   getters: {
-    // current element
+    getRestoredElement(state) {
+      return state.restoredElement;
+    },
     getCurrentClasses(state) {
       return state.currentClasses;
     },
@@ -135,6 +138,9 @@ export default {
   },
 
   mutations: {
+    setRestoredElement(state, payload) {
+      state.restoredElement = payload;
+    },
     setClass(state, payload) {
       state.currentClasses = [...state.currentClasses, payload];
     },

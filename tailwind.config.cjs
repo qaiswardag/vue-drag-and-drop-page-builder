@@ -12,8 +12,8 @@ module.exports = {
     extend: {
       colors: {
         // Custom colors
-        myPrimaryBrandColor: '#9F2B68',
-        myPrimaryLinkColor: '#9F2B68',
+        myPrimaryBrandColor: '#000000',
+        myPrimaryLinkColor: '#16a34a',
 
         myPrimaryLightGrayColor: '#e2e8f0',
         myPrimaryMediumGrayColor: '#9ca3af',

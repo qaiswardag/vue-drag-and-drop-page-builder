@@ -8,19 +8,19 @@
         </p>
         <XMarkIcon
           class="shrink-0 w-5 h-5 cursor-pointer"
-          @click.esc="$emit('closeEditor')"
+          @click="$emit('closeEditor')"
         ></XMarkIcon>
       </div>
 
       <div class="mb-4 overflow-y-scroll md:pb-24 pb-12">
-        <article v-show="getCurrentImagePreview">
+        <article>
           <ImageEditor> </ImageEditor>
         </article>
-        <article v-show="!getCurrentImagePreview && showTextArea !== false">
+        <article>
           <TextContent></TextContent>
         </article>
 
-        <article v-show="textEditable">
+        <article>
           <Typography></Typography>
         </article>
         <article>
@@ -51,82 +51,20 @@ import ColorsEditor from '../../designer/editor-menu/editables/ColorEditor.vue';
 import TextContent from '../../designer/editor-menu/editables/TextContent.vue';
 import Typography from '../../designer/editor-menu/editables/Typography.vue';
 import Spacing from './editables/Spacing.vue';
-import DeleteElementEditor from './editables/DeleteElementEditor.vue';
+import DeleteElementEditor from './editables/DeleteElement.vue';
 
 // store
 const store = useStore();
 // emit
-const emit = defineEmits([
-  'previewCurrentDesign',
-  'signOutClick',
-  'closeEditor',
-]);
-
-const showTextArea = ref(false);
-
-// getters: current element from store
-const getCurrentImagePreview = computed(() => {
-  return store.getters['designer/getCurrentImagePreview'];
-});
+const emit = defineEmits(['closeEditor']);
 
 // get current element tag
 const getComponent = computed(() => {
   return store.getters['designer/getComponent'];
 });
 
-// get outer HTML of current element
-const getComponentInnerHTML = computed(() => {
-  return getComponent?.value?.innerHTML ? getComponent?.value?.innerHTML : [];
-});
-
-// watch and show text area based "get current element" content
-// only show text area if it's include text only plus if containing <br>
-watch(getComponentInnerHTML, (newElementInnerHTML, oldElement) => {
-  // stop execution if
-  if (typeof newElementInnerHTML !== 'string') {
-    return;
-  }
-
-  const newElementClone = ref(newElementInnerHTML);
-
-  // check for br tags and replace br tags with empty space
-  newElementClone.value = newElementClone.value.replace(/<br\s*\/?>/gi, '');
-  newElementClone.value = newElementClone.value?.replaceAll('<br>', '');
-  newElementClone.value = newElementClone.value?.replaceAll('<br/>', '');
-  newElementClone.value = newElementClone.value?.replaceAll('<br />', '');
-
-  // check for any html
-  // if test return true, the element is containing html
-  const containsHTML = ref(/<\/?[a-z][\s\S]*>/i.test(newElementClone.value));
-
-  // if test return true, the element is containing html
-  if (containsHTML.value === true) {
-    showTextArea.value = false;
-  }
-  if (containsHTML.value === false) {
-    showTextArea.value = true;
-  }
-});
-
-// text tags
-const textTags = [
-  'H1',
-  'H2',
-  'H3',
-  'H4',
-  'H5',
-  'H6',
-  'P',
-  'A',
-  'BUTTON',
-  'SPAN',
-];
 // Get tagName of element
 const elementTag = computed(() => {
   return getComponent.value?.tagName;
-});
-// Check if text is editable
-const textEditable = computed(() => {
-  return textTags.includes(elementTag.value);
 });
 </script>
