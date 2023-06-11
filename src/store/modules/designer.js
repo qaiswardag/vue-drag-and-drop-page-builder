@@ -16,6 +16,7 @@ export default {
 
   // state
   state: {
+    textAreaVueModel: null,
     restoredElement: null,
     currentClasses: [],
     fontVerticalPadding: null,
@@ -43,6 +44,9 @@ export default {
 
   // getters
   getters: {
+    getTextAreaVueModel(state) {
+      return state.textAreaVueModel;
+    },
     getRestoredElement(state) {
       return state.restoredElement;
     },
@@ -138,6 +142,9 @@ export default {
   },
 
   mutations: {
+    setTextAreaVueModel(state, payload) {
+      state.textAreaVueModel = payload;
+    },
     setRestoredElement(state, payload) {
       state.restoredElement = payload;
     },

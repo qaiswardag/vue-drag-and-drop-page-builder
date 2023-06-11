@@ -10,6 +10,9 @@ class Designer {
     this.currentElement = ref({});
     this.colors = tailwindColors.backgroundColors();
     this.store = store;
+    this.getTextAreaVueModel = computed(
+      () => this.store.getters['designer/getTextAreaVueModel']
+    );
     this.getComponent = computed(
       () => this.store.getters['designer/getComponent']
     );
@@ -72,12 +75,6 @@ class Designer {
       this.store.commit('designer/removeClass', userSelectedClass);
     }
   }
-  handleDeleteElement() {
-    console.log('this ran');
-
-    this.store.commit('designer/setRestoredElement', this.getComponent.value);
-    this.getComponent.value.remove();
-  }
 
   handleDeleteElement() {
     console.log('handleDeleteElement ran');
@@ -89,9 +86,7 @@ class Designer {
     element.remove(); // Remove the element from the DOM
   }
   handleRestoreElement() {
-    console.log('handleRestoreElement ran');
-
-    // Clear the stored deleted element in the Vuex store
+    // Clear the stored deleted element
     this.store.commit('designer/setComponent', null);
     this.store.commit('designer/setRestoredElement', null);
   }
@@ -362,6 +357,34 @@ class Designer {
     });
   };
 
+  textContent() {
+    // text content
+    if (typeof this.getComponent.value.innerHTML !== 'string') {
+      return;
+    }
+
+    if (typeof this.getComponent.value.innerHTML === 'string') {
+      const textContentElementClone =
+        this.getComponent.value.innerHTML.replaceAll('<br>', '\r\n') || '';
+
+      this.store.commit(
+        'designer/setTextAreaVueModel',
+        textContentElementClone
+      );
+    }
+  }
+  changeText() {
+    if (this.getTextAreaVueModel.value !== null) {
+      const textContentElementClone = this.getTextAreaVueModel.value.replaceAll(
+        /\n/g,
+        '<br>'
+      );
+      // text change
+      this.getComponent.value.innerHTML = textContentElementClone;
+      this.store.commit('designer/setComponent', this.getComponent.value);
+    }
+  }
+
   handleDesignerMethods() {
     console.log('SWITCHED TO NEW COMPONENT / COMPONENT OUTHTML UPDATED');
 
@@ -390,6 +413,10 @@ class Designer {
     this.handleColor();
     // handle classes
     this.currentClasses();
+    // handle text content
+    this.textContent();
+    // handle text change
+    // this.changeText();
   }
 }
 
