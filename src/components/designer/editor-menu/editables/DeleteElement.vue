@@ -19,7 +19,7 @@ const getRestoredElement = computed(() => {
 
 <template>
   <EditorAccordion>
-    <template #title>Delete</template>
+    <template #title>Delete or restore</template>
     <template #content>
       <div class="my-2">
         <button

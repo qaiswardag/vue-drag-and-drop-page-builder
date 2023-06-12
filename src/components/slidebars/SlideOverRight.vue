@@ -27,22 +27,18 @@ const props = defineProps({
 });
 
 // emit
-const emit = defineEmits(['colorsSlideOverButton']);
+const emit = defineEmits(['slideOverButton']);
 
 // button
-const colorsSlideOverButton = function () {
-  emit('colorsSlideOverButton');
+const slideOverButton = function () {
+  emit('slideOverButton');
 };
 </script>
 
 <template>
   <teleport to="body">
     <TransitionRoot as="template" :show="open">
-      <Dialog
-        as="div"
-        class="relative z-30"
-        @click="$emit('colorsSlideOverButton')"
-      >
+      <Dialog as="div" class="relative z-30" @click="$emit('slideOverButton')">
         <div class="fixed inset-0" />
 
         <div class="fixed inset-0 overflow-hidden">
@@ -52,10 +48,10 @@ const colorsSlideOverButton = function () {
             >
               <TransitionChild
                 as="template"
-                enter="transform transition ease-in-out duration-100 sm:duration-100"
+                enter="transform transition ease-in-out duration-200 sm:duration-200"
                 enter-from="translate-x-full"
                 enter-to="translate-x-0"
-                leave="transform transition ease-in-out duration-100 sm:duration-100"
+                leave="transform transition ease-in-out duration-200 sm:duration-200"
                 leave-from="translate-x-0"
                 leave-to="translate-x-full"
               >
@@ -65,32 +61,17 @@ const colorsSlideOverButton = function () {
                   >
                     <div class="px-4 sm:px-6">
                       <div class="flex items-center justify-between">
-                        <DialogTitle class="myTertiaryHeader">
+                        <DialogTitle class="myTertiaryHeader my-0">
                           {{ title }}
                         </DialogTitle>
                         <div class="ml-3 flex h-7 items-center">
-                          <button
-                            type="button"
-                            class="focus:outline-none cursor-pointer flex gap-2 items-center rounded-full px-1.5 py-1.5 hover:ring-2 hover:ring-myPrimaryBrandColor hover:bg-gray-50 font-medium"
-                            @click="$emit('colorsSlideOverButton')"
+                          <div
+                            @click="$emit('slideOverButton')"
+                            class="hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
                           >
-                            <span class="sr-only">Close panel</span>
-
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke-width="1.5"
-                              stroke="currentColor"
-                              class="w-6 h-6"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M6 18L18 6M6 6l12 12"
-                              />
-                            </svg>
-                          </button>
+                            <XMarkIcon class="shrink-0 w-5 h-5 m-2">
+                            </XMarkIcon>
+                          </div>
                         </div>
                       </div>
                     </div>

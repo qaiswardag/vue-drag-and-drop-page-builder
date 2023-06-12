@@ -88,5 +88,11 @@
     "category": "forms",
     "imageSrc": "/previews/contact-right-image.png",
     "html": "<section render-html>\n\t\t<section>\n\t\t\t<div class=\"py-20 mx-auto max-w-7xl px-6\">\n\t\t\t\t<div class=\"grid lg:grid-cols-3\">\n\t\t\t\t\t<div class=\"lg:col-span-1 bg-emerald-500\">\n\t\t\t\t\t\t<div class=\"px-10 py-24\">\n\t\t\t\t\t\t\t<h1 class=\"xl:text-4xl text-3xl pb-8 font-bold text-gray-100\">Contact us</h1>\n\t\t\t\t\t\t\t<p class=\"text-lg pb-8 leading-relaxed font-normal text-gray-100\">Got a question about\n\t\t\t\t\t\t\t\tus?<br> Have some suggestions or just want to say Hi? Just contact us.</p>\n\t\t\t\t\t\t\t<div class=\"flex pb-4 items-center\">\n\t\t\t\t\t\t\t\t<p class=\"text-base text-gray-100\">+45 12 34 56 78</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"flex items-center\">\n\t\t\t\t\t\t\t\t<p class=\"text-base text-gray-100\">kontakt@company.com</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<p class=\"text-lg pt-10 tracking-wide text-gray-100\">\n\t\t\t\t\t\t\t\tBoulevard 10\n\t\t\t\t\t\t\t\t<br> Copenhagen, Denmark\n\t\t\t\t\t\t\t</p>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t\t<img class=\"object-cover lg:col-span-2 object-cover h-full\"\n\t\t\t\t\t\tsrc=\"https://images.unsplash.com/photo-1497366811353-6870744d04b2?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=MnwzMTI0Mzl8MHwxfHNlYXJjaHwxNTJ8fG9mZmljZSUyMG1pbmltfGVufDB8fHx8MTY1MDg5MTcxNA&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=1080\"\n\t\t\t\t\t\talt=\"provider\">\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</section>\n\t</section>"
+  },
+  {
+    "name": "Support center",
+    "category": "headers",
+    "imageSrc": "https://images.unsplash.com/photo-1683009427590-dd987135e66c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2370&q=80",
+    "html": "<div class=\"bg-white py-24 sm:py-32\"><div class=\"mx-auto max-w-7xl px-6 lg:px-8\"><div class=\"mx-auto max-w-2xl lg:mx-0\"><h2 class=\"text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl\">Support center</h2><p class=\"mt-6 text-lg leading-8 text-gray-600\">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p></div></div></div>"
   }
 ]

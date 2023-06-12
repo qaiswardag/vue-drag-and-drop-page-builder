@@ -45,7 +45,7 @@
       <SlideOverRight
         :open="showColorsSlideOverRight"
         :title="titleSlideOverRight"
-        @colorsSlideOverButton="colorsSlideOverButton"
+        @slideOverButton="colorsSlideOverButton"
       >
         <ManageBackgroundColor></ManageBackgroundColor>
       </SlideOverRight>
@@ -72,12 +72,12 @@ const store = useStore();
 const showColorsSlideOverRight = ref(false);
 const titleSlideOverRight = ref(null);
 
-// handle notifications window
+// handle slideover window
 const handleColorsSlideOver = function () {
   titleSlideOverRight.value = 'Manage colors';
   showColorsSlideOverRight.value = true;
 };
-// handle notifications window
+// handle slideover window
 const colorsSlideOverButton = function () {
   showColorsSlideOverRight.value = false;
 };

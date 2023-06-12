@@ -6,15 +6,28 @@ import { computed, ref } from 'vue';
 
 class Designer {
   constructor(store) {
-    // current clicked element
-    this.currentElement = ref({});
+    // Create a new WeakSet to keep track of elements with event listeners
+    this.elementsWithListeners = new WeakSet();
+
     this.colors = tailwindColors.backgroundColors();
     this.store = store;
     this.getTextAreaVueModel = computed(
       () => this.store.getters['designer/getTextAreaVueModel']
     );
+
+    this.getComponents = computed(
+      () => this.store.getters['designer/getComponents']
+    );
+
     this.getComponent = computed(
       () => this.store.getters['designer/getComponent']
+    );
+
+    this.getNextSibling = computed(
+      () => this.store.getters['designer/getNextSibling']
+    );
+    this.getParentElement = computed(
+      () => this.store.getters['designer/getParentElement']
     );
     this.getRestoredElement = computed(
       () => this.store.getters['designer/getRestoredElement']
@@ -77,19 +90,37 @@ class Designer {
   }
 
   handleDeleteElement() {
-    console.log('handleDeleteElement ran');
-
     const element = this.getComponent.value; // Get the element to be deleted
 
+    this.store.commit('designer/setParentElement', element.parentNode); // Store the parent of the deleted element
     this.store.commit('designer/setRestoredElement', element.outerHTML); // Store the outerHTML of the deleted element
+    this.store.commit('designer/setNextSibling', element.nextSibling); // Store the next sibling of the deleted element
+    this.store.commit('designer/setComponent', null);
 
     element.remove(); // Remove the element from the DOM
   }
   handleRestoreElement() {
-    // Clear the stored deleted element
-    this.store.commit('designer/setComponent', null);
+    // Get the stored deleted element and its parent
+    if (this.getRestoredElement !== null && this.getParentElement !== null) {
+      // Create a new element from the stored outerHTML
+      const newElement = document.createElement('div');
+      newElement.innerHTML = this.getRestoredElement.value;
+
+      // Append the restored element to its parent
+      // Insert the restored element before its next sibling in its parent
+      this.getParentElement.value.insertBefore(
+        newElement.firstChild,
+        this.getNextSibling.value
+      );
+    }
+
+    // Clear
     this.store.commit('designer/setRestoredElement', null);
+    this.store.commit('designer/setParentElement', null);
+    this.store.commit('designer/setComponent', null);
+    this.attachElementEventListeners();
   }
+
   handleClearRestoreElement() {
     this.store.commit('designer/setRestoredElement', null);
   }
@@ -277,15 +308,12 @@ class Designer {
     this.#updateStyle(userSelectedColor, this.colors, 'setBackgroundColor');
   }
 
-  saveAllComponentsInLocalstorage(allComponentsAddedToDom) {
+  saveAllComponentsInLocalstorage(components) {
     //
     // wait for components to be added to DOM
     setTimeout(() => {
       // save design
-      localStorage.setItem(
-        'savedCurrentDesign',
-        JSON.stringify(allComponentsAddedToDom)
-      );
+      localStorage.setItem('savedCurrentDesign', JSON.stringify(components));
     }, 100);
   }
 
@@ -295,8 +323,22 @@ class Designer {
    * The attachElementEventListeners function is responsible for dynamically adding event listeners
    * to elements within the [render-html] component in the Vue template.
    */
-  attachElementMouseoverListener = (el) => {
-    // Stop propagation to prevent the event from bubbling up the DOM tree
+  attachElementEventListeners = () => {
+    // Iterate over all descendant elements of the [render-html] component
+    document.querySelectorAll('[render-html] *').forEach((el) => {
+      // If the WeakSet already contains this element, it means that event listeners
+      // are already attached to this element. In this case, we should skip this element
+      // to prevent multiple instances of the same listener being attached.
+      if (!this.elementsWithListeners.has(el)) {
+        // Add the element to the WeakSet to indicate that this element now has event listeners attached
+        this.elementsWithListeners.add(el);
+
+        this.attachElementListeners(el);
+      }
+    });
+  };
+
+  attachElementListeners = (el) => {
     el.addEventListener('mouseover', (e) => {
       e.stopPropagation();
 
@@ -306,10 +348,7 @@ class Designer {
       // Set the 'hovered' attribute on the currently hovered element
       el.setAttribute('hovered', '');
     });
-  };
 
-  attachElementClickListener = (el) => {
-    // Stop propagation to prevent the event from bubbling up the DOM tree
     el.addEventListener('click', (e) => {
       if (this.getComponent.value !== null) {
         this.handleDesignerMethods();
@@ -318,7 +357,7 @@ class Designer {
       e.stopPropagation();
 
       // Set menu right to true. This likely triggers the display of a contextual menu
-      // MenuRight.value = true;
+      this.store.commit('designer/setMenuRight', true);
 
       // If there is an element with the 'selected' attribute, remove this attribute
       document.querySelector('[selected]')?.removeAttribute('selected');
@@ -329,35 +368,73 @@ class Designer {
       // Set the 'selected' attribute on the clicked element
       e.currentTarget.setAttribute('selected', '');
 
-      // Update the 'currentElement' reference to point to the clicked element
-      this.currentElement.value = e.currentTarget;
-
-      // Commit the selected component state to the Vuex store, effectively marking this
-      // component as the currently active or "selected" one in the application state
-      // store.commit('designer/setComponent', currentElement.value);
-      this.store.commit('designer/setComponent', this.currentElement.value);
+      // Commit the selected component state to the Vuex store
+      this.store.commit('designer/setComponent', e.currentTarget);
     });
   };
 
-  attachElementEventListeners = () => {
-    // Iterate over all descendant elements of the [render-html] component
-    document.querySelectorAll('[render-html] *').forEach((el) => {
-      // If the element already has the 'hasListeners' class, it means that event listeners
-      // are already attached to this element. In this case, we should skip this element
-      // to prevent multiple instances of the same listener being attached.
-      if (el.classList.contains('hasListeners')) {
-        return;
-      }
+  deleteAllComponents() {
+    this.store.commit('designer/setComponents', []);
+    this.saveAllComponentsInLocalstorage([]);
+  }
 
-      // Add the 'hasListeners' class to indicate that this element now has event listeners attached
-      el.classList.add('hasListeners');
+  getCurrentIndex(event) {
+    // Declare container of components and current event
+    const allComponents = document.querySelector('#pagebuilder').children;
+    const currentComponent = event.target.closest('div[data-draggable="true"]');
+    // Get index of chosen event
+    const currentIndex = Array.from(allComponents).indexOf(currentComponent);
+    return currentIndex;
+  }
 
-      this.attachElementMouseoverListener(el);
-      this.attachElementClickListener(el);
-    });
-  };
+  deleteComponent(event) {
+    const currentIndex = this.getCurrentIndex(event);
+    // remove component from array
+    this.getComponents.value.splice(currentIndex, 1);
+    this.store.commit('designer/setComponents', this.getComponents.value);
 
-  textContent() {
+    this.saveAllComponentsInLocalstorage(this.getComponents.value);
+
+    // hide right menu if the last component was removed
+    if (this.getComponents.value.length === 0) {
+      this.store.commit('designer/setMenuRight', false);
+      this.store.commit('designer/setComponent', this.getComponent.value);
+    }
+  }
+
+  // move component
+  // runs when html components are rearranged
+  moveComponent(event, dir) {
+    // Get index of component
+    const currentIndex = this.getCurrentIndex(event);
+    // Return if moving first element backwards or last element forwards
+    if (
+      (currentIndex === 0 && dir === -1) ||
+      (currentIndex === this.getComponents.value.length - 1 && dir === 1)
+    )
+      return;
+    // Store chosen component
+    const currentComponent = this.getComponents.value[currentIndex];
+    // Remove current object
+    // Move it forwards if negative dir or forward if positive dir
+    this.getComponents.value.splice(currentIndex, 1);
+    this.getComponents.value.splice(
+      currentIndex + 1 * dir,
+      0,
+      currentComponent
+    );
+    // Follow element to new location
+    document
+      .querySelector('#pagebuilder')
+      .children[currentIndex + 1 * dir].scrollIntoView({ behavior: 'smooth' });
+    //
+    // save all current added HTML components in local storage
+    this.saveAllComponentsInLocalstorage(this.getComponents.value);
+    //
+    // end of method "moveComponent"
+  }
+
+  handleTextAreaContent() {
     // text content
     if (typeof this.getComponent.value.innerHTML !== 'string') {
       return;
@@ -385,38 +462,88 @@ class Designer {
     }
   }
 
+  cloneComponent(componenet) {
+    // Hide slider and right menu
+    this.store.commit('designer/setMenuPreview', false);
+
+    this.store.commit('designer/setMenuRight', false);
+
+    // Deep clone component
+    const clonedComponent = { ...componenet };
+
+    const currentDate = new Date();
+    const timestamp = currentDate.getTime();
+
+    // set id of clone to timestamp giving it a unique id
+    clonedComponent.id = timestamp;
+
+    // return to the cloned element to be dropped
+    return clonedComponent;
+  }
+
+  previewCurrentDesign() {
+    const addedHtmlComponents = ref([]);
+    // preview current design in external browser tab
+
+    // iterate over each component
+    document.querySelectorAll('[render-html]').forEach((html) => {
+      // push outer html into the array
+      addedHtmlComponents.value.push(html.outerHTML);
+    });
+    // stringify added html components
+    addedHtmlComponents.value = JSON.stringify(addedHtmlComponents.value);
+
+    // commit
+    this.store.commit(
+      'designer/setCurrentLayoutPreview',
+      addedHtmlComponents.value
+    );
+    // set added html components back to empty array
+
+    addedHtmlComponents.value = [];
+  }
+
+  areComponentsStoredInLocalStorage() {
+    if (localStorage.getItem('savedCurrentDesign')) {
+      this.store.commit(
+        'designer/setComponents',
+        JSON.parse(localStorage.getItem('savedCurrentDesign'))
+      );
+    }
+  }
+
   handleDesignerMethods() {
     console.log('SWITCHED TO NEW COMPONENT / COMPONENT OUTHTML UPDATED');
 
-    // invoke methods
-    // handle clear restore element
-    this.handleClearRestoreElement();
-    // handle font size
-    this.handleFontSize();
-    // handle font weight
-    this.handleFontWeight();
-    // handle font family
-    this.handleFontFamily();
-    // handle font style
-    this.handleFontStyle();
-    // handle vertical padding
-    this.handleVerticalPadding();
-    // handle horizontal padding
-    this.handleHorizontalPadding();
-    // handle vertical margin
-    this.handleVerticalMargin();
-    // handle horizontal margin
-    this.handleHorizontalMargin();
-    // handle custom color
-    this.handleCustomColor();
-    // handle color
-    this.handleColor();
-    // handle classes
-    this.currentClasses();
-    // handle text content
-    this.textContent();
-    // handle text change
-    // this.changeText();
+    if (this.getComponent.value !== null) {
+      // invoke methods
+      // handle clear restore element
+      this.handleClearRestoreElement();
+      // handle font size
+      this.handleFontSize();
+      // handle font weight
+      this.handleFontWeight();
+      // handle font family
+      this.handleFontFamily();
+      // handle font style
+      this.handleFontStyle();
+      // handle vertical padding
+      this.handleVerticalPadding();
+      // handle horizontal padding
+      this.handleHorizontalPadding();
+      // handle vertical margin
+      this.handleVerticalMargin();
+      // handle horizontal margin
+      this.handleHorizontalMargin();
+      // handle custom color
+      this.handleCustomColor();
+      // handle color
+      this.handleColor();
+      // handle classes
+      this.currentClasses();
+      // handle text content
+      this.handleTextAreaContent();
+    }
   }
 }
 

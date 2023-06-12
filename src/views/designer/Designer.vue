@@ -1,56 +1,46 @@
 <script setup>
 import Draggable from 'vuedraggable';
 import Designer from '../../composables/Designer';
-import { onBeforeMount, ref, onUpdated } from 'vue';
-import { computed } from 'vue';
-import { watch } from 'vue';
+import { onMounted, computed, onBeforeMount, ref, watch } from 'vue';
 import {
-  ArrowUpIcon,
-  ArrowLeftIcon,
-  ArrowDownIcon,
   Bars3Icon,
-  Square3Stack3DIcon,
   XMarkIcon,
+  EyeIcon,
+  BellIcon,
+  EyeSlashIcon,
+  AdjustmentsVerticalIcon,
+  Square3Stack3DIcon,
 } from '@heroicons/vue/24/outline';
-import { PencilIcon, TrashIcon } from '@heroicons/vue/24/outline';
-import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 import OptionsDropdown from '../../components/dropdowns-and-toggles/OptionsDropdown.vue';
 import RightSidebarEditor from '../../components/designer/editor-menu/RightSidebarEditor.vue';
 import Spinner from '../../components/loaders/Spinner.vue';
-import SaveDesign from '../../components/dropdowns-and-toggles/SaveDesign.vue';
-import DynamicModal from '../../components/modal/DynamicModal.vue';
+import ComponentTopMenu from '../../components/designer/editor-menu/editables/ComponentTopMenu.vue';
+import SlideOverRight from '../../components/slidebars/SlideOverRight.vue';
 
 const store = useStore();
 const designer = new Designer(store);
+const showSettingsSlideOverRight = ref(false);
+const titleSettingsSlideOverRight = ref(null);
+const menuLeft = ref(true);
+const getMenuRight = computed(() => {
+  return store.getters['designer/getMenuRight'];
+});
+const getMenuPreview = computed(() => {
+  return store.getters['designer/getMenuPreview'];
+});
 
-const showModalDeleteHTMLElement = ref(false);
-//
-// use dynamic model
-const typeModal = ref('');
-const gridColumnModal = ref(Number(1));
-const titleModal = ref('');
-const descriptionModal = ref('');
-const firstButtonModal = ref('');
-const secondButtonModal = ref(null);
-const thirdButtonModal = ref(null);
-// set dynamic modal handle functions
-const firstModalButtonFunction = ref(null);
-const secondModalButtonFunction = ref(null);
-const thirdModalButtonFunction = ref(null);
-//
-//
-//
-//
-//
-// menu right
-const MenuLeft = ref(true);
-const MenuRight = ref(true);
-// menu preview
-const MenuPreview = ref(false);
-// categories
+// handle slideover window
+const handleSettingsSlideOver = function () {
+  titleSettingsSlideOverRight.value = 'Settings';
+  showSettingsSlideOverRight.value = true;
+};
+// handle slideover window
+const settingsSlideOverButton = function () {
+  showSettingsSlideOverRight.value = false;
+};
+
 const categories = ref(null);
-// categories value
 categories.value = [
   'forms',
   'teams',
@@ -59,200 +49,35 @@ categories.value = [
   'headers',
   'testimonials',
 ];
-// current active library
 const activeLibrary = ref('forms');
 
-//
-//
-//
-// get components added
-const allComponentsAddedToDom = computed(() => {
-  return store.getters['designer/getComponentsAdded'];
-});
-//
-// set state for "components added"
-store.commit('designer/setComponentsAdded', allComponentsAddedToDom.value);
-//
-//
-// save current design in local storage
-const saveCurrentDesignInDB = function () {
-  console.log('save current design in DB method');
-};
-//
-//
 const toggleMenuLeft = function () {
-  MenuLeft.value = !MenuLeft.value;
-};
-//
-//
-//
-
-// clone component
-const cloneComponent = function (comp) {
-  // Hide slider and right menu
-  MenuPreview.value = false;
-  // MenuRight.value = false;
-
-  // Deep clone component
-  const clonedComp = { ...comp };
-
-  const currentDate = new Date();
-  const timestamp = currentDate.getTime();
-
-  // set id of clone to timestamp giving it a unique id
-  clonedComp.id = timestamp;
-
-  // return to the cloned element to be dropped
-  return clonedComp;
+  menuLeft.value = !menuLeft.value;
 };
 
-const getCurrentIndex = function (component) {
-  // Declare container of components and current component
-  const allComponents = document.querySelector('#pagebuilder').children;
-  const currentComponent = component.closest('div[data-draggable="true"]');
-  // Get index of chosen component
-  const currentIndex = Array.from(allComponents).indexOf(currentComponent);
-  return currentIndex;
+const cloneComponent = function (component) {
+  return designer.cloneComponent(component);
 };
 
-// move component
-// runs when html componenets are rearranged
-const moveComponent = function (e, dir) {
-  // Get index of component
-  const currentIndex = getCurrentIndex(e.currentTarget);
-  // Return if moving first element backwards or last element forwards
-  if (
-    (currentIndex === 0 && dir === -1) ||
-    (currentIndex === allComponentsAddedToDom.value.length - 1 && dir === 1)
-  )
-    return;
-  // Store chosen component
-  const currentComponent = allComponentsAddedToDom.value[currentIndex];
-  // Remove current object
-  // Move it forwards if negative dir or forward if positive dir
-  allComponentsAddedToDom.value.splice(currentIndex, 1);
-  allComponentsAddedToDom.value.splice(
-    currentIndex + 1 * dir,
-    0,
-    currentComponent
-  );
-  // Follow element to new location
-  document
-    .querySelector('#pagebuilder')
-    .children[currentIndex + 1 * dir].scrollIntoView({ behavior: 'smooth' });
-  //
-  // save all current added HTML components in local storage
-  designer.saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
-  //
-  // end of method "moveComponent"
-};
-//
-// remove component
-// delete singular component on trach icon click
-const removeComponent = function (e) {
-  const currentIndex = getCurrentIndex(e.currentTarget);
-
-  // set modal standards
-  showModalDeleteHTMLElement.value = true;
-  typeModal.value = 'delete';
-  gridColumnModal.value = 2;
-  titleModal.value = 'Delete component';
-  descriptionModal.value = 'Are you sure you want to delete this component?';
-  firstButtonModal.value = 'Close';
-  secondButtonModal.value = null;
-  thirdButtonModal.value = 'Delete';
-
-  // handle click
-  firstModalButtonFunction.value = function () {
-    // set open modal
-    showModalDeleteHTMLElement.value = false;
-  };
-  //
-  // handle click
-  thirdModalButtonFunction.value = function () {
-    // remove component from array
-    allComponentsAddedToDom.value.splice(currentIndex, 1);
-
-    // hide right menu if last component was removed
-    if (allComponentsAddedToDom.value.length === 0) MenuRight.value = false;
-
-    // set open modal
-    showModalDeleteHTMLElement.value = false;
-  };
-  // end modal
-};
-//
-//
-//
-//
-//
-//
-//
-//
-// locally added html components array
-const addedHtmlComponents = ref([]);
-//
-// preview current design in external browser tab
 const previewCurrentDesign = function () {
-  // iterate over each component
-  document.querySelectorAll('[render-html]').forEach((html) => {
-    // push outer html into the array
-    addedHtmlComponents.value.push(html.outerHTML);
-  });
-  // stringify added html components
-  addedHtmlComponents.value = JSON.stringify(addedHtmlComponents.value);
-
-  // commit
-  store.commit('designer/setCurrentPreview', addedHtmlComponents.value);
-  // set added html components back to empty array
-
-  addedHtmlComponents.value = [];
+  designer.previewCurrentDesign();
 };
-//
-//
-//
-//
-//
-// set all components add on before mount
-// On before mount
-onBeforeMount(async () => {
-  if (localStorage.getItem('savedCurrentDesign')) {
-    store.commit(
-      'designer/setComponentsAdded',
-      JSON.parse(localStorage.getItem('savedCurrentDesign'))
-    );
-  }
-});
 
-// get fetched components
 const getFetchedComponents = computed(() => {
   return store.getters['designer/getFetchedComponents'];
 });
-// menu for fetched components filtered after category
+
+// Fetched components filtered after category
 const componentsMenu = computed(() => {
-  return getFetchedComponents.value?.fetchedData?.filter((comp) => {
-    return comp.category === activeLibrary.value;
+  return getFetchedComponents.value?.fetchedData?.filter((component) => {
+    return component.category === activeLibrary.value;
   });
 });
-//
 
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-// JUNE 2023 UPDATING THE DESIGNER - START
-//
-//
-// when HTML component is dropped into the DOM
+// When HTML component is dropped into the DOM
 const onDrop = function () {
   // save all current added HTML components in local storage
-  designer.saveAllComponentsInLocalstorage(allComponentsAddedToDom.value);
+  designer.saveAllComponentsInLocalstorage(getComponents.value);
 };
 const getComponent = computed(() => {
   return store.getters['designer/getComponent'];
@@ -264,31 +89,37 @@ const getComponentOuterHTML = computed(() => {
 watch(getComponentOuterHTML, (newComponent) => {
   designer.handleDesignerMethods();
 });
-//
-// on mounted
+
+const getComponents = computed(() => {
+  return store.getters['designer/getComponents'];
+});
+
+const unselectComponent = function () {
+  store.commit('designer/setComponent', null);
+};
+
+onBeforeMount(() => {
+  designer.areComponentsStoredInLocalStorage();
+});
+
 onMounted(async () => {
-  // run "add editor listener - so when saved design is loaded from localstorage it's get rerendered"
+  // Rerender `get components` when it is loaded from local storage
   designer.attachElementEventListeners();
   // load all HTML components
   store.dispatch('designer/loadComponents');
-  // end get componenets
 });
-
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
-// JUNE 2023 UPDATING THE DESIGNER - END
 </script>
 
 <template xmlns="http://www.w3.org/1999/html">
+  <SlideOverRight
+    :open="showSettingsSlideOverRight"
+    :title="titleSettingsSlideOverRight"
+    @slideOverButton="settingsSlideOverButton"
+  >
+    <p class="myPrimaryParagraph text-xs mt-8">
+      Sorry, there are currently no settings available.
+    </p>
+  </SlideOverRight>
   <div
     class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
   >
@@ -296,29 +127,25 @@ onMounted(async () => {
       <aside
         aria-label="sidebar"
         :class="{
-          'w-0': !MenuLeft,
-          'w-60': MenuLeft,
-          'rounded-r-[0rem]': MenuPreview,
+          'w-0': !menuLeft,
+          'w-60': menuLeft,
+          'rounded-r-[0rem]': getMenuPreview,
         }"
         class="h-full flex-shrink-0 shadow-2xl rounded-r-2xl overflow-hidden mr-4 duration-150"
-        @mouseleave="MenuPreview = false"
+        @mouseleave="store.commit('designer/setMenuPreview', false)"
       >
         <div class="sticky h-full w-60 overflow-hidden">
-          <nav aria-label="Sidebar" class="h-full bg-white p-4">
-            <div
-              class="flex flex-row justify-between border-b border-myPrimaryMediumGrayColor"
-            >
-              <XMarkIcon
+          <nav
+            aria-label="Sidebar"
+            class="h-full bg-white pt-2.5 pr-4 pb-4 pl-4"
+          >
+            <div class="flex flex-row justify-end">
+              <div
                 @click="toggleMenuLeft"
-                class="shrink-0 w-5 h-5 cursor-pointer"
+                class="hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
               >
-              </XMarkIcon>
-              <p
-                @click="toggleMenuLeft"
-                class="font-bold text-sm cursor-pointer"
-              >
-                Hide
-              </p>
+                <XMarkIcon class="shrink-0 w-5 h-5 m-2"> </XMarkIcon>
+              </div>
             </div>
 
             <p class="myPrimaryParagraph font-medium pl-4 pt-4 pr-4">
@@ -332,12 +159,12 @@ onMounted(async () => {
                 :key="category"
                 :class="{
                   'bg-gray-100 text-gray-900':
-                    activeLibrary === category && MenuPreview === true,
+                    activeLibrary === category && getMenuPreview === true,
                 }"
                 class="myPrimaryParagrap font-medium p-2 capitalize cursor-pointer rounded-md"
                 @mouseover="
                   activeLibrary = category;
-                  MenuPreview = true;
+                  store.commit('designer/setMenuPreview', true);
                 "
               >
                 {{ category }}
@@ -346,11 +173,11 @@ onMounted(async () => {
           </nav>
         </div>
 
-        <!--preview - start-->
+        <!--Preview - start-->
         <aside
           aria-label="saidebar"
-          :class="[!MenuPreview ? '-left-[30rem]' : 'left-60']"
-          class="absolute z-10 w-[30rem] h-full duration-200 top-0 rounded-r-2xl shadow-2xl bg-gray-50"
+          :class="[!getMenuPreview ? '-left-[30rem]' : 'left-60']"
+          class="absolute z-10 w-[20rem] h-full duration-200 top-0 rounded-r-2xl shadow-2xl bg-gray-50"
         >
           <div class="flex flex-col gap-4 p-4 h-full font-normal">
             <p class="myPrimaryParagraph capitalize">{{ activeLibrary }}</p>
@@ -375,18 +202,20 @@ onMounted(async () => {
           </div>
         </aside>
       </aside>
-      <!--preview - end-->
+      <!--Preview - end-->
 
       <!-- Bars - start -->
       <div
-        v-show="MenuLeft === false"
-        class="pt-4 mr-4 h-full flex-shrink-0 overflow-hidden"
+        v-show="menuLeft === false"
+        class="pt-2 mr-4 h-full flex-shrink-0 overflow-hidden"
       >
-        <Bars3Icon
+        <div
           @click="toggleMenuLeft"
-          class="shrink-0 w-6 h-6 cursor-pointer"
+          class="cursor-pointer rounded-full flex items-center justify-center bg-gray-100 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
         >
-        </Bars3Icon>
+          <Square3Stack3DIcon class="shrink-0 w-6 h-6 m-2 cursor-pointer">
+          </Square3Stack3DIcon>
+        </div>
       </div>
       <!-- Bars - end -->
 
@@ -403,43 +232,34 @@ onMounted(async () => {
               <span class="w-2 h-2 rounded-full bg-green-400"></span>
             </div>
           </div>
-          <div class="flex myPrimaryGap">
-            <OptionsDropdown
-              @previewCurrentDesign="previewCurrentDesign"
-            ></OptionsDropdown>
-          </div>
 
-          <div class="flex items-center gap-2">
-            <div class="flex gap-1 items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-4 h-4 cursor-pointer"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
-                />
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
+          <OptionsDropdown
+            @previewCurrentDesign="previewCurrentDesign"
+          ></OptionsDropdown>
 
-              <p class="myPrimaryParagraph cursor-pointer">unsaved changes</p>
+          <div class="flex items-center justify-center gap-2">
+            <div
+              @click="unselectComponent"
+              class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+            >
+              <EyeSlashIcon
+                class="w-5 h-5 m-2 stroke-1.5 cursor-pointer"
+              ></EyeSlashIcon>
             </div>
-            <SaveDesign @click="saveCurrentDesignInDB"> </SaveDesign>
+            <div
+              @click="handleSettingsSlideOver"
+              class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+            >
+              <AdjustmentsVerticalIcon
+                class="w-5 h-5 m-2 stroke-1.5 cursor-pointer"
+              ></AdjustmentsVerticalIcon>
+            </div>
           </div>
         </div>
 
         <Draggable
           id="pagebuilder"
-          :list="allComponentsAddedToDom"
+          :list="getComponents"
           animation="200"
           class="bg-white grow overflow-y-auto"
           drag-class="opacity-0"
@@ -451,50 +271,21 @@ onMounted(async () => {
         >
           <template #item="{ element }">
             <div class="relative overflow-hidden group">
-              <div
-                class="absolute z-10 overflow-hidden left-0 right-0 top-0 text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor duration-100 transform group-hover:block hidden max-w-[80%] mx-auto mt-2 rounded-sm shadow-sm"
-              >
-                <div
-                  class="flex flex-row justify-between mx-auto p-3 max-w-6xl"
-                >
-                  <div>
-                    <PencilIcon
-                      class="inline-block h-6 w-6 mx-2 cursor-pointer"
-                    />
-                    <TrashIcon
-                      class="inline-block h-6 w-6 mx-2 stroke-2 cursor-pointer"
-                      @click="removeComponent($event)"
-                    />
-                  </div>
-
-                  <div>
-                    <ArrowDownIcon
-                      class="inline-block h-6 w-6 cursor-pointer"
-                      @click="moveComponent($event, 1)"
-                    />
-                    <ArrowUpIcon
-                      class="inline-block h-6 w-6 cursor-pointer"
-                      @click="moveComponent($event, -1)"
-                    />
-                  </div>
-                </div>
-              </div>
+              <ComponentTopMenu></ComponentTopMenu>
               <section v-html="element.html"></section>
             </div>
           </template>
         </Draggable>
-
-        <div
-          class="h-8 bg-myPrimaryLightGrayColor flex-shrink-0 rounded-b-2xl"
-        ></div>
       </main>
 
       <aside
         aria-label="Menu"
-        :class="{ 'w-0': !MenuRight, 'w-80 ml-4': MenuRight }"
+        :class="{ 'w-0': !getMenuRight, 'w-80 ml-4': getMenuRight }"
         class="h-full duration-300 z-20 flex-shrink-0 overflow-hidden shadow-2xl rounded-l-2xl bg-white"
       >
-        <RightSidebarEditor @closeEditor="MenuRight = null">
+        <RightSidebarEditor
+          @closeEditor="store.commit('designer/setMenuRight', false)"
+        >
         </RightSidebarEditor>
       </aside>
     </div>
@@ -506,22 +297,6 @@ onMounted(async () => {
       "
     >
     </Spinner>
-    <DynamicModal
-      :show="showModalDeleteHTMLElement"
-      :type="typeModal"
-      :gridColumnAmount="gridColumnModal"
-      :title="titleModal"
-      :description="descriptionModal"
-      :firstButtonText="firstButtonModal"
-      :secondButtonText="secondButtonModal"
-      :thirdButtonText="thirdButtonModal"
-      @firstModalButtonFunction="firstModalButtonFunction"
-      @secondModalButtonFunction="secondModalButtonFunction"
-      @thirdModalButtonFunction="thirdModalButtonFunction"
-    >
-      <header></header>
-      <main></main>
-    </DynamicModal>
   </div>
 </template>
 

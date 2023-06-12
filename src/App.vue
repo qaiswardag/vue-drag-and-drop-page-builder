@@ -238,7 +238,7 @@ const handleDesigner = function () {
     <template #description> Elevate your creativity to new heights.</template>
     <template #content>
       <p class="myPrimaryPragraph">
-        Build your website pages with hundreds of ready-made componenets.
+        Build your website pages with hundreds of ready-made components.
         Designed to fit your every need, fully customizable & always responsive.
         Elevate your creative vision and effortlessly create pages using an
         intuitive Vue.js drag-and-drop page builder. Break free from design

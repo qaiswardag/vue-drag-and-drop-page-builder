@@ -16,7 +16,11 @@ export default {
 
   // state
   state: {
+    menuPreview: false,
+    menuRight: true,
     textAreaVueModel: null,
+    nextSibling: null,
+    parentElement: null,
     restoredElement: null,
     currentClasses: [],
     fontVerticalPadding: null,
@@ -34,18 +38,28 @@ export default {
     backgroundColorCustom: null,
     backgroundColor: null,
     component: null,
+    components: [],
     currentImagePreview: null,
     currentClickedImage: null,
-    currentPreview: null,
-    componentsAdded: [],
-    currentComponent: null,
     fetchedComponents: [],
   },
 
   // getters
   getters: {
+    getMenuPreview(state) {
+      return state.menuPreview;
+    },
+    getMenuRight(state) {
+      return state.menuRight;
+    },
     getTextAreaVueModel(state) {
       return state.textAreaVueModel;
+    },
+    getNextSibling(state) {
+      return state.nextSibling;
+    },
+    getParentElement(state) {
+      return state.parentElement;
     },
     getRestoredElement(state) {
       return state.restoredElement;
@@ -99,19 +113,13 @@ export default {
       return state.component;
     },
     // current element
-    getComponentsAdded(state) {
-      return state.componentsAdded;
-    },
-    // current components added
-    getCurrentComponent(state) {
-      return state.currentComponent;
+    getComponents(state) {
+      return state.components;
     },
     getCurrentClickedImage(state) {
       return state.currentClickedImage;
     },
-    getCurrentPreview(state) {
-      return state.currentComponent;
-    },
+
     //
     // current image
     getCurrentImagePreview(state) {
@@ -142,8 +150,20 @@ export default {
   },
 
   mutations: {
+    setMenuPreview(state, payload) {
+      state.menuPreview = payload;
+    },
+    setMenuRight(state, payload) {
+      state.menuRight = payload;
+    },
     setTextAreaVueModel(state, payload) {
       state.textAreaVueModel = payload;
+    },
+    setNextSibling(state, payload) {
+      state.nextSibling = payload;
+    },
+    setParentElement(state, payload) {
+      state.parentElement = payload;
     },
     setRestoredElement(state, payload) {
       state.restoredElement = payload;
@@ -205,13 +225,11 @@ export default {
       state.component = {};
       state.component = payload;
     },
-    setComponentsAdded(state, payload) {
-      state.componentsAdded = {};
-      state.componentsAdded = payload;
+    setComponents(state, payload) {
+      state.components = {};
+      state.components = payload;
     },
-    setCurrentComponent(state, payload) {
-      state.currentComponent = payload;
-    },
+
     setCurrentClickedImage(state, payload) {
       state.currentClickedImage = payload;
     },
@@ -223,7 +241,7 @@ export default {
       // set currebt image
       state.currentImagePreview = payload;
     },
-    setCurrentPreview(state, payload) {
+    setCurrentLayoutPreview(state, payload) {
       localStorage.setItem('preview', payload);
     },
     setFetchedComponents(state, payload) {

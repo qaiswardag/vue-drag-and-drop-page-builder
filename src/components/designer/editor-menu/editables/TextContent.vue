@@ -23,46 +23,6 @@ const getTextAreaVueModel = computed(() => {
 watch(getTextAreaVueModel, (newValue) => {
   textContentVueModel.value = newValue;
 });
-
-// NEW CODE - END
-
-// // get components added
-// const allComponentsAddedToDom = computed(() => {
-//   return store.getters['designer/getComponentsAdded'];
-// });
-// // getters: current element from store
-// const getComponent = computed(() => {
-//   return store.getters['designer/getComponent'];
-// });
-
-// // get outer HTML of current element
-// const getComponentInnerHTML = computed(() => {
-//   return getComponent?.value?.innerHTML ? getComponent?.value?.innerHTML : [];
-// });
-
-// // update editor defaults when an element is selected
-// watch(getComponentInnerHTML, (newElementWatch, oldElement) => {
-//   // text content
-//   if (typeof newElementWatch !== 'string') {
-//     return;
-//   }
-//   textContentVueModel.value = newElementWatch?.replaceAll('<br>', '\r\n') || '';
-// });
-
-// watch for text change
-// const changeText = function () {
-//   const textContentElementClone = ref(null);
-//   textContentElementClone.value = textContentVueModel.value?.replaceAll(
-//     /\n/g,
-//     '<br>'
-//   );
-//   // text change
-//   getComponent.value.innerHTML = textContentElementClone.value;
-
-//   allComponentsAddedToDom.value.forEach((htmlComponent) => {});
-// };
-//
-//
 </script>
 
 <template>
