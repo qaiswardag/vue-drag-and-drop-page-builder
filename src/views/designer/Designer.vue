@@ -53,6 +53,7 @@ const activeLibrary = ref('forms');
 
 const toggleMenuLeft = function () {
   menuLeft.value = !menuLeft.value;
+  store.commit('designer/setMenuPreview', false);
 };
 
 const cloneComponent = function (component) {
