@@ -63,7 +63,7 @@
     |--------------------------------------------------------------------------
     */
   .myPrimaryTag {
-    @apply myPrimaryParagraph bg-myPrimaryLightGrayColor rounded-full my-2 px-3 py-3 text-xs font-medium shadow-sm;
+    @apply myPrimaryParagraph bg-myPrimaryLightGrayColor my-2 px-3 py-3 text-xs font-medium shadow-sm;
   }
   /*
     |--------------------------------------------------------------------------
@@ -157,7 +157,7 @@
   }
 
   .myPrimaryButton {
-    @apply whitespace-nowrap break-keep font-medium inline-flex items-center justify-center rounded-3xl border border-transparent bg-myPrimaryLinkColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
+    @apply whitespace-nowrap break-keep font-medium inline-flex items-center justify-center rounded-sm border border-transparent bg-myPrimaryLinkColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
         focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2
         focus-visible:ring-2 focus-visible:ring-myPrimaryLinkColor;
   }

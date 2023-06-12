@@ -116,9 +116,9 @@
                   <!-- Main content - end-->
 
                   <!-- Details sidebar start-->
-                  <aside class="md:w-72 relative min-h-[58rem] max-h-[58rem]">
+                  <aside class="md:w-72 relative min-h-[62rem] max-h-[62rem]">
                     <div
-                      class="md:w-72 md:min-h-[53rem] md:max-h-[53rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
+                      class="md:w-72 md:min-h-[56.5rem] md:max-h-[56.5rem] min-h-[15rem] max-h-[15rem] overflow-y-scroll bg-white border border-gray-200 rounded"
                     >
                       <div class="pb-6 space-y-6">
                         <div

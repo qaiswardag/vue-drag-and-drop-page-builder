@@ -1,32 +1,30 @@
 <template>
-  <div class="block px-4 ease-linear duration-200 pb-10 cursor-pointer">
-    <img
-      v-if="
-        getCurrentDisplayedImage !== undefined &&
-        getCurrentDisplayedImage !== null
-      "
-      class="object-cover object-center w-full rounded-md"
-      :src="getCurrentDisplayedImage"
-      @click="imageClick"
-      alt="image"
-    />
+  <img
+    v-if="
+      getCurrentDisplayedImage !== undefined &&
+      getCurrentDisplayedImage !== null
+    "
+    class="object-cover object-center w-full"
+    :src="getCurrentDisplayedImage"
+    @click="imageClick"
+    alt="image"
+  />
 
-    <div
-      v-if="
-        getCurrentDisplayedImage !== undefined &&
-        getCurrentDisplayedImage !== null
-      "
-      class="mt-4"
+  <div
+    v-if="
+      getCurrentDisplayedImage !== undefined &&
+      getCurrentDisplayedImage !== null
+    "
+    class="my-4 px-4"
+  >
+    <button
+      @click="imageClick"
+      type="button"
+      class="myPrimaryButton gap-2 items-center w-full"
     >
-      <button
-        @click="imageClick"
-        type="button"
-        class="myPrimaryButton gap-2 items-center w-full"
-      >
-        <PhotoIcon class="w-4 h-4 stroke-2"></PhotoIcon>
-        Update image
-      </button>
-    </div>
+      <PhotoIcon class="w-4 h-4 stroke-2"></PhotoIcon>
+      Update image
+    </button>
   </div>
 
   <MediaLibraryModal

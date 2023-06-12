@@ -119,9 +119,7 @@
       aria-label="Pagination"
     >
       <p class="myPrimaryTag">
-        <span class="font-normal">
-          Images {{ getUnsplashImages.fetchedMedia.total }}
-        </span>
+        Images {{ getUnsplashImages.fetchedMedia.total }}
       </p>
       <p class="myPrimaryTag">
         Pages {{ getUnsplashImages.fetchedMedia.total_pages }}
@@ -138,7 +136,7 @@
           {{ `Prev ${currentPage > 0 ? currentPage - 1 : currentPage - 1}` }}
         </button>
 
-        <span class="rounded-full myPrimaryTag p-2.5">
+        <span class="myPrimaryTag p-2.5">
           {{ currentPage }}
         </span>
         <button
