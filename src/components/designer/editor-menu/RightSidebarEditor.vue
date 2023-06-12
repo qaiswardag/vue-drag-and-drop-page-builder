@@ -2,7 +2,7 @@
   <div class="h-full w-80 bg-white">
     <div class="h-screen flex flex-col">
       <div
-        class="flex flex-row justify-between pt-2.5 pr-4 pb-4 pl-4 items-center"
+        class="flex flex-row justify-between pt-2.5 pr-4 pb-3 pl-4 items-center border-b mb-3"
       >
         <div
           @click="$emit('closeEditor')"

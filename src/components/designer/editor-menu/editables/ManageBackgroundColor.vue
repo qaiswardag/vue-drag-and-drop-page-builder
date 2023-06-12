@@ -104,7 +104,9 @@ const designer = new Designer(store);
     <label for="meta_title" class="myPrimaryInputLabel">
       Current Background:
     </label>
-    <div class="flex flex-row justify-start items-center myPrimaryGap mb-8">
+    <div
+      class="flex flex-row justify-start items-center myPrimaryGap mt-4 py-3 px-2 cursor-pointer focus:bg-white rounded-md py-3 px-3 border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+    >
       <div
         v-if="getBackgroundColor !== 'none'"
         class="myPrimaryColorPreview w-8 h-8 cursor-default"
@@ -129,7 +131,7 @@ const designer = new Designer(store);
         {{ getBackgroundColorCustomHex }}
       </p>
       <p v-if="!getBackgroundColorCustom" class="myPrimaryParagraph">
-        {{ getBackgroundColor }}
+        {{ getBackgroundColor === 'none' ? 'None' : getBackgroundColor }}
       </p>
     </div>
 

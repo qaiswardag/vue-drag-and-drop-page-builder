@@ -65,13 +65,13 @@ const slideOverButton = function () {
                           {{ title }}
                         </DialogTitle>
                         <div class="ml-3 flex h-7 items-center">
-                          <div
+                          <button
                             @click="$emit('slideOverButton')"
                             class="hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
                           >
                             <XMarkIcon class="shrink-0 w-5 h-5 m-2">
                             </XMarkIcon>
-                          </div>
+                          </button>
                         </div>
                       </div>
                     </div>

@@ -8,7 +8,7 @@
             Background:
           </label>
           <div
-            class="flex flex-row justify-start items-center myPrimaryGap mb-8 cursor-pointer"
+            class="flex flex-row justify-start items-center myPrimaryGap mt-4 py-3 px-2 cursor-pointer focus:bg-white rounded-md py-3 px-3 border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
           >
             <div
               v-if="getBackgroundColor !== 'none'"
@@ -37,7 +37,7 @@
               {{ getBackgroundColorCustomHex }}
             </p>
             <p v-if="!getBackgroundColorCustom" class="myPrimaryParagraph">
-              {{ getBackgroundColor }}
+              {{ getBackgroundColor === 'none' ? 'None' : getBackgroundColor }}
             </p>
           </div>
         </div>

@@ -39,7 +39,7 @@ export default {
     backgroundColor: null,
     component: null,
     components: [],
-    currentImagePreview: null,
+    currentDisplayedImage: null,
     currentClickedImage: null,
     fetchedComponents: [],
   },
@@ -121,28 +121,24 @@ export default {
     },
 
     //
-    // current image
-    getCurrentImagePreview(state) {
-      // create a new HTML div
-      let currentImage = document.createElement('div');
-      // set the new HTML div equal to state and current element
-      currentImage.innerHTML = state.component?.outerHTML;
+    getCurrentDisplayedImage(state) {
+      // Create a new HTML div
+      const currentImageContainer = document.createElement('div');
+      // Set the new HTML div equal to the state and current element's outerHTML
+      currentImageContainer.innerHTML = state.component?.outerHTML;
 
-      // check now if the new HTML contains any images
-      if (currentImage.getElementsByTagName('img').length === 0) {
-        // return null since there is zero image
-        return null;
+      // Get all <img> and <div> elements within the current image container
+      const imgElements = currentImageContainer.getElementsByTagName('img');
+      const divElements = currentImageContainer.getElementsByTagName('div');
+
+      // Check if there is exactly one <img> element and no <div> elements
+      if (imgElements.length === 1 && divElements.length === 0) {
+        // Return the source of the only <img> element
+        return imgElements[0].src;
       }
-      // return true if current element contains exactly one image
-      if (currentImage.getElementsByTagName('img').length === 1) {
-        currentImage = currentImage.getElementsByTagName('img')[0].src;
-        // return clicked image
-        return currentImage;
-      }
-      if (currentImage.getElementsByTagName('img').length > 1) {
-        // return null since there is more than one image
-        return null;
-      }
+
+      // Return null if the conditions are not met
+      return null;
     },
     getFetchedComponents(state) {
       return state.fetchedComponents;
@@ -234,12 +230,12 @@ export default {
       state.currentClickedImage = payload;
     },
 
-    setCurrentImagePreview(state, payload) {
+    setCurrentDisplayedImage(state, payload) {
       // set clicked element (which is the image & select the image src) to equal payload
       // payload source is the new image src
       state.component.src = payload;
       // set currebt image
-      state.currentImagePreview = payload;
+      state.currentDisplayedImage = payload;
     },
     setCurrentLayoutPreview(state, payload) {
       localStorage.setItem('preview', payload);

@@ -332,8 +332,8 @@ export default {
     const getCurrentClickedImage = computed(() => {
       return store.getters['designer/getCurrentClickedImage'];
     });
-    const getCurrentImagePreview = computed(() => {
-      return store.getters['designer/getCurrentImagePreview'];
+    const getCurrentDisplayedImage = computed(() => {
+      return store.getters['designer/getCurrentDisplayedImage'];
     });
     //
     const getComponent = computed(() => {
@@ -369,7 +369,7 @@ export default {
       tabs,
       selected,
       getComponent,
-      getCurrentImagePreview,
+      getCurrentDisplayedImage,
       changeSelectedMenuTab,
       getCurrentClickedImage,
     };

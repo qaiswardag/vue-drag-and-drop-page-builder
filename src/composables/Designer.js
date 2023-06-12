@@ -15,6 +15,10 @@ class Designer {
       () => this.store.getters['designer/getTextAreaVueModel']
     );
 
+    this.getCurrentClickedImage = computed(
+      () => this.store.getters['designer/getCurrentClickedImage']
+    );
+
     this.getComponents = computed(
       () => this.store.getters['designer/getComponents']
     );
@@ -321,11 +325,11 @@ class Designer {
   // for each on all added html componenets
   /**
    * The attachElementEventListeners function is responsible for dynamically adding event listeners
-   * to elements within the [render-html] component in the Vue template.
+   * to elements within the [section *'] component in the Vue template.
    */
   attachElementEventListeners = () => {
-    // Iterate over all descendant elements of the [render-html] component
-    document.querySelectorAll('[render-html] *').forEach((el) => {
+    // Iterate over all direct child elements of the 'section' element
+    document.querySelectorAll('section *').forEach((el) => {
       // If the WeakSet already contains this element, it means that event listeners
       // are already attached to this element. In this case, we should skip this element
       // to prevent multiple instances of the same listener being attached.
@@ -485,11 +489,14 @@ class Designer {
     const addedHtmlComponents = ref([]);
     // preview current design in external browser tab
 
-    // iterate over each component
-    document.querySelectorAll('[render-html]').forEach((html) => {
-      // push outer html into the array
-      addedHtmlComponents.value.push(html.outerHTML);
-    });
+    // iterate over each top-level section component
+    document
+      .querySelectorAll('section:not(section section)')
+      .forEach((section) => {
+        // push outer html into the array
+        addedHtmlComponents.value.push(section.outerHTML);
+      });
+
     // stringify added html components
     addedHtmlComponents.value = JSON.stringify(addedHtmlComponents.value);
 
@@ -498,8 +505,8 @@ class Designer {
       'designer/setCurrentLayoutPreview',
       addedHtmlComponents.value
     );
-    // set added html components back to empty array
 
+    // set added html components back to empty array
     addedHtmlComponents.value = [];
   }
 
@@ -508,6 +515,17 @@ class Designer {
       this.store.commit(
         'designer/setComponents',
         JSON.parse(localStorage.getItem('savedCurrentDesign'))
+      );
+    }
+  }
+  imageClick() {
+    if (
+      this.getCurrentClickedImage.value &&
+      this.getCurrentClickedImage.value.file !== null
+    ) {
+      this.store.commit(
+        'designer/setCurrentDisplayedImage',
+        this.getCurrentClickedImage.value.file
       );
     }
   }
