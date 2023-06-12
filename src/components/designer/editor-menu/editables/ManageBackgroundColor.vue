@@ -105,7 +105,7 @@ const designer = new Designer(store);
       Current Background:
     </label>
     <div
-      class="flex flex-row justify-start items-center myPrimaryGap mt-4 py-2 px-2 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+      class="flex flex-row justify-start items-center myPrimaryGap mt-4 py-2.5 px-2 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
     >
       <div class="relative flex items-center w-full py-0 p-0">
         <div class="flex items-center gap-2 justify-start">
@@ -152,7 +152,7 @@ const designer = new Designer(store);
     <!-- Custom color - start -->
     <!-- Error - end -->
     <div class="flex gap-2 flex-col items-center justify-around">
-      <div class="border-y pb-4 mb-6 border-myPrimaryLightGrayColor w-full">
+      <div class="pb-4 mb-6 border-myPrimaryLightGrayColor w-full">
         <!-- Error - start -->
         <div class="min-h-[3.5rem] flex items-center">
           <div>
