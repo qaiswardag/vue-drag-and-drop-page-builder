@@ -133,7 +133,7 @@ const deleteAllComponents = function () {
             >
               <div class="flex items-center justify-left gap-2 cursor-pointer">
                 <EyeIcon class="w-3 h-3 stroke-2"></EyeIcon>
-                Preview Layout
+                Preview page
               </div>
             </div>
           </MenuItem>

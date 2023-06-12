@@ -26,7 +26,9 @@ const getComponentInnerHTML = computed(() => {
 
 // watch and show text area based "get current element" content
 // only show text area if it's include text only plus if containing <br>
-watch(getComponentInnerHTML, (newElementInnerHTML, oldElement) => {
+watch(getComponentInnerHTML, (newElementInnerHTML) => {
+  showTextArea.value = false;
+
   // stop execution if
   if (typeof newElementInnerHTML !== 'string') {
     return;

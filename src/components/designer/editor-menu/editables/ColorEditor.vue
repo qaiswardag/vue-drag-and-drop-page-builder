@@ -8,37 +8,52 @@
             Background:
           </label>
           <div
-            class="flex flex-row justify-start items-center myPrimaryGap mt-4 py-3 px-2 cursor-pointer focus:bg-white rounded-md py-3 px-3 border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+            class="flex flex-row justify-start items-center myPrimaryGap mt-4 py-2 px-2 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor shadow-sm focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
           >
-            <div
-              v-if="getBackgroundColor !== 'none'"
-              class="myPrimaryColorPreview w-8 h-8"
-              :class="[getBackgroundColor]"
-              :style="{ backgroundColor: getBackgroundColorCustom }"
-            ></div>
-            <div
-              v-if="getBackgroundColor === 'none'"
-              class="w-8 h-8 cursor-default"
-            >
-              <div
-                class="myPrimaryColorPreview bg-gray-50"
-                :style="{ backgroundColor: getBackgroundColorCustom }"
-              >
-                <XMarkIcon
-                  v-if="
-                    getBackgroundColorCustom === null ||
-                    getBackgroundColorCustom.length === 0
-                  "
-                  class="text-myPrimaryErrorColor stroke-2"
-                ></XMarkIcon>
+            <div class="relative flex items-center w-full py-0 p-0">
+              <div class="flex items-center gap-2 justify-start">
+                <div
+                  v-if="getBackgroundColor !== 'none'"
+                  class="myPrimaryColorPreview w-6 h-6 cursor-default"
+                  :class="[getBackgroundColor]"
+                  :style="{ backgroundColor: getBackgroundColorCustom }"
+                ></div>
+                <div
+                  v-if="getBackgroundColor === 'none'"
+                  class="w-6 h-6 cursor-default"
+                >
+                  <div
+                    class="myPrimaryColorPreview bg-gray-50"
+                    :style="{ backgroundColor: getBackgroundColorCustom }"
+                  >
+                    <XMarkIcon
+                      v-if="
+                        getBackgroundColorCustom === null ||
+                        getBackgroundColorCustom.length === 0
+                      "
+                      class="text-myPrimaryErrorColor stroke-2"
+                    ></XMarkIcon>
+                  </div>
+                </div>
+                <p v-if="getBackgroundColorCustom" class="myPrimaryParagraph">
+                  {{ getBackgroundColorCustomHex }}
+                </p>
+                <p v-if="!getBackgroundColorCustom" class="myPrimaryParagraph">
+                  {{
+                    getBackgroundColor === 'none' ? 'None' : getBackgroundColor
+                  }}
+                </p>
               </div>
             </div>
-            <p v-if="getBackgroundColorCustom" class="myPrimaryParagraph">
-              {{ getBackgroundColorCustomHex }}
-            </p>
-            <p v-if="!getBackgroundColorCustom" class="myPrimaryParagraph">
-              {{ getBackgroundColor === 'none' ? 'None' : getBackgroundColor }}
-            </p>
+            <div
+              class="border-none rounded flex items-center justify-center h-full w-8"
+            >
+              <div
+                class="myPrimaryParagraph text-myPrimaryDarkGrayColor border-none"
+              >
+                <SwatchIcon class="h-5 w-5"></SwatchIcon>
+              </div>
+            </div>
           </div>
         </div>
       </div>
