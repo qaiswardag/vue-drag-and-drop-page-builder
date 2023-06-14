@@ -1,4 +1,4 @@
-const tailwindSizes = {
+const tailwindPaddingPlusMargin = {
   verticalPadding: [
     'none',
     'py-0',
@@ -149,4 +149,4 @@ const tailwindSizes = {
   ],
 };
 
-export default tailwindSizes;
+export default tailwindPaddingPlusMargin;

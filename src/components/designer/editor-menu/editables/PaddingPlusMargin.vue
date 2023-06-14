@@ -1,10 +1,13 @@
 <template>
   <EditorAccordion>
-    <template #title>Spacing</template>
+    <template #title>Padding & Margin</template>
     <template #content>
       <p class="myPrimaryParagraph font-medium py-0 my-4">Padding</p>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel">
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
           Padding Y-axis:
         </label>
         <select
@@ -12,9 +15,14 @@
           class="myPrimarySelect"
           @change="designer.handleVerticalPadding(fontVerticalPadding)"
         >
-          <option disabled value="">Select</option>
           <option
-            v-for="verticalPadding in tailwindSpacing.verticalPadding"
+            disabled
+            value=""
+          >
+            Select
+          </option>
+          <option
+            v-for="verticalPadding in tailwindPaddingPlusMargin.verticalPadding"
             :key="verticalPadding"
           >
             {{ verticalPadding }}
@@ -22,7 +30,10 @@
         </select>
       </div>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel">
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
           Padding X-axis:
         </label>
         <select
@@ -30,9 +41,14 @@
           class="myPrimarySelect"
           @change="designer.handleHorizontalPadding(fontHorizontalPadding)"
         >
-          <option disabled value="">Select</option>
           <option
-            v-for="horizontalPadding in tailwindSpacing.horizontalPadding"
+            disabled
+            value=""
+          >
+            Select
+          </option>
+          <option
+            v-for="horizontalPadding in tailwindPaddingPlusMargin.horizontalPadding"
             :key="horizontalPadding"
           >
             {{ horizontalPadding }}
@@ -41,7 +57,10 @@
       </div>
       <p class="myPrimaryParagraph font-medium py-0 my-4">Margin</p>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel">
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
           Margin Y-axis:
         </label>
         <select
@@ -49,9 +68,14 @@
           class="myPrimarySelect"
           @change="designer.handleVerticalMargin(fontVerticalMargin)"
         >
-          <option disabled value="">Select</option>
           <option
-            v-for="verticalMargin in tailwindSpacing.verticalMargin"
+            disabled
+            value=""
+          >
+            Select
+          </option>
+          <option
+            v-for="verticalMargin in tailwindPaddingPlusMargin.verticalMargin"
             :key="verticalMargin"
           >
             {{ verticalMargin }}
@@ -59,7 +83,10 @@
         </select>
       </div>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel">
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
           Margin X-axis:
         </label>
         <select
@@ -67,9 +94,14 @@
           class="myPrimarySelect"
           @change="designer.handleHorizontalMargin(fontHorizontalMargin)"
         >
-          <option disabled value="">Select</option>
           <option
-            v-for="horizontalMargin in tailwindSpacing.horizontalMargin"
+            disabled
+            value=""
+          >
+            Select
+          </option>
+          <option
+            v-for="horizontalMargin in tailwindPaddingPlusMargin.horizontalMargin"
             :key="horizontalMargin"
           >
             {{ horizontalMargin }}
@@ -81,7 +113,7 @@
 </template>
 
 <script setup>
-import tailwindSpacing from '../../../../utils/tailwind-spacing';
+import tailwindPaddingPlusMargin from '../../../../utils/tailwind-padding-margin';
 import Designer from '../../../../composables/Designer';
 import EditorAccordion from '../EditorAccordion.vue';
 import { useStore } from 'vuex';
@@ -96,29 +128,29 @@ const fontHorizontalPadding = ref(null);
 const fontVerticalMargin = ref(null);
 const fontHorizontalMargin = ref(null);
 
-const getFontVerticalPaddingCurrent = computed(() => {
+const getFontVerticalPadding = computed(() => {
   return store.getters['designer/getFontVerticalPadding'];
 });
-const getFontHorizontalPaddingCurrent = computed(() => {
+const getFontHorizontalPadding = computed(() => {
   return store.getters['designer/getFontHorizontalPadding'];
 });
-const getFontVerticalMarginCurrent = computed(() => {
+const getFontVerticalMargin = computed(() => {
   return store.getters['designer/getFontVerticalMargin'];
 });
-const getFontHorizontalMarginCurrent = computed(() => {
+const getFontHorizontalMargin = computed(() => {
   return store.getters['designer/getFontHorizontalMargin'];
 });
 
-watch(getFontVerticalPaddingCurrent, (newValue) => {
+watch(getFontVerticalPadding, (newValue) => {
   fontVerticalPadding.value = newValue;
 });
-watch(getFontHorizontalPaddingCurrent, (newValue) => {
+watch(getFontHorizontalPadding, (newValue) => {
   fontHorizontalPadding.value = newValue;
 });
-watch(getFontVerticalMarginCurrent, (newValue) => {
+watch(getFontVerticalMargin, (newValue) => {
   fontVerticalMargin.value = newValue;
 });
-watch(getFontHorizontalMarginCurrent, (newValue) => {
+watch(getFontHorizontalMargin, (newValue) => {
   fontHorizontalMargin.value = newValue;
 });
 </script>

@@ -18,6 +18,13 @@ export default {
   state: {
     menuPreview: false,
     menuRight: true,
+    // border radius / start
+    borderRadiusGlobal: null,
+    borderRadiusTopLeft: null,
+    borderRadiusTopRight: null,
+    borderRadiusBottomleft: null,
+    borderRadiusBottomRight: null,
+    // border radius / end
     textAreaVueModel: null,
     nextSibling: null,
     parentElement: null,
@@ -52,6 +59,23 @@ export default {
     getMenuRight(state) {
       return state.menuRight;
     },
+    // border radius / start
+    getBorderRadiusGlobal(state) {
+      return state.borderRadiusGlobal;
+    },
+    getBorderRadiusTopLeft(state) {
+      return state.borderRadiusTopLeft;
+    },
+    getBorderRadiusTopRight(state) {
+      return state.borderRadiusTopRight;
+    },
+    getBorderRadiusBottomleft(state) {
+      return state.borderRadiusBottomleft;
+    },
+    getBorderRadiusBottomRight(state) {
+      return state.borderRadiusBottomRight;
+    },
+    // border radius / end
     getTextAreaVueModel(state) {
       return state.textAreaVueModel;
     },
@@ -152,6 +176,23 @@ export default {
     setMenuRight(state, payload) {
       state.menuRight = payload;
     },
+    // border radius / start
+    setBorderRadiusGlobal(state, payload) {
+      state.borderRadiusGlobal = payload;
+    },
+    setBorderRadiusTopLeft(state, payload) {
+      state.borderRadiusTopLeft = payload;
+    },
+    setBorderRadiusTopRight(state, payload) {
+      state.borderRadiusTopRight = payload;
+    },
+    setBorderRadiusBottomleft(state, payload) {
+      state.borderRadiusBottomleft = payload;
+    },
+    setBorderRadiusBottomRight(state, payload) {
+      state.borderRadiusBottomRight = payload;
+    },
+    // border radius / end
     setTextAreaVueModel(state, payload) {
       state.textAreaVueModel = payload;
     },

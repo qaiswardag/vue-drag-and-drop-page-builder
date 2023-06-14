@@ -1,7 +1,8 @@
 import tailwindColors from '../utils/tailwaind-colors';
 import tailwindFontSizes from '../utils/tailwind-font-sizes';
 import tailwindFontStyles from '../utils/tailwind-font-styles';
-import tailwindSpacing from '../utils/tailwind-spacing';
+import tailwindPaddingAndMargin from '../utils/tailwind-padding-margin';
+import tailwindBorderRadius from '../utils/tailwind-border-radius';
 import { computed, ref } from 'vue';
 
 class Designer {
@@ -19,14 +20,12 @@ class Designer {
       () => this.store.getters['designer/getCurrentClickedImage']
     );
 
-    this.getComponents = computed(
-      () => this.store.getters['designer/getComponents']
-    );
-
     this.getComponent = computed(
       () => this.store.getters['designer/getComponent']
     );
-
+    this.getComponents = computed(
+      () => this.store.getters['designer/getComponents']
+    );
     this.getNextSibling = computed(
       () => this.store.getters['designer/getNextSibling']
     );
@@ -153,14 +152,14 @@ class Designer {
   handleVerticalPadding(userSelectedVerticalPadding) {
     this.#updateStyle(
       userSelectedVerticalPadding,
-      tailwindSpacing.verticalPadding,
+      tailwindPaddingAndMargin.verticalPadding,
       'setFontVerticalPadding'
     );
   }
   handleHorizontalPadding(userSelectedHorizontalPadding) {
     this.#updateStyle(
       userSelectedHorizontalPadding,
-      tailwindSpacing.horizontalPadding,
+      tailwindPaddingAndMargin.horizontalPadding,
       'setFontHorizontalPadding'
     );
   }
@@ -168,17 +167,55 @@ class Designer {
   handleVerticalMargin(userSelectedVerticalMargin) {
     this.#updateStyle(
       userSelectedVerticalMargin,
-      tailwindSpacing.verticalMargin,
+      tailwindPaddingAndMargin.verticalMargin,
       'setFontVerticalMargin'
     );
   }
   handleHorizontalMargin(userSelectedHorizontalMargin) {
     this.#updateStyle(
       userSelectedHorizontalMargin,
-      tailwindSpacing.horizontalMargin,
+      tailwindPaddingAndMargin.horizontalMargin,
       'setFontHorizontalMargin'
     );
   }
+
+  // border radius / start
+  handleBorderRadiusGlobal(borderRadiusGlobal) {
+    this.#updateStyle(
+      borderRadiusGlobal,
+      tailwindBorderRadius.roundedGlobal,
+      'setBorderRadiusGlobal'
+    );
+  }
+  handleBorderRadiusTopLeft(borderRadiusTopLeft) {
+    this.#updateStyle(
+      borderRadiusTopLeft,
+      tailwindBorderRadius.roundedTopLeft,
+      'setBorderRadiusTopLeft'
+    );
+  }
+  handleBorderRadiusTopRight(borderRadiusTopRight) {
+    this.#updateStyle(
+      borderRadiusTopRight,
+      tailwindBorderRadius.roundedTopRight,
+      'setBorderRadiusTopRight'
+    );
+  }
+  handleBorderRadiusBottomleft(borderRadiusBottomleft) {
+    this.#updateStyle(
+      borderRadiusBottomleft,
+      tailwindBorderRadius.roundedBottomLeft,
+      'setBorderRadiusBottomleft'
+    );
+  }
+  handleBorderRadiusBottomRight(borderRadiusBottomRight) {
+    this.#updateStyle(
+      borderRadiusBottomRight,
+      tailwindBorderRadius.roundedBottomRight,
+      'setBorderRadiusBottomRight'
+    );
+  }
+  // border radius / end
 
   handleFontSize(userSelectedFontSize) {
     let fontBase = tailwindFontSizes.fontBase.find((size) => {
@@ -535,6 +572,15 @@ class Designer {
 
     if (this.getComponent.value !== null) {
       // invoke methods
+      // border radius
+      this.handleBorderRadiusGlobal();
+      this.handleBorderRadiusTopLeft();
+      // border radius
+      this.handleBorderRadiusTopRight();
+      // border radius
+      this.handleBorderRadiusBottomleft();
+      // border radius
+      this.handleBorderRadiusBottomRight();
       // handle clear restore element
       this.handleClearRestoreElement();
       // handle font size

@@ -32,7 +32,13 @@
             <ColorsEditor> </ColorsEditor>
           </article>
           <article>
-            <Spacing> </Spacing>
+            <PaddingPlusMargin> </PaddingPlusMargin>
+          </article>
+          <article>
+            <BorderRadius></BorderRadius>
+          </article>
+          <article>
+            <Borders></Borders>
           </article>
           <article>
             <ClassEditor></ClassEditor>
@@ -61,8 +67,10 @@ import ImageEditor from '../../designer/editor-menu/editables/ImageEditor.vue';
 import ColorsEditor from '../../designer/editor-menu/editables/ColorEditor.vue';
 import TextContent from '../../designer/editor-menu/editables/TextContent.vue';
 import Typography from '../../designer/editor-menu/editables/Typography.vue';
-import Spacing from './editables/Spacing.vue';
+import PaddingPlusMargin from './editables/PaddingPlusMargin.vue';
 import DeleteElement from './editables/DeleteElement.vue';
+import BorderRadius from './editables/BorderRadius.vue';
+import Borders from './editables/Borders.vue';
 
 // store
 const store = useStore();

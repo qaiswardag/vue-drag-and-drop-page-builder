@@ -21,7 +21,7 @@ const inputClass = ref('');
 
 <template>
   <EditorAccordion>
-    <template #title>Classes</template>
+    <template #title>Generated CSS</template>
     <template #content>
       <div class="flex flex-row flex-wrap gap-2 mt-2 mb-4">
         <p
