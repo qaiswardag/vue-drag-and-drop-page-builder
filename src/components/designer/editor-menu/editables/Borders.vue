@@ -2,7 +2,6 @@
   <EditorAccordion>
     <template #title>Border Style, Width & Color</template>
     <template #content>
-      <p class="myPrimaryParagraph font-medium py-0 my-4">Border Style</p>
       <div class="mb-4">
         <label
           for="meta_title"
@@ -29,7 +28,6 @@
           </option>
         </select>
       </div>
-      <p class="myPrimaryParagraph font-medium py-0 my-4">Border Width</p>
       <div class="mb-4">
         <label
           for="meta_title"
@@ -56,33 +54,95 @@
           </option>
         </select>
       </div>
-      <p class="myPrimaryParagraph font-medium py-0 my-4">Border Color</p>
-      <div class="mb-4">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Border Color:
-        </label>
-        <select
-          v-model="borderColor"
-          class="myPrimarySelect"
-          @change="designer.handleBorderColor(borderColor)"
-        >
-          <option
-            disabled
-            value=""
+
+      <label
+        for="meta_title"
+        class="myPrimaryInputLabel"
+      >
+        Border Color:
+      </label>
+      <Listbox
+        as="div"
+        v-model="borderColor"
+      >
+        <div class="relative mt-2">
+          <ListboxButton class="myPrimarySelect">
+            <span class="flex items-center">
+              <div
+                v-if="borderColor !== 'none'"
+                class="aspect-square w-6 h-6"
+                :class="`bg-${borderColor?.replace('border-', '')}`"
+              ></div>
+              <span
+                class="block truncate"
+                :class="[borderColor !== 'none' ? 'ml-3' : '']"
+                >{{ borderColor }}</span
+              >
+            </span>
+            <span
+              class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2"
+            >
+              <ChevronUpDownIcon
+                class="h-5 w-5 text-gray-400"
+                aria-hidden="true"
+              />
+            </span>
+          </ListboxButton>
+
+          <transition
+            leave-active-class="transition ease-in duration-100"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
           >
-            Select
-          </option>
-          <option
-            v-for="borderColor in tailwindBorderStyleWidthPlusColor.borderColor"
-            :key="borderColor"
-          >
-            {{ borderColor }}
-          </option>
-        </select>
-      </div>
+            <ListboxOptions
+              class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+            >
+              <ListboxOption
+                as="template"
+                v-for="color in tailwindBorderStyleWidthPlusColor.borderColor"
+                @click="designer.handleBorderColor(borderColor)"
+                :key="color"
+                :value="color"
+                v-slot="{ active, borderColor }"
+              >
+                <li
+                  :class="[
+                    active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                    'relative cursor-default select-none py-2 pl-3 pr-9',
+                  ]"
+                >
+                  <div class="flex items-center">
+                    <div
+                      class="aspect-square w-6 h-6"
+                      :class="`bg-${color.replace('border-', '')}`"
+                    ></div>
+                    <span
+                      :class="[
+                        borderColor ? 'font-semibold' : 'font-normal',
+                        'ml-3 block truncate',
+                      ]"
+                      >{{ color }}</span
+                    >
+                  </div>
+
+                  <span
+                    v-if="borderColor"
+                    :class="[
+                      active ? 'text-white' : 'text-indigo-600',
+                      'absolute inset-y-0 right-0 flex items-center pr-4',
+                    ]"
+                  >
+                    <CheckIcon
+                      class="h-5 w-5"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </li>
+              </ListboxOption>
+            </ListboxOptions>
+          </transition>
+        </div>
+      </Listbox>
     </template>
   </EditorAccordion>
 </template>
@@ -93,6 +153,14 @@ import Designer from '../../../../composables/Designer';
 import EditorAccordion from '../EditorAccordion.vue';
 import { useStore } from 'vuex';
 import { computed, ref, watch } from 'vue';
+import {
+  Listbox,
+  ListboxButton,
+  ListboxLabel,
+  ListboxOption,
+  ListboxOptions,
+} from '@headlessui/vue';
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid';
 
 const store = useStore();
 
