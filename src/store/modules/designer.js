@@ -18,6 +18,11 @@ export default {
   state: {
     menuPreview: false,
     menuRight: true,
+    // border style, width & color / start
+    borderStyle: null,
+    borderWidth: null,
+    borderColor: null,
+    // border style, width & color / end
     // border radius / start
     borderRadiusGlobal: null,
     borderRadiusTopLeft: null,
@@ -59,6 +64,19 @@ export default {
     getMenuRight(state) {
       return state.menuRight;
     },
+
+    // border style, width & color / start
+    getBorderStyle(state) {
+      return state.borderStyle;
+    },
+    getBorderWidth(state) {
+      return state.borderWidth;
+    },
+    getBorderColor(state) {
+      return state.borderColor;
+    },
+    // border style, width & color / end
+
     // border radius / start
     getBorderRadiusGlobal(state) {
       return state.borderRadiusGlobal;
@@ -76,6 +94,7 @@ export default {
       return state.borderRadiusBottomRight;
     },
     // border radius / end
+
     getTextAreaVueModel(state) {
       return state.textAreaVueModel;
     },
@@ -176,6 +195,19 @@ export default {
     setMenuRight(state, payload) {
       state.menuRight = payload;
     },
+
+    // border style, width & color / start
+    setBorderStyle(state, payload) {
+      state.borderStyle = payload;
+    },
+    setBorderWidth(state, payload) {
+      state.borderWidth = payload;
+    },
+    setBorderColor(state, payload) {
+      state.borderColor = payload;
+    },
+    // border style, width & color / end
+
     // border radius / start
     setBorderRadiusGlobal(state, payload) {
       state.borderRadiusGlobal = payload;

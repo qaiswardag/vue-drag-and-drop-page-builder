@@ -3,6 +3,7 @@ import tailwindFontSizes from '../utils/tailwind-font-sizes';
 import tailwindFontStyles from '../utils/tailwind-font-styles';
 import tailwindPaddingAndMargin from '../utils/tailwind-padding-margin';
 import tailwindBorderRadius from '../utils/tailwind-border-radius';
+import tailwindBorderStyleWidthPlusColor from '../utils/tailwind-border-style-width-color';
 import { computed, ref } from 'vue';
 
 class Designer {
@@ -178,6 +179,30 @@ class Designer {
       'setFontHorizontalMargin'
     );
   }
+
+  // border style & width / start
+  handleBorderStyle(borderStyle) {
+    this.#updateStyle(
+      borderStyle,
+      tailwindBorderStyleWidthPlusColor.borderStyle,
+      'setBorderStyle'
+    );
+  }
+  handleBorderWidth(borderWidth) {
+    this.#updateStyle(
+      borderWidth,
+      tailwindBorderStyleWidthPlusColor.borderWidth,
+      'setBorderWidth'
+    );
+  }
+  handleBorderColor(borderColor) {
+    this.#updateStyle(
+      borderColor,
+      tailwindBorderStyleWidthPlusColor.borderColor,
+      'setBorderColor'
+    );
+  }
+  // border style & width / end
 
   // border radius / start
   handleBorderRadiusGlobal(borderRadiusGlobal) {
@@ -572,8 +597,16 @@ class Designer {
 
     if (this.getComponent.value !== null) {
       // invoke methods
+
+      // border style
+      this.handleBorderStyle();
+      // border width
+      this.handleBorderWidth();
+      // border color
+      this.handleBorderColor();
       // border radius
       this.handleBorderRadiusGlobal();
+      // border radius
       this.handleBorderRadiusTopLeft();
       // border radius
       this.handleBorderRadiusTopRight();

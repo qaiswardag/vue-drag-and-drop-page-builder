@@ -1,19 +1,19 @@
 <template>
   <EditorAccordion>
-    <template #title>Borders</template>
+    <template #title>Border Style, Width & Color</template>
     <template #content>
-      <p class="myPrimaryParagraph font-medium py-0 my-4">Padding</p>
+      <p class="myPrimaryParagraph font-medium py-0 my-4">Border Style</p>
       <div class="mb-4">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
         >
-          Padding Y-axis:
+          Border Style:
         </label>
         <select
-          v-model="fontVerticalPadding"
+          v-model="borderStyle"
           class="myPrimarySelect"
-          @change="designer.handleVerticalPadding(fontVerticalPadding)"
+          @change="designer.handleBorderStyle(borderStyle)"
         >
           <option
             disabled
@@ -22,24 +22,25 @@
             Select
           </option>
           <option
-            v-for="verticalPadding in tailwindSpacing.verticalPadding"
-            :key="verticalPadding"
+            v-for="borderStyle in tailwindBorderStyleWidthPlusColor.borderStyle"
+            :key="borderStyle"
           >
-            {{ verticalPadding }}
+            {{ borderStyle }}
           </option>
         </select>
       </div>
+      <p class="myPrimaryParagraph font-medium py-0 my-4">Border Width</p>
       <div class="mb-4">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
         >
-          Padding X-axis:
+          Border Width:
         </label>
         <select
-          v-model="fontHorizontalPadding"
+          v-model="borderWidth"
           class="myPrimarySelect"
-          @change="designer.handleHorizontalPadding(fontHorizontalPadding)"
+          @change="designer.handleBorderWidth(borderWidth)"
         >
           <option
             disabled
@@ -48,25 +49,25 @@
             Select
           </option>
           <option
-            v-for="horizontalPadding in tailwindSpacing.horizontalPadding"
-            :key="horizontalPadding"
+            v-for="borderWidth in tailwindBorderStyleWidthPlusColor.borderWidth"
+            :key="borderWidth"
           >
-            {{ horizontalPadding }}
+            {{ borderWidth }}
           </option>
         </select>
       </div>
-      <p class="myPrimaryParagraph font-medium py-0 my-4">Margin</p>
+      <p class="myPrimaryParagraph font-medium py-0 my-4">Border Color</p>
       <div class="mb-4">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
         >
-          Margin Y-axis:
+          Border Color:
         </label>
         <select
-          v-model="fontVerticalMargin"
+          v-model="borderColor"
           class="myPrimarySelect"
-          @change="designer.handleVerticalMargin(fontVerticalMargin)"
+          @change="designer.handleBorderColor(borderColor)"
         >
           <option
             disabled
@@ -75,36 +76,10 @@
             Select
           </option>
           <option
-            v-for="verticalMargin in tailwindSpacing.verticalMargin"
-            :key="verticalMargin"
+            v-for="borderColor in tailwindBorderStyleWidthPlusColor.borderColor"
+            :key="borderColor"
           >
-            {{ verticalMargin }}
-          </option>
-        </select>
-      </div>
-      <div class="mb-4">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Margin X-axis:
-        </label>
-        <select
-          v-model="fontHorizontalMargin"
-          class="myPrimarySelect"
-          @change="designer.handleHorizontalMargin(fontHorizontalMargin)"
-        >
-          <option
-            disabled
-            value=""
-          >
-            Select
-          </option>
-          <option
-            v-for="horizontalMargin in tailwindSpacing.horizontalMargin"
-            :key="horizontalMargin"
-          >
-            {{ horizontalMargin }}
+            {{ borderColor }}
           </option>
         </select>
       </div>
@@ -113,7 +88,7 @@
 </template>
 
 <script setup>
-import tailwindSpacing from '../../../../utils/tailwind-padding-margin';
+import tailwindBorderStyleWidthPlusColor from '../../../../utils/tailwind-border-style-width-color';
 import Designer from '../../../../composables/Designer';
 import EditorAccordion from '../EditorAccordion.vue';
 import { useStore } from 'vuex';
@@ -123,34 +98,27 @@ const store = useStore();
 
 const designer = new Designer(store);
 
-const fontVerticalPadding = ref(null);
-const fontHorizontalPadding = ref(null);
-const fontVerticalMargin = ref(null);
-const fontHorizontalMargin = ref(null);
+const borderStyle = ref(null);
+const borderWidth = ref(null);
+const borderColor = ref(null);
 
-const getFontVerticalPaddingCurrent = computed(() => {
-  return store.getters['designer/getFontVerticalPadding'];
+const getBorderStyle = computed(() => {
+  return store.getters['designer/getBorderStyle'];
 });
-const getFontHorizontalPaddingCurrent = computed(() => {
-  return store.getters['designer/getFontHorizontalPadding'];
+const getBorderWidth = computed(() => {
+  return store.getters['designer/getBorderWidth'];
 });
-const getFontVerticalMarginCurrent = computed(() => {
-  return store.getters['designer/getFontVerticalMargin'];
-});
-const getFontHorizontalMarginCurrent = computed(() => {
-  return store.getters['designer/getFontHorizontalMargin'];
+const getBorderColor = computed(() => {
+  return store.getters['designer/getBorderColor'];
 });
 
-watch(getFontVerticalPaddingCurrent, (newValue) => {
-  fontVerticalPadding.value = newValue;
+watch(getBorderStyle, (newValue) => {
+  borderStyle.value = newValue;
 });
-watch(getFontHorizontalPaddingCurrent, (newValue) => {
-  fontHorizontalPadding.value = newValue;
+watch(getBorderWidth, (newValue) => {
+  borderWidth.value = newValue;
 });
-watch(getFontVerticalMarginCurrent, (newValue) => {
-  fontVerticalMargin.value = newValue;
-});
-watch(getFontHorizontalMarginCurrent, (newValue) => {
-  fontHorizontalMargin.value = newValue;
+watch(getBorderColor, (newValue) => {
+  borderColor.value = newValue;
 });
 </script>
