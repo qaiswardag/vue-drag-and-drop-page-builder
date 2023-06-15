@@ -10,6 +10,8 @@ import {
   EyeSlashIcon,
   AdjustmentsVerticalIcon,
   Square3Stack3DIcon,
+  Square2StackIcon,
+  Squares2X2Icon,
 } from '@heroicons/vue/24/outline';
 import { useStore } from 'vuex';
 import OptionsDropdown from '../../components/dropdowns-and-toggles/OptionsDropdown.vue';
@@ -22,7 +24,9 @@ const store = useStore();
 const designer = new Designer(store);
 const showSettingsSlideOverRight = ref(false);
 const titleSettingsSlideOverRight = ref(null);
-const menuLeft = ref(true);
+const getMenuLeft = computed(() => {
+  return store.getters['designer/getMenuLeft'];
+});
 const getMenuRight = computed(() => {
   return store.getters['designer/getMenuRight'];
 });
@@ -50,11 +54,6 @@ categories.value = [
   'testimonials',
 ];
 const activeLibrary = ref('forms');
-
-const toggleMenuLeft = function () {
-  menuLeft.value = !menuLeft.value;
-  store.commit('designer/setMenuPreview', false);
-};
 
 const cloneComponent = function (component) {
   return designer.cloneComponent(component);
@@ -128,8 +127,8 @@ onMounted(async () => {
       <aside
         aria-label="sidebar"
         :class="{
-          'w-0': !menuLeft,
-          'w-60': menuLeft,
+          'w-0': !getMenuLeft,
+          'w-60': getMenuLeft,
           'rounded-r-[0rem]': getMenuPreview,
         }"
         class="h-full flex-shrink-0 shadow-2xl rounded-r-2xl overflow-hidden mr-4 duration-150"
@@ -140,9 +139,12 @@ onMounted(async () => {
             aria-label="Sidebar"
             class="h-full bg-white pt-2.5 pr-4 pb-4 pl-4"
           >
-            <div class="flex flex-row justify-end border-b pb-3 mb-3">
+            <div class="flex flex-row justify-end border-b pb-3 mb-3 øøø">
               <div
-                @click="toggleMenuLeft"
+                @click="
+                  store.commit('designer/setMenuLeft', false) &&
+                    store.commit('designer/setMenuPreview', false)
+                "
                 class="hover:bg-myPrimaryLinkColor hover:text-white bg-gray-100 rounded-full cursor-pointer"
               >
                 <XMarkIcon class="shrink-0 w-5 h-5 m-2"> </XMarkIcon>
@@ -207,15 +209,18 @@ onMounted(async () => {
 
       <!-- Bars - start -->
       <div
-        v-show="menuLeft === false"
+        v-show="getMenuLeft === false"
         class="pt-2 mr-4 h-full flex-shrink-0 overflow-hidden"
       >
         <div
-          @click="toggleMenuLeft"
           class="cursor-pointer rounded-full flex items-center justify-center bg-gray-100 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
         >
           <Square3Stack3DIcon class="shrink-0 w-6 h-6 m-2 cursor-pointer">
           </Square3Stack3DIcon>
+          <Square2StackIcon
+            class="shrink-0 w-6 h-6 m-2 cursor-pointer"
+          ></Square2StackIcon
+          >øøæøæøæ
         </div>
       </div>
       <!-- Bars - end -->
@@ -254,6 +259,15 @@ onMounted(async () => {
               <AdjustmentsVerticalIcon
                 class="w-5 h-5 m-2 stroke-1.5 cursor-pointer"
               ></AdjustmentsVerticalIcon>
+            </div>
+            <div
+              v-if="getMenuRight === false"
+              @click="store.commit('designer/setMenuRight', true)"
+              class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+            >
+              <Squares2X2Icon
+                class="w-5 h-5 m-2 stroke-1.5 cursor-pointer"
+              ></Squares2X2Icon>
             </div>
           </div>
         </div>

@@ -460,12 +460,6 @@ class Designer {
     this.store.commit('designer/setComponents', this.getComponents.value);
 
     this.saveAllComponentsInLocalstorage(this.getComponents.value);
-
-    // hide right menu if the last component was removed
-    if (this.getComponents.value.length === 0) {
-      this.store.commit('designer/setMenuRight', false);
-      this.store.commit('designer/setComponent', this.getComponent.value);
-    }
   }
 
   // move component

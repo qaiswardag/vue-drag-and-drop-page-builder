@@ -17,6 +17,7 @@ export default {
   // state
   state: {
     menuPreview: false,
+    menuLeft: true,
     menuRight: true,
     // border style, width & color / start
     borderStyle: null,
@@ -60,6 +61,9 @@ export default {
   getters: {
     getMenuPreview(state) {
       return state.menuPreview;
+    },
+    getMenuLeft(state) {
+      return state.menuLeft;
     },
     getMenuRight(state) {
       return state.menuRight;
@@ -191,6 +195,9 @@ export default {
   mutations: {
     setMenuPreview(state, payload) {
       state.menuPreview = payload;
+    },
+    setMenuLeft(state, payload) {
+      state.menuLeft = payload;
     },
     setMenuRight(state, payload) {
       state.menuRight = payload;

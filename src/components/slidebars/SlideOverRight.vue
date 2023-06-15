@@ -37,8 +37,15 @@ const slideOverButton = function () {
 
 <template>
   <teleport to="body">
-    <TransitionRoot as="template" :show="open">
-      <Dialog as="div" class="relative z-30" @click="$emit('slideOverButton')">
+    <TransitionRoot
+      as="template"
+      :show="open"
+    >
+      <Dialog
+        as="div"
+        class="relative z-30"
+        @click="$emit('slideOverButton')"
+      >
         <div class="fixed inset-0" />
 
         <div class="fixed inset-0 overflow-hidden">
@@ -57,9 +64,9 @@ const slideOverButton = function () {
               >
                 <DialogPanel class="pointer-events-auto w-96 max-w-md">
                   <div
-                    class="flex h-full flex-col overflow-y-scroll bg-white pt-3 pb-6 shadow-xl"
+                    class="flex h-full flex-col overflow-y-scroll bg-white pt-8 pb-6 shadow-xl"
                   >
-                    <div class="px-4 sm:px-6">
+                    <div class="px-2 sm:px-2">
                       <div class="flex items-center justify-between">
                         <DialogTitle class="myTertiaryHeader my-0">
                           {{ title }}
