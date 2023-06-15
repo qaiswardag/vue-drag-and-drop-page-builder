@@ -50,6 +50,7 @@ export default {
     enabledCustomColorBG: null,
     backgroundColorCustom: null,
     backgroundColor: null,
+    element: null,
     component: null,
     components: [],
     currentDisplayedImage: null,
@@ -156,10 +157,12 @@ export default {
     getBackgroundColorCustom(state) {
       return state.backgroundColorCustom;
     },
+    getElement(state) {
+      return state.element;
+    },
     getComponent(state) {
       return state.component;
     },
-    // current element
     getComponents(state) {
       return state.components;
     },
@@ -169,22 +172,19 @@ export default {
 
     //
     getCurrentDisplayedImage(state) {
-      // Create a new HTML div
       const currentImageContainer = document.createElement('div');
-      // Set the new HTML div equal to the state and current element's outerHTML
       currentImageContainer.innerHTML = state.component?.outerHTML;
 
-      // Get all <img> and <div> elements within the current image container
+      // Get all img and div within the current image container
       const imgElements = currentImageContainer.getElementsByTagName('img');
       const divElements = currentImageContainer.getElementsByTagName('div');
 
-      // Check if there is exactly one <img> element and no <div> elements
+      // Check if there is exactly one img and no div
       if (imgElements.length === 1 && divElements.length === 0) {
-        // Return the source of the only <img> element
+        // Return the source of the only img
         return imgElements[0].src;
       }
 
-      // Return null if the conditions are not met
       return null;
     },
     getFetchedComponents(state) {
@@ -297,6 +297,10 @@ export default {
     setEnabledCustomColorBG(state, payload) {
       state.enabledCustomColorBG = payload;
     },
+    setElement(state, payload) {
+      state.element = {};
+      state.element = payload;
+    },
     setComponent(state, payload) {
       state.component = {};
       state.component = payload;
@@ -311,10 +315,7 @@ export default {
     },
 
     setCurrentDisplayedImage(state, payload) {
-      // set clicked element (which is the image & select the image src) to equal payload
-      // payload source is the new image src
       state.component.src = payload;
-      // set currebt image
       state.currentDisplayedImage = payload;
     },
     setCurrentLayoutPreview(state, payload) {

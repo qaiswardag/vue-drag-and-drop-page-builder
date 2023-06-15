@@ -434,8 +434,8 @@ class Designer {
       // Set the 'selected' attribute on the clicked element
       e.currentTarget.setAttribute('selected', '');
 
-      // Commit the selected component state to the Vuex store
-      this.store.commit('designer/setComponent', e.currentTarget);
+      // Commit the selected to the store
+      this.store.commit('designer/setElement', e.currentTarget);
     });
   };
 

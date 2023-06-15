@@ -139,7 +139,7 @@ onMounted(async () => {
             aria-label="Sidebar"
             class="h-full bg-white pt-2.5 pr-4 pb-4 pl-4"
           >
-            <div class="flex flex-row justify-end border-b pb-3 mb-3 øøø">
+            <div class="flex flex-row justify-end border-b pb-3 mb-3">
               <div
                 @click="
                   store.commit('designer/setMenuLeft', false) &&
