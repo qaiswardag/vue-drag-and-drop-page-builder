@@ -435,7 +435,7 @@ class Designer {
       e.currentTarget.setAttribute('selected', '');
 
       // Commit the selected to the store
-      this.store.commit('designer/setElement', e.currentTarget);
+      this.store.commit('designer/setComponent', e.currentTarget);
     });
   };
 
