@@ -12,21 +12,21 @@ const getTextAreaVueModel = computed(() => {
   return store.getters['designer/getTextAreaVueModel'];
 });
 
-const getComponent = computed(() => {
-  return store.getters['designer/getComponent'];
+const getElement = computed(() => {
+  return store.getters['designer/getElement'];
 });
 
 // Default value for showTextArea
 const showTextArea = ref(true);
 
 // get outer HTML of current element
-const getComponentInnerHTML = computed(() => {
-  return getComponent?.value?.innerHTML ? getComponent?.value?.innerHTML : [];
+const getElementInnerHTML = computed(() => {
+  return getElement?.value?.innerHTML ? getElement?.value?.innerHTML : [];
 });
 
 // watch and show text area based "get current element" content
 // only show text area if it's include text only plus if containing <br>
-watch(getComponentInnerHTML, (newElementInnerHTML) => {
+watch(getElementInnerHTML, (newElementInnerHTML) => {
   showTextArea.value = false;
 
   // stop execution if
@@ -68,9 +68,17 @@ watch(getTextAreaVueModel, (newValue) => {
 </script>
 
 <template>
-  <div v-if="showTextArea === true" class="my-2 pb-8">
+  <div
+    v-if="showTextArea === true"
+    class="my-2 pb-8"
+  >
     <div class="block px-4 ease-linear duration-200 bg-white">
-      <label for="meta_title" class="myPrimaryInputLabel"> Text content </label>
+      <label
+        for="meta_title"
+        class="myPrimaryInputLabel"
+      >
+        Text content
+      </label>
 
       <textarea
         v-model="textContentVueModel"

@@ -30,7 +30,6 @@ const store = useStore();
 const designer = new Designer(store);
 
 // remove component
-// delete singular component on trach icon click
 const deleteComponent = function (e) {
   // set modal standards
   showModalDeleteComponent.value = true;

@@ -5,10 +5,22 @@ import tailwindPaddingAndMargin from '../utils/tailwind-padding-margin';
 import tailwindBorderRadius from '../utils/tailwind-border-radius';
 import tailwindBorderStyleWidthPlusColor from '../utils/tailwind-border-style-width-color';
 import { computed, ref } from 'vue';
+import { v4 as uuidv4 } from 'uuid';
 
 class Designer {
   constructor(store) {
-    // Create a new WeakSet to keep track of elements with event listeners
+    /**
+     * Initialize an instance variable 'elementsWithListeners' as a WeakSet.
+     *
+     * A WeakSet is a special type of Set that holds weak references to its elements,
+     * meaning that an element could be garbage collected if there is no other reference to it.
+     * This is especially useful in the context of managing DOM elements and their associated events,
+     * as it allows for efficient and automated cleanup of references to DOM elements that have been removed.
+     *
+     * By checking if an element is in this WeakSet before attaching an event listener,
+     * we can prevent redundant addition of the same event listener to an element.
+     * This helps in managing the memory usage and performance of the application.
+     */
     this.elementsWithListeners = new WeakSet();
 
     this.colors = tailwindColors.backgroundColors();
@@ -21,11 +33,12 @@ class Designer {
       () => this.store.getters['designer/getCurrentClickedImage']
     );
 
-    this.getComponent = computed(
-      () => this.store.getters['designer/getComponent']
-    );
+    this.getElement = computed(() => this.store.getters['designer/getElement']);
     this.getComponents = computed(
       () => this.store.getters['designer/getComponents']
+    );
+    this.getComponent = computed(
+      () => this.store.getters['designer/getComponent']
     );
     this.getNextSibling = computed(
       () => this.store.getters['designer/getNextSibling']
@@ -37,36 +50,33 @@ class Designer {
       () => this.store.getters['designer/getRestoredElement']
     );
   }
-  #updateStyle(userSelectedStyle, styleArray, mutationName) {
-    let currentStyle = styleArray.find((style) => {
-      return this.getComponent.value.classList.contains(style);
+  #updateStyle(selectedCSS, CSSArray, mutationName) {
+    let currentCSS = CSSArray.find((CSS) => {
+      return this.getElement.value.classList.contains(CSS);
     });
 
-    currentStyle = currentStyle || 'none'; // set to 'none' if undefined
+    currentCSS = currentCSS || 'none'; // set to 'none' if undefined
 
-    this.store.commit(`designer/${mutationName}`, currentStyle);
+    this.store.commit(`designer/${mutationName}`, currentCSS);
 
-    if (userSelectedStyle && userSelectedStyle !== 'none') {
-      if (
-        currentStyle &&
-        this.getComponent.value.classList.contains(currentStyle)
-      ) {
-        this.getComponent.value.classList.remove(currentStyle);
+    if (selectedCSS && selectedCSS !== 'none') {
+      if (currentCSS && this.getElement.value.classList.contains(currentCSS)) {
+        this.getElement.value.classList.remove(currentCSS);
       }
 
-      this.getComponent.value.classList.add(userSelectedStyle);
-      currentStyle = userSelectedStyle;
-    } else if (userSelectedStyle === 'none' && currentStyle) {
-      this.getComponent.value.classList.remove(currentStyle);
-      currentStyle = userSelectedStyle;
+      this.getElement.value.classList.add(selectedCSS);
+      currentCSS = selectedCSS;
+    } else if (selectedCSS === 'none' && currentCSS) {
+      this.getElement.value.classList.remove(currentCSS);
+      currentCSS = selectedCSS;
     }
 
-    this.store.commit(`designer/${mutationName}`, currentStyle);
-    this.store.commit('designer/setComponent', this.getComponent.value);
+    this.store.commit(`designer/${mutationName}`, currentCSS);
+    this.store.commit('designer/setElement', this.getElement.value);
   }
   currentClasses() {
     // convert classList to array
-    let classListArray = Array.from(this.getComponent.value.classList);
+    let classListArray = Array.from(this.getElement.value.classList);
 
     // commit array to store
     this.store.commit('designer/setCurrentClasses', classListArray);
@@ -77,29 +87,29 @@ class Designer {
       typeof userSelectedClass === 'string' &&
       userSelectedClass !== '' &&
       !userSelectedClass.includes(' ') &&
-      !this.getComponent.value.classList.contains(userSelectedClass) // Check if class already exists
+      !this.getElement.value.classList.contains(userSelectedClass) // Check if class already exists
     ) {
-      this.getComponent.value.classList.add(userSelectedClass);
-      this.store.commit('designer/setComponent', this.getComponent.value);
+      this.getElement.value.classList.add(userSelectedClass);
+      this.store.commit('designer/setElement', this.getElement.value);
       this.store.commit('designer/setClass', userSelectedClass);
     }
   }
   handleRemoveClasses(userSelectedClass) {
     // remove selected class from element
-    if (this.getComponent.value.classList.contains(userSelectedClass)) {
-      this.getComponent.value.classList.remove(userSelectedClass);
-      this.store.commit('designer/setComponent', this.getComponent.value);
+    if (this.getElement.value.classList.contains(userSelectedClass)) {
+      this.getElement.value.classList.remove(userSelectedClass);
+      this.store.commit('designer/setElement', this.getElement.value);
       this.store.commit('designer/removeClass', userSelectedClass);
     }
   }
 
   handleDeleteElement() {
-    const element = this.getComponent.value; // Get the element to be deleted
+    const element = this.getElement.value; // Get the element to be deleted
 
     this.store.commit('designer/setParentElement', element.parentNode); // Store the parent of the deleted element
     this.store.commit('designer/setRestoredElement', element.outerHTML); // Store the outerHTML of the deleted element
     this.store.commit('designer/setNextSibling', element.nextSibling); // Store the next sibling of the deleted element
-    this.store.commit('designer/setComponent', null);
+    this.store.commit('designer/setElement', null);
 
     element.remove(); // Remove the element from the DOM
   }
@@ -121,8 +131,7 @@ class Designer {
     // Clear
     this.store.commit('designer/setRestoredElement', null);
     this.store.commit('designer/setParentElement', null);
-    this.store.commit('designer/setComponent', null);
-    this.attachElementEventListeners();
+    this.store.commit('designer/setElement', null);
   }
 
   handleClearRestoreElement() {
@@ -244,28 +253,28 @@ class Designer {
 
   handleFontSize(userSelectedFontSize) {
     let fontBase = tailwindFontSizes.fontBase.find((size) => {
-      return this.getComponent.value.classList.contains(size);
+      return this.getElement.value.classList.contains(size);
     });
     if (fontBase === undefined) {
       fontBase = 'base:none';
     }
 
     let fontDesktop = tailwindFontSizes.fontDesktop.find((size) => {
-      return this.getComponent.value.classList.contains(size);
+      return this.getElement.value.classList.contains(size);
     });
     if (fontDesktop === undefined) {
       fontDesktop = 'lg:none';
     }
 
     let fontTablet = tailwindFontSizes.fontTablet.find((size) => {
-      return this.getComponent.value.classList.contains(size);
+      return this.getElement.value.classList.contains(size);
     });
     if (fontTablet === undefined) {
       fontTablet = 'md:none';
     }
 
     let fontMobile = tailwindFontSizes.fontMobile.find((size) => {
-      return this.getComponent.value.classList.contains(size);
+      return this.getElement.value.classList.contains(size);
     });
     if (fontMobile === undefined) {
       fontMobile = 'sm:none';
@@ -296,39 +305,39 @@ class Designer {
         !userSelectedFontSize.includes('md:') &&
         !userSelectedFontSize.includes('lg:')
       ) {
-        this.getComponent.value.classList.remove(getFontBase.value);
+        this.getElement.value.classList.remove(getFontBase.value);
         if (!userSelectedFontSize.includes('base:none')) {
-          this.getComponent.value.classList.add(userSelectedFontSize);
+          this.getElement.value.classList.add(userSelectedFontSize);
         }
 
         this.store.commit('designer/setFontBase', userSelectedFontSize);
       }
       if (userSelectedFontSize.includes('lg:')) {
-        this.getComponent.value.classList.remove(getFontDesktop.value);
+        this.getElement.value.classList.remove(getFontDesktop.value);
         if (!userSelectedFontSize.includes('lg:none')) {
-          this.getComponent.value.classList.add(userSelectedFontSize);
+          this.getElement.value.classList.add(userSelectedFontSize);
         }
 
         this.store.commit('designer/setFontDesktop', userSelectedFontSize);
       }
       if (userSelectedFontSize.includes('md:')) {
-        this.getComponent.value.classList.remove(getFontTablet.value);
+        this.getElement.value.classList.remove(getFontTablet.value);
         if (!userSelectedFontSize.includes('md:none')) {
-          this.getComponent.value.classList.add(userSelectedFontSize);
+          this.getElement.value.classList.add(userSelectedFontSize);
         }
 
         this.store.commit('designer/setFontTablet', userSelectedFontSize);
       }
       if (userSelectedFontSize.includes('sm:')) {
-        this.getComponent.value.classList.remove(getFontMobile.value);
+        this.getElement.value.classList.remove(getFontMobile.value);
         if (!userSelectedFontSize.includes('sm:none')) {
-          this.getComponent.value.classList.add(userSelectedFontSize);
+          this.getElement.value.classList.add(userSelectedFontSize);
         }
 
         this.store.commit('designer/setFontMobile', userSelectedFontSize);
       }
 
-      this.store.commit('designer/setComponent', this.getComponent.value);
+      this.store.commit('designer/setElement', this.getElement.value);
     }
   }
 
@@ -336,7 +345,7 @@ class Designer {
     // if user is selecting a custom HEX color
     if (userSelectedColor === undefined && enabledCustomColor === undefined) {
       // Get the style property
-      let bgColor = this.getComponent.value.style.backgroundColor;
+      let bgColor = this.getElement.value.style.backgroundColor;
 
       // Check for inline background color
       if (typeof bgColor === 'string' && bgColor.length !== 0) {
@@ -356,26 +365,74 @@ class Designer {
     //
     // if user is selecting a custom HEX color
     if (enabledCustomColor === true) {
-      // this.getComponent.value.classList.add(`bg-[${userSelectedColor}]`);
+      // this.getElement.value.classList.add(`bg-[${userSelectedColor}]`);
 
-      this.getComponent.value.style.backgroundColor = userSelectedColor;
+      this.getElement.value.style.backgroundColor = userSelectedColor;
       // this.store.commit('designer/setBackgroundColor', userSelectedColor);
-      this.store.commit('designer/setComponent', this.getComponent.value);
+      this.store.commit('designer/setElement', this.getElement.value);
       return;
     }
   }
   removeCustomColor() {
-    this.getComponent.value.style.removeProperty('background-color');
+    this.getElement.value.style.removeProperty('background-color');
     this.store.commit('designer/setEnabledCustomColorBG', null);
     this.store.commit('designer/setBackgroundColorCustom', null);
-    this.store.commit('designer/setComponent', this.getComponent.value);
+    this.store.commit('designer/setElement', this.getElement.value);
   }
   handleColor(userSelectedColor) {
     this.#updateStyle(userSelectedColor, this.colors, 'setBackgroundColor');
   }
 
-  saveAllComponentsInLocalstorage(components) {
+  cloneComponent(cloneComponent) {
+    // Hide slider and right menu
+    this.store.commit('designer/setMenuPreview', false);
+
+    this.store.commit('designer/setMenuRight', false);
+
+    // Deep clone clone component
+    const clonedComponent = { ...cloneComponent };
+
     //
+    //
+    //
+    //
+    // Add unique ID to each tag in clonedComponent's HTML
+
+    // Create a DOMParser instance
+    const parser = new DOMParser();
+
+    // Parse the HTML content of the clonedComponent using the DOMParser
+    const doc = parser.parseFromString(clonedComponent.html, 'text/html');
+
+    // Select all elements within the parsed HTML
+    const elements = doc.querySelectorAll('*');
+
+    // Iterate through each element
+    elements.forEach((element) => {
+      // Generate a unique ID using uuidv4()
+      const uniqueId = uuidv4();
+
+      // Add the unique ID as a dataset attribute to the element
+      element.dataset.uniqid = uniqueId;
+    });
+
+    // Update the HTML content of the clonedComponent with the modified HTML
+    clonedComponent.html = doc.querySelector('section').outerHTML;
+
+    //
+    //
+    //
+    //
+
+    // return to the cloned element to be dropped
+    return clonedComponent;
+  }
+
+  //
+  //
+  //
+  //
+  saveComponentsLocalStorage(components) {
     // wait for components to be added to DOM
     setTimeout(() => {
       // save design
@@ -383,65 +440,122 @@ class Designer {
     }, 100);
   }
 
-  // DOM Event listener
-  // for each on all added html componenets
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
   /**
-   * The attachElementEventListeners function is responsible for dynamically adding event listeners
-   * to elements within the [section *'] component in the Vue template.
+   * The attachElementEventListeners function is used to
+   * attach event listeners to each element within a 'section'
+   *
    */
   attachElementEventListeners = () => {
-    // Iterate over all direct child elements of the 'section' element
-    document.querySelectorAll('section *').forEach((el) => {
-      // If the WeakSet already contains this element, it means that event listeners
-      // are already attached to this element. In this case, we should skip this element
-      // to prevent multiple instances of the same listener being attached.
-      if (!this.elementsWithListeners.has(el)) {
-        // Add the element to the WeakSet to indicate that this element now has event listeners attached
-        this.elementsWithListeners.add(el);
-
-        this.attachElementListeners(el);
-      }
-    });
+    this.addClickAndHoverEvents();
   };
 
-  attachElementListeners = (el) => {
-    el.addEventListener('mouseover', (e) => {
+  addClickAndHoverEvents() {
+    document.querySelectorAll('section *').forEach((element) => {
+      if (this.elementsWithListeners.has(element) === false) {
+        this.elementsWithListeners.add(element);
+        this.attachElementListeners(element);
+      }
+    });
+  }
+
+  /**
+   * The attachElementListeners function is adding mouseover
+   * and click event listeners to a specific DOM element
+   *
+   */
+  attachElementListeners = (element) => {
+    // Only run on mouse over
+    element.addEventListener('mouseover', (e) => {
       e.stopPropagation();
 
-      // If there is an element with the 'hovered' attribute, remove this attribute
-      document.querySelector('[hovered]')?.removeAttribute('hovered');
-
-      // Set the 'hovered' attribute on the currently hovered element
-      el.setAttribute('hovered', '');
-    });
-
-    el.addEventListener('click', (e) => {
-      if (this.getComponent.value !== null) {
-        this.handleDesignerMethods();
+      if (document.querySelector('[hovered]') !== null) {
+        document.querySelector('[hovered]').removeAttribute('hovered');
       }
 
-      e.stopPropagation();
-
-      // Set menu right to true. This likely triggers the display of a contextual menu
+      element.setAttribute('hovered', '');
+    });
+    // Only run during on mouse click
+    element.addEventListener('click', (e) => {
       this.store.commit('designer/setMenuRight', true);
 
-      // If there is an element with the 'selected' attribute, remove this attribute
-      document.querySelector('[selected]')?.removeAttribute('selected');
+      e.stopPropagation();
 
-      // Remove the 'hovered' attribute from the clicked element (if it exists)
+      if (document.querySelector('[selected]') !== null) {
+        document.querySelector('[selected]').removeAttribute('selected');
+      }
+
       e.currentTarget.removeAttribute('hovered');
 
-      // Set the 'selected' attribute on the clicked element
       e.currentTarget.setAttribute('selected', '');
 
-      // Commit the selected to the store
-      this.store.commit('designer/setComponent', e.currentTarget);
+      this.store.commit('designer/setElement', e.currentTarget);
+      if (this.getElement.value === null) return;
+
+      this.handleDesignerMethods();
     });
   };
-
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
   deleteAllComponents() {
     this.store.commit('designer/setComponents', []);
-    this.saveAllComponentsInLocalstorage([]);
+    this.saveComponentsLocalStorage([]);
   }
 
   getCurrentIndex(event) {
@@ -459,7 +573,7 @@ class Designer {
     this.getComponents.value.splice(currentIndex, 1);
     this.store.commit('designer/setComponents', this.getComponents.value);
 
-    this.saveAllComponentsInLocalstorage(this.getComponents.value);
+    this.saveComponentsLocalStorage(this.getComponents.value);
   }
 
   // move component
@@ -467,13 +581,13 @@ class Designer {
   moveComponent(event, dir) {
     // Get index of component
     const currentIndex = this.getCurrentIndex(event);
-    // Return if moving first element backwards or last element forwards
+    // Return if moving first component backwards or last component forwards
     if (
       (currentIndex === 0 && dir === -1) ||
       (currentIndex === this.getComponents.value.length - 1 && dir === 1)
     )
       return;
-    // Store chosen component
+
     const currentComponent = this.getComponents.value[currentIndex];
     // Remove current object
     // Move it forwards if negative dir or forward if positive dir
@@ -483,26 +597,26 @@ class Designer {
       0,
       currentComponent
     );
-    // Follow element to new location
+    // Follow component to new location
     document
       .querySelector('#pagebuilder')
       .children[currentIndex + 1 * dir].scrollIntoView({ behavior: 'smooth' });
     //
     // save all current added HTML components in local storage
-    this.saveAllComponentsInLocalstorage(this.getComponents.value);
+    this.saveComponentsLocalStorage(this.getComponents.value);
     //
     // end of method "moveComponent"
   }
 
   handleTextAreaContent() {
     // text content
-    if (typeof this.getComponent.value.innerHTML !== 'string') {
+    if (typeof this.getElement.value.innerHTML !== 'string') {
       return;
     }
 
-    if (typeof this.getComponent.value.innerHTML === 'string') {
+    if (typeof this.getElement.value.innerHTML === 'string') {
       const textContentElementClone =
-        this.getComponent.value.innerHTML.replaceAll('<br>', '\r\n') || '';
+        this.getElement.value.innerHTML.replaceAll('<br>', '\r\n') || '';
 
       this.store.commit(
         'designer/setTextAreaVueModel',
@@ -517,28 +631,9 @@ class Designer {
         '<br>'
       );
       // text change
-      this.getComponent.value.innerHTML = textContentElementClone;
-      this.store.commit('designer/setComponent', this.getComponent.value);
+      this.getElement.value.innerHTML = textContentElementClone;
+      this.store.commit('designer/setElement', this.getElement.value);
     }
-  }
-
-  cloneComponent(componenet) {
-    // Hide slider and right menu
-    this.store.commit('designer/setMenuPreview', false);
-
-    this.store.commit('designer/setMenuRight', false);
-
-    // Deep clone component
-    const clonedComponent = { ...componenet };
-
-    const currentDate = new Date();
-    const timestamp = currentDate.getTime();
-
-    // set id of clone to timestamp giving it a unique id
-    clonedComponent.id = timestamp;
-
-    // return to the cloned element to be dropped
-    return clonedComponent;
   }
 
   previewCurrentDesign() {
@@ -564,14 +659,34 @@ class Designer {
 
     // set added html components back to empty array
     addedHtmlComponents.value = [];
+
+    //
+    this.saveCurrentDesign();
+  }
+  saveCurrentDesign() {
+    this.getComponents.value.forEach((component) => {
+      const section = document.querySelector(
+        `section[data-componentid="${component.id}"]`
+      );
+      if (section) {
+        component.html = section.outerHTML;
+      }
+    });
+
+    this.store.commit('designer/setComponents', this.getComponents.value);
   }
 
   areComponentsStoredInLocalStorage() {
-    if (localStorage.getItem('savedCurrentDesign')) {
-      this.store.commit(
-        'designer/setComponents',
-        JSON.parse(localStorage.getItem('savedCurrentDesign'))
-      );
+    const savedCurrentDesign = localStorage.getItem('savedCurrentDesign');
+    if (savedCurrentDesign) {
+      try {
+        this.store.commit(
+          'designer/setComponents',
+          JSON.parse(savedCurrentDesign)
+        );
+      } catch (e) {
+        console.error('Error parsing localStorage data: ', e);
+      }
     }
   }
   imageClick() {
@@ -585,56 +700,80 @@ class Designer {
       );
     }
   }
+  handleCurrentDisplayedImage() {
+    const currentImageContainer = document.createElement('div');
+    currentImageContainer.innerHTML = this.getElement.value.outerHTML;
+
+    // Get all img and div within the current image container
+    const imgElements = currentImageContainer.getElementsByTagName('img');
+    const divElements = currentImageContainer.getElementsByTagName('div');
+
+    // Check if there is exactly one img and no div
+    if (imgElements.length === 1 && divElements.length === 0) {
+      // Return the source of the only img
+
+      this.store.commit(
+        'designer/setCurrentDisplayedImage',
+        imgElements[0].src
+      );
+    }
+    if (imgElements.length !== 1) {
+      // Return the source of the only img
+
+      this.store.commit('designer/setCurrentDisplayedImage', null);
+    }
+  }
 
   handleDesignerMethods() {
-    console.log('SWITCHED TO NEW COMPONENT / COMPONENT OUTHTML UPDATED');
+    console.log('SWITCHED TO NEW COMPONENT / COMPONENT OUTERHTML UPDATED');
 
-    if (this.getComponent.value !== null) {
-      // invoke methods
+    if (this.getElement.value === null) return;
 
-      // border style
-      this.handleBorderStyle();
-      // border width
-      this.handleBorderWidth();
-      // border color
-      this.handleBorderColor();
-      // border radius
-      this.handleBorderRadiusGlobal();
-      // border radius
-      this.handleBorderRadiusTopLeft();
-      // border radius
-      this.handleBorderRadiusTopRight();
-      // border radius
-      this.handleBorderRadiusBottomleft();
-      // border radius
-      this.handleBorderRadiusBottomRight();
-      // handle clear restore element
-      this.handleClearRestoreElement();
-      // handle font size
-      this.handleFontSize();
-      // handle font weight
-      this.handleFontWeight();
-      // handle font family
-      this.handleFontFamily();
-      // handle font style
-      this.handleFontStyle();
-      // handle vertical padding
-      this.handleVerticalPadding();
-      // handle horizontal padding
-      this.handleHorizontalPadding();
-      // handle vertical margin
-      this.handleVerticalMargin();
-      // handle horizontal margin
-      this.handleHorizontalMargin();
-      // handle custom color
-      this.handleCustomColor();
-      // handle color
-      this.handleColor();
-      // handle classes
-      this.currentClasses();
-      // handle text content
-      this.handleTextAreaContent();
-    }
+    // invoke methods
+    // displayed image
+    this.handleCurrentDisplayedImage();
+    // border style
+    this.handleBorderStyle();
+    // border width
+    this.handleBorderWidth();
+    // border color
+    this.handleBorderColor();
+    // border radius
+    this.handleBorderRadiusGlobal();
+    // border radius
+    this.handleBorderRadiusTopLeft();
+    // border radius
+    this.handleBorderRadiusTopRight();
+    // border radius
+    this.handleBorderRadiusBottomleft();
+    // border radius
+    this.handleBorderRadiusBottomRight();
+    // handle clear restore element
+    this.handleClearRestoreElement();
+    // handle font size
+    this.handleFontSize();
+    // handle font weight
+    this.handleFontWeight();
+    // handle font family
+    this.handleFontFamily();
+    // handle font style
+    this.handleFontStyle();
+    // handle vertical padding
+    this.handleVerticalPadding();
+    // handle horizontal padding
+    this.handleHorizontalPadding();
+    // handle vertical margin
+    this.handleVerticalMargin();
+    // handle horizontal margin
+    this.handleHorizontalMargin();
+    // handle custom color
+    this.handleCustomColor();
+    // handle color
+    this.handleColor();
+    // handle classes
+    this.currentClasses();
+    // handle text content
+    this.handleTextAreaContent();
   }
 }
 

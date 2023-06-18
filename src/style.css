@@ -157,7 +157,7 @@
   }
 
   .myPrimaryButton {
-    @apply whitespace-nowrap break-keep font-medium inline-flex items-center justify-center rounded-full border border-transparent bg-myPrimaryLinkColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
+    @apply whitespace-nowrap break-keep font-medium inline-flex items-center justify-center rounded-lg border border-transparent bg-myPrimaryLinkColor px-5 py-2  sm:text-sm text-sm text-white shadow-sm hover:bg-myPrimaryLinkColor sm:w-auto
         focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2
         focus-visible:ring-2 focus-visible:ring-myPrimaryLinkColor;
   }

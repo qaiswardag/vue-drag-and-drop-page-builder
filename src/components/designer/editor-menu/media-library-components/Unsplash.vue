@@ -37,7 +37,12 @@
         />
       </div>
 
-      <button type="submit" class="myPrimaryButton">Search</button>
+      <button
+        type="submit"
+        class="myPrimaryButton"
+      >
+        Search
+      </button>
     </div>
 
     <div class="flex justify-start items-center gap-2 py-2 mb-1">
@@ -291,7 +296,7 @@ const searchUnsplash = function () {
 
 // on mounted
 onMounted(() => {
-  // load values from store when component is mounted
+  // load values from store when mounted
   if (getSearchTerm.value.length > 0 && searchQuery.value.length === 0) {
     searchQuery.value = getSearchTerm.value;
     currentPage.value = getCurrentPageNumber.value;

@@ -2,6 +2,7 @@
 import Draggable from 'vuedraggable';
 import Designer from '../../composables/Designer';
 import { onMounted, computed, onBeforeMount, ref, watch } from 'vue';
+import DesignerSettings from '../../components/settings/DesignerSettings.vue';
 import {
   Bars3Icon,
   XMarkIcon,
@@ -10,7 +11,6 @@ import {
   EyeSlashIcon,
   AdjustmentsVerticalIcon,
   Square3Stack3DIcon,
-  Square2StackIcon,
   Squares2X2Icon,
 } from '@heroicons/vue/24/outline';
 import { useStore } from 'vuex';
@@ -55,10 +55,6 @@ categories.value = [
 ];
 const activeLibrary = ref('forms');
 
-const cloneComponent = function (component) {
-  return designer.cloneComponent(component);
-};
-
 const previewCurrentDesign = function () {
   designer.previewCurrentDesign();
 };
@@ -74,19 +70,23 @@ const componentsMenu = computed(() => {
   });
 });
 
-// When HTML component is dropped into the DOM
-const onDrop = function () {
-  // save all current added HTML components in local storage
-  designer.saveAllComponentsInLocalstorage(getComponents.value);
+// clone
+const cloneComponent = function (cloneComponent) {
+  return designer.cloneComponent(cloneComponent);
 };
-const getComponent = computed(() => {
-  return store.getters['designer/getComponent'];
+
+// When HTML component is dropped into the DOM øøø
+const onDrop = function (droppedElement, targetIndex, originalEvent) {
+  designer.saveComponentsLocalStorage(getComponents.value);
+};
+const getElement = computed(() => {
+  return store.getters['designer/getElement'];
 });
-const getComponentOuterHTML = computed(() => {
-  if (getComponent.value === null) return;
-  return getComponent.value.outerHTML ? getComponent.value.outerHTML : null;
+const getElementOuterHTML = computed(() => {
+  if (getElement.value === null) return;
+  return getElement.value.outerHTML ? getElement.value.outerHTML : null;
 });
-watch(getComponentOuterHTML, (newComponent) => {
+watch(getElementOuterHTML, (newComponent) => {
   designer.handleDesignerMethods();
 });
 
@@ -94,8 +94,8 @@ const getComponents = computed(() => {
   return store.getters['designer/getComponents'];
 });
 
-const unselectComponent = function () {
-  store.commit('designer/setComponent', null);
+const deselectCurrentComponent = function () {
+  store.commit('designer/setElement', null);
 };
 
 onBeforeMount(() => {
@@ -103,10 +103,14 @@ onBeforeMount(() => {
 });
 
 onMounted(async () => {
+  // Load all HTML components
+  await store.dispatch('designer/loadComponents');
+
+  // store.commit('designer/setComponent', null);
+  // store.commit('designer/setElement', null);
+
   // Rerender `get components` when it is loaded from local storage
   designer.attachElementEventListeners();
-  // load all HTML components
-  store.dispatch('designer/loadComponents');
 });
 </script>
 
@@ -116,9 +120,7 @@ onMounted(async () => {
     :title="titleSettingsSlideOverRight"
     @slideOverButton="settingsSlideOverButton"
   >
-    <p class="myPrimaryParagraph text-xs mt-8">
-      Sorry, there are currently no settings available.
-    </p>
+    <DesignerSettings></DesignerSettings>
   </SlideOverRight>
   <div
     class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
@@ -137,9 +139,9 @@ onMounted(async () => {
         <div class="sticky h-full w-60 overflow-hidden">
           <nav
             aria-label="Sidebar"
-            class="h-full bg-white pt-2.5 pr-4 pb-4 pl-4"
+            class="h-full bg-white pt-2.5 pr-0 pb-4 pl-4"
           >
-            <div class="flex flex-row justify-end border-b pb-3 mb-3">
+            <div class="flex flex-row justify-end border-b pb-3 mb-3 pr-4">
               <div
                 @click="
                   store.commit('designer/setMenuLeft', false) &&
@@ -155,7 +157,8 @@ onMounted(async () => {
               COMPONENTS
             </p>
             <ul
-              class="flex flex-col gap-4 p-4 font-normal h-full overflow-y-scroll"
+              @mouseover.self="store.commit('designer/setMenuPreview', false)"
+              class="flex flex-col pt-4 pr-0 pb-0 font-normal h-full overflow-y-auto"
             >
               <li
                 v-for="category in categories"
@@ -164,7 +167,7 @@ onMounted(async () => {
                   'bg-gray-100 text-gray-900':
                     activeLibrary === category && getMenuPreview === true,
                 }"
-                class="myPrimaryParagrap font-medium p-2 capitalize cursor-pointer rounded-md"
+                class="w-full myPrimaryParagrap font-medium py-4 pl-2 pr-0 capitalize cursor-pointer rounded-l-lg"
                 @mouseover="
                   activeLibrary = category;
                   store.commit('designer/setMenuPreview', true);
@@ -213,14 +216,11 @@ onMounted(async () => {
         class="pt-2 mr-4 h-full flex-shrink-0 overflow-hidden"
       >
         <div
+          @click="store.commit('designer/setMenuLeft', true)"
           class="cursor-pointer rounded-full flex items-center justify-center bg-gray-100 aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
         >
           <Square3Stack3DIcon class="shrink-0 w-6 h-6 m-2 cursor-pointer">
           </Square3Stack3DIcon>
-          <Square2StackIcon
-            class="shrink-0 w-6 h-6 m-2 cursor-pointer"
-          ></Square2StackIcon
-          >øøæøæøæ
         </div>
       </div>
       <!-- Bars - end -->
@@ -245,7 +245,7 @@ onMounted(async () => {
 
           <div class="flex items-center justify-center gap-2">
             <div
-              @click="unselectComponent"
+              @click="deselectCurrentComponent"
               class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
             >
               <EyeSlashIcon
@@ -285,7 +285,10 @@ onMounted(async () => {
           @change="designer.attachElementEventListeners"
         >
           <template #item="{ element }">
-            <div class="relative overflow-hidden group">
+            <div
+              @mouseup="store.commit('designer/setComponent', element)"
+              class="relative overflow-hidden group"
+            >
               <ComponentTopMenu></ComponentTopMenu>
               <section v-html="element.html"></section>
             </div>

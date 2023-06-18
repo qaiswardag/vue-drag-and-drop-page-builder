@@ -2,7 +2,7 @@ import { vueFetch } from 'use-lightweight-fetch';
 
 // get images
 const {
-  handleData: handleGetComponents,
+  handleData: handlegetElements,
   fetchedData: fetchedComponents,
   isError: isErrorComponents,
   error: errorComponents,
@@ -172,20 +172,7 @@ export default {
 
     //
     getCurrentDisplayedImage(state) {
-      const currentImageContainer = document.createElement('div');
-      currentImageContainer.innerHTML = state.component?.outerHTML;
-
-      // Get all img and div within the current image container
-      const imgElements = currentImageContainer.getElementsByTagName('img');
-      const divElements = currentImageContainer.getElementsByTagName('div');
-
-      // Check if there is exactly one img and no div
-      if (imgElements.length === 1 && divElements.length === 0) {
-        // Return the source of the only img
-        return imgElements[0].src;
-      }
-
-      return null;
+      return state.currentDisplayedImage;
     },
     getFetchedComponents(state) {
       return state.fetchedComponents;
@@ -202,7 +189,6 @@ export default {
     setMenuRight(state, payload) {
       state.menuRight = payload;
     },
-
     // border style, width & color / start
     setBorderStyle(state, payload) {
       state.borderStyle = payload;
@@ -330,7 +316,7 @@ export default {
   actions: {
     // load products
     loadComponents(context, payload) {
-      handleGetComponents(
+      handlegetElements(
         '/components.json',
         {},
         {

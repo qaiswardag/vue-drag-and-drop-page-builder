@@ -1,6 +1,9 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <TransitionRoot :show="open" as="template">
+  <TransitionRoot
+    :show="open"
+    as="template"
+  >
     <Dialog
       as="div"
       class="fixed z-30 inset-0 overflow-y-auto"
@@ -44,7 +47,10 @@
             <div
               class="flex gap-2 justify-between items-center border-b border-gray-200 pb-2"
             >
-              <DialogTitle as="h3" class="tertiaryHeader my-0 py-0">
+              <DialogTitle
+                as="h3"
+                class="tertiaryHeader my-0 py-0"
+              >
                 {{ title }}
               </DialogTitle>
 
@@ -69,7 +75,11 @@
                       <div class="mb-2">
                         <!-- Tabs Mobile -->
                         <div class="sm:hidden">
-                          <label for="tabs" class="sr-only">Select a tab</label>
+                          <label
+                            for="tabs"
+                            class="sr-only"
+                            >Select a tab</label
+                          >
                           <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
 
                           <select
@@ -183,8 +193,8 @@
                         </div>
                         <div
                           v-if="
-                            (getComponent &&
-                              getComponent.src !== undefined &&
+                            (getElement &&
+                              getElement.src !== undefined &&
                               getCurrentClickedImage === null) ||
                             getCurrentClickedImage?.file === null
                           "
@@ -192,7 +202,7 @@
                           <img
                             alt="preview"
                             class="mx-auto block w-full rounded-t-sm object-cover object-center cursor-pointer hover:shadow-sm"
-                            :src="getComponent.src"
+                            :src="getElement.src"
                           />
                         </div>
 
@@ -336,8 +346,8 @@ export default {
       return store.getters['designer/getCurrentDisplayedImage'];
     });
     //
-    const getComponent = computed(() => {
-      return store.getters['designer/getComponent'];
+    const getElement = computed(() => {
+      return store.getters['designer/getElement'];
     });
     //
     //
@@ -368,7 +378,7 @@ export default {
       thirdButton,
       tabs,
       selected,
-      getComponent,
+      getElement,
       getCurrentDisplayedImage,
       changeSelectedMenuTab,
       getCurrentClickedImage,

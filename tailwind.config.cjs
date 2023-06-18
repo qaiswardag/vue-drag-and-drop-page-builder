@@ -13,7 +13,7 @@ module.exports = {
       colors: {
         // Custom colors
         myPrimaryBrandColor: '#000000',
-        myPrimaryLinkColor: '#16a34a',
+        myPrimaryLinkColor: '#2563eb',
 
         myPrimaryLightGrayColor: '#e2e8f0',
         myPrimaryMediumGrayColor: '#9ca3af',

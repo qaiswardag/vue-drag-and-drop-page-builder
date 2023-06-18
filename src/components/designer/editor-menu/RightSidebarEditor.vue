@@ -78,8 +78,8 @@ const store = useStore();
 const emit = defineEmits(['closeEditor']);
 
 // get current element tag
-const getComponent = computed(() => {
-  return store.getters['designer/getComponent'];
+const getElement = computed(() => {
+  return store.getters['designer/getElement'];
 });
 const getRestoredElement = computed(() => {
   return store.getters['designer/getRestoredElement'];
@@ -87,14 +87,14 @@ const getRestoredElement = computed(() => {
 
 // Get tagName of element
 const elementTag = computed(() => {
-  return getComponent.value?.tagName;
+  return getElement.value?.tagName;
 });
 
 const isHeadingElement = computed(() => {
   return (
-    (getComponent.value instanceof HTMLElement &&
-      getComponent.value.innerText.trim() !== ' ') ||
-    getComponent.value instanceof HTMLImageElement
+    (getElement.value instanceof HTMLElement &&
+      getElement.value.innerText.trim() !== ' ') ||
+    getElement.value instanceof HTMLImageElement
   );
 });
 </script>
