@@ -133,15 +133,15 @@
                       <div class="pb-6 space-y-6">
                         <div
                           v-if="
-                            getCurrentClickedImage &&
-                            getCurrentClickedImage.file !== null
+                            getHighlightedImage &&
+                            getHighlightedImage.file !== null
                           "
                           class="pb-6 space-y-6"
                         >
                           <img
                             alt="preview"
                             class="mx-auto block w-full rounded-t-sm object-cover object-center cursor-pointer hover:shadow-sm"
-                            :src="getCurrentClickedImage.file"
+                            :src="getHighlightedImage.file"
                           />
 
                           <div class="md:px-2 px-2">
@@ -156,12 +156,10 @@
                               >
                                 <dt class="text-gray-500">Dimensions</dt>
                                 <dd class="text-gray-900">
-                                  {{
-                                    getCurrentClickedImage?.imageDetails?.width
-                                  }}
+                                  {{ getHighlightedImage?.imageDetails?.width }}
                                   x
                                   {{
-                                    getCurrentClickedImage?.imageDetails?.height
+                                    getHighlightedImage?.imageDetails?.height
                                   }}
                                 </dd>
                               </div>
@@ -171,7 +169,7 @@
                                 <dt class="text-gray-500">By</dt>
                                 <dd class="text-gray-900">
                                   {{
-                                    getCurrentClickedImage?.imageDetails?.user
+                                    getHighlightedImage?.imageDetails?.user
                                       ?.name
                                   }}
                                 </dd>
@@ -183,8 +181,8 @@
                                 <dt class="text-gray-500">Image ID</dt>
                                 <dd class="text-gray-900">
                                   {{
-                                    getCurrentClickedImage.imageDetails &&
-                                    getCurrentClickedImage.imageDetails?.id
+                                    getHighlightedImage.imageDetails &&
+                                    getHighlightedImage.imageDetails?.id
                                   }}
                                 </dd>
                               </div>
@@ -195,8 +193,8 @@
                           v-if="
                             (getElement &&
                               getElement.src !== undefined &&
-                              getCurrentClickedImage === null) ||
-                            getCurrentClickedImage?.file === null
+                              getHighlightedImage === null) ||
+                            getHighlightedImage?.file === null
                           "
                         >
                           <img
@@ -339,11 +337,11 @@ export default {
     const store = useStore();
     //
     //
-    const getCurrentClickedImage = computed(() => {
-      return store.getters['designer/getCurrentClickedImage'];
+    const getHighlightedImage = computed(() => {
+      return store.getters['designer/getHighlightedImage'];
     });
-    const getCurrentDisplayedImage = computed(() => {
-      return store.getters['designer/getCurrentDisplayedImage'];
+    const getBasePrimaryImage = computed(() => {
+      return store.getters['designer/getBasePrimaryImage'];
     });
     //
     const getElement = computed(() => {
@@ -379,9 +377,9 @@ export default {
       tabs,
       selected,
       getElement,
-      getCurrentDisplayedImage,
+      getBasePrimaryImage,
       changeSelectedMenuTab,
-      getCurrentClickedImage,
+      getHighlightedImage,
     };
   },
 };

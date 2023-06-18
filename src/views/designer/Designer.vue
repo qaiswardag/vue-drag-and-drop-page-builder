@@ -95,6 +95,7 @@ const getComponents = computed(() => {
 });
 
 const deselectCurrentComponent = function () {
+  store.commit('designer/setComponent', null);
   store.commit('designer/setElement', null);
 };
 
@@ -110,7 +111,7 @@ onMounted(async () => {
   // store.commit('designer/setElement', null);
 
   // Rerender `get components` when it is loaded from local storage
-  designer.attachElementEventListeners();
+  designer.addClickAndHoverEvents();
 });
 </script>
 
@@ -282,7 +283,7 @@ onMounted(async () => {
           handle=".cursor-grab"
           item-key="id"
           :onDrop="onDrop"
-          @change="designer.attachElementEventListeners"
+          @change="designer.addClickAndHoverEvents"
         >
           <template #item="{ element }">
             <div

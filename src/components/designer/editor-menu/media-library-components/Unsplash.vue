@@ -244,7 +244,7 @@ const getUnsplashImages = computed(() => {
 //
 const handleImageClick = function (file, imageDetails) {
   // in store - update preview image
-  store.commit('designer/setCurrentClickedImage', { file, imageDetails });
+  store.commit('designer/setHighlightedImage', { file, imageDetails });
 };
 //
 //

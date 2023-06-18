@@ -1,24 +1,18 @@
 <template>
   <img
-    v-if="
-      getCurrentDisplayedImage !== undefined &&
-      getCurrentDisplayedImage !== null
-    "
+    v-if="getBasePrimaryImage !== undefined && getBasePrimaryImage !== null"
     class="object-cover object-center w-full"
-    :src="getCurrentDisplayedImage"
-    @click="imageClick"
+    :src="getBasePrimaryImage"
+    @click="updateImage"
     alt="image"
   />
 
   <div
-    v-if="
-      getCurrentDisplayedImage !== undefined &&
-      getCurrentDisplayedImage !== null
-    "
+    v-if="getBasePrimaryImage !== undefined && getBasePrimaryImage !== null"
     class="my-4 px-4"
   >
     <button
-      @click="imageClick"
+      @click="updateImage"
       type="button"
       class="myPrimaryButton gap-2 items-center w-full"
     >
@@ -70,13 +64,13 @@ const thirdMediaButtonFunction = ref(null);
 //
 //
 // get current image from store
-const getCurrentDisplayedImage = computed(() => {
-  return store.getters['designer/getCurrentDisplayedImage'];
+const getBasePrimaryImage = computed(() => {
+  return store.getters['designer/getBasePrimaryImage'];
 });
 //
 //
 // image click
-const imageClick = function () {
+const updateImage = function () {
   // open modal to true
   showMediaModal.value = true;
 
@@ -94,7 +88,7 @@ const imageClick = function () {
   //
   // handle click
   secondMediaButtonFunction.value = function () {
-    designer.imageClick();
+    designer.updateBasePrimaryImage();
     // close media library modal
     showMediaModal.value = false;
   };

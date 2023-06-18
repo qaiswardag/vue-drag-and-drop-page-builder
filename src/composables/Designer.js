@@ -29,8 +29,8 @@ class Designer {
       () => this.store.getters['designer/getTextAreaVueModel']
     );
 
-    this.getCurrentClickedImage = computed(
-      () => this.store.getters['designer/getCurrentClickedImage']
+    this.getHighlightedImage = computed(
+      () => this.store.getters['designer/getHighlightedImage']
     );
 
     this.getElement = computed(() => this.store.getters['designer/getElement']);
@@ -392,10 +392,6 @@ class Designer {
     // Deep clone clone component
     const clonedComponent = { ...cloneComponent };
 
-    //
-    //
-    //
-    //
     // Add unique ID to each tag in clonedComponent's HTML
 
     // Create a DOMParser instance
@@ -407,22 +403,23 @@ class Designer {
     // Select all elements within the parsed HTML
     const elements = doc.querySelectorAll('*');
 
-    // Iterate through each element
-    elements.forEach((element) => {
-      // Generate a unique ID using uuidv4()
-      const uniqueId = uuidv4();
+    // // Iterate through each element
+    // elements.forEach((element) => {
+    //   // Generate a unique ID using uuidv4()
+    //   const uniqueId = uuidv4();
 
-      // Add the unique ID as a dataset attribute to the element
-      element.dataset.uniqid = uniqueId;
-    });
+    //   // Add the unique ID as a dataset attribute to the element
+    //   element.dataset.uniqid = uniqueId;
+    // });
+
+    // Add the component id to the section element
+    const section = doc.querySelector('section');
+    if (section) {
+      section.dataset.componentid = cloneComponent.id;
+    }
 
     // Update the HTML content of the clonedComponent with the modified HTML
     clonedComponent.html = doc.querySelector('section').outerHTML;
-
-    //
-    //
-    //
-    //
 
     // return to the cloned element to be dropped
     return clonedComponent;
@@ -475,22 +472,21 @@ class Designer {
   //
   //
   /**
-   * The attachElementEventListeners function is used to
+   * The addClickAndHoverEvents function is used to
    * attach event listeners to each element within a 'section'
    *
    */
-  attachElementEventListeners = () => {
-    this.addClickAndHoverEvents();
-  };
-
-  addClickAndHoverEvents() {
+  addClickAndHoverEvents = () => {
     document.querySelectorAll('section *').forEach((element) => {
-      if (this.elementsWithListeners.has(element) === false) {
+      if (
+        this.elementsWithListeners &&
+        this.elementsWithListeners.has(element) === false
+      ) {
         this.elementsWithListeners.add(element);
         this.attachElementListeners(element);
       }
     });
-  }
+  };
 
   /**
    * The attachElementListeners function is adding mouseover
@@ -664,16 +660,24 @@ class Designer {
     this.saveCurrentDesign();
   }
   saveCurrentDesign() {
+    if (document.querySelector('[hovered]') !== null) {
+      document.querySelector('[hovered]').removeAttribute('hovered');
+    }
+
+    if (document.querySelector('[selected]') !== null) {
+      document.querySelector('[selected]').removeAttribute('selected');
+    }
+
     this.getComponents.value.forEach((component) => {
       const section = document.querySelector(
         `section[data-componentid="${component.id}"]`
       );
+
       if (section) {
         component.html = section.outerHTML;
       }
     });
-
-    this.store.commit('designer/setComponents', this.getComponents.value);
+    this.saveComponentsLocalStorage(this.getComponents.value);
   }
 
   areComponentsStoredInLocalStorage() {
@@ -689,18 +693,18 @@ class Designer {
       }
     }
   }
-  imageClick() {
+  updateBasePrimaryImage() {
     if (
-      this.getCurrentClickedImage.value &&
-      this.getCurrentClickedImage.value.file !== null
+      this.getHighlightedImage.value &&
+      this.getHighlightedImage.value.file !== null
     ) {
       this.store.commit(
-        'designer/setCurrentDisplayedImage',
-        this.getCurrentClickedImage.value.file
+        'designer/setBasePrimaryImage',
+        this.getHighlightedImage.value.file
       );
     }
   }
-  handleCurrentDisplayedImage() {
+  showBasePrimaryImage() {
     const currentImageContainer = document.createElement('div');
     currentImageContainer.innerHTML = this.getElement.value.outerHTML;
 
@@ -712,15 +716,10 @@ class Designer {
     if (imgElements.length === 1 && divElements.length === 0) {
       // Return the source of the only img
 
-      this.store.commit(
-        'designer/setCurrentDisplayedImage',
-        imgElements[0].src
-      );
+      this.store.commit('designer/setBasePrimaryImage', imgElements[0].src);
     }
     if (imgElements.length !== 1) {
-      // Return the source of the only img
-
-      this.store.commit('designer/setCurrentDisplayedImage', null);
+      this.store.commit('designer/setBasePrimaryImage', null);
     }
   }
 
@@ -729,9 +728,11 @@ class Designer {
 
     if (this.getElement.value === null) return;
 
+    // save current design
+
     // invoke methods
     // displayed image
-    this.handleCurrentDisplayedImage();
+    this.showBasePrimaryImage();
     // border style
     this.handleBorderStyle();
     // border width

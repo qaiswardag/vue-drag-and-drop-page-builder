@@ -6,26 +6,17 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, watch } from 'vue';
 
-export default {
-  name: 'WebsitePreview',
-
-  setup() {
-    // router
-    // const router = useRouter();
-    // preview content
-    const htmlPage = ref('');
-    // get preview item from local storage
-    htmlPage.value = localStorage.getItem('preview');
-    // parse
-    htmlPage.value = JSON.parse(htmlPage.value);
-    // join
-    htmlPage.value = htmlPage.value.join('');
-
-    // return
-    return { htmlPage };
-  },
-};
+// router
+// const router = useRouter();
+// preview content
+const htmlPage = ref('');
+// get preview item from local storage
+htmlPage.value = localStorage.getItem('preview');
+// parse
+htmlPage.value = JSON.parse(htmlPage.value);
+// join
+htmlPage.value = htmlPage.value.join('');
 </script>

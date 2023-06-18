@@ -53,8 +53,8 @@ export default {
     element: null,
     component: null,
     components: [],
-    currentDisplayedImage: null,
-    currentClickedImage: null,
+    basePrimaryImage: null,
+    highlightedImage: null,
     fetchedComponents: [],
   },
 
@@ -166,13 +166,13 @@ export default {
     getComponents(state) {
       return state.components;
     },
-    getCurrentClickedImage(state) {
-      return state.currentClickedImage;
+    getHighlightedImage(state) {
+      return state.highlightedImage;
     },
 
     //
-    getCurrentDisplayedImage(state) {
-      return state.currentDisplayedImage;
+    getBasePrimaryImage(state) {
+      return state.basePrimaryImage;
     },
     getFetchedComponents(state) {
       return state.fetchedComponents;
@@ -296,13 +296,13 @@ export default {
       state.components = payload;
     },
 
-    setCurrentClickedImage(state, payload) {
-      state.currentClickedImage = payload;
+    setHighlightedImage(state, payload) {
+      state.highlightedImage = payload;
     },
 
-    setCurrentDisplayedImage(state, payload) {
-      state.component.src = payload;
-      state.currentDisplayedImage = payload;
+    setBasePrimaryImage(state, payload) {
+      state.element.src = payload;
+      state.basePrimaryImage = payload;
     },
     setCurrentLayoutPreview(state, payload) {
       localStorage.setItem('preview', payload);
