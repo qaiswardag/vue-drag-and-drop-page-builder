@@ -12,9 +12,13 @@ const getCurrentClasses = computed(() => {
   return store.getters['designer/getCurrentClasses'];
 });
 
-watch(getCurrentClasses, (newValue) => {
-  currentClasses.value = newValue;
-});
+watch(
+  getCurrentClasses,
+  (newValue) => {
+    currentClasses.value = newValue;
+  },
+  { immediate: true }
+);
 
 const inputClass = ref('');
 </script>

@@ -3,6 +3,8 @@ import Draggable from 'vuedraggable';
 import Designer from '../../composables/Designer';
 import { onMounted, computed, onBeforeMount, ref, watch } from 'vue';
 import DesignerSettings from '../../components/settings/DesignerSettings.vue';
+import DesignerPreviewModal from '../../components/modal/DesignerPreviewModal.vue';
+import Preview from '../designer/Preview.vue';
 import {
   Bars3Icon,
   XMarkIcon,
@@ -12,6 +14,8 @@ import {
   AdjustmentsVerticalIcon,
   Square3Stack3DIcon,
   Squares2X2Icon,
+  XCircleIcon,
+  BoltSlashIcon,
 } from '@heroicons/vue/24/outline';
 import { useStore } from 'vuex';
 import OptionsDropdown from '../../components/dropdowns-and-toggles/OptionsDropdown.vue';
@@ -19,6 +23,8 @@ import RightSidebarEditor from '../../components/designer/editor-menu/RightSideb
 import Spinner from '../../components/loaders/Spinner.vue';
 import ComponentTopMenu from '../../components/designer/editor-menu/editables/ComponentTopMenu.vue';
 import SlideOverRight from '../../components/slidebars/SlideOverRight.vue';
+
+const emit = defineEmits(['previewCurrentDesign']);
 
 const store = useStore();
 const designer = new Designer(store);
@@ -59,6 +65,21 @@ const previewCurrentDesign = function () {
   designer.previewCurrentDesign();
 };
 
+const openDesignerPreviewModal = ref(false);
+const firstDesignerPreviewModalButtonFunction = ref(null);
+
+const handleDesignerPreview = function () {
+  previewCurrentDesign();
+  // set modal standards
+  openDesignerPreviewModal.value = true;
+  // handle click
+  firstDesignerPreviewModalButtonFunction.value = function () {
+    // set open modal
+    openDesignerPreviewModal.value = false;
+  };
+  // end modal
+};
+
 const getFetchedComponents = computed(() => {
   return store.getters['designer/getFetchedComponents'];
 });
@@ -75,7 +96,7 @@ const cloneComponent = function (cloneComponent) {
   return designer.cloneComponent(cloneComponent);
 };
 
-// When HTML component is dropped into the DOM øøø
+// When HTML component is dropped into the DOM
 const onDrop = function (droppedElement, targetIndex, originalEvent) {
   designer.saveComponentsLocalStorage(getComponents.value);
 };
@@ -107,8 +128,8 @@ onMounted(async () => {
   // Load all HTML components
   await store.dispatch('designer/loadComponents');
 
-  // store.commit('designer/setComponent', null);
-  // store.commit('designer/setElement', null);
+  store.commit('designer/setComponent', null);
+  store.commit('designer/setElement', null);
 
   // Rerender `get components` when it is loaded from local storage
   designer.addClickAndHoverEvents();
@@ -116,12 +137,21 @@ onMounted(async () => {
 </script>
 
 <template xmlns="http://www.w3.org/1999/html">
+  <DesignerPreviewModal
+    :show="openDesignerPreviewModal"
+    @firstDesignerPreviewModalButtonFunction="
+      firstDesignerPreviewModalButtonFunction
+    "
+  >
+    <Preview></Preview>
+  </DesignerPreviewModal>
+
   <SlideOverRight
     :open="showSettingsSlideOverRight"
     :title="titleSettingsSlideOverRight"
     @slideOverButton="settingsSlideOverButton"
   >
-    <DesignerSettings></DesignerSettings>
+    <DesignerSettings> </DesignerSettings>
   </SlideOverRight>
   <div
     class="w-full inset-x-0 h-[94vh] lg:pt-0 pt-0-z-10 bg-white overflow-x-scroll"
@@ -154,9 +184,7 @@ onMounted(async () => {
               </div>
             </div>
 
-            <p class="myPrimaryParagraph font-medium pl-4 pt-4 pr-4">
-              COMPONENTS
-            </p>
+            <p class="myPrimaryParagraph font-medium pt-4 pr-4">COMPONENTS</p>
             <ul
               @mouseover.self="store.commit('designer/setMenuPreview', false)"
               class="flex flex-col pt-4 pr-0 pb-0 font-normal h-full overflow-y-auto"
@@ -246,12 +274,19 @@ onMounted(async () => {
 
           <div class="flex items-center justify-center gap-2">
             <div
+              @click="handleDesignerPreview"
+              class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+            >
+              <EyeIcon class="w-5 h-5 m-2 stroke-1.5 cursor-pointer"></EyeIcon>
+            </div>
+            <div
+              v-if="getElement !== null"
               @click="deselectCurrentComponent"
               class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
             >
-              <EyeSlashIcon
+              <BoltSlashIcon
                 class="w-5 h-5 m-2 stroke-1.5 cursor-pointer"
-              ></EyeSlashIcon>
+              ></BoltSlashIcon>
             </div>
             <div
               @click="handleSettingsSlideOver"

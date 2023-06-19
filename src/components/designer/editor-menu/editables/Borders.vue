@@ -180,13 +180,25 @@ const getBorderColor = computed(() => {
   return store.getters['designer/getBorderColor'];
 });
 
-watch(getBorderStyle, (newValue) => {
-  borderStyle.value = newValue;
-});
-watch(getBorderWidth, (newValue) => {
-  borderWidth.value = newValue;
-});
-watch(getBorderColor, (newValue) => {
-  borderColor.value = newValue;
-});
+watch(
+  getBorderStyle,
+  (newValue) => {
+    borderStyle.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getBorderWidth,
+  (newValue) => {
+    borderWidth.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getBorderColor,
+  (newValue) => {
+    borderColor.value = newValue;
+  },
+  { immediate: true }
+);
 </script>

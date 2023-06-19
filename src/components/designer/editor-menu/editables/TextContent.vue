@@ -16,6 +16,10 @@ const getElement = computed(() => {
   return store.getters['designer/getElement'];
 });
 
+const getBasePrimaryImage = computed(() => {
+  return store.getters['designer/getBasePrimaryImage'];
+});
+
 // Default value for showTextArea
 const showTextArea = ref(true);
 
@@ -27,8 +31,6 @@ const getElementInnerHTML = computed(() => {
 // watch and show text area based "get current element" content
 // only show text area if it's include text only plus if containing <br>
 watch(getElementInnerHTML, (newElementInnerHTML) => {
-  showTextArea.value = false;
-
   // stop execution if
   if (typeof newElementInnerHTML !== 'string') {
     return;
@@ -47,7 +49,7 @@ watch(getElementInnerHTML, (newElementInnerHTML) => {
   const containsHTML = ref(/<\/?[a-z][\s\S]*>/i.test(newElementClone.value));
 
   // if test return true, the element is containing html
-  if (containsHTML.value === true) {
+  if (containsHTML.value === true || newElementClone.value.length >= 0) {
     showTextArea.value = false;
   }
   if (containsHTML.value === false) {
@@ -58,18 +60,29 @@ watch(getElementInnerHTML, (newElementInnerHTML) => {
 // text area v-model
 const textContentVueModel = ref('');
 
-watch(textContentVueModel, (newValue) => {
-  store.commit('designer/setTextAreaVueModel', newValue);
-});
+watch(
+  textContentVueModel,
+  (newValue) => {
+    store.commit('designer/setTextAreaVueModel', newValue);
+  },
+  { immediate: true }
+);
 
-watch(getTextAreaVueModel, (newValue) => {
-  textContentVueModel.value = newValue;
-});
+watch(
+  getTextAreaVueModel,
+  (newValue) => {
+    textContentVueModel.value = newValue;
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
   <div
-    v-if="showTextArea === true"
+    v-if="
+      showTextArea === true &&
+      (getBasePrimaryImage === undefined || getBasePrimaryImage === null)
+    "
     class="my-2 pb-8"
   >
     <div class="block px-4 ease-linear duration-200 bg-white">

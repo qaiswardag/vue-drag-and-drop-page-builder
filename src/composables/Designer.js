@@ -23,6 +23,7 @@ class Designer {
      */
     this.elementsWithListeners = new WeakSet();
 
+    this.timer = null;
     this.colors = tailwindColors.backgroundColors();
     this.store = store;
     this.getTextAreaVueModel = computed(
@@ -383,58 +384,12 @@ class Designer {
     this.#updateStyle(userSelectedColor, this.colors, 'setBackgroundColor');
   }
 
-  cloneComponent(cloneComponent) {
-    // Hide slider and right menu
-    this.store.commit('designer/setMenuPreview', false);
-
-    this.store.commit('designer/setMenuRight', false);
-
-    // Deep clone clone component
-    const clonedComponent = { ...cloneComponent };
-
-    // Add unique ID to each tag in clonedComponent's HTML
-
-    // Create a DOMParser instance
-    const parser = new DOMParser();
-
-    // Parse the HTML content of the clonedComponent using the DOMParser
-    const doc = parser.parseFromString(clonedComponent.html, 'text/html');
-
-    // Select all elements within the parsed HTML
-    const elements = doc.querySelectorAll('*');
-
-    // // Iterate through each element
-    // elements.forEach((element) => {
-    //   // Generate a unique ID using uuidv4()
-    //   const uniqueId = uuidv4();
-
-    //   // Add the unique ID as a dataset attribute to the element
-    //   element.dataset.uniqid = uniqueId;
-    // });
-
-    // Add the component id to the section element
-    const section = doc.querySelector('section');
-    if (section) {
-      section.dataset.componentid = cloneComponent.id;
-    }
-
-    // Update the HTML content of the clonedComponent with the modified HTML
-    clonedComponent.html = doc.querySelector('section').outerHTML;
-
-    // return to the cloned element to be dropped
-    return clonedComponent;
-  }
-
   //
   //
   //
   //
   saveComponentsLocalStorage(components) {
-    // wait for components to be added to DOM
-    setTimeout(() => {
-      // save design
-      localStorage.setItem('savedCurrentDesign', JSON.stringify(components));
-    }, 100);
+    localStorage.setItem('savedCurrentDesign', JSON.stringify(components));
   }
 
   //
@@ -534,9 +489,110 @@ class Designer {
   //
   //
   //
+  saveCurrentDesignWithTimer = () => {
+    setTimeout(() => {
+      this.saveCurrentDesign();
+      console.log('CURRENT DESIGN SAVED.');
+    }, 1000);
+
+    //
+    //
+    //
+    //
+    //
+    // if (this.timer) {
+    //   clearTimeout(this.timer);
+    // }
+
+    // this.timer = setTimeout(() => {
+    //   console.log('CURRENT DESIGN SAVED.');
+    //   this.saveCurrentDesign();
+
+    //   this.saveCurrentDesignWithTimer();
+    // }, 1000);
+  };
+
+  saveCurrentDesign = async () => {
+    if (document.querySelector('[hovered]') !== null) {
+      document.querySelector('[hovered]').removeAttribute('hovered');
+    }
+
+    this.addClickAndHoverEvents();
+    this.getComponents.value.forEach((component) => {
+      const section = document.querySelector(
+        `section[data-componentid="${component.id}"]`
+      );
+
+      if (section) {
+        component.html = section.outerHTML;
+      }
+    });
+    this.saveComponentsLocalStorage(this.getComponents.value);
+
+    // Initialize the MutationObserver
+    this.observer = new MutationObserver((mutationsList, observer) => {
+      // Once we have seen a mutation, stop observing and resolve the promise
+      observer.disconnect();
+    });
+
+    // Start observing the document with the configured parameters
+    this.observer.observe(document, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+
+    // Use the MutationObserver to wait for the next DOM change
+    await new Promise((resolve) => {
+      resolve();
+    });
+
+    // This will be executed after the DOM has been updated
+    this.store.commit(
+      'designer/setElement',
+      document.querySelector('[selected]')
+    );
+
+    this.addClickAndHoverEvents();
+  };
+
   //
   //
-  //
+  cloneComponent(cloneComponent) {
+    this.saveCurrentDesignWithTimer();
+    // Hide slider and right menu
+    this.store.commit('designer/setMenuPreview', false);
+    this.store.commit('designer/setMenuRight', false);
+
+    // Deep clone clone component
+    const clonedComponent = { ...cloneComponent };
+
+    // Create a DOMParser instance
+    const parser = new DOMParser();
+
+    // Parse the HTML content of the clonedComponent using the DOMParser
+    const doc = parser.parseFromString(clonedComponent.html, 'text/html');
+
+    // Select all elements within the parsed HTML
+    const elements = doc.querySelectorAll('*');
+
+    // Add the component id to the section element
+    const section = doc.querySelector('section');
+    if (section) {
+      // Generate a unique ID using uuidv4() and assign it to the section
+      section.dataset.componentid = uuidv4();
+    }
+
+    // Update the clonedComponent id with the newly generated unique ID
+    clonedComponent.id = section.dataset.componentid;
+
+    // Update the HTML content of the clonedComponent with the modified HTML
+    clonedComponent.html = doc.querySelector('section').outerHTML;
+
+    // return to the cloned element to be dropped
+    return clonedComponent;
+  }
+
   //
   //
   //
@@ -657,27 +713,6 @@ class Designer {
     addedHtmlComponents.value = [];
 
     //
-    this.saveCurrentDesign();
-  }
-  saveCurrentDesign() {
-    if (document.querySelector('[hovered]') !== null) {
-      document.querySelector('[hovered]').removeAttribute('hovered');
-    }
-
-    if (document.querySelector('[selected]') !== null) {
-      document.querySelector('[selected]').removeAttribute('selected');
-    }
-
-    this.getComponents.value.forEach((component) => {
-      const section = document.querySelector(
-        `section[data-componentid="${component.id}"]`
-      );
-
-      if (section) {
-        component.html = section.outerHTML;
-      }
-    });
-    this.saveComponentsLocalStorage(this.getComponents.value);
   }
 
   areComponentsStoredInLocalStorage() {
@@ -698,6 +733,7 @@ class Designer {
       this.getHighlightedImage.value &&
       this.getHighlightedImage.value.file !== null
     ) {
+      this.handleDesignerMethods();
       this.store.commit(
         'designer/setBasePrimaryImage',
         this.getHighlightedImage.value.file
@@ -729,6 +765,7 @@ class Designer {
     if (this.getElement.value === null) return;
 
     // save current design
+    this.saveCurrentDesignWithTimer();
 
     // invoke methods
     // displayed image

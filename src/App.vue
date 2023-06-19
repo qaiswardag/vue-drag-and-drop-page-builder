@@ -77,13 +77,7 @@ const store = useStore();
 
 // set backend current user
 store.commit('user/setUser', {
-  name: 'Joe Doe',
-  email: 'joe@apple.com',
-});
-
-// set backend current user
-store.commit('user/setUser', {
-  name: 'Joe Doe',
+  name: 'John Doe',
   email: 'joe@apple.com',
 });
 
@@ -145,7 +139,9 @@ const handleDesigner = function () {
       Vue.js drag-and-drop page builder.
       <br />
       Contact me to request access to the code. You can reach me through
-      <a class="text-myPrimaryLinkColor" href="mailto:qais.wardag@outlook.com"
+      <a
+        class="text-myPrimaryLinkColor"
+        href="mailto:qais.wardag@outlook.com"
         >Email</a
       >
       or
@@ -158,7 +154,10 @@ const handleDesigner = function () {
     </p>
     <div class="flex justify-center gap-2 my-8">
       <div>
-        <button @click="handleDesigner" class="myPrimaryButton">
+        <button
+          @click="handleDesigner"
+          class="myPrimaryButton"
+        >
           Start Designer
         </button>
       </div>
@@ -173,7 +172,10 @@ const handleDesigner = function () {
       </div>
     </div>
   </div>
-  <FullWidthElement :descriptionArea="true" class="bg-red-50">
+  <FullWidthElement
+    :descriptionArea="true"
+    class="bg-red-50"
+  >
     <template #title>All-in-one Designer</template>
     <template #description>
       <span class="block">
@@ -184,7 +186,10 @@ const handleDesigner = function () {
       </span>
       <div class="flex justify-start gap-2 my-8">
         <div>
-          <button @click="handleDesigner" class="myPrimaryButton">
+          <button
+            @click="handleDesigner"
+            class="myPrimaryButton"
+          >
             Start Designer
           </button>
         </div>
@@ -247,7 +252,10 @@ const handleDesigner = function () {
     </template>
   </FullWidthElement>
 
-  <FullWidthElement :descriptionArea="true" class="bg-red-50">
+  <FullWidthElement
+    :descriptionArea="true"
+    class="bg-red-50"
+  >
     <template #title>Frequently asked questions</template>
     <template #description>
       Power your vision and build impressive pages with ease using an intuitive
@@ -275,11 +283,18 @@ const handleDesigner = function () {
                     class="h-5 w-5"
                     aria-hidden="true"
                   />
-                  <MinusSmallIcon v-else class="h-5 w-5" aria-hidden="true" />
+                  <MinusSmallIcon
+                    v-else
+                    class="h-5 w-5"
+                    aria-hidden="true"
+                  />
                 </span>
               </DisclosureButton>
             </dt>
-            <DisclosurePanel as="dd" class="mt-2 pr-12 pb-16">
+            <DisclosurePanel
+              as="dd"
+              class="mt-2 pr-12 pb-16"
+            >
               <p class="myPrimaryParagraph">
                 {{ faq.answer }}
               </p>
@@ -315,7 +330,10 @@ const handleDesigner = function () {
     <div
       class="flex justify-center space-x-6 md:order-2 text-gray-600 hover:text-gray-700"
     >
-      <a href="https://github.com/qaiswardag" target="_blank">
+      <a
+        href="https://github.com/qaiswardag"
+        target="_blank"
+      >
         <span class="sr-only">GitHub</span>
         <svg
           class="h-6 w-6"

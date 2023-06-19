@@ -141,16 +141,32 @@ const getFontHorizontalMargin = computed(() => {
   return store.getters['designer/getFontHorizontalMargin'];
 });
 
-watch(getFontVerticalPadding, (newValue) => {
-  fontVerticalPadding.value = newValue;
-});
-watch(getFontHorizontalPadding, (newValue) => {
-  fontHorizontalPadding.value = newValue;
-});
-watch(getFontVerticalMargin, (newValue) => {
-  fontVerticalMargin.value = newValue;
-});
-watch(getFontHorizontalMargin, (newValue) => {
-  fontHorizontalMargin.value = newValue;
-});
+watch(
+  getFontVerticalPadding,
+  (newValue) => {
+    fontVerticalPadding.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getFontHorizontalPadding,
+  (newValue) => {
+    fontHorizontalPadding.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getFontVerticalMargin,
+  (newValue) => {
+    fontVerticalMargin.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getFontHorizontalMargin,
+  (newValue) => {
+    fontHorizontalMargin.value = newValue;
+  },
+  { immediate: true }
+);
 </script>

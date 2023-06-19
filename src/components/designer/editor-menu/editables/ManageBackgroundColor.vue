@@ -101,11 +101,14 @@ const designer = new Designer(store);
 
 <template>
   <div class="mt-6 pt-4 pb-8">
-    <label for="meta_title" class="myPrimaryInputLabel">
+    <label
+      for="meta_title"
+      class="myPrimaryInputLabel"
+    >
       Current Background:
     </label>
     <div
-      class="flex flex-row justify-start items-center myPrimaryGap mt-4 py-2.5 px-2 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+      class="flex flex-row justify-between items-center myPrimaryGap mt-4 py-2.5 px-3 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
     >
       <div class="relative flex items-center w-full py-0 p-0">
         <div class="flex items-center gap-2 justify-start">
@@ -132,10 +135,16 @@ const designer = new Designer(store);
               ></XMarkIcon>
             </div>
           </div>
-          <p v-if="getBackgroundColorCustom" class="myPrimaryParagraph">
+          <p
+            v-if="getBackgroundColorCustom"
+            class="myPrimaryParagraph"
+          >
             {{ getBackgroundColorCustomHex }}
           </p>
-          <p v-if="!getBackgroundColorCustom" class="myPrimaryParagraph">
+          <p
+            v-if="!getBackgroundColorCustom"
+            class="myPrimaryParagraph"
+          >
             {{ getBackgroundColor === 'none' ? 'None' : getBackgroundColor }}
           </p>
         </div>
@@ -181,12 +190,18 @@ const designer = new Designer(store);
               @click="handleRemoveTag"
               class="flex flex-wrap justify-center items-center gap-2 myPrimaryTag py-3 my-0 w-full hover:bg-red-500 cursor-pointer text-center"
             >
-              <template v-for="color in selectedHEXColor" :key="color">
+              <template
+                v-for="color in selectedHEXColor"
+                :key="color"
+              >
                 <div
                   :data-color="color"
                   class="flex flex-wrap justify-center items-center gap-2"
                 >
-                  <p class="w-full text-xs" :data-color="color">
+                  <p
+                    class="w-full text-xs"
+                    :data-color="color"
+                  >
                     {{ color }}
                   </p>
                 </div>

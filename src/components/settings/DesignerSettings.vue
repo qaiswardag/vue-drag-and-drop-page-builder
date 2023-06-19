@@ -16,6 +16,10 @@ const handleAdvancedSettingsSlideOver = function () {
 const settingsAdvancedSlideOverButton = function () {
   showAdvancedSettingsSlideOverRight.value = false;
 };
+
+const handleDownloadPageLayout = function () {
+  console.log('download page');
+};
 </script>
 
 <template>
@@ -26,11 +30,27 @@ const settingsAdvancedSlideOverButton = function () {
   >
     <AdvancedDesignerSettings></AdvancedDesignerSettings>
   </SlideOverRightParent>
+  <!-- Download Layout layout - start -->
+  <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
+    <div class="flex items-left flex-col gap-1">
+      <h3 class="myFourthHeader">Download Layout</h3>
+      <p class="myPrimaryParagraph text-xs">Download current page layout.</p>
+    </div>
+    <div class="mt-4">
+      <button
+        @click="handleDownloadPageLayout"
+        type="button"
+        class="myPrimaryButton text-xs"
+      >
+        Preview Page
+      </button>
+    </div>
+  </div>
+  <!-- Download Layout - end -->
+
   <!-- Advanced Settings - start -->
-  <div class="my-8">
-    <div
-      class="flex items-left flex-col myPrimaryGap border-myPrimaryMediumGrayColor"
-    >
+  <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
+    <div class="flex items-left flex-col gap-1">
       <h3 class="myFourthHeader">Advanced Settings</h3>
       <p class="myPrimaryParagraph text-xs">
         Manage advanced settings here. Like an overview of Selected Element,

@@ -2,19 +2,25 @@
   <EditorAccordion>
     <template #title>Color settings</template>
     <template #content>
-      <div @click="handleColorsSlideOver" class="mb-2">
+      <div
+        @click="handleColorsSlideOver"
+        class="mb-2"
+      >
         <div class="pt-0 pb-0 mb-6">
-          <label for="meta_title" class="myPrimaryInputLabel">
+          <label
+            for="meta_title"
+            class="myPrimaryInputLabel"
+          >
             Background:
           </label>
           <div
-            class="flex flex-row justify-start items-center myPrimaryGap mt-4 py-2.5 px-2 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+            class="flex flex-row justify-between items-center myPrimaryGap mt-4 py-2.5 px-3 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
           >
             <div class="relative flex items-center w-full py-0 p-0">
               <div class="flex items-center gap-2 justify-start">
                 <div
                   v-if="getBackgroundColor !== 'none'"
-                  class="myPrimaryColorPreview w-6 h-6 cursor-default"
+                  class="myPrimaryColorPreview w-6 h-6 cursor-pointer"
                   :class="[getBackgroundColor]"
                   :style="{ backgroundColor: getBackgroundColorCustom }"
                 ></div>
@@ -35,10 +41,16 @@
                     ></XMarkIcon>
                   </div>
                 </div>
-                <p v-if="getBackgroundColorCustom" class="myPrimaryParagraph">
+                <p
+                  v-if="getBackgroundColorCustom"
+                  class="myPrimaryParagraph"
+                >
                   {{ getBackgroundColorCustomHex }}
                 </p>
-                <p v-if="!getBackgroundColorCustom" class="myPrimaryParagraph">
+                <p
+                  v-if="!getBackgroundColorCustom"
+                  class="myPrimaryParagraph"
+                >
                   {{
                     getBackgroundColor === 'none' ? 'None' : getBackgroundColor
                   }}

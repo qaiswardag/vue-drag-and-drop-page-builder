@@ -175,19 +175,39 @@ const getBorderRadiusBottomRight = computed(() => {
   return store.getters['designer/getBorderRadiusBottomRight'];
 });
 
-watch(getBorderRadiusGlobal, (newValue) => {
-  borderRadiusGlobal.value = newValue;
-});
-watch(getBorderRadiusTopLeft, (newValue) => {
-  borderRadiusTopLeft.value = newValue;
-});
-watch(getBorderRadiusTopRight, (newValue) => {
-  borderRadiusTopRight.value = newValue;
-});
-watch(getBorderRadiusBottomleft, (newValue) => {
-  borderRadiusBottomleft.value = newValue;
-});
-watch(getBorderRadiusBottomRight, (newValue) => {
-  borderRadiusBottomRight.value = newValue;
-});
+watch(
+  getBorderRadiusGlobal,
+  (newValue) => {
+    borderRadiusGlobal.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getBorderRadiusTopLeft,
+  (newValue) => {
+    borderRadiusTopLeft.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getBorderRadiusTopRight,
+  (newValue) => {
+    borderRadiusTopRight.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getBorderRadiusBottomleft,
+  (newValue) => {
+    borderRadiusBottomleft.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getBorderRadiusBottomRight,
+  (newValue) => {
+    borderRadiusBottomRight.value = newValue;
+  },
+  { immediate: true }
+);
 </script>

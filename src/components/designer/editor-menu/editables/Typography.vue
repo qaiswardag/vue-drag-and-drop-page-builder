@@ -40,27 +40,55 @@ const getFontStyle = computed(() => {
   return store.getters['designer/getFontStyle'];
 });
 
-watch(getFontBase, (newValue) => {
-  fontBase.value = newValue;
-});
-watch(getFontDesktop, (newValue) => {
-  fontDesktop.value = newValue;
-});
-watch(getFontTablet, (newValue) => {
-  fontTablet.value = newValue;
-});
-watch(getFontMobile, (newValue) => {
-  fontMobile.value = newValue;
-});
-watch(getFontWeight, (newValue) => {
-  fontWeight.value = newValue;
-});
-watch(getFontFamily, (newValue) => {
-  fontFamily.value = newValue;
-});
-watch(getFontStyle, (newValue) => {
-  fontStyle.value = newValue;
-});
+watch(
+  getFontBase,
+  (newValue) => {
+    fontBase.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getFontDesktop,
+  (newValue) => {
+    fontDesktop.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getFontTablet,
+  (newValue) => {
+    fontTablet.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getFontMobile,
+  (newValue) => {
+    fontMobile.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getFontWeight,
+  (newValue) => {
+    fontWeight.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getFontFamily,
+  (newValue) => {
+    fontFamily.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getFontStyle,
+  (newValue) => {
+    fontStyle.value = newValue;
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
@@ -70,13 +98,23 @@ watch(getFontStyle, (newValue) => {
       <!-- FONT SIZES -->
       <p class="myPrimaryParagraph font-medium py-0 my-4">Font sizes</p>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel"> Font Base </label>
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
+          Font Base
+        </label>
         <select
           v-model="fontBase"
           class="myPrimarySelect"
           @change="designer.handleFontSize(fontBase)"
         >
-          <option disabled value="">Select</option>
+          <option
+            disabled
+            value=""
+          >
+            Select
+          </option>
           <option
             v-for="fontSize in tailwindFontSizes.fontBase"
             :key="fontSize"
@@ -86,7 +124,10 @@ watch(getFontStyle, (newValue) => {
         </select>
       </div>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel">
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
           Font desktop size
         </label>
         <select
@@ -94,7 +135,12 @@ watch(getFontStyle, (newValue) => {
           class="myPrimarySelect"
           @change="designer.handleFontSize(fontDesktop)"
         >
-          <option disabled value="">Select</option>
+          <option
+            disabled
+            value=""
+          >
+            Select
+          </option>
           <option
             v-for="fontSize in tailwindFontSizes.fontDesktop"
             :key="fontSize"
@@ -104,7 +150,10 @@ watch(getFontStyle, (newValue) => {
         </select>
       </div>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel">
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
           Font tablet size
         </label>
         <select
@@ -112,7 +161,12 @@ watch(getFontStyle, (newValue) => {
           class="myPrimarySelect"
           @change="designer.handleFontSize(fontTablet)"
         >
-          <option disabled value="">Select</option>
+          <option
+            disabled
+            value=""
+          >
+            Select
+          </option>
           <option
             v-for="fontSize in tailwindFontSizes.fontTablet"
             :key="fontSize"
@@ -122,7 +176,10 @@ watch(getFontStyle, (newValue) => {
         </select>
       </div>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel">
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
           Font mobile size
         </label>
         <select
@@ -130,7 +187,12 @@ watch(getFontStyle, (newValue) => {
           class="myPrimarySelect"
           @change="designer.handleFontSize(fontMobile)"
         >
-          <option disabled value="">Select</option>
+          <option
+            disabled
+            value=""
+          >
+            Select
+          </option>
           <option
             v-for="fontSize in tailwindFontSizes.fontMobile"
             :key="fontSize"
@@ -142,7 +204,10 @@ watch(getFontStyle, (newValue) => {
       <hr />
       <p class="myPrimaryParagraph font-medium py-0 my-4">Font general</p>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel">
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
           Font weight
         </label>
         <select
@@ -150,7 +215,12 @@ watch(getFontStyle, (newValue) => {
           class="myPrimarySelect"
           @change="designer.handleFontWeight(fontWeight)"
         >
-          <option disabled value="">Select</option>
+          <option
+            disabled
+            value=""
+          >
+            Select
+          </option>
           <option
             v-for="fontWeight in tailwindFontStyles.fontWeight"
             :key="fontWeight"
@@ -160,7 +230,10 @@ watch(getFontStyle, (newValue) => {
         </select>
       </div>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel">
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
           Font family
         </label>
         <select
@@ -168,7 +241,12 @@ watch(getFontStyle, (newValue) => {
           class="myPrimarySelect"
           @change="designer.handleFontFamily(fontFamily)"
         >
-          <option disabled value="">Select</option>
+          <option
+            disabled
+            value=""
+          >
+            Select
+          </option>
           <option
             v-for="fontFamily in tailwindFontStyles.fontFamily"
             :key="fontFamily"
@@ -178,13 +256,23 @@ watch(getFontStyle, (newValue) => {
         </select>
       </div>
       <div class="mb-4">
-        <label for="meta_title" class="myPrimaryInputLabel"> Font Style </label>
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
+          Font Style
+        </label>
         <select
           v-model="fontStyle"
           class="myPrimarySelect"
           @change="designer.handleFontStyle(fontStyle)"
         >
-          <option disabled value="">Select</option>
+          <option
+            disabled
+            value=""
+          >
+            Select
+          </option>
           <option
             v-for="fontStyle in tailwindFontStyles.fontStyle"
             :key="fontStyle"
