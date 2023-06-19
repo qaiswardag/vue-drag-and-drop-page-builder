@@ -33,7 +33,7 @@ const handleDownloadPageLayout = function () {
   <!-- Download Layout layout - start -->
   <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
     <div class="flex items-left flex-col gap-1">
-      <h3 class="myFourthHeader">Download Layout</h3>
+      <h3 class="myFourthHeader">Download Page HTML</h3>
       <p class="myPrimaryParagraph text-xs">Download current page layout.</p>
     </div>
     <div class="mt-4">
@@ -42,7 +42,7 @@ const handleDownloadPageLayout = function () {
         type="button"
         class="myPrimaryButton text-xs"
       >
-        Preview Page
+        Download Page
       </button>
     </div>
   </div>
