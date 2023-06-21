@@ -28,7 +28,10 @@ const firstButton = function () {
 
 <template>
   <teleport to="body">
-    <TransitionRoot :show="show" as="template">
+    <TransitionRoot
+      :show="show"
+      as="template"
+    >
       <Dialog
         as="div"
         class="fixed z-30 inset-0 overflow-y-auto"
@@ -71,14 +74,13 @@ const firstButton = function () {
               class="inline-block align-bottom text-left transform transition-all sm:align-middle w-full overflow-hidden h-[100vh] top-0 left-0 right-0 absolute"
             >
               <div
-                class="flex items-center justify-between px-4 bg-white h-[6vh]"
+                class="px-6 h-[6vh] flex items-center justify-between bg-gray-50"
               >
-                <p
-                  class="-m-1.5 p-1.5 myPrimaryParagraph text-2xl sm:text-3xl font-semibold text-black cursor-pointer"
-                >
-                  <span class="sr-only">myself</span>
-                  myself
-                </p>
+                <img
+                  class="h-6"
+                  src="/public/logo-myissue.svg"
+                  alt="Logo"
+                />
                 <div
                   @click="firstButton"
                   class="flex items-center justify-center gap-1 cursor-pointer hover:underline"

@@ -107,21 +107,21 @@ const handleDesigner = function () {
     <Designer></Designer>
   </DesignerModal>
   <nav
-    class="mx-auto flex items-center justify-between p-6 lg:px-8 bg-black"
+    class="px-6 h-[6vh] fixed inset-0 mx-auto flex items-center justify-between bg-gray-50"
     aria-label="Global"
   >
-    <a
-      href="/"
-      class="-m-1.5 p-1.5 myPrimaryParagraph text-2xl sm:text-3xl font-semibold text-white"
-    >
-      <span class="sr-only">myself</span>
-      myself
+    <a href="/">
+      <img
+        class="h-6"
+        src="/public/logo-myissue.svg"
+        alt="Logo"
+      />
     </a>
 
     <div class="flex lg:gap-x-12 myPrimaryGap">
       <p
         @click="handleDesigner"
-        class="text-sm font-medium text-white flex gap-2 items-center cursor-pointer"
+        class="text-sm font-medium text-myPrimaryDarkGrayColor flex gap-2 items-center cursor-pointer"
       >
         Start Designer
       </p>
@@ -303,7 +303,7 @@ const handleDesigner = function () {
         </dl>
         <img
           class="w-full object-cover lg:col-span-8"
-          src="https://static.wixstatic.com/media/ea1602_193267bbb2eb4bbf90bd566f2e5406ab~mv2.png/v1/fill/w_1920,h_1076,al_c,q_95,enc_auto/respo_main.png"
+          src="https://tailwindcss.com/_next/static/media/classic-utility-jacket.82031370.jpg"
           alt="image"
         />
       </div>

@@ -323,7 +323,7 @@ onMounted(async () => {
           <template #item="{ element }">
             <div
               @mouseup="store.commit('designer/setComponent', element)"
-              class="relative overflow-hidden group"
+              class="relative group"
             >
               <ComponentTopMenu></ComponentTopMenu>
               <section v-html="element.html"></section>
