@@ -494,22 +494,6 @@ class Designer {
       this.saveCurrentDesign();
       console.log('CURRENT DESIGN SAVED.');
     }, 1000);
-
-    //
-    //
-    //
-    //
-    //
-    // if (this.timer) {
-    //   clearTimeout(this.timer);
-    // }
-
-    // this.timer = setTimeout(() => {
-    //   console.log('CURRENT DESIGN SAVED.');
-    //   this.saveCurrentDesign();
-
-    //   this.saveCurrentDesignWithTimer();
-    // }, 1000);
   };
 
   saveCurrentDesign = async () => {
@@ -676,12 +660,17 @@ class Designer {
       );
     }
   }
+
   changeText() {
     if (this.getTextAreaVueModel.value !== null) {
-      const textContentElementClone = this.getTextAreaVueModel.value.replaceAll(
-        /\n/g,
+      let textContentElementClone = this.getTextAreaVueModel.value;
+
+      // Replace newline characters with <br> tags
+      textContentElementClone = textContentElementClone.replaceAll(
+        /[\r\n]+/g,
         '<br>'
       );
+
       // text change
       this.getElement.value.innerHTML = textContentElementClone;
       this.store.commit('designer/setElement', this.getElement.value);

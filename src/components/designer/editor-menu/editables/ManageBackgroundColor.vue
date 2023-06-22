@@ -62,7 +62,6 @@ const getEnabledCustomColorBG = computed(() => {
 watch(getEnabledCustomColorBG, (newValue) => {
   // remove inline custom style color
   if (newValue === true) {
-    console.log('skal være true');
     enabledCustomColor.value = true;
   }
   if (newValue === false) {

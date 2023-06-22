@@ -303,7 +303,7 @@ const handleDesigner = function () {
         </dl>
         <img
           class="w-full object-cover lg:col-span-8"
-          src="https://tailwindcss.com/_next/static/media/classic-utility-jacket.82031370.jpg"
+          src="public/images/myissue-deisgner-cover.jpg"
           alt="image"
         />
       </div>

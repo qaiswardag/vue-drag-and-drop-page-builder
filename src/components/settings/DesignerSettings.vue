@@ -18,7 +18,7 @@ const settingsAdvancedSlideOverButton = function () {
 };
 
 const handleDownloadPageLayout = function () {
-  console.log('download page');
+  //
 };
 </script>
 

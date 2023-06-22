@@ -97,7 +97,7 @@ watch(
         v-model="textContentVueModel"
         rows="12"
         class="myPrimaryTextArea"
-        @input="designer.changeText"
+        @keypress="designer.changeText"
       />
     </div>
   </div>
