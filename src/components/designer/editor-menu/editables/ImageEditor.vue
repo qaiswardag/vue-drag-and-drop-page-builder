@@ -1,7 +1,4 @@
 <template>
-  <p class="py-4">
-    getBasePrimaryImage er: {{ JSON.stringify(getBasePrimaryImage) }}
-  </p>
   <div v-if="getBasePrimaryImage !== null">
     <img
       class="object-cover object-center w-full"
