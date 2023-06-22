@@ -165,7 +165,7 @@ const handleDesigner = function () {
       <div>
         <a
           class="myPrimaryButton"
-          href="https://www.myself.myissue.io"
+          href="https://www.admin.myissue.io"
           target="_blank"
           >Try Admin Panel</a
         >
@@ -197,7 +197,7 @@ const handleDesigner = function () {
         <div>
           <a
             class="myPrimaryButton"
-            href="https://www.myself.myissue.io"
+            href="https://www.admin.myissue.io"
             target="_blank"
             >Try Admin Panel</a
           >
