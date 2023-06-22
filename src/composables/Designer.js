@@ -4,7 +4,7 @@ import tailwindFontStyles from '../utils/tailwind-font-styles';
 import tailwindPaddingAndMargin from '../utils/tailwind-padding-margin';
 import tailwindBorderRadius from '../utils/tailwind-border-radius';
 import tailwindBorderStyleWidthPlusColor from '../utils/tailwind-border-style-width-color';
-import { computed, ref } from 'vue';
+import { computed, ref, nextTick } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 
 class Designer {
@@ -22,6 +22,7 @@ class Designer {
      * This helps in managing the memory usage and performance of the application.
      */
     this.elementsWithListeners = new WeakSet();
+    this.nextTick = nextTick();
 
     this.timer = null;
     this.colors = tailwindColors.backgroundColors();
@@ -661,7 +662,9 @@ class Designer {
     }
   }
 
-  changeText() {
+  async changeText() {
+    await this.nextTick;
+
     if (this.getTextAreaVueModel.value !== null) {
       let textContentElementClone = this.getTextAreaVueModel.value;
 
@@ -742,10 +745,10 @@ class Designer {
       // Return the source of the only img
 
       this.store.commit('designer/setBasePrimaryImage', imgElements[0].src);
+      return;
     }
-    if (imgElements.length !== 1) {
-      this.store.commit('designer/setBasePrimaryImage', null);
-    }
+
+    this.store.commit('designer/setBasePrimaryImage', null);
   }
 
   handleDesignerMethods() {

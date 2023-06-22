@@ -1,8 +1,6 @@
 <script setup>
-import { watch } from 'vue';
-import { ref } from 'vue';
+import { watch, ref, computed } from 'vue';
 import { useStore } from 'vuex';
-import { computed } from 'vue'; // store
 import Designer from '../../../../composables/Designer';
 
 const store = useStore();
@@ -79,10 +77,7 @@ watch(
 
 <template>
   <div
-    v-if="
-      showTextArea === true &&
-      (getBasePrimaryImage === undefined || getBasePrimaryImage === null)
-    "
+    v-if="showTextArea === true && getBasePrimaryImage === null"
     class="my-2 pb-8"
   >
     <div class="block px-4 ease-linear duration-200 bg-white">
@@ -97,7 +92,7 @@ watch(
         v-model="textContentVueModel"
         rows="12"
         class="myPrimaryTextArea"
-        @keypress="designer.changeText"
+        @input="designer.changeText()"
       />
     </div>
   </div>

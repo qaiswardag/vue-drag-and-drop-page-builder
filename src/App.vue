@@ -107,7 +107,7 @@ const handleDesigner = function () {
     <Designer></Designer>
   </DesignerModal>
   <nav
-    class="px-6 h-[6vh] fixed inset-0 mx-auto flex items-center justify-between bg-gray-50"
+    class="px-6 py-6 mx-auto flex items-center justify-between bg-gray-50"
     aria-label="Global"
   >
     <a href="/">

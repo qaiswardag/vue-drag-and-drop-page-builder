@@ -1,26 +1,26 @@
 <template>
-  <img
-    v-if="getBasePrimaryImage !== undefined && getBasePrimaryImage !== null"
-    class="object-cover object-center w-full"
-    :src="getBasePrimaryImage"
-    @click="updateImage"
-    alt="image"
-  />
-
-  <div
-    v-if="getBasePrimaryImage !== undefined && getBasePrimaryImage !== null"
-    class="my-4 px-4"
-  >
-    <button
+  <p class="py-4">
+    getBasePrimaryImage er: {{ JSON.stringify(getBasePrimaryImage) }}
+  </p>
+  <div v-if="getBasePrimaryImage !== null">
+    <img
+      class="object-cover object-center w-full"
+      :src="getBasePrimaryImage"
       @click="updateImage"
-      type="button"
-      class="myPrimaryButton gap-2 items-center w-full"
-    >
-      <PhotoIcon class="w-4 h-4 stroke-2"></PhotoIcon>
-      Update image
-    </button>
-  </div>
+      alt="image"
+    />
 
+    <div class="my-4 px-4">
+      <button
+        @click="updateImage"
+        type="button"
+        class="myPrimaryButton gap-2 items-center w-full"
+      >
+        <PhotoIcon class="w-4 h-4 stroke-2"></PhotoIcon>
+        Update image
+      </button>
+    </div>
+  </div>
   <MediaLibraryModal
     :open="showMediaModal"
     :title="titleMedia"
