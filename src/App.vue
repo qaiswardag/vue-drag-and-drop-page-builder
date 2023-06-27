@@ -113,7 +113,7 @@ const handleDesigner = function () {
     <a href="/">
       <img
         class="h-6"
-        src="/public/logo-myissue.svg"
+        src="/logo-myissue.svg"
         alt="Logo"
       />
     </a>
@@ -138,6 +138,16 @@ const handleDesigner = function () {
       Power your vision and build impressive pages with ease using an intuitive
       Vue.js drag-and-drop page builder.
       <br />
+      Feel free to visit my
+      <a
+        class="text-myPrimaryLinkColor"
+        href="https://github.com/qaiswardag"
+        target="_blank"
+        >GitHub</a
+      >
+      profile for more information.
+      <br />
+
       Contact me to request access to the code. You can reach me through
       <a
         class="text-myPrimaryLinkColor"
@@ -147,10 +157,10 @@ const handleDesigner = function () {
       or
       <a
         class="text-myPrimaryLinkColor"
-        href="https://www.linkedin.com/in/qaiswardag"
+        href="https://www.linkedin.com/in/qaiswardag/"
         target="_blank"
-        >LinkedIn.</a
-      >
+        >LinkedIn</a
+      >.
     </p>
     <div class="flex justify-center gap-2 my-8">
       <div>
@@ -224,7 +234,7 @@ const handleDesigner = function () {
           >
             <dt class="myFourthHeader">
               <CheckIcon
-                class="absolute left-0 top-1 h-5 w-5 text-indigo-500"
+                class="absolute left-0 top-1 h-5 w-5 text-myPrimaryBrandColor"
                 aria-hidden="true"
               />
               {{ feature.name }}

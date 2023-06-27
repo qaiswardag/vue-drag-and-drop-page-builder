@@ -78,7 +78,7 @@ const firstButton = function () {
               >
                 <img
                   class="h-6"
-                  src="/public/logo-myissue.svg"
+                  src="/logo-myissue.svg"
                   alt="Logo"
                 />
                 <div

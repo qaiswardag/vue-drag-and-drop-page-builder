@@ -1,4 +1,5 @@
 import tailwindColors from '../utils/tailwaind-colors';
+import tailwindOpacities from '../utils/tailwind-opacities';
 import tailwindFontSizes from '../utils/tailwind-font-sizes';
 import tailwindFontStyles from '../utils/tailwind-font-styles';
 import tailwindPaddingAndMargin from '../utils/tailwind-padding-margin';
@@ -53,28 +54,37 @@ class Designer {
     );
   }
   #updateStyle(selectedCSS, CSSArray, mutationName) {
-    let currentCSS = CSSArray.find((CSS) => {
+    const currentCSS = CSSArray.find((CSS) => {
       return this.getElement.value.classList.contains(CSS);
     });
 
-    currentCSS = currentCSS || 'none'; // set to 'none' if undefined
+    let elementClass = currentCSS || 'none'; // set to 'none' if undefined
 
-    this.store.commit(`designer/${mutationName}`, currentCSS);
+    this.store.commit(`designer/${mutationName}`, elementClass);
 
-    if (selectedCSS && selectedCSS !== 'none') {
-      if (currentCSS && this.getElement.value.classList.contains(currentCSS)) {
-        this.getElement.value.classList.remove(currentCSS);
+    if (typeof selectedCSS === 'string' && selectedCSS !== 'none') {
+      if (
+        elementClass &&
+        this.getElement.value.classList.contains(elementClass)
+      ) {
+        this.getElement.value.classList.remove(elementClass);
       }
 
       this.getElement.value.classList.add(selectedCSS);
-      currentCSS = selectedCSS;
-    } else if (selectedCSS === 'none' && currentCSS) {
-      this.getElement.value.classList.remove(currentCSS);
-      currentCSS = selectedCSS;
+      elementClass = selectedCSS;
+    } else if (
+      typeof selectedCSS === 'string' &&
+      selectedCSS === 'none' &&
+      elementClass
+    ) {
+      this.getElement.value.classList.remove(elementClass);
+      elementClass = selectedCSS;
     }
 
-    this.store.commit(`designer/${mutationName}`, currentCSS);
+    this.store.commit(`designer/${mutationName}`, elementClass);
     this.store.commit('designer/setElement', this.getElement.value);
+
+    return currentCSS;
   }
   currentClasses() {
     // convert classList to array
@@ -384,49 +394,18 @@ class Designer {
   handleColor(userSelectedColor) {
     this.#updateStyle(userSelectedColor, this.colors, 'setBackgroundColor');
   }
-
-  //
-  //
-  //
-  //
+  handleBackgroundOpacity(opacity) {
+    this.#updateStyle(
+      opacity,
+      tailwindOpacities.backgroundOpacities,
+      'setBackgroundOpacity'
+    );
+    //
+  }
   saveComponentsLocalStorage(components) {
     localStorage.setItem('savedCurrentDesign', JSON.stringify(components));
   }
 
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
   /**
    * The addClickAndHoverEvents function is used to
    * attach event listeners to each element within a 'section'
@@ -670,7 +649,7 @@ class Designer {
 
       // Replace newline characters with <br> tags
       textContentElementClone = textContentElementClone.replaceAll(
-        /[\r\n]+/g,
+        /\r?\n/g,
         '<br>'
       );
 
@@ -760,6 +739,8 @@ class Designer {
     this.saveCurrentDesignWithTimer();
 
     // invoke methods
+    // handle BG opacity
+    this.handleBackgroundOpacity();
     // displayed image
     this.showBasePrimaryImage();
     // border style

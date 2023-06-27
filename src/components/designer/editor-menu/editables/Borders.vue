@@ -1,3 +1,59 @@
+<script setup>
+import tailwindBorderStyleWidthPlusColor from '../../../../utils/tailwind-border-style-width-color';
+import Designer from '../../../../composables/Designer';
+import EditorAccordion from '../EditorAccordion.vue';
+import { useStore } from 'vuex';
+import { computed, ref, watch } from 'vue';
+import {
+  Listbox,
+  ListboxButton,
+  ListboxLabel,
+  ListboxOption,
+  ListboxOptions,
+} from '@headlessui/vue';
+import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid';
+
+const store = useStore();
+
+const designer = new Designer(store);
+
+const borderStyle = ref(null);
+const borderWidth = ref(null);
+const borderColor = ref(null);
+
+const getBorderStyle = computed(() => {
+  return store.getters['designer/getBorderStyle'];
+});
+const getBorderWidth = computed(() => {
+  return store.getters['designer/getBorderWidth'];
+});
+const getBorderColor = computed(() => {
+  return store.getters['designer/getBorderColor'];
+});
+
+watch(
+  getBorderStyle,
+  (newValue) => {
+    borderStyle.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getBorderWidth,
+  (newValue) => {
+    borderWidth.value = newValue;
+  },
+  { immediate: true }
+);
+watch(
+  getBorderColor,
+  (newValue) => {
+    borderColor.value = newValue;
+  },
+  { immediate: true }
+);
+</script>
+
 <template>
   <EditorAccordion>
     <template #title>Border Style, Width & Color</template>
@@ -107,7 +163,9 @@
               >
                 <li
                   :class="[
-                    active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+                    active
+                      ? 'bg-myPrimaryLinkColor text-white'
+                      : 'text-gray-900',
                     'relative cursor-default select-none py-2 pl-3 pr-9',
                   ]"
                 >
@@ -116,27 +174,8 @@
                       class="aspect-square w-6 h-6"
                       :class="`bg-${color.replace('border-', '')}`"
                     ></div>
-                    <span
-                      :class="[
-                        borderColor ? 'font-semibold' : 'font-normal',
-                        'ml-3 block truncate',
-                      ]"
-                      >{{ color }}</span
-                    >
+                    <span class="ml-3">{{ color }}</span>
                   </div>
-
-                  <span
-                    v-if="borderColor"
-                    :class="[
-                      active ? 'text-white' : 'text-indigo-600',
-                      'absolute inset-y-0 right-0 flex items-center pr-4',
-                    ]"
-                  >
-                    <CheckIcon
-                      class="h-5 w-5"
-                      aria-hidden="true"
-                    />
-                  </span>
                 </li>
               </ListboxOption>
             </ListboxOptions>
@@ -146,59 +185,3 @@
     </template>
   </EditorAccordion>
 </template>
-
-<script setup>
-import tailwindBorderStyleWidthPlusColor from '../../../../utils/tailwind-border-style-width-color';
-import Designer from '../../../../composables/Designer';
-import EditorAccordion from '../EditorAccordion.vue';
-import { useStore } from 'vuex';
-import { computed, ref, watch } from 'vue';
-import {
-  Listbox,
-  ListboxButton,
-  ListboxLabel,
-  ListboxOption,
-  ListboxOptions,
-} from '@headlessui/vue';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid';
-
-const store = useStore();
-
-const designer = new Designer(store);
-
-const borderStyle = ref(null);
-const borderWidth = ref(null);
-const borderColor = ref(null);
-
-const getBorderStyle = computed(() => {
-  return store.getters['designer/getBorderStyle'];
-});
-const getBorderWidth = computed(() => {
-  return store.getters['designer/getBorderWidth'];
-});
-const getBorderColor = computed(() => {
-  return store.getters['designer/getBorderColor'];
-});
-
-watch(
-  getBorderStyle,
-  (newValue) => {
-    borderStyle.value = newValue;
-  },
-  { immediate: true }
-);
-watch(
-  getBorderWidth,
-  (newValue) => {
-    borderWidth.value = newValue;
-  },
-  { immediate: true }
-);
-watch(
-  getBorderColor,
-  (newValue) => {
-    borderColor.value = newValue;
-  },
-  { immediate: true }
-);
-</script>

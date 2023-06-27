@@ -1,7 +1,8 @@
 <template>
   <EditorAccordion>
-    <template #title>Color settings</template>
+    <template #title>Color & Opacity settings</template>
     <template #content>
+      <!-- Background color - start -->
       <div
         @click="handleColorsSlideOver"
         class="mb-2"
@@ -11,10 +12,10 @@
             for="meta_title"
             class="myPrimaryInputLabel"
           >
-            Background:
+            Background color:
           </label>
           <div
-            class="flex flex-row justify-between items-center myPrimaryGap mt-4 py-2.5 px-3 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+            class="flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
           >
             <div class="relative flex items-center w-full py-0 p-0">
               <div class="flex items-center gap-2 justify-start">
@@ -69,6 +70,10 @@
           </div>
         </div>
       </div>
+      <!-- Background color - end -->
+      <!-- Background opacity - start -->
+      <ManageBackgroundOpacity></ManageBackgroundOpacity>
+      <!-- Background opacity - end -->
       <SlideOverRight
         :open="showColorsSlideOverRight"
         :title="titleSlideOverRight"
@@ -86,6 +91,7 @@ import { computed } from 'vue';
 import EditorAccordion from '../EditorAccordion.vue';
 import SlideOverRight from '../../../slidebars/SlideOverRight.vue';
 import ManageBackgroundColor from './ManageBackgroundColor.vue';
+import ManageBackgroundOpacity from './ManageBackgroundOpacity.vue';
 
 import {
   XMarkIcon,
@@ -93,9 +99,11 @@ import {
   CubeTransparentIcon,
 } from '@heroicons/vue/24/outline';
 import { ref, watch } from 'vue';
+import Designer from '../../../../composables/Designer';
 
 // store
 const store = useStore();
+const designer = new Designer(store);
 const showColorsSlideOverRight = ref(false);
 const titleSlideOverRight = ref(null);
 

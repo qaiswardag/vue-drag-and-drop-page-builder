@@ -31,6 +31,7 @@ export default {
     borderRadiusBottomleft: null,
     borderRadiusBottomRight: null,
     // border radius / end
+    backgroundOpacity: null,
     textAreaVueModel: null,
     nextSibling: null,
     parentElement: null,
@@ -99,7 +100,9 @@ export default {
       return state.borderRadiusBottomRight;
     },
     // border radius / end
-
+    getBackgroundOpacity(state) {
+      return state.backgroundOpacity;
+    },
     getTextAreaVueModel(state) {
       return state.textAreaVueModel;
     },
@@ -217,7 +220,9 @@ export default {
     setBorderRadiusBottomRight(state, payload) {
       state.borderRadiusBottomRight = payload;
     },
-    // border radius / end
+    setBackgroundOpacity(state, payload) {
+      state.backgroundOpacity = payload;
+    },
     setTextAreaVueModel(state, payload) {
       state.textAreaVueModel = payload;
     },
