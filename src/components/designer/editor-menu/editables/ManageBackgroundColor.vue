@@ -107,7 +107,7 @@ const designer = new Designer(store);
       for="meta_title"
       class="myPrimaryInputLabel"
     >
-      Current Background:
+      Current Background
     </label>
     <div
       class="flex flex-row hover:outline hover:outline-offset-0 hover:outline-myPrimaryBrandColor justify-between items-center myPrimaryGap py-2.5 px-3 cursor-default focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
@@ -215,7 +215,7 @@ const designer = new Designer(store);
           for="meta_title"
           class="myPrimaryInputLabel"
         >
-          Custom HEX:
+          Custom HEX
         </label>
         <div class="flex items-center justify-start gap-2 w-full">
           <div
