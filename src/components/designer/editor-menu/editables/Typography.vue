@@ -97,7 +97,7 @@ watch(
     <template #content>
       <!-- FONT SIZES -->
       <p class="myPrimaryParagraph font-medium py-0 my-4">Font sizes</p>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
@@ -123,7 +123,7 @@ watch(
           </option>
         </select>
       </div>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
@@ -149,7 +149,7 @@ watch(
           </option>
         </select>
       </div>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
@@ -175,7 +175,7 @@ watch(
           </option>
         </select>
       </div>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
@@ -203,7 +203,7 @@ watch(
       </div>
       <hr />
       <p class="myPrimaryParagraph font-medium py-0 my-4">Font general</p>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
@@ -229,7 +229,7 @@ watch(
           </option>
         </select>
       </div>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
@@ -255,7 +255,7 @@ watch(
           </option>
         </select>
       </div>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"

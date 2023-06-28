@@ -31,6 +31,7 @@ export default {
     borderRadiusBottomleft: null,
     borderRadiusBottomRight: null,
     // border radius / end
+    opacity: null,
     backgroundOpacity: null,
     textAreaVueModel: null,
     nextSibling: null,
@@ -48,7 +49,7 @@ export default {
     fontDesktop: null,
     fontTablet: null,
     fontMobile: null,
-    enabledCustomColorBG: null,
+    enabledCustomColorBackground: null,
     backgroundColorCustom: null,
     backgroundColor: null,
     element: null,
@@ -100,6 +101,9 @@ export default {
       return state.borderRadiusBottomRight;
     },
     // border radius / end
+    getOpacity(state) {
+      return state.opacity;
+    },
     getBackgroundOpacity(state) {
       return state.backgroundOpacity;
     },
@@ -154,8 +158,8 @@ export default {
     getBackgroundColor(state) {
       return state.backgroundColor;
     },
-    getEnabledCustomColorBG(state) {
-      return state.enabledCustomColorBG;
+    getEnabledCustomColorBackground(state) {
+      return state.enabledCustomColorBackground;
     },
     getBackgroundColorCustom(state) {
       return state.backgroundColorCustom;
@@ -219,6 +223,9 @@ export default {
     },
     setBorderRadiusBottomRight(state, payload) {
       state.borderRadiusBottomRight = payload;
+    },
+    setOpacity(state, payload) {
+      state.opacity = payload;
     },
     setBackgroundOpacity(state, payload) {
       state.backgroundOpacity = payload;
@@ -285,8 +292,8 @@ export default {
     setBackgroundColorCustom(state, payload) {
       state.backgroundColorCustom = payload;
     },
-    setEnabledCustomColorBG(state, payload) {
-      state.enabledCustomColorBG = payload;
+    setEnabledCustomColorBackground(state, payload) {
+      state.enabledCustomColorBackground = payload;
     },
     setElement(state, payload) {
       state.element = {};

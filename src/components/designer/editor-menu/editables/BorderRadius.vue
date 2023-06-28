@@ -3,12 +3,12 @@
     <template #title>Border Radius</template>
     <template #content>
       <p class="myPrimaryParagraph font-medium py-0 my-4">Global</p>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
         >
-          Border Radius:
+          Border Radius
         </label>
         <select
           v-model="borderRadiusGlobal"
@@ -30,12 +30,12 @@
         </select>
       </div>
       <p class="myPrimaryParagraph font-medium py-0 my-4">Specific</p>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
         >
-          Border Radius top left:
+          Border Radius top left
         </label>
         <select
           v-model="borderRadiusTopLeft"
@@ -56,12 +56,12 @@
           </option>
         </select>
       </div>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
         >
-          Border Radius top right:
+          Border Radius top right
         </label>
         <select
           v-model="borderRadiusTopRight"
@@ -82,12 +82,12 @@
           </option>
         </select>
       </div>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
         >
-          Border Radius bottom left:
+          Border Radius bottom left
         </label>
         <select
           v-model="borderRadiusBottomleft"
@@ -110,12 +110,12 @@
           </option>
         </select>
       </div>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
         >
-          Border Radius bottom right:
+          Border Radius bottom right
         </label>
         <select
           v-model="borderRadiusBottomRight"

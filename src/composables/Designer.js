@@ -353,7 +353,7 @@ class Designer {
     }
   }
 
-  handleCustomColor(userSelectedColor, enabledCustomColor) {
+  handleCustomBackgroundColor(userSelectedColor, enabledCustomColor) {
     // if user is selecting a custom HEX color
     if (userSelectedColor === undefined && enabledCustomColor === undefined) {
       // Get the style property
@@ -361,13 +361,13 @@ class Designer {
 
       // Check for inline background color
       if (typeof bgColor === 'string' && bgColor.length !== 0) {
-        this.store.commit('designer/setEnabledCustomColorBG', true);
+        this.store.commit('designer/setEnabledCustomColorBackground', true);
         this.store.commit('designer/setBackgroundColorCustom', bgColor);
       }
 
       // Check for inline background color
       if (typeof bgColor === 'string' && bgColor.length === 0) {
-        this.store.commit('designer/setEnabledCustomColorBG', false);
+        this.store.commit('designer/setEnabledCustomColorBackground', false);
         this.store.commit('designer/setBackgroundColorCustom', null);
       }
     }
@@ -387,7 +387,7 @@ class Designer {
   }
   removeCustomColor() {
     this.getElement.value.style.removeProperty('background-color');
-    this.store.commit('designer/setEnabledCustomColorBG', null);
+    this.store.commit('designer/setEnabledCustomColorBackground', null);
     this.store.commit('designer/setBackgroundColorCustom', null);
     this.store.commit('designer/setElement', this.getElement.value);
   }
@@ -400,6 +400,10 @@ class Designer {
       tailwindOpacities.backgroundOpacities,
       'setBackgroundOpacity'
     );
+    //
+  }
+  handleOpacity(opacity) {
+    this.#updateStyle(opacity, tailwindOpacities.opacities, 'setOpacity');
     //
   }
   saveComponentsLocalStorage(components) {
@@ -739,6 +743,8 @@ class Designer {
     this.saveCurrentDesignWithTimer();
 
     // invoke methods
+    // handle opacity
+    this.handleOpacity();
     // handle BG opacity
     this.handleBackgroundOpacity();
     // displayed image
@@ -778,7 +784,7 @@ class Designer {
     // handle horizontal margin
     this.handleHorizontalMargin();
     // handle custom color
-    this.handleCustomColor();
+    this.handleCustomBackgroundColor();
     // handle color
     this.handleColor();
     // handle classes

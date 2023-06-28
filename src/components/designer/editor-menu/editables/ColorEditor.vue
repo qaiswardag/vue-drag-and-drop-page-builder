@@ -7,15 +7,15 @@
         @click="handleColorsSlideOver"
         class="mb-2"
       >
-        <div class="pt-0 pb-0 mb-6">
+        <div class="my-3 py-3">
           <label
             for="meta_title"
             class="myPrimaryInputLabel"
           >
-            Background color:
+            Background color
           </label>
           <div
-            class="flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+            class="flex flex-row hover:outline hover:outline-offset-0 hover:outline-myPrimaryBrandColor justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
           >
             <div class="relative flex items-center w-full py-0 p-0">
               <div class="flex items-center gap-2 justify-start">
@@ -71,9 +71,10 @@
         </div>
       </div>
       <!-- Background color - end -->
-      <!-- Background opacity - start -->
+
+      <ManageOpacity></ManageOpacity>
       <ManageBackgroundOpacity></ManageBackgroundOpacity>
-      <!-- Background opacity - end -->
+
       <SlideOverRight
         :open="showColorsSlideOverRight"
         :title="titleSlideOverRight"
@@ -92,6 +93,7 @@ import EditorAccordion from '../EditorAccordion.vue';
 import SlideOverRight from '../../../slidebars/SlideOverRight.vue';
 import ManageBackgroundColor from './ManageBackgroundColor.vue';
 import ManageBackgroundOpacity from './ManageBackgroundOpacity.vue';
+import ManageOpacity from './ManageOpacity.vue';
 
 import {
   XMarkIcon,

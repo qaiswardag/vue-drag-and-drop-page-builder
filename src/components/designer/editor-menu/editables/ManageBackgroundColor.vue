@@ -12,7 +12,7 @@ const enabledCustomColor = ref(false);
 const selectedHEXColor = ref([]);
 const error = ref(null);
 
-const handleCustomColor = function () {
+const handleCustomBackgroundColor = function () {
   const isHexColor = /^#([0-9A-Fa-f]{3}){1,2}$/.test(customColorInput.value);
   if (isHexColor === false) {
     error.value = 'Invalid HEX color. Remember to add #';
@@ -24,7 +24,10 @@ const handleCustomColor = function () {
   }
 
   selectedHEXColor.value = [customColorInput.value];
-  designer.handleCustomColor(customColorInput.value, enabledCustomColor.value);
+  designer.handleCustomBackgroundColor(
+    customColorInput.value,
+    enabledCustomColor.value
+  );
 
   customColorInput.value = '';
   error.value = null;
@@ -38,7 +41,7 @@ const handleRemoveTag = function () {
 watch(enabledCustomColor, (newValue) => {
   // remove inline custom style color
   if (newValue === true) {
-    handleCustomColor();
+    handleCustomBackgroundColor();
   }
   if (newValue === false) {
     designer.removeCustomColor();
@@ -55,11 +58,11 @@ const getBackgroundColorCustom = computed(() => {
   return store.getters['designer/getBackgroundColorCustom'];
 });
 
-const getEnabledCustomColorBG = computed(() => {
-  return store.getters['designer/getEnabledCustomColorBG'];
+const getEnabledCustomColorBackground = computed(() => {
+  return store.getters['designer/getEnabledCustomColorBackground'];
 });
 
-watch(getEnabledCustomColorBG, (newValue) => {
+watch(getEnabledCustomColorBackground, (newValue) => {
   // remove inline custom style color
   if (newValue === true) {
     enabledCustomColor.value = true;
@@ -78,10 +81,10 @@ const rgbToHex = function rgbToHex(r, g, b) {
 
 onMounted(() => {
   if (
-    typeof getEnabledCustomColorBG.value === 'boolean' &&
-    getEnabledCustomColorBG.value === true
+    typeof getEnabledCustomColorBackground.value === 'boolean' &&
+    getEnabledCustomColorBackground.value === true
   ) {
-    enabledCustomColor.value = getEnabledCustomColorBG.value;
+    enabledCustomColor.value = getEnabledCustomColorBackground.value;
     // Extract the numbers from the RGB string
     let rgbValues = getBackgroundColorCustom.value.match(/\d+/g).map(Number);
     let hexColor = rgbToHex(...rgbValues); // Spread array values
@@ -99,7 +102,7 @@ const designer = new Designer(store);
 </script>
 
 <template>
-  <div class="mt-6 pt-4 pb-8">
+  <div class="my-3 py-3">
     <label
       for="meta_title"
       class="myPrimaryInputLabel"
@@ -107,7 +110,7 @@ const designer = new Designer(store);
       Current Background:
     </label>
     <div
-      class="flex flex-row justify-between items-center myPrimaryGap mt-4 py-2.5 px-3 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+      class="flex flex-row hover:outline hover:outline-offset-0 hover:outline-myPrimaryBrandColor justify-between items-center myPrimaryGap py-2.5 px-3 cursor-default focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
     >
       <div class="relative flex items-center w-full py-0 p-0">
         <div class="flex items-center gap-2 justify-start">
@@ -162,11 +165,11 @@ const designer = new Designer(store);
     <div class="flex gap-2 flex-col items-center justify-around">
       <div class="pb-4 mb-6 border-myPrimaryLightGrayColor w-full">
         <!-- Error - start -->
-        <div class="min-h-[3.5rem] flex items-center">
+        <div class="min-h-[3.5rem] flex items-center mt-4">
           <div>
             <p
               v-if="error !== null"
-              class="myPrimaryInputError my-0 py-0 text-xs"
+              class="myPrimaryInputError my-0 py-0"
             >
               {{ error }}
             </p>
@@ -174,7 +177,7 @@ const designer = new Designer(store);
               v-if="
                 enabledCustomColor === true && selectedHEXColor.length === 0
               "
-              class="myPrimaryInputError my-0 py-0 text-xs"
+              class="myPrimaryInputError my-0 py-0"
             >
               Using Custom Color? Please input a valid HEX code.
             </p>
@@ -208,6 +211,12 @@ const designer = new Designer(store);
             </div>
           </div>
         </div>
+        <label
+          for="meta_title"
+          class="myPrimaryInputLabel"
+        >
+          Custom HEX:
+        </label>
         <div class="flex items-center justify-start gap-2 w-full">
           <div
             class="relative flex items-center w-full border myPrimaryInput py-0 p-0"
@@ -215,10 +224,10 @@ const designer = new Designer(store);
             <input
               v-model="customColorInput"
               type="text"
-              placeholder="Custom color.."
+              placeholder="Custom background color.."
               autocomplete="off"
               class="myPrimaryInput border-none rounded-r-none ml-0 w-full"
-              @keydown.enter.tab.prevent="handleCustomColor()"
+              @keydown.enter.tab.prevent="handleCustomBackgroundColor()"
             />
             <div
               class="border border-gray-200 border-none rounded flex items-center justify-center h-full w-8"

@@ -23,12 +23,12 @@ const designer = new Designer(store);
 
 const opacityVueModel = ref(null);
 
-const getBackgroundOpacity = computed(() => {
-  return store.getters['designer/getBackgroundOpacity'];
+const getOpacity = computed(() => {
+  return store.getters['designer/getOpacity'];
 });
 
 watch(
-  getBackgroundOpacity,
+  getOpacity,
   (newValue) => {
     opacityVueModel.value = newValue;
   },
@@ -38,7 +38,7 @@ watch(
 
 <template>
   <div class="my-3 py-3">
-    <label class="myPrimaryInputLabel"> Background opacity</label>
+    <label class="myPrimaryInputLabel"> Opacity</label>
 
     <Listbox
       as="div"
@@ -88,10 +88,10 @@ watch(
           >
             <ListboxOption
               as="template"
-              v-for="backgroundOpacity in tailwindOpacities.backgroundOpacities"
-              @click="designer.handleBackgroundOpacity(backgroundOpacity)"
-              :key="backgroundOpacity"
-              :value="backgroundOpacity"
+              v-for="elementOpacity in tailwindOpacities.opacities"
+              @click="designer.handleOpacity(elementOpacity)"
+              :key="elementOpacity"
+              :value="elementOpacity"
               v-slot="{ active, opacityVueModel }"
             >
               <li
@@ -102,7 +102,7 @@ watch(
               >
                 <div class="flex items-center">
                   <div
-                    v-if="backgroundOpacity === 'none'"
+                    v-if="elementOpacity === 'none'"
                     class="aspect-square w-6 h-6"
                   >
                     <div class="myPrimaryColorPreview bg-gray-100">
@@ -111,11 +111,11 @@ watch(
                   </div>
 
                   <div
-                    v-if="backgroundOpacity !== 'none'"
+                    v-if="elementOpacity !== 'none'"
                     class="aspect-square w-6 h-6 bg-gray-950"
-                    :class="`${backgroundOpacity}`"
+                    :class="`${elementOpacity}`"
                   ></div>
-                  <span class="ml-3">{{ backgroundOpacity }}</span>
+                  <span class="ml-3">{{ elementOpacity }}</span>
                 </div>
               </li>
             </ListboxOption>

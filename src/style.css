@@ -285,7 +285,7 @@
   }
 
   .myPrimaryInputError {
-    @apply mt-1 italic block text-sm font-normal text-myPrimaryErrorColor text-left;
+    @apply mt-1 block font-normal text-myPrimaryErrorColor text-left;
   }
 
   .myPrimaryHiddenInputField {

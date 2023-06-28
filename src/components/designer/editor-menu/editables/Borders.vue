@@ -58,12 +58,12 @@ watch(
   <EditorAccordion>
     <template #title>Border Style, Width & Color</template>
     <template #content>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
         >
-          Border Style:
+          Border Style
         </label>
         <select
           v-model="borderStyle"
@@ -84,12 +84,12 @@ watch(
           </option>
         </select>
       </div>
-      <div class="mb-4">
+      <div class="my-3 py-3">
         <label
           for="meta_title"
           class="myPrimaryInputLabel"
         >
-          Border Width:
+          Border Width
         </label>
         <select
           v-model="borderWidth"
@@ -115,7 +115,7 @@ watch(
         for="meta_title"
         class="myPrimaryInputLabel"
       >
-        Border Color:
+        Border Color
       </label>
       <Listbox
         as="div"

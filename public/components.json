@@ -53,7 +53,7 @@
     "category": "features",
     "imageSrc": "/previews/single-image-with-text-center.png",
     "id": 9,
-    "html": "<section>\n\t\t<sectionclass=\"grid grid-cols-7 grid-rows-1 overflow-hidden m-auto lg:max-h-[40vh]\">\n\t\t\t<img src=\"https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=MnwzMTI0Mzl8MHwxfHNlYXJjaHwxMDV8fGdyZWVufGVufDB8fHx8MTY1MDM3ODQ5Mw&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=1080\"\n\t\t\t\talt=\"\" class=\"object-cover w-full h-full row-span-full col-span-full col-start-1 col-end-8\">\n\t\t\t<p\n\t\t\t\tclass=\"col-start-3 col-end-6 self-center z-10 text-lg md:text-3xl lg:text-7xl row-span-full col-span-full bg-opacity-40 text-center text-gray-50 bold\">\n\t\t\t\tBeing noticed not ignored</p>\n\t\t</section>\n\t</section>"
+    "html": "<section>\n\t\t<section class=\"grid grid-cols-7 grid-rows-1 overflow-hidden m-auto lg:min-h-[35rem] lg:max-h-[40vh]\">\n\t\t\t<img src=\"https://images.unsplash.com/photo-1418065460487-3e41a6c84dc5?crop=entropy&amp;cs=tinysrgb&amp;fit=max&amp;fm=jpg&amp;ixid=MnwzMTI0Mzl8MHwxfHNlYXJjaHwxMDV8fGdyZWVufGVufDB8fHx8MTY1MDM3ODQ5Mw&amp;ixlib=rb-1.2.1&amp;q=80&amp;w=1080\"\n\t\t\t\talt=\"\" class=\"object-cover w-full h-full row-span-full col-span-full col-start-1 col-end-8\">\n\t\t\t<p\n\t\t\t\tclass=\"col-start-3 col-end-6 self-center z-10 text-lg md:text-3xl lg:text-7xl row-span-full col-span-full bg-opacity-40 text-center text-gray-50 bold\">\n\t\t\t\tBeing noticed not ignored</p>\n\t\t</section>\n\t</section>"
   },
   {
     "name": "Uneven images with text",

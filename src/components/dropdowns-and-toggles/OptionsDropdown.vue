@@ -95,14 +95,20 @@ const deleteAllComponents = function () {
     <header></header>
     <main></main>
   </DynamicModal>
-  <Menu as="div" class="myPrimaryParagraph relative inline-block text-left">
+  <Menu
+    as="div"
+    class="myPrimaryParagraph relative inline-block text-left"
+  >
     <div>
       <MenuButton
         class="inline-flex items-center gap-2 justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-emerald-600"
       >
         <CheckIcon class="h-4 w-4 stroke-2"></CheckIcon>
         Options
-        <ChevronDownIcon class="h-3 w-3 stroke-2" aria-hidden="true" />
+        <ChevronDownIcon
+          class="h-3 w-3 stroke-2"
+          aria-hidden="true"
+        />
       </MenuButton>
     </div>
 
@@ -124,7 +130,10 @@ const deleteAllComponents = function () {
           </p>
         </div>
         <div class="py-1">
-          <MenuItem v-slot="{ active }" @click="handleDesignerPreview">
+          <MenuItem
+            v-slot="{ active }"
+            @click="handleDesignerPreview"
+          >
             <div
               :class="[
                 active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -150,23 +159,6 @@ const deleteAllComponents = function () {
               <div class="flex items-center justify-left gap-2">
                 <TrashIcon class="w-3 h-3 stroke-2"></TrashIcon>
                 Delete all Components
-              </div>
-            </div>
-          </MenuItem>
-
-          <MenuItem v-slot="{ active }">
-            <div
-              class="cursor-pointer"
-              :class="[
-                active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                'block px-4 py-2',
-              ]"
-            >
-              <div class="flex items-center justify-left gap-2">
-                <ArrowUturnRightIcon
-                  class="w-3 h-3 stroke-2"
-                ></ArrowUturnRightIcon>
-                History
               </div>
             </div>
           </MenuItem>
