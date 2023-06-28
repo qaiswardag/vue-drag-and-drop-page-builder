@@ -15,7 +15,7 @@
             Background color
           </label>
           <div
-            class="flex flex-row hover:outline hover:outline-offset-0 hover:outline-myPrimaryBrandColor justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+            class="flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
           >
             <div class="relative flex items-center w-full py-0 p-0">
               <div class="flex items-center gap-2 justify-start">
