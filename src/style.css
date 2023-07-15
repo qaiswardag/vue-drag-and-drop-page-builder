@@ -96,7 +96,7 @@
   }
 
   .myPrimaryParagraphError {
-    @apply myPrimaryParagraph mt-1 italic text-myPrimaryErrorColor;
+    @apply myPrimaryParagraph mt-1 text-myPrimaryErrorColor text-sm;
   }
 
   /*

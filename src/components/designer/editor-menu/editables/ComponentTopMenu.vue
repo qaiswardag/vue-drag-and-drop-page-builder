@@ -76,13 +76,13 @@ const deleteComponent = function (e) {
     <main></main>
   </DynamicModal>
   <div
-    class="absolute z-40 overflow-hidden left-0 right-0 top-0 text-myPrimaryDarkGrayColor bg-myPrimaryLightGrayColor border border-gray-400 duration-100 transform group-hover:block hidden max-w-[80%] mx-auto mt-4 rounded-full shadow-sm"
+    class="mx-auto mt-4 bg-myPrimaryLightGrayColor absolute z-40 overflow-hidden left-0 right-0 top-0 text-myPrimaryDarkGrayColor border border-gray-400 duration-100 transform group-hover:block hidden max-w-[80%] rounded-full shadow-sm"
   >
     <div class="flex flex-row justify-between mx-auto py-1.5 px-3 max-w-6xl">
       <div class="flex gap-2 items-center justify-center">
         <div
           @click="deleteComponent($event)"
-          class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryLinkColor hover:text-white"
+          class="cursor-pointer rounded-full flex items-center justify-center bg-white aspect-square hover:bg-myPrimaryErrorColor hover:text-white"
         >
           <TrashIcon class="w-4 h-4 m-2 stroke-2" />
         </div>

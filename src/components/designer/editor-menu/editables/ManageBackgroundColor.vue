@@ -3,8 +3,8 @@ import { useStore } from 'vuex';
 import { computed, onMounted, watch } from 'vue';
 import tailwindColors from '../../../../utils/tailwaind-colors';
 import Designer from '../../../../composables/Designer';
-import { CheckIcon, SwatchIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
+import { CheckIcon, SwatchIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { Switch } from '@headlessui/vue';
 
 const customColorInput = ref(null);
@@ -169,7 +169,7 @@ const designer = new Designer(store);
           <div>
             <p
               v-if="error !== null"
-              class="myPrimaryInputError my-0 py-0"
+              class="myPrimaryParagraphError my-0 py-0"
             >
               {{ error }}
             </p>
@@ -177,7 +177,7 @@ const designer = new Designer(store);
               v-if="
                 enabledCustomColor === true && selectedHEXColor.length === 0
               "
-              class="myPrimaryInputError my-0 py-0"
+              class="myPrimaryParagraphError my-0 py-0"
             >
               Using Custom Color? Please input a valid HEX code.
             </p>

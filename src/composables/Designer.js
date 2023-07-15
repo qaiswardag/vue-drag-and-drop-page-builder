@@ -28,6 +28,10 @@ class Designer {
     this.timer = null;
     this.colors = tailwindColors.backgroundColors();
     this.store = store;
+    this.getElementHasActiveLink = computed(
+      () => this.store.getters['designer/getElementHasActiveLink']
+    );
+
     this.getTextAreaVueModel = computed(
       () => this.store.getters['designer/getTextAreaVueModel']
     );
@@ -36,7 +40,15 @@ class Designer {
       () => this.store.getters['designer/getHighlightedImage']
     );
 
+    this.getElementHasActiveLink = computed(
+      () => this.store.getters['designer/getElementHasActiveLink']
+    );
+    this.getOpenLinkInNewTab = computed(
+      () => this.store.getters['designer/getOpenLinkInNewTab']
+    );
+
     this.getElement = computed(() => this.store.getters['designer/getElement']);
+
     this.getComponents = computed(
       () => this.store.getters['designer/getComponents']
     );
@@ -371,19 +383,141 @@ class Designer {
         this.store.commit('designer/setBackgroundColorCustom', null);
       }
     }
-    //
-    //
-    //
-    //
+
     // if user is selecting a custom HEX color
     if (enabledCustomColor === true) {
-      // this.getElement.value.classList.add(`bg-[${userSelectedColor}]`);
-
       this.getElement.value.style.backgroundColor = userSelectedColor;
-      // this.store.commit('designer/setBackgroundColor', userSelectedColor);
       this.store.commit('designer/setElement', this.getElement.value);
       return;
     }
+  }
+
+  #applyCustomURLToElement(hasActiveLink, urlInput) {
+    const target = '_blank'; // Replace with your desired target
+    const parentHyperlink = this.getElement.value.closest('a');
+    const hyperlink = this.getElement.value.querySelector('a');
+
+    this.store.commit('designer/setCustomURlValidation', null);
+
+    // url validation
+    const urlRegex =
+      /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+
+    const isValidURL = ref(true);
+
+    if (hasActiveLink === true && urlInput !== null) {
+      isValidURL.value = urlRegex.test(urlInput);
+    }
+
+    if (isValidURL.value === false && urlInput.length !== 0) {
+      this.store.commit('designer/setCustomURlValidation', 'URL is not valid');
+      return;
+    }
+
+    if (hasActiveLink === true && typeof urlInput === 'string') {
+      if (hyperlink !== null && hyperlink.href === urlInput) {
+        this.store.commit(
+          'designer/setCustomURlValidation',
+          'Entered URL already exist.'
+        );
+        return;
+      }
+
+      // check if element contains child a tag
+      // updated existing url
+      if (hyperlink !== null && urlInput.length !== 0) {
+        hyperlink.href = urlInput;
+        hyperlink.target = target;
+        hyperlink.textContent = this.getElement.value.textContent;
+        this.store.commit(
+          'designer/setCustomURlSuccessMessage',
+          'Succesfully updated element link'
+        );
+      }
+
+      // check if element contains child a tag
+      if (hyperlink === null && urlInput.length !== 0) {
+        // handle case where parent element already has an a href tag
+        if (parentHyperlink !== null) {
+          this.store.commit(
+            'designer/setCustomURlValidation',
+            'Cannot add link inside an existing hyperlink'
+          );
+        }
+
+        // add a href
+        if (parentHyperlink === null) {
+          const link = document.createElement('a');
+          link.href = urlInput;
+          link.target = target;
+          link.textContent = this.getElement.value.textContent;
+          this.getElement.value.textContent = '';
+          this.getElement.value.appendChild(link);
+          this.store.commit(
+            'designer/setCustomURlSuccessMessage',
+            'Successfully added link to element'
+          );
+        }
+      }
+      //
+      this.store.commit('designer/setElementHasActiveLink', true);
+    }
+
+    //
+    //
+    //
+    // remove url from element
+    if (hasActiveLink === false) {
+      this.store.commit('designer/setCustomURlValidation', null);
+
+      // To remove the added <a> tag and revert back to the original content
+      const originalText = this.getElement.value.textContent;
+      const textNode = document.createTextNode(originalText);
+      this.getElement.value.textContent = '';
+      this.getElement.value.appendChild(textNode);
+      //
+      //
+      //
+      this.store.commit('designer/setElementHasActiveLink', false);
+      this.store.commit('designer/setCustomURLInput', '');
+    }
+  }
+
+  //
+  #checkEnteredCustumURL(hasActiveLink, urlInput) {
+    this.store.commit('designer/setCustomURlValidation', null);
+    const hyperlink = this.getElement.value.querySelector('a');
+
+    if (hyperlink !== null) {
+      this.store.commit('designer/setCustomURLInput', hyperlink.href);
+      this.store.commit('designer/setElementHasActiveLink', true);
+      this.store.commit('designer/setOpenLinkInNewTab', true);
+    }
+    if (hyperlink === null) {
+      this.store.commit('designer/setCustomURLInput', '');
+      this.store.commit('designer/setElementHasActiveLink', false);
+      this.store.commit('designer/setOpenLinkInNewTab', false);
+    }
+  }
+
+  //
+  //
+  //
+  handleCustomURL(hasActiveLink, urlInput) {
+    this.store.commit('designer/setCustomURlSuccessMessage', null);
+
+    if (hasActiveLink === undefined) {
+      this.#checkEnteredCustumURL(hasActiveLink, urlInput);
+      return;
+    }
+
+    this.#applyCustomURLToElement(hasActiveLink, urlInput);
+
+    //
+    //
+    //
+    //
+    //
   }
   removeCustomColor() {
     this.getElement.value.style.removeProperty('background-color');
@@ -443,10 +577,21 @@ class Designer {
 
       element.setAttribute('hovered', '');
     });
+
+    // Only run on mouse leave
+    element.addEventListener('mouseleave', (e) => {
+      e.stopPropagation();
+
+      if (document.querySelector('[hovered]') !== null) {
+        document.querySelector('[hovered]').removeAttribute('hovered');
+      }
+    });
+
     // Only run during on mouse click
     element.addEventListener('click', (e) => {
       this.store.commit('designer/setMenuRight', true);
 
+      e.preventDefault();
       e.stopPropagation();
 
       if (document.querySelector('[selected]') !== null) {
@@ -463,11 +608,20 @@ class Designer {
       this.handleDesignerMethods();
     });
   };
+
   //
   //
   //
   //
-  //
+  removeHoveredAndSelected() {
+    if (document.querySelector('[hovered]') !== null) {
+      document.querySelector('[hovered]').removeAttribute('hovered');
+    }
+
+    if (document.querySelector('[selected]') !== null) {
+      document.querySelector('[selected]').removeAttribute('selected');
+    }
+  }
   //
   //
   //
@@ -671,6 +825,18 @@ class Designer {
     document
       .querySelectorAll('section:not(section section)')
       .forEach((section) => {
+        // remove hovered and selected
+
+        // remove hovered
+        if (section.querySelector('[hovered]') !== null) {
+          section.querySelector('[hovered]').removeAttribute('hovered');
+        }
+
+        // remove selected
+        if (section.querySelector('[selected]') !== null) {
+          section.querySelector('[selected]').removeAttribute('selected');
+        }
+
         // push outer html into the array
         addedHtmlComponents.value.push(section.outerHTML);
       });
@@ -743,6 +909,8 @@ class Designer {
     this.saveCurrentDesignWithTimer();
 
     // invoke methods
+    // handle custom URL
+    this.handleCustomURL();
     // handle opacity
     this.handleOpacity();
     // handle BG opacity

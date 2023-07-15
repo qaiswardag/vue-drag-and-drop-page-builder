@@ -24,7 +24,9 @@
           <article>
             <TextContent></TextContent>
           </article>
-
+          <article>
+            <LinkEditor></LinkEditor>
+          </article>
           <article>
             <Typography></Typography>
           </article>
@@ -71,6 +73,7 @@ import PaddingPlusMargin from './editables/PaddingPlusMargin.vue';
 import DeleteElement from './editables/DeleteElement.vue';
 import BorderRadius from './editables/BorderRadius.vue';
 import Borders from './editables/Borders.vue';
+import LinkEditor from './editables/LinkEditor.vue';
 
 // store
 const store = useStore();

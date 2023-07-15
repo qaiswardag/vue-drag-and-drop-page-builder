@@ -28,6 +28,7 @@ const emit = defineEmits(['previewCurrentDesign']);
 
 const store = useStore();
 const designer = new Designer(store);
+
 const showSettingsSlideOverRight = ref(false);
 const titleSettingsSlideOverRight = ref(null);
 const getMenuLeft = computed(() => {
@@ -118,6 +119,7 @@ const getComponents = computed(() => {
 const deselectCurrentComponent = function () {
   store.commit('designer/setComponent', null);
   store.commit('designer/setElement', null);
+  designer.removeHoveredAndSelected();
 };
 
 onBeforeMount(() => {
@@ -326,7 +328,10 @@ onMounted(async () => {
               class="relative group"
             >
               <ComponentTopMenu></ComponentTopMenu>
-              <section v-html="element.html"></section>
+              <section
+                v-html="element.html"
+                class="p-0.5"
+              ></section>
             </div>
           </template>
         </Draggable>
@@ -355,10 +360,16 @@ onMounted(async () => {
 </template>
 
 <style>
-#pagebuilder [hovered],
+#pagebuilder a {
+  cursor: default;
+}
 #pagebuilder [selected] {
-  outline: #10b981 dashed 3px;
-  outline-offset: -2px;
+  outline: rgb(185, 16, 16) dashed 4px !important;
+  outline-offset: -2px !important;
+}
+#pagebuilder [hovered] {
+  outline: rgb(0, 140, 14, 1) dashed 4px !important;
+  outline-offset: -2px !important;
 }
 
 .sortable-ghost {

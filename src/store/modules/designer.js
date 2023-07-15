@@ -31,6 +31,11 @@ export default {
     borderRadiusBottomleft: null,
     borderRadiusBottomRight: null,
     // border radius / end
+    customURLInput: null,
+    customURlSuccessMessage: null,
+    customURlValidation: null,
+    elementHasActiveLink: null,
+    openLinkInNewTab: null,
     opacity: null,
     backgroundOpacity: null,
     textAreaVueModel: null,
@@ -101,6 +106,21 @@ export default {
       return state.borderRadiusBottomRight;
     },
     // border radius / end
+    getCustomURLInput(state) {
+      return state.customURLInput;
+    },
+    getCustomURlSuccessMessage(state) {
+      return state.customURlSuccessMessage;
+    },
+    getCustomURlValidation(state) {
+      return state.customURlValidation;
+    },
+    getElementHasActiveLink(state) {
+      return state.elementHasActiveLink;
+    },
+    getOpenLinkInNewTab(state) {
+      return state.openLinkInNewTab;
+    },
     getOpacity(state) {
       return state.opacity;
     },
@@ -223,6 +243,21 @@ export default {
     },
     setBorderRadiusBottomRight(state, payload) {
       state.borderRadiusBottomRight = payload;
+    },
+    setCustomURLInput(state, payload) {
+      state.customURLInput = payload;
+    },
+    setCustomURlSuccessMessage(state, payload) {
+      state.customURlSuccessMessage = payload;
+    },
+    setCustomURlValidation(state, payload) {
+      state.customURlValidation = payload;
+    },
+    setElementHasActiveLink(state, payload) {
+      state.elementHasActiveLink = payload;
+    },
+    setOpenLinkInNewTab(state, payload) {
+      state.openLinkInNewTab = payload;
     },
     setOpacity(state, payload) {
       state.opacity = payload;
