@@ -146,7 +146,7 @@
         </div>
         <!-- no attached url - end -->
         <div
-          v-if="true || hyperlinkEnable === true"
+          v-if="hyperlinkEnable === true"
           class="my-3 py-3"
         >
           <div

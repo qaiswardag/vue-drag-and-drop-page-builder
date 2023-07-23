@@ -384,14 +384,10 @@ class Designer {
     if (enabledCustomColor === true) {
       this.getElement.value.style.backgroundColor = userSelectedColor;
       this.store.commit('designer/setElement', this.getElement.value);
-      return;
     }
   }
 
   #applyCustomURLToElement(hyperlinkEnable, urlInput) {
-    console.log('hyperlinkEnable:', hyperlinkEnable);
-    console.log('urlInput:', urlInput);
-    //this.store.commit('designer/setHyberlinkEnable', true);
     const target = '_blank'; // Replace with your desired target
     const parentHyperlink = this.getElement.value.closest('a');
     const hyperlink = this.getElement.value.querySelector('a');
@@ -470,57 +466,22 @@ class Designer {
       //
     }
 
-    //
-    //
-    //
-    //
-    if (
-      hyperlinkEnable === false &&
-      typeof urlInput === 'string' &&
-      urlInput.length !== 0 &&
-      urlInput !== 'removeHyperlink'
-    ) {
-      this.store.commit(
-        'designer/setCustomURlValidation',
-        'Enable URL toggle in order to set a hyperlink.'
-      );
-
-      return;
-    }
-    //
-    //
-    //
-    console.log('urlInput:', urlInput);
-    console.log('hyperlink:', hyperlink);
-    // remove url from element
-
-    // if (hyperlink === null && urlInput.length !== 0) {
-    //   // handle case where parent element already has an a href tag
-    //   if (parentHyperlink !== null) {
-
     if (
       hyperlinkEnable === false &&
       urlInput === 'removeHyperlink' &&
       hyperlink !== null
     ) {
-      //  this.store.commit('designer/setCustomURlValidation', null);
-
       // To remove the added <a> tag and revert back to the original content
       const originalText = this.getElement.value.textContent;
       const textNode = document.createTextNode(originalText);
       this.getElement.value.textContent = '';
       this.getElement.value.appendChild(textNode);
-      //
-      //
-      //
       this.store.commit('designer/setHyberlinkEnable', false);
       this.store.commit('designer/setCustomURLInput', '');
       this.store.commit(
         'designer/setCustomURlSuccessMessage',
         'Succesfully removed hyperlink.'
       );
-
-      return;
     }
   }
 
@@ -533,11 +494,8 @@ class Designer {
       this.store.commit('designer/setCustomURLInput', hyperlink.href);
       this.store.commit('designer/setHyberlinkEnable', true);
       this.store.commit('designer/setOpenLinkInNewTab', true);
-      return;
     }
   }
-
-  //
   //
   //
   handleCustomURL(hyperlinkEnable, urlInput) {
@@ -569,13 +527,8 @@ class Designer {
     }
 
     this.#applyCustomURLToElement(hyperlinkEnable, urlInput);
-
-    //
-    //
-    //
-    //
-    //
   }
+
   removeCustomColor() {
     this.getElement.value.style.removeProperty('background-color');
     this.store.commit('designer/setEnabledCustomColorBackground', null);
