@@ -296,37 +296,25 @@ const getOpenLinkInNewTab = computed(() => {
   return store.getters['designer/getOpenLinkInNewTab'];
 });
 
-watch(
-  getCustomURLInput,
-  (newValue) => {
-    urlInput.value = newValue;
-  }
-  // { immediate: true }
-);
-watch(
-  getHyberlinkEnable,
-  (newValue) => {
-    hyperlinkEnable.value = newValue;
-  }
-  // { immediate: true }
-);
-watch(
-  getOpenLinkInNewTab,
-  (newValue) => {
-    openLinkInNewTab.value = newValue;
-  }
-  // { immediate: true }
-);
+watch(getCustomURLInput, (newValue) => {
+  urlInput.value = newValue;
+});
+watch(getHyberlinkEnable, (newValue) => {
+  hyperlinkEnable.value = newValue;
+});
+watch(getOpenLinkInNewTab, (newValue) => {
+  openLinkInNewTab.value = newValue;
+});
 
 // remove hyperlink
-watch(hyperlinkEnable, (newValue) => {
+watch(hyperlinkEnable, (hyperlinkEnableNewValue) => {
   if (hyperlinkEnable.value === false) {
-    designer.handleCustomURL(newValue, 'removeHyperlink');
+    console.log(
+      'FROM COMPONENT. ONLY RUN ME WHEN WISH TO REMOVE A LINK:',
+      hyperlinkEnableNewValue
+    );
+    designer.handleCustomURL(hyperlinkEnableNewValue, 'removeHyperlink');
   }
-  // if (hyperlinkEnable.value === true) {
-  //   console.log('kom her');
-  //   designer.handleCustomURL(newValue, urlInput.value);
-  // }
 });
 
 // add hyperlink

@@ -388,7 +388,8 @@ class Designer {
   }
 
   #applyCustomURLToElement(hyperlinkEnable, urlInput) {
-    const target = '_blank'; // Replace with your desired target
+    console.log('TILFØJ MIG');
+    const target = '_blank';
     const parentHyperlink = this.getElement.value.closest('a');
     const hyperlink = this.getElement.value.querySelector('a');
 
@@ -418,10 +419,11 @@ class Designer {
           'designer/setCustomURlValidation',
           'Entered URL already exist.'
         );
+        this.store.commit('designer/setElementContainsHyperlink', true);
         return;
       }
 
-      // check if element contains child a tag
+      // check if element contains child hyperlink tag
       // updated existing url
       if (hyperlink !== null && urlInput.length !== 0) {
         hyperlink.href = urlInput;
@@ -431,21 +433,12 @@ class Designer {
           'designer/setCustomURlSuccessMessage',
           'Succesfully updated element link'
         );
-
+        this.store.commit('designer/setElementContainsHyperlink', true);
         return;
       }
 
       // check if element contains child a tag
       if (hyperlink === null && urlInput.length !== 0) {
-        // handle case where parent element already has an a href tag
-        if (parentHyperlink !== null) {
-          this.store.commit(
-            'designer/setCustomURlValidation',
-            'Element is already a hyperlink. You are not able to add a hyperlink inside an existing hyperlink.'
-          );
-          return;
-        }
-
         // add a href
         if (parentHyperlink === null) {
           const link = document.createElement('a');
@@ -466,27 +459,21 @@ class Designer {
       //
     }
 
-    if (
-      hyperlinkEnable === false &&
-      urlInput === 'removeHyperlink' &&
-      hyperlink !== null
-    ) {
-      // To remove the added <a> tag and revert back to the original content
+    if (hyperlinkEnable === false && urlInput === 'removeHyperlink') {
+      console.log('REMOVE ME');
+      // To remove the added hyperlink tag
       const originalText = this.getElement.value.textContent;
       const textNode = document.createTextNode(originalText);
       this.getElement.value.textContent = '';
       this.getElement.value.appendChild(textNode);
       this.store.commit('designer/setHyberlinkEnable', false);
       this.store.commit('designer/setCustomURLInput', '');
-      this.store.commit(
-        'designer/setCustomURlSuccessMessage',
-        'Succesfully removed hyperlink.'
-      );
     }
   }
 
   //
-  #checkEnteredCustumURL(hyperlinkEnable, urlInput) {
+  #checkForHyperlink(hyperlinkEnable, urlInput) {
+    console.log('CHECK MIG');
     const hyperlink = this.getElement.value.querySelector('a');
 
     if (hyperlink !== null && hyperlink.parentNode === this.getElement.value) {
@@ -522,7 +509,7 @@ class Designer {
     }
 
     if (hyperlinkEnable === undefined) {
-      this.#checkEnteredCustumURL(hyperlinkEnable, urlInput);
+      this.#checkForHyperlink(hyperlinkEnable, urlInput);
       return;
     }
 
