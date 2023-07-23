@@ -31,11 +31,15 @@ export default {
     borderRadiusBottomleft: null,
     borderRadiusBottomRight: null,
     // border radius / end
+    // hyperlink / start
+    elementContainsHyperlink: null,
+    hyperlinkAbility: null,
     customURLInput: null,
     customURlSuccessMessage: null,
     customURlValidation: null,
-    elementHasActiveLink: null,
+    hyberlinkEnable: null,
     openLinkInNewTab: null,
+    // hyperlink / end
     opacity: null,
     backgroundOpacity: null,
     textAreaVueModel: null,
@@ -106,6 +110,13 @@ export default {
       return state.borderRadiusBottomRight;
     },
     // border radius / end
+    // hyperlink / start
+    getElementContainsHyperlink(state) {
+      return state.elementContainsHyperlink;
+    },
+    getHyperlinkAbility(state) {
+      return state.hyperlinkAbility;
+    },
     getCustomURLInput(state) {
       return state.customURLInput;
     },
@@ -115,12 +126,13 @@ export default {
     getCustomURlValidation(state) {
       return state.customURlValidation;
     },
-    getElementHasActiveLink(state) {
-      return state.elementHasActiveLink;
+    getHyberlinkEnable(state) {
+      return state.hyberlinkEnable;
     },
     getOpenLinkInNewTab(state) {
       return state.openLinkInNewTab;
     },
+    // hyperlink / end
     getOpacity(state) {
       return state.opacity;
     },
@@ -244,6 +256,13 @@ export default {
     setBorderRadiusBottomRight(state, payload) {
       state.borderRadiusBottomRight = payload;
     },
+    // hyperlink / start
+    setElementContainsHyperlink(state, payload) {
+      state.elementContainsHyperlink = payload;
+    },
+    setHyperlinkAbility(state, payload) {
+      state.hyperlinkAbility = payload;
+    },
     setCustomURLInput(state, payload) {
       state.customURLInput = payload;
     },
@@ -253,12 +272,13 @@ export default {
     setCustomURlValidation(state, payload) {
       state.customURlValidation = payload;
     },
-    setElementHasActiveLink(state, payload) {
-      state.elementHasActiveLink = payload;
+    setHyberlinkEnable(state, payload) {
+      state.hyberlinkEnable = payload;
     },
     setOpenLinkInNewTab(state, payload) {
       state.openLinkInNewTab = payload;
     },
+    // hyperlink / end
     setOpacity(state, payload) {
       state.opacity = payload;
     },

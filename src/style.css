@@ -96,7 +96,7 @@
   }
 
   .myPrimaryParagraphError {
-    @apply myPrimaryParagraph mt-1 text-myPrimaryErrorColor text-sm;
+    @apply myPrimaryParagraph mt-1 text-myPrimaryErrorColor;
   }
 
   /*
@@ -302,6 +302,10 @@
 
   .myPrimarySelect {
     @apply relative w-full cursor-default rounded-md  border border-myPrimaryMediumGrayColor bg-white py-3 pl-3 pr-10 text-left shadow-sm focus:border-myPrimaryBrandColor focus:outline-none focus:ring-1 focus:ring-myPrimaryBrandColor;
+  }
+
+  a {
+    @apply text-myPrimaryLinkColor;
   }
 }
 
