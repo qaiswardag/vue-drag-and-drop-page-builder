@@ -387,135 +387,6 @@ class Designer {
     }
   }
 
-  #applyCustomURLToElement(hyperlinkEnable, urlInput) {
-    console.log('TILFØJ MIG');
-    const target = '_blank';
-    const parentHyperlink = this.getElement.value.closest('a');
-    const hyperlink = this.getElement.value.querySelector('a');
-
-    this.store.commit('designer/setCustomURlValidation', null);
-
-    // url validation
-    const urlRegex =
-      /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
-
-    const isValidURL = ref(true);
-
-    if (hyperlinkEnable === true && urlInput !== null) {
-      isValidURL.value = urlRegex.test(urlInput);
-    }
-
-    if (isValidURL.value === false && urlInput.length !== 0) {
-      this.store.commit('designer/setCustomURlValidation', 'URL is not valid');
-      return;
-    }
-
-    if (hyperlinkEnable === true && typeof urlInput === 'string') {
-      if (
-        (hyperlink !== null && hyperlink.href === urlInput + '/') ||
-        (hyperlink !== null && hyperlink.href === urlInput)
-      ) {
-        this.store.commit(
-          'designer/setCustomURlValidation',
-          'Entered URL already exist.'
-        );
-        this.store.commit('designer/setElementContainsHyperlink', true);
-        return;
-      }
-
-      // check if element contains child hyperlink tag
-      // updated existing url
-      if (hyperlink !== null && urlInput.length !== 0) {
-        hyperlink.href = urlInput;
-        hyperlink.target = target;
-        hyperlink.textContent = this.getElement.value.textContent;
-        this.store.commit(
-          'designer/setCustomURlSuccessMessage',
-          'Succesfully updated element link'
-        );
-        this.store.commit('designer/setElementContainsHyperlink', true);
-        return;
-      }
-
-      // check if element contains child a tag
-      if (hyperlink === null && urlInput.length !== 0) {
-        // add a href
-        if (parentHyperlink === null) {
-          const link = document.createElement('a');
-          link.href = urlInput;
-          link.target = target;
-          link.textContent = this.getElement.value.textContent;
-          this.getElement.value.textContent = '';
-          this.getElement.value.appendChild(link);
-          this.store.commit(
-            'designer/setCustomURlSuccessMessage',
-            'Successfully added link to element'
-          );
-          this.store.commit('designer/setElementContainsHyperlink', true);
-
-          return;
-        }
-      }
-      //
-    }
-
-    if (hyperlinkEnable === false && urlInput === 'removeHyperlink') {
-      console.log('REMOVE ME');
-      // To remove the added hyperlink tag
-      const originalText = this.getElement.value.textContent;
-      const textNode = document.createTextNode(originalText);
-      this.getElement.value.textContent = '';
-      this.getElement.value.appendChild(textNode);
-      this.store.commit('designer/setHyberlinkEnable', false);
-      this.store.commit('designer/setCustomURLInput', '');
-    }
-  }
-
-  //
-  #checkForHyperlink(hyperlinkEnable, urlInput) {
-    console.log('CHECK MIG');
-    const hyperlink = this.getElement.value.querySelector('a');
-
-    if (hyperlink !== null && hyperlink.parentNode === this.getElement.value) {
-      this.store.commit('designer/setElementContainsHyperlink', true);
-      this.store.commit('designer/setCustomURLInput', hyperlink.href);
-      this.store.commit('designer/setHyberlinkEnable', true);
-      this.store.commit('designer/setOpenLinkInNewTab', true);
-    }
-  }
-  //
-  //
-  handleCustomURL(hyperlinkEnable, urlInput) {
-    this.store.commit('designer/setElementContainsHyperlink', false);
-    this.store.commit('designer/setHyperlinkAbility', true);
-    this.store.commit('designer/setCustomURlValidation', null);
-    this.store.commit('designer/setCustomURlSuccessMessage', null);
-    this.store.commit('designer/setCustomURLInput', '');
-    this.store.commit('designer/setHyberlinkEnable', false);
-
-    const parentHyperlink = this.getElement.value.closest('a');
-    const hyperlink = this.getElement.value.querySelector('a');
-
-    // check if element contains child a tag
-    if (
-      hyperlink === null &&
-      typeof urlInput === 'string' &&
-      urlInput.length !== 0
-    ) {
-      // handle case where parent element already has an a href tag
-      if (parentHyperlink !== null) {
-        this.store.commit('designer/setHyperlinkAbility', false);
-      }
-    }
-
-    if (hyperlinkEnable === undefined) {
-      this.#checkForHyperlink(hyperlinkEnable, urlInput);
-      return;
-    }
-
-    this.#applyCustomURLToElement(hyperlinkEnable, urlInput);
-  }
-
   removeCustomColor() {
     this.getElement.value.style.removeProperty('background-color');
     this.store.commit('designer/setEnabledCustomColorBackground', null);
@@ -897,6 +768,137 @@ class Designer {
     this.store.commit('designer/setBasePrimaryImage', null);
   }
 
+  #addHyperlinkToElement(hyperlinkEnable, urlInput) {
+    console.log('APPLY HYPERLINK TO ELEMENT');
+    const target = '_blank';
+    const parentHyperlink = this.getElement.value.closest('a');
+    const hyperlink = this.getElement.value.querySelector('a');
+
+    this.store.commit('designer/setCustomURlValidation', null);
+
+    // url validation
+    const urlRegex =
+      /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+
+    const isValidURL = ref(true);
+
+    if (hyperlinkEnable === true && urlInput !== null) {
+      isValidURL.value = urlRegex.test(urlInput);
+    }
+
+    if (isValidURL.value === false && urlInput.length !== 0) {
+      this.store.commit('designer/setCustomURlValidation', 'URL is not valid');
+      return;
+    }
+
+    if (hyperlinkEnable === true && typeof urlInput === 'string') {
+      if (
+        (hyperlink !== null && hyperlink.href === urlInput + '/') ||
+        (hyperlink !== null && hyperlink.href === urlInput)
+      ) {
+        this.store.commit(
+          'designer/setCustomURlValidation',
+          'Entered URL already exist.'
+        );
+        this.store.commit('designer/setElementContainsHyperlink', true);
+        return;
+      }
+
+      // check if element contains child hyperlink tag
+      // updated existing url
+      if (hyperlink !== null && urlInput.length !== 0) {
+        hyperlink.href = urlInput;
+        hyperlink.target = target;
+        hyperlink.textContent = this.getElement.value.textContent;
+        this.store.commit(
+          'designer/setCustomURlSuccessMessage',
+          'Succesfully updated element link'
+        );
+        this.store.commit('designer/setElementContainsHyperlink', true);
+        return;
+      }
+
+      // check if element contains child a tag
+      if (hyperlink === null && urlInput.length !== 0) {
+        // add a href
+        if (parentHyperlink === null) {
+          const link = document.createElement('a');
+          link.href = urlInput;
+          link.target = target;
+          link.textContent = this.getElement.value.textContent;
+          this.getElement.value.textContent = '';
+          this.getElement.value.appendChild(link);
+          this.store.commit(
+            'designer/setCustomURlSuccessMessage',
+            'Successfully added link to element'
+          );
+          this.store.commit('designer/setElementContainsHyperlink', true);
+
+          return;
+        }
+      }
+      //
+    }
+
+    if (hyperlinkEnable === false && urlInput === 'removeHyperlink') {
+      console.log('REMOVE ME');
+      // To remove the added hyperlink tag
+      const originalText = this.getElement.value.textContent;
+      const textNode = document.createTextNode(originalText);
+      this.getElement.value.textContent = '';
+      this.getElement.value.appendChild(textNode);
+      this.store.commit('designer/setHyberlinkEnable', false);
+      this.store.commit('designer/setCustomURLInput', '');
+    }
+  }
+
+  //
+  #checkForHyperlink(hyperlinkEnable, urlInput) {
+    console.log('CHECK FOR HYPERLINK IN ELEMENT');
+    const hyperlink = this.getElement.value.querySelector('a');
+
+    if (hyperlink !== null) {
+      console.log('kom her');
+      this.store.commit('designer/setElementContainsHyperlink', true);
+      this.store.commit('designer/setCustomURLInput', hyperlink.href);
+      this.store.commit('designer/setOpenLinkInNewTab', true);
+      this.store.commit('designer/setHyberlinkEnable', true);
+    }
+  }
+  //
+  //
+  handleCustomURL(hyperlinkEnable, urlInput) {
+    this.store.commit('designer/setHyperlinkAbility', true);
+    this.store.commit('designer/setElementContainsHyperlink', false);
+    this.store.commit('designer/setCustomURlValidation', null);
+    this.store.commit('designer/setCustomURlSuccessMessage', null);
+    this.store.commit('designer/setCustomURLInput', '');
+    this.store.commit('designer/setHyberlinkEnable', false);
+
+    const parentHyperlink = this.getElement.value.closest('a');
+    const hyperlink = this.getElement.value.querySelector('a');
+
+    // check if element contains child a tag
+    if (
+      hyperlink === null &&
+      typeof urlInput === 'string' &&
+      urlInput.length !== 0
+    ) {
+      // handle case where parent element already has an a href tag
+      if (parentHyperlink !== null) {
+        this.store.commit('designer/setHyperlinkAbility', false);
+      }
+    }
+
+    if (hyperlinkEnable === undefined) {
+      this.#checkForHyperlink(hyperlinkEnable, urlInput);
+      return;
+    }
+    if (hyperlinkEnable !== undefined && urlInput !== undefined) {
+      this.#addHyperlinkToElement(hyperlinkEnable, urlInput);
+    }
+  }
+
   handleDesignerMethods() {
     console.log('SWITCHED TO NEW COMPONENT / COMPONENT OUTERHTML UPDATED');
 
@@ -907,7 +909,7 @@ class Designer {
 
     // invoke methods
     // handle custom URL
-    this.handleCustomURL();
+    this.handleCustomURL(undefined, undefined);
     // handle opacity
     this.handleOpacity();
     // handle BG opacity

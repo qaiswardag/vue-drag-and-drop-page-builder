@@ -32,10 +32,11 @@
       <div v-if="getHyperlinkAbility === true">
         <div class="my-3 py-3">
           <div class="flex items-center justify-between gap-2 w-full">
-            <p class="myPrimaryParagraph">Enable URL</p>
+            <p class="myPrimaryParagraph">Enable hyperlink</p>
             <!-- Toggle start -->
             <Switch
               v-model="hyperlinkEnable"
+              @click="handleToggleChange('removeHyperlink')"
               :class="[
                 hyperlinkEnable ? 'bg-myPrimaryLinkColor' : 'bg-gray-200',
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
@@ -257,7 +258,7 @@
 import Designer from '../../../../composables/Designer';
 import EditorAccordion from '../EditorAccordion.vue';
 import { useStore } from 'vuex';
-import { computed, ref, watch } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import {
   CheckIcon,
   ExclamationCircleIcon,
@@ -296,6 +297,10 @@ const getOpenLinkInNewTab = computed(() => {
   return store.getters['designer/getOpenLinkInNewTab'];
 });
 
+const getElement = computed(() => {
+  return store.getters['designer/getElement'];
+});
+
 watch(getCustomURLInput, (newValue) => {
   urlInput.value = newValue;
 });
@@ -307,16 +312,18 @@ watch(getOpenLinkInNewTab, (newValue) => {
 });
 
 // remove hyperlink
-watch(hyperlinkEnable, (hyperlinkEnableNewValue) => {
-  if (hyperlinkEnable.value === false) {
-    console.log(
-      'FROM COMPONENT. ONLY RUN ME WHEN WISH TO REMOVE A LINK:',
-      hyperlinkEnableNewValue
-    );
-    designer.handleCustomURL(hyperlinkEnableNewValue, 'removeHyperlink');
-  }
+watch(hyperlinkEnable, async (hyperlinkEnableNewValue) => {
+  hyperlinkEnable.value = hyperlinkEnableNewValue;
+  // designer.handleCustomURL(hyperlinkEnableNewValue, urlInput.value);
 });
 
+const handleToggleChange = async function (data) {
+  await nextTick();
+
+  if (hyperlinkEnable.value === false) {
+    designer.handleCustomURL(hyperlinkEnable.value, data);
+  }
+};
 // add hyperlink
 const handleCustomURL = function () {
   designer.handleCustomURL(hyperlinkEnable.value, urlInput.value);
