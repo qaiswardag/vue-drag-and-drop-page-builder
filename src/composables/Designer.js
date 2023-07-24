@@ -769,7 +769,6 @@ class Designer {
   }
 
   #addHyperlinkToElement(hyperlinkEnable, urlInput) {
-    console.log('APPLY HYPERLINK TO ELEMENT');
     const target = '_blank';
     const parentHyperlink = this.getElement.value.closest('a');
     const hyperlink = this.getElement.value.querySelector('a');
@@ -841,62 +840,75 @@ class Designer {
     }
 
     if (hyperlinkEnable === false && urlInput === 'removeHyperlink') {
-      console.log('REMOVE ME');
       // To remove the added hyperlink tag
       const originalText = this.getElement.value.textContent;
       const textNode = document.createTextNode(originalText);
       this.getElement.value.textContent = '';
       this.getElement.value.appendChild(textNode);
       this.store.commit('designer/setHyberlinkEnable', false);
-      this.store.commit('designer/setCustomURLInput', '');
+      this.store.commit('designer/setElementContainsHyperlink', false);
     }
   }
 
   //
   #checkForHyperlink(hyperlinkEnable, urlInput) {
-    console.log('CHECK FOR HYPERLINK IN ELEMENT');
     const hyperlink = this.getElement.value.querySelector('a');
 
     if (hyperlink !== null) {
-      console.log('kom her');
+      this.store.commit('designer/setHyberlinkEnable', true);
       this.store.commit('designer/setElementContainsHyperlink', true);
       this.store.commit('designer/setCustomURLInput', hyperlink.href);
       this.store.commit('designer/setOpenLinkInNewTab', true);
-      this.store.commit('designer/setHyberlinkEnable', true);
+      this.store.commit('designer/setCustomURlSuccessMessage', null);
+      this.store.commit('designer/setCustomURlValidation', null);
+
+      return;
     }
+
+    this.store.commit('designer/setElementContainsHyperlink', false);
+    this.store.commit('designer/setCustomURLInput', '');
+    this.store.commit('designer/setCustomURlValidation', null);
+    this.store.commit('designer/setCustomURlSuccessMessage', null);
+    this.store.commit('designer/setHyberlinkEnable', false);
   }
   //
   //
   handleCustomURL(hyperlinkEnable, urlInput) {
     this.store.commit('designer/setHyperlinkAbility', true);
-    this.store.commit('designer/setElementContainsHyperlink', false);
-    this.store.commit('designer/setCustomURlValidation', null);
-    this.store.commit('designer/setCustomURlSuccessMessage', null);
-    this.store.commit('designer/setCustomURLInput', '');
-    this.store.commit('designer/setHyberlinkEnable', false);
+    this.store.commit('designer/setHyberlinkEnable', true);
 
     const parentHyperlink = this.getElement.value.closest('a');
     const hyperlink = this.getElement.value.querySelector('a');
 
-    // check if element contains child a tag
+    // handle case where parent element already has an a href tag
+    // when clicking directly on a hyperlink
+    if (parentHyperlink !== null) {
+      this.store.commit('designer/setHyperlinkAbility', false);
+    }
+    //
+    const elementTag = this.getElement.value.tagName.toUpperCase();
+
     if (
-      hyperlink === null &&
-      typeof urlInput === 'string' &&
-      urlInput.length !== 0
+      elementTag !== 'P' &&
+      elementTag !== 'H1' &&
+      elementTag !== 'H2' &&
+      elementTag !== 'H3' &&
+      elementTag !== 'H4' &&
+      elementTag !== 'H5' &&
+      elementTag !== 'H6'
     ) {
-      // handle case where parent element already has an a href tag
-      if (parentHyperlink !== null) {
-        this.store.commit('designer/setHyperlinkAbility', false);
-      }
+      this.store.commit('designer/setHyperlinkAbility', false);
     }
 
     if (hyperlinkEnable === undefined) {
       this.#checkForHyperlink(hyperlinkEnable, urlInput);
       return;
     }
-    if (hyperlinkEnable !== undefined && urlInput !== undefined) {
-      this.#addHyperlinkToElement(hyperlinkEnable, urlInput);
-    }
+
+    //
+    //
+    this.#addHyperlinkToElement(hyperlinkEnable, urlInput);
+    //
   }
 
   handleDesignerMethods() {
@@ -909,7 +921,7 @@ class Designer {
 
     // invoke methods
     // handle custom URL
-    this.handleCustomURL(undefined, undefined);
+    this.handleCustomURL();
     // handle opacity
     this.handleOpacity();
     // handle BG opacity

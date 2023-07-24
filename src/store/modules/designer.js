@@ -37,7 +37,7 @@ export default {
     customURLInput: null,
     customURlSuccessMessage: null,
     customURlValidation: null,
-    hyberlinkEnable: null,
+    hyberlinkEnable: false,
     openLinkInNewTab: null,
     // hyperlink / end
     opacity: null,

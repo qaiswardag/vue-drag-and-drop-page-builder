@@ -312,7 +312,7 @@ watch(getOpenLinkInNewTab, (newValue) => {
 });
 
 // remove hyperlink
-watch(hyperlinkEnable, async (hyperlinkEnableNewValue) => {
+watch(hyperlinkEnable, (hyperlinkEnableNewValue) => {
   hyperlinkEnable.value = hyperlinkEnableNewValue;
   // designer.handleCustomURL(hyperlinkEnableNewValue, urlInput.value);
 });
