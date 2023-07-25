@@ -74,19 +74,15 @@ export default {
         orientationType = `&orientation=${payload.orientation}`;
       }
 
+      const unsplashKey = import.meta.env.VITE_UNSPLASH_KEY;
+
       handleGetImages(
         `https://api.unsplash.com/search/photos?page=${payload.currentPage}&per_page=24&query=${payload.searchTerm}${orientationType}`,
         {
-          //TODO: the api key should not be available in frontend.
           headers: {
             'Accept-Version': 'v1',
-            Authorization:
-              'Client-ID 5m9Y7Ewvxu686LvPcfccdUKxIEJNWhhcnI2IkO95-ao',
+            Authorization: unsplashKey,
           },
-        },
-        {
-          additionalCallTime: 0,
-          abortTimeoutTime: 12000,
         }
       );
 
