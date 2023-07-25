@@ -34,11 +34,11 @@ export default {
     // hyperlink / start
     elementContainsHyperlink: null,
     hyperlinkAbility: null,
-    customURLInput: null,
-    customURlSuccessMessage: null,
-    customURlValidation: null,
+    hyperlinkInput: null,
+    hyperlinkMessage: null,
+    hyperlinkError: null,
     hyberlinkEnable: false,
-    openLinkInNewTab: null,
+    openHyperlinkinkInNewTab: null,
     // hyperlink / end
     opacity: null,
     backgroundOpacity: null,
@@ -117,20 +117,20 @@ export default {
     getHyperlinkAbility(state) {
       return state.hyperlinkAbility;
     },
-    getCustomURLInput(state) {
-      return state.customURLInput;
+    getHyperlinkInput(state) {
+      return state.hyperlinkInput;
     },
-    getCustomURlSuccessMessage(state) {
-      return state.customURlSuccessMessage;
+    getHyperlinkMessage(state) {
+      return state.hyperlinkMessage;
     },
-    getCustomURlValidation(state) {
-      return state.customURlValidation;
+    getHyperlinkError(state) {
+      return state.hyperlinkError;
     },
     getHyberlinkEnable(state) {
       return state.hyberlinkEnable;
     },
-    getOpenLinkInNewTab(state) {
-      return state.openLinkInNewTab;
+    getOpenHyperlinkInNewTab(state) {
+      return state.openHyperlinkinkInNewTab;
     },
     // hyperlink / end
     getOpacity(state) {
@@ -263,20 +263,20 @@ export default {
     setHyperlinkAbility(state, payload) {
       state.hyperlinkAbility = payload;
     },
-    setCustomURLInput(state, payload) {
-      state.customURLInput = payload;
+    setHyperlinkInput(state, payload) {
+      state.hyperlinkInput = payload;
     },
-    setCustomURlSuccessMessage(state, payload) {
-      state.customURlSuccessMessage = payload;
+    setHyperlinkMessage(state, payload) {
+      state.hyperlinkMessage = payload;
     },
-    setCustomURlValidation(state, payload) {
-      state.customURlValidation = payload;
+    setHyperlinkError(state, payload) {
+      state.hyperlinkError = payload;
     },
     setHyberlinkEnable(state, payload) {
       state.hyberlinkEnable = payload;
     },
-    setOpenLinkInNewTab(state, payload) {
-      state.openLinkInNewTab = payload;
+    setOpenHyperlinkInNewTab(state, payload) {
+      state.openHyperlinkinkInNewTab = payload;
     },
     // hyperlink / end
     setOpacity(state, payload) {

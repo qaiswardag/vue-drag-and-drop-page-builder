@@ -35,14 +35,9 @@ class Designer {
     this.getHighlightedImage = computed(
       () => this.store.getters['designer/getHighlightedImage']
     );
-
     this.getHyberlinkEnable = computed(
       () => this.store.getters['designer/getHyberlinkEnable']
     );
-    this.getOpenLinkInNewTab = computed(
-      () => this.store.getters['designer/getOpenLinkInNewTab']
-    );
-
     this.getElement = computed(() => this.store.getters['designer/getElement']);
 
     this.getComponents = computed(
@@ -768,12 +763,15 @@ class Designer {
     this.store.commit('designer/setBasePrimaryImage', null);
   }
 
-  #addHyperlinkToElement(hyperlinkEnable, urlInput) {
-    const target = '_blank';
+  #addHyperlinkToElement(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
+    console.table('hyperlinkEnable:', hyperlinkEnable);
+    console.table('urlInput:', urlInput);
+    console.table('openHyperlinkInNewTab', openHyperlinkInNewTab);
+    // const target = '_blank';
     const parentHyperlink = this.getElement.value.closest('a');
     const hyperlink = this.getElement.value.querySelector('a');
 
-    this.store.commit('designer/setCustomURlValidation', null);
+    this.store.commit('designer/setHyperlinkError', null);
 
     // url validation
     const urlRegex =
@@ -783,35 +781,34 @@ class Designer {
 
     if (hyperlinkEnable === true && urlInput !== null) {
       isValidURL.value = urlRegex.test(urlInput);
+      console.log('OOOOOOO:', isValidURL.value);
     }
 
-    if (isValidURL.value === false && urlInput.length !== 0) {
-      this.store.commit('designer/setCustomURlValidation', 'URL is not valid');
+    console.log('hvad bliver den:', JSON.stringify(urlInput));
+    if (isValidURL.value === false) {
+      this.store.commit('designer/setHyperlinkMessage', null);
+      this.store.commit('designer/setHyperlinkError', 'URL is not valid');
       return;
     }
 
     if (hyperlinkEnable === true && typeof urlInput === 'string') {
-      if (
-        (hyperlink !== null && hyperlink.href === urlInput + '/') ||
-        (hyperlink !== null && hyperlink.href === urlInput)
-      ) {
-        this.store.commit(
-          'designer/setCustomURlValidation',
-          'Entered URL already exist.'
-        );
-        this.store.commit('designer/setElementContainsHyperlink', true);
-        return;
-      }
-
       // check if element contains child hyperlink tag
       // updated existing url
       if (hyperlink !== null && urlInput.length !== 0) {
         hyperlink.href = urlInput;
-        hyperlink.target = target;
+
+        // Conditionally set the target attribute if openHyperlinkInNewTab is true
+        if (openHyperlinkInNewTab === true) {
+          hyperlink.target = '_blank';
+        }
+        if (openHyperlinkInNewTab === false) {
+          hyperlink.removeAttribute('target');
+        }
+
         hyperlink.textContent = this.getElement.value.textContent;
         this.store.commit(
-          'designer/setCustomURlSuccessMessage',
-          'Succesfully updated element link'
+          'designer/setHyperlinkMessage',
+          'Succesfully updated element hyperlink'
         );
         this.store.commit('designer/setElementContainsHyperlink', true);
         return;
@@ -823,13 +820,18 @@ class Designer {
         if (parentHyperlink === null) {
           const link = document.createElement('a');
           link.href = urlInput;
-          link.target = target;
+
+          // Conditionally set the target attribute if openHyperlinkInNewTab is true
+          if (openHyperlinkInNewTab === true) {
+            link.target = '_blank';
+          }
+
           link.textContent = this.getElement.value.textContent;
           this.getElement.value.textContent = '';
           this.getElement.value.appendChild(link);
           this.store.commit(
-            'designer/setCustomURlSuccessMessage',
-            'Successfully added link to element'
+            'designer/setHyperlinkMessage',
+            'Successfully added hyperlink to element'
           );
           this.store.commit('designer/setElementContainsHyperlink', true);
 
@@ -851,31 +853,35 @@ class Designer {
   }
 
   //
-  #checkForHyperlink(hyperlinkEnable, urlInput) {
+  #checkForHyperlink(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
     const hyperlink = this.getElement.value.querySelector('a');
-
     if (hyperlink !== null) {
       this.store.commit('designer/setHyberlinkEnable', true);
       this.store.commit('designer/setElementContainsHyperlink', true);
-      this.store.commit('designer/setCustomURLInput', hyperlink.href);
-      this.store.commit('designer/setOpenLinkInNewTab', true);
-      this.store.commit('designer/setCustomURlSuccessMessage', null);
-      this.store.commit('designer/setCustomURlValidation', null);
+      this.store.commit('designer/setHyperlinkInput', hyperlink.href);
+      this.store.commit('designer/setHyperlinkMessage', null);
+      this.store.commit('designer/setHyperlinkError', null);
+
+      if (hyperlink.target === '_blank') {
+        this.store.commit('designer/setOpenHyperlinkInNewTab', true);
+      }
+      if (hyperlink.target !== '_blank') {
+        this.store.commit('designer/setOpenHyperlinkInNewTab', false);
+      }
 
       return;
     }
 
     this.store.commit('designer/setElementContainsHyperlink', false);
-    this.store.commit('designer/setCustomURLInput', '');
-    this.store.commit('designer/setCustomURlValidation', null);
-    this.store.commit('designer/setCustomURlSuccessMessage', null);
+    this.store.commit('designer/setHyperlinkInput', '');
+    this.store.commit('designer/setHyperlinkError', null);
+    this.store.commit('designer/setHyperlinkMessage', null);
     this.store.commit('designer/setHyberlinkEnable', false);
   }
   //
   //
-  handleCustomURL(hyperlinkEnable, urlInput) {
+  handleHyperlink(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
     this.store.commit('designer/setHyperlinkAbility', true);
-    this.store.commit('designer/setHyberlinkEnable', true);
 
     const parentHyperlink = this.getElement.value.closest('a');
     const hyperlink = this.getElement.value.querySelector('a');
@@ -901,13 +907,17 @@ class Designer {
     }
 
     if (hyperlinkEnable === undefined) {
-      this.#checkForHyperlink(hyperlinkEnable, urlInput);
+      this.#checkForHyperlink(hyperlinkEnable, urlInput, openHyperlinkInNewTab);
       return;
     }
 
     //
     //
-    this.#addHyperlinkToElement(hyperlinkEnable, urlInput);
+    this.#addHyperlinkToElement(
+      hyperlinkEnable,
+      urlInput,
+      openHyperlinkInNewTab
+    );
     //
   }
 
@@ -921,7 +931,7 @@ class Designer {
 
     // invoke methods
     // handle custom URL
-    this.handleCustomURL();
+    this.handleHyperlink();
     // handle opacity
     this.handleOpacity();
     // handle BG opacity

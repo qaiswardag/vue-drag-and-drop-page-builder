@@ -36,7 +36,7 @@
             <!-- Toggle start -->
             <Switch
               v-model="hyperlinkEnable"
-              @click="handleToggleChange('removeHyperlink')"
+              @click="handleToggleHyperlinkEnable('removeHyperlink')"
               :class="[
                 hyperlinkEnable ? 'bg-myPrimaryLinkColor' : 'bg-gray-200',
                 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
@@ -159,7 +159,7 @@
               placeholder="URL.."
               autocomplete="off"
               class="myPrimaryInput border-none rounded-r-none ml-0 w-full"
-              @keydown.enter.tab.prevent="handleCustomURL()"
+              @keydown.enter.tab.prevent="handleHyperlink()"
             />
             <div
               class="border border-gray-200 border-none rounded flex items-center justify-center h-full w-8"
@@ -171,16 +171,16 @@
           </div>
 
           <p
-            v-if="getCustomURlSuccessMessage !== null"
+            v-if="getHyperlinkMessage !== null"
             class="myPrimaryParagraph text-myPrimarySuccesColor mt-1"
           >
-            {{ getCustomURlSuccessMessage }}
+            {{ getHyperlinkMessage }}
           </p>
           <p
-            v-if="getCustomURlValidation !== null"
+            v-if="getHyperlinkError !== null"
             class="myPrimaryParagraphError mt-1"
           >
-            {{ getCustomURlValidation }}
+            {{ getHyperlinkError }}
           </p>
 
           <div class="my-3 py-3">
@@ -188,22 +188,25 @@
               <p class="myPrimaryParagraph">Open in new tab</p>
               <!-- Toggle start -->
               <Switch
-                v-model="openLinkInNewTab"
+                v-model="openHyperlinkInNewTab"
+                @click="handleToggleOpenHyperlinkInNewTab"
                 :class="[
-                  openLinkInNewTab ? 'bg-myPrimaryLinkColor' : 'bg-gray-200',
+                  openHyperlinkInNewTab
+                    ? 'bg-myPrimaryLinkColor'
+                    : 'bg-gray-200',
                   'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-myPrimaryLinkColor focus:ring-offset-2',
                 ]"
               >
                 <span class="sr-only">Use setting</span>
                 <span
                   :class="[
-                    openLinkInNewTab ? 'translate-x-5' : 'translate-x-0',
+                    openHyperlinkInNewTab ? 'translate-x-5' : 'translate-x-0',
                     'pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
                   ]"
                 >
                   <span
                     :class="[
-                      openLinkInNewTab
+                      openHyperlinkInNewTab
                         ? 'opacity-0 ease-out duration-100'
                         : 'opacity-100 ease-in duration-200',
                       'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
@@ -226,7 +229,7 @@
                   </span>
                   <span
                     :class="[
-                      openLinkInNewTab
+                      openHyperlinkInNewTab
                         ? 'opacity-100 ease-in duration-200'
                         : 'opacity-0 ease-out duration-100',
                       'absolute inset-0 flex h-full w-full items-center justify-center transition-opacity',
@@ -273,7 +276,7 @@ const designer = new Designer(store);
 
 const hyperlinkEnable = ref(false);
 const urlInput = ref(null);
-const openLinkInNewTab = ref(false);
+const openHyperlinkInNewTab = ref(false);
 
 const getElementContainsHyperlink = computed(() => {
   return store.getters['designer/getElementContainsHyperlink'];
@@ -281,51 +284,66 @@ const getElementContainsHyperlink = computed(() => {
 const getHyperlinkAbility = computed(() => {
   return store.getters['designer/getHyperlinkAbility'];
 });
-const getCustomURlSuccessMessage = computed(() => {
-  return store.getters['designer/getCustomURlSuccessMessage'];
+const getHyperlinkMessage = computed(() => {
+  return store.getters['designer/getHyperlinkMessage'];
 });
-const getCustomURlValidation = computed(() => {
-  return store.getters['designer/getCustomURlValidation'];
+const getHyperlinkError = computed(() => {
+  return store.getters['designer/getHyperlinkError'];
 });
-const getCustomURLInput = computed(() => {
-  return store.getters['designer/getCustomURLInput'];
+const getHyperlinkInput = computed(() => {
+  return store.getters['designer/getHyperlinkInput'];
 });
 const getHyberlinkEnable = computed(() => {
   return store.getters['designer/getHyberlinkEnable'];
 });
-const getOpenLinkInNewTab = computed(() => {
-  return store.getters['designer/getOpenLinkInNewTab'];
-});
 
+const getOpenHyperlinkInNewTab = computed(() => {
+  return store.getters['designer/getOpenHyperlinkInNewTab'];
+});
 const getElement = computed(() => {
   return store.getters['designer/getElement'];
 });
 
-watch(getCustomURLInput, (newValue) => {
+watch(getHyperlinkInput, (newValue) => {
   urlInput.value = newValue;
 });
 watch(getHyberlinkEnable, (newValue) => {
   hyperlinkEnable.value = newValue;
 });
-watch(getOpenLinkInNewTab, (newValue) => {
-  openLinkInNewTab.value = newValue;
+watch(getOpenHyperlinkInNewTab, (newValue) => {
+  openHyperlinkInNewTab.value = newValue;
 });
 
 // remove hyperlink
 watch(hyperlinkEnable, (hyperlinkEnableNewValue) => {
   hyperlinkEnable.value = hyperlinkEnableNewValue;
-  // designer.handleCustomURL(hyperlinkEnableNewValue, urlInput.value);
+  store.commit('designer/setHyberlinkEnable', hyperlinkEnable.value);
 });
 
-const handleToggleChange = async function (data) {
+const handleToggleHyperlinkEnable = async function (data) {
   await nextTick();
 
+  // remove hyperlink
   if (hyperlinkEnable.value === false) {
-    designer.handleCustomURL(hyperlinkEnable.value, data);
+    designer.handleHyperlink(hyperlinkEnable.value, data);
   }
 };
 // add hyperlink
-const handleCustomURL = function () {
-  designer.handleCustomURL(hyperlinkEnable.value, urlInput.value);
+const handleHyperlink = function () {
+  designer.handleHyperlink(
+    hyperlinkEnable.value,
+    urlInput.value,
+    openHyperlinkInNewTab.value
+  );
+};
+
+const handleToggleOpenHyperlinkInNewTab = async function () {
+  await nextTick();
+
+  designer.handleHyperlink(
+    hyperlinkEnable.value,
+    urlInput.value,
+    openHyperlinkInNewTab.value
+  );
 };
 </script>
