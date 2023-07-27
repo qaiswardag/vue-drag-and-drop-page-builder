@@ -494,7 +494,7 @@ class Designer {
     setTimeout(() => {
       this.saveCurrentDesign();
       console.log('CURRENT DESIGN SAVED.');
-    }, 1000);
+    }, 3000);
   };
 
   saveCurrentDesign = async () => {
