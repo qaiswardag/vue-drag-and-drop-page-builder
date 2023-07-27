@@ -132,6 +132,13 @@
       <div
         class="flex flex-1 justify-between sm:justify-end items-center gap-2"
       >
+        <span
+          v-if="currentPage !== 1"
+          class="myPrimaryParagraph italic pr-2 pl-1 cursor-pointer text-xs underline"
+          @click="nextPage((currentPage = 1))"
+        >
+          first page
+        </span>
         <button
           v-if="currentPage > 1"
           :disabled="currentPage < 1"

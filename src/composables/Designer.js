@@ -61,7 +61,8 @@ class Designer {
       return this.getElement.value.classList.contains(CSS);
     });
 
-    let elementClass = currentCSS || 'none'; // set to 'none' if undefined
+    // set to 'none' if undefined
+    let elementClass = currentCSS || 'none';
 
     this.store.commit(`designer/${mutationName}`, elementClass);
 
@@ -102,7 +103,8 @@ class Designer {
       typeof userSelectedClass === 'string' &&
       userSelectedClass !== '' &&
       !userSelectedClass.includes(' ') &&
-      !this.getElement.value.classList.contains(userSelectedClass) // Check if class already exists
+      // Check if class already exists
+      !this.getElement.value.classList.contains(userSelectedClass)
     ) {
       this.getElement.value.classList.add(userSelectedClass);
       this.store.commit('designer/setElement', this.getElement.value);
@@ -119,14 +121,19 @@ class Designer {
   }
 
   handleDeleteElement() {
-    const element = this.getElement.value; // Get the element to be deleted
+    // Get the element to be deleted
+    const element = this.getElement.value;
 
-    this.store.commit('designer/setParentElement', element.parentNode); // Store the parent of the deleted element
-    this.store.commit('designer/setRestoredElement', element.outerHTML); // Store the outerHTML of the deleted element
-    this.store.commit('designer/setNextSibling', element.nextSibling); // Store the next sibling of the deleted element
+    // Store the parent of the deleted element
+    this.store.commit('designer/setParentElement', element.parentNode);
+    // Store the outerHTML of the deleted element
+    this.store.commit('designer/setRestoredElement', element.outerHTML);
+    // Store the next sibling of the deleted element
+    this.store.commit('designer/setNextSibling', element.nextSibling);
     this.store.commit('designer/setElement', null);
 
-    element.remove(); // Remove the element from the DOM
+    // Remove the element from the DOM
+    element.remove();
   }
   handleRestoreElement() {
     // Get the stored deleted element and its parent
@@ -397,11 +404,9 @@ class Designer {
       tailwindOpacities.backgroundOpacities,
       'setBackgroundOpacity'
     );
-    //
   }
   handleOpacity(opacity) {
     this.#updateStyle(opacity, tailwindOpacities.opacities, 'setOpacity');
-    //
   }
   saveComponentsLocalStorage(components) {
     localStorage.setItem('savedCurrentDesign', JSON.stringify(components));
@@ -472,10 +477,6 @@ class Designer {
     });
   };
 
-  //
-  //
-  //
-  //
   removeHoveredAndSelected() {
     if (document.querySelector('[hovered]') !== null) {
       document.querySelector('[hovered]').removeAttribute('hovered');
@@ -485,11 +486,7 @@ class Designer {
       document.querySelector('[selected]').removeAttribute('selected');
     }
   }
-  //
-  //
-  //
-  //
-  //
+
   saveCurrentDesignWithTimer = () => {
     setTimeout(() => {
       this.saveCurrentDesign();
@@ -541,8 +538,6 @@ class Designer {
     this.addClickAndHoverEvents();
   };
 
-  //
-  //
   cloneComponent(cloneComponent) {
     this.saveCurrentDesignWithTimer();
     // Hide slider and right menu
@@ -578,18 +573,6 @@ class Designer {
     return clonedComponent;
   }
 
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
   deleteAllComponents() {
     this.store.commit('designer/setComponents', []);
     this.saveComponentsLocalStorage([]);
@@ -641,7 +624,6 @@ class Designer {
     //
     // save all current added HTML components in local storage
     this.saveComponentsLocalStorage(this.getComponents.value);
-    //
     // end of method "moveComponent"
   }
 
@@ -852,7 +834,6 @@ class Designer {
     }
   }
 
-  //
   #checkForHyperlink(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
     const hyperlink = this.getElement.value.querySelector('a');
     if (hyperlink !== null) {
@@ -878,8 +859,7 @@ class Designer {
     this.store.commit('designer/setHyperlinkMessage', null);
     this.store.commit('designer/setHyberlinkEnable', false);
   }
-  //
-  //
+
   handleHyperlink(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
     this.store.commit('designer/setHyperlinkAbility', true);
 
@@ -911,14 +891,11 @@ class Designer {
       return;
     }
 
-    //
-    //
     this.#addHyperlinkToElement(
       hyperlinkEnable,
       urlInput,
       openHyperlinkInNewTab
     );
-    //
   }
 
   handleDesignerMethods() {
