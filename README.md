@@ -1,4 +1,4 @@
-# Vue 3 drag anddrop page builder
+# Vue 3 drag and drop page builder
 
 ## Intro
 
