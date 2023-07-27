@@ -63,7 +63,7 @@ If you are familiar with Laravel, you can integrate the page builder with my ope
 
 By utilizing a backend Framework, the HTML components, currently stored in a JSON file at `public/components.json`, can be easily stored in the database, resulting in better management of HTML components.
 
-## Documentation
+# Documentation
 
 ### Customizing the page builder
 
@@ -79,7 +79,7 @@ Example: VITE_UNSPLASH_KEY="your-unsplash-api-key-here"
 
 [Get your unsplash api key here](https://unsplash.com/developers).
 
-## Get in Touch
+# Get in Touch
 
 If you have any questions, feel free to connect with me on LinkedIn and send me a message.
 
