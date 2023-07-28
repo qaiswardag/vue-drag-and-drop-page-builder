@@ -642,6 +642,19 @@ class Designer {
         textContentElementClone
       );
     }
+
+    if (Number(this.getElement.value.textContent.length) === 0) {
+      // Apply the 'min-h-[2]' class
+      this.getElement.value.classList.add('h-7');
+      this.getElement.value.classList.add('min-h-[7]');
+      this.getElement.value.classList.add('bg-red-50');
+    }
+    if (Number(this.getElement.value.textContent.length) !== 0) {
+      // Remove the 'min-h-[2]' class if it's present
+      this.getElement.value.classList.remove('h-7');
+      this.getElement.value.classList.remove('min-h-[7]');
+      this.getElement.value.classList.remove('bg-red-50');
+    }
   }
 
   async changeText() {
