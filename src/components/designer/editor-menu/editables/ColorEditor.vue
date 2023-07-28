@@ -8,12 +8,14 @@
           <label class="myPrimaryInputLabel"> Background color </label>
           <div
             @click="handleBackgroundColorsSlideOver"
-            class="flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:ring-1 hover:ring-myPrimaryBrandColor focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+            class="flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-2 hover:ring-myPrimaryBrandColor focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
           >
             <div class="relative flex items-center w-full py-0 p-0">
               <div class="flex items-center gap-2 justify-start">
                 <div
-                  v-if="getBackgroundColor !== 'none'"
+                  v-if="
+                    getBackgroundColor !== null && getBackgroundColor !== 'none'
+                  "
                   class="myPrimaryColorPreview w-6 h-6 cursor-pointer"
                   :class="[getBackgroundColor]"
                   :style="{ backgroundColor: getBackgroundColorCustom }"
@@ -70,46 +72,44 @@
           <label class="myPrimaryInputLabel"> Text color </label>
           <div
             @click="handleTextColorsSlideOver"
-            class="flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:ring-1 hover:ring-myPrimaryBrandColor focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
+            class="flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-pointer hover:border-transparent hover:ring-2 hover:ring-myPrimaryBrandColor focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
           >
             <div class="relative flex items-center w-full py-0 p-0">
               <div class="flex items-center gap-2 justify-start">
                 <div
-                  v-if="getBackgroundColor !== 'none'"
+                  v-if="getTextColor !== null && getTextColor !== 'none'"
                   class="myPrimaryColorPreview w-6 h-6 cursor-pointer"
-                  :class="[getBackgroundColor]"
-                  :style="{ backgroundColor: getBackgroundColorCustom }"
+                  :class="[getTextColor?.replace('text', 'bg')]"
+                  :style="{ backgroundColor: getTextColorCustom }"
                 ></div>
                 <div
-                  v-if="getBackgroundColor === 'none'"
+                  v-if="getTextColor === 'none'"
                   class="w-6 h-6 cursor-default"
                 >
                   <div
                     class="myPrimaryColorPreview bg-gray-50"
-                    :style="{ backgroundColor: getBackgroundColorCustom }"
+                    :style="{ color: getTextColorCustom }"
                   >
                     <XMarkIcon
                       v-if="
-                        getBackgroundColorCustom === null ||
-                        getBackgroundColorCustom.length === 0
+                        getTextColorCustom === null ||
+                        getTextColorCustom.length === 0
                       "
                       class="text-myPrimaryErrorColor stroke-2"
                     ></XMarkIcon>
                   </div>
                 </div>
                 <p
-                  v-if="getBackgroundColorCustom"
+                  v-if="getTextColorCustom"
                   class="myPrimaryParagraph"
                 >
-                  {{ getBackgroundColorCustomHex }}
+                  {{ getTextColorCustomHex }}
                 </p>
                 <p
-                  v-if="!getBackgroundColorCustom"
+                  v-if="!getTextColorCustom"
                   class="myPrimaryParagraph"
                 >
-                  {{
-                    getBackgroundColor === 'none' ? 'None' : getBackgroundColor
-                  }}
+                  {{ getTextColor === 'none' ? 'None' : getTextColor }}
                 </p>
               </div>
             </div>
@@ -142,7 +142,7 @@
         :title="titleTextColorsSlideOverRight"
         @slideOverButton="textColorsSlideOverButton"
       >
-        Text color compo here
+        <ManageTextColor></ManageTextColor>
       </SlideOverRight>
     </template>
   </EditorAccordion>
@@ -154,6 +154,7 @@ import { computed } from 'vue';
 import EditorAccordion from '../EditorAccordion.vue';
 import SlideOverRight from '../../../slidebars/SlideOverRight.vue';
 import ManageBackgroundColor from './ManageBackgroundColor.vue';
+import ManageTextColor from './ManageTextColor.vue';
 import ManageBackgroundOpacity from './ManageBackgroundOpacity.vue';
 import ManageOpacity from './ManageOpacity.vue';
 
@@ -194,8 +195,14 @@ const textColorsSlideOverButton = function () {
 const getBackgroundColor = computed(() => {
   return store.getters['designer/getBackgroundColor'];
 });
+const getTextColor = computed(() => {
+  return store.getters['designer/getTextColor'];
+});
 const getBackgroundColorCustom = computed(() => {
   return store.getters['designer/getBackgroundColorCustom'];
+});
+const getTextColorCustom = computed(() => {
+  return store.getters['designer/getTextColorCustom'];
 });
 
 const rgbToHex = function rgbToHex(r, g, b) {
@@ -207,6 +214,10 @@ const rgbToHex = function rgbToHex(r, g, b) {
 
 const getBackgroundColorCustomHex = computed(() => {
   let rgbValues = getBackgroundColorCustom.value.match(/\d+/g).map(Number);
+  return rgbToHex(...rgbValues);
+});
+const getTextColorCustomHex = computed(() => {
+  let rgbValues = getTextColorCustom.value.match(/\d+/g).map(Number);
   return rgbToHex(...rgbValues);
 });
 </script>

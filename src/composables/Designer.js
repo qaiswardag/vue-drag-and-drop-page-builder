@@ -26,7 +26,8 @@ class Designer {
     this.nextTick = nextTick();
 
     this.timer = null;
-    this.colors = tailwindColors.backgroundColors();
+    this.backgroundColors = tailwindColors.backgroundColors();
+    this.textColors = tailwindColors.textColors();
     this.store = store;
     this.getTextAreaVueModel = computed(
       () => this.store.getters['designer/getTextAreaVueModel']
@@ -388,15 +389,53 @@ class Designer {
       this.store.commit('designer/setElement', this.getElement.value);
     }
   }
+  handleCustomTextColor(userSelectedColor, enabledCustomColor) {
+    // if user is selecting a custom HEX color
+    if (userSelectedColor === undefined && enabledCustomColor === undefined) {
+      // Get the style property
+      let textColor = this.getElement.value.style.color;
 
-  removeCustomColor() {
+      // Check for inline background color
+      if (typeof textColor === 'string' && textColor.length !== 0) {
+        this.store.commit('designer/setEnabledCustomColorText', true);
+        this.store.commit('designer/setTextColorCustom', textColor);
+      }
+
+      // Check for inline background color
+      if (typeof textColor === 'string' && textColor.length === 0) {
+        this.store.commit('designer/setEnabledCustomColorText', false);
+        this.store.commit('designer/setTextColorCustom', null);
+      }
+    }
+
+    // if user is selecting a custom HEX color
+    if (enabledCustomColor === true) {
+      this.getElement.value.style.color = userSelectedColor;
+      this.store.commit('designer/setElement', this.getElement.value);
+    }
+  }
+
+  handleBackgroundColor(userSelectedColor) {
+    this.#updateStyle(
+      userSelectedColor,
+      this.backgroundColors,
+      'setBackgroundColor'
+    );
+  }
+  handleTextColor(userSelectedColor) {
+    this.#updateStyle(userSelectedColor, this.textColors, 'setTextColor');
+  }
+  removeCustomColorBackground() {
     this.getElement.value.style.removeProperty('background-color');
     this.store.commit('designer/setEnabledCustomColorBackground', null);
     this.store.commit('designer/setBackgroundColorCustom', null);
     this.store.commit('designer/setElement', this.getElement.value);
   }
-  handleColor(userSelectedColor) {
-    this.#updateStyle(userSelectedColor, this.colors, 'setBackgroundColor');
+  removeCustomColorText() {
+    this.getElement.value.style.removeProperty('color');
+    this.store.commit('designer/setEnabledCustomColorText', null);
+    this.store.commit('designer/setTextColorCustom', null);
+    this.store.commit('designer/setElement', this.getElement.value);
   }
   handleBackgroundOpacity(opacity) {
     this.#updateStyle(
@@ -490,7 +529,6 @@ class Designer {
   saveCurrentDesignWithTimer = () => {
     setTimeout(() => {
       this.saveCurrentDesign();
-      console.log('CURRENT DESIGN SAVED.');
     }, 100);
   };
 
@@ -776,10 +814,8 @@ class Designer {
 
     if (hyperlinkEnable === true && urlInput !== null) {
       isValidURL.value = urlRegex.test(urlInput);
-      console.log('OOOOOOO:', isValidURL.value);
     }
 
-    console.log('hvad bliver den:', JSON.stringify(urlInput));
     if (isValidURL.value === false) {
       this.store.commit('designer/setHyperlinkMessage', null);
       this.store.commit('designer/setHyperlinkError', 'URL is not valid');
@@ -912,8 +948,6 @@ class Designer {
   }
 
   handleDesignerMethods() {
-    console.log('SWITCHED TO NEW COMPONENT / COMPONENT OUTERHTML UPDATED');
-
     if (this.getElement.value === null) return;
 
     // save current design
@@ -962,10 +996,12 @@ class Designer {
     this.handleVerticalMargin();
     // handle horizontal margin
     this.handleHorizontalMargin();
-    // handle custom color
-    this.handleCustomBackgroundColor();
     // handle color
-    this.handleColor();
+    this.handleBackgroundColor();
+    this.handleCustomBackgroundColor();
+
+    this.handleTextColor();
+    this.handleCustomTextColor();
     // handle classes
     this.currentClasses();
     // handle text content

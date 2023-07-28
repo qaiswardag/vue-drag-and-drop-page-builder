@@ -58,9 +58,16 @@ export default {
     fontDesktop: null,
     fontTablet: null,
     fontMobile: null,
+    // background color / start
     enabledCustomColorBackground: null,
     backgroundColorCustom: null,
     backgroundColor: null,
+    // background color / end
+    // text color / start
+    enabledCustomColorText: null,
+    textColorCustom: null,
+    textColor: null,
+    // text color / end
     element: null,
     component: null,
     components: [],
@@ -190,11 +197,20 @@ export default {
     getBackgroundColor(state) {
       return state.backgroundColor;
     },
+    getTextColor(state) {
+      return state.textColor;
+    },
     getEnabledCustomColorBackground(state) {
       return state.enabledCustomColorBackground;
     },
+    getEnabledCustomColorText(state) {
+      return state.enabledCustomColorText;
+    },
     getBackgroundColorCustom(state) {
       return state.backgroundColorCustom;
+    },
+    getTextColorCustom(state) {
+      return state.textColorCustom;
     },
     getElement(state) {
       return state.element;
@@ -344,11 +360,20 @@ export default {
     setBackgroundColor(state, payload) {
       state.backgroundColor = payload;
     },
+    setTextColor(state, payload) {
+      state.textColor = payload;
+    },
     setBackgroundColorCustom(state, payload) {
       state.backgroundColorCustom = payload;
     },
+    setTextColorCustom(state, payload) {
+      state.textColorCustom = payload;
+    },
     setEnabledCustomColorBackground(state, payload) {
       state.enabledCustomColorBackground = payload;
+    },
+    setEnabledCustomColorText(state, payload) {
+      state.enabledCustomColorText = payload;
     },
     setElement(state, payload) {
       state.element = {};

@@ -12,7 +12,7 @@ const enabledCustomColor = ref(false);
 const selectedHEXColor = ref([]);
 const error = ref(null);
 
-const handleCustomBackgroundColor = function () {
+const handleCustomTextColor = function () {
   const isHexColor = /^#([0-9A-Fa-f]{3}){1,2}$/.test(customColorInput.value);
   if (isHexColor === false) {
     error.value = 'Invalid HEX color. Remember to add #';
@@ -24,7 +24,7 @@ const handleCustomBackgroundColor = function () {
   }
 
   selectedHEXColor.value = [customColorInput.value];
-  designer.handleCustomBackgroundColor(
+  designer.handleCustomTextColor(
     customColorInput.value,
     enabledCustomColor.value
   );
@@ -41,28 +41,28 @@ const handleRemoveTag = function () {
 watch(enabledCustomColor, (newValue) => {
   // remove inline custom style color
   if (newValue === true) {
-    handleCustomBackgroundColor();
+    handleCustomTextColor();
   }
   if (newValue === false) {
-    designer.removeCustomColorBackground();
+    designer.removeCustomColorText();
   }
 });
 
 const store = useStore();
-const colors = tailwindColors.backgroundColors();
+const colors = tailwindColors.textColors();
 
-const getBackgroundColor = computed(() => {
-  return store.getters['designer/getBackgroundColor'];
+const getTextColor = computed(() => {
+  return store.getters['designer/getTextColor'];
 });
-const getBackgroundColorCustom = computed(() => {
-  return store.getters['designer/getBackgroundColorCustom'];
-});
-
-const getEnabledCustomColorBackground = computed(() => {
-  return store.getters['designer/getEnabledCustomColorBackground'];
+const getTextColorCustom = computed(() => {
+  return store.getters['designer/getTextColorCustom'];
 });
 
-watch(getEnabledCustomColorBackground, (newValue) => {
+const getEnabledCustomColorText = computed(() => {
+  return store.getters['designer/getEnabledCustomColorText'];
+});
+
+watch(getEnabledCustomColorText, (newValue) => {
   // remove inline custom style color
   if (newValue === true) {
     enabledCustomColor.value = true;
@@ -81,20 +81,20 @@ const rgbToHex = function rgbToHex(r, g, b) {
 
 onMounted(() => {
   if (
-    typeof getEnabledCustomColorBackground.value === 'boolean' &&
-    getEnabledCustomColorBackground.value === true
+    typeof getEnabledCustomColorText.value === 'boolean' &&
+    getEnabledCustomColorText.value === true
   ) {
-    enabledCustomColor.value = getEnabledCustomColorBackground.value;
+    enabledCustomColor.value = getEnabledCustomColorText.value;
     // Extract the numbers from the RGB string
-    let rgbValues = getBackgroundColorCustom.value.match(/\d+/g).map(Number);
+    let rgbValues = getTextColorCustom.value.match(/\d+/g).map(Number);
     let hexColor = rgbToHex(...rgbValues); // Spread array values
     customColorInput.value = hexColor;
     error.value = null;
   }
 });
 
-const getBackgroundColorCustomHex = computed(() => {
-  let rgbValues = getBackgroundColorCustom.value.match(/\d+/g).map(Number);
+const getTextColorCustomHex = computed(() => {
+  let rgbValues = getTextColorCustom.value.match(/\d+/g).map(Number);
   return rgbToHex(...rgbValues);
 });
 
@@ -103,46 +103,45 @@ const designer = new Designer(store);
 
 <template>
   <div class="my-3 py-3">
-    <label class="myPrimaryInputLabel"> Current Background </label>
+    <label class="myPrimaryInputLabel"> Current Text color </label>
     <div
       class="flex flex-row justify-between items-center myPrimaryGap py-2.5 px-3 cursor-default focus:bg-white rounded-md border border-myPrimaryMediumGrayColor focus:outline-none focus:ring-2 focus:ring-myPrimaryBrandColor focus:border-transparent"
     >
       <div class="relative flex items-center w-full py-0 p-0">
         <div class="flex items-center gap-2 justify-start">
           <div
-            v-if="getBackgroundColor !== 'none'"
+            v-if="getTextColor !== 'none'"
             class="myPrimaryColorPreview w-6 h-6 cursor-default"
-            :class="[getBackgroundColor]"
-            :style="{ backgroundColor: getBackgroundColorCustom }"
+            :class="[getTextColor.replace('text', 'bg')]"
+            :style="{ backgroundColor: getTextColorCustom }"
           ></div>
           <div
-            v-if="getBackgroundColor === 'none'"
+            v-if="getTextColor === 'none'"
             class="w-6 h-6 cursor-default"
           >
             <div
               class="myPrimaryColorPreview bg-gray-50"
-              :style="{ backgroundColor: getBackgroundColorCustom }"
+              :style="{ textColor: getTextColorCustom }"
             >
               <XMarkIcon
                 v-if="
-                  getBackgroundColorCustom === null ||
-                  getBackgroundColorCustom.length === 0
+                  getTextColorCustom === null || getTextColorCustom.length === 0
                 "
                 class="text-myPrimaryErrorColor stroke-2"
               ></XMarkIcon>
             </div>
           </div>
           <p
-            v-if="getBackgroundColorCustom"
+            v-if="getTextColorCustom"
             class="myPrimaryParagraph"
           >
-            {{ getBackgroundColorCustomHex }}
+            {{ getTextColorCustomHex }}
           </p>
           <p
-            v-if="!getBackgroundColorCustom"
+            v-if="!getTextColorCustom"
             class="myPrimaryParagraph"
           >
-            {{ getBackgroundColor === 'none' ? 'None' : getBackgroundColor }}
+            {{ getTextColor === 'none' ? 'None' : getTextColor }}
           </p>
         </div>
       </div>
@@ -214,10 +213,10 @@ const designer = new Designer(store);
             <input
               v-model="customColorInput"
               type="text"
-              placeholder="Custom background color.."
+              placeholder="Custom text color.."
               autocomplete="off"
               class="myPrimaryInput border-none rounded-r-none ml-0 w-full"
-              @keydown.enter.tab.prevent="handleCustomBackgroundColor()"
+              @keydown.enter.tab.prevent="handleCustomTextColor()"
             />
             <div
               class="border border-gray-200 border-none rounded flex items-center justify-center h-full w-8"
@@ -297,11 +296,14 @@ const designer = new Designer(store);
         <div
           v-for="color in colors.slice(1, 3)"
           :key="color"
-          @click="designer.handleBackgroundColor(color)"
+          @click="designer.handleTextColor(color)"
           class="myPrimaryColorPreview flex justify-center items-center"
-          :class="[color === getBackgroundColor ? '' : '', color]"
+          :class="[
+            color === getTextColor ? '' : '',
+            color.replace('text', 'bg'),
+          ]"
         >
-          <template v-if="color === getBackgroundColor">
+          <template v-if="color === getTextColor">
             <!-- Display the checkmark icon or any other indicator -->
             <CheckIcon
               class="w-6 h-6 text-white bg-black bg-opacity-50 rounded-full"
@@ -310,9 +312,9 @@ const designer = new Designer(store);
           </template>
         </div>
         <div
-          @click="designer.handleBackgroundColor('none')"
+          @click="designer.handleTextColor('none')"
           class="myPrimaryColorPreview relative bg-gray-100"
-          :class="[getBackgroundColor === null ? 'rounded-full' : '']"
+          :class="[getTextColor === null ? 'rounded-full' : '']"
         >
           <XMarkIcon class="text-myPrimaryErrorColor stroke-2"></XMarkIcon>
         </div>
@@ -321,11 +323,14 @@ const designer = new Designer(store);
         <div
           v-for="color in colors.slice(3)"
           :key="color"
-          @click="designer.handleBackgroundColor(color)"
+          @click="designer.handleTextColor(color)"
           class="myPrimaryColorPreview flex justify-center items-center"
-          :class="[color === getBackgroundColor ? '' : '', color]"
+          :class="[
+            color === getTextColor ? '' : '',
+            color.replace('text', 'bg'),
+          ]"
         >
-          <template v-if="color === getBackgroundColor">
+          <template v-if="color === getTextColor">
             <!-- Display the checkmark icon or any other indicator -->
             <CheckIcon
               class="w-6 h-6 text-white bg-black bg-opacity-50 rounded-full"
