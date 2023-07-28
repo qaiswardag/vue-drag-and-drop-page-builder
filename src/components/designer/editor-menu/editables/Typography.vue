@@ -98,12 +98,7 @@ watch(
       <!-- FONT SIZES -->
       <p class="myPrimaryParagraph font-medium py-0 my-4">Font sizes</p>
       <div class="my-3 py-3">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Font Base
-        </label>
+        <label class="myPrimaryInputLabel"> Font Base </label>
         <select
           v-model="fontBase"
           class="myPrimarySelect"
@@ -124,12 +119,7 @@ watch(
         </select>
       </div>
       <div class="my-3 py-3">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Font desktop size
-        </label>
+        <label class="myPrimaryInputLabel"> Font desktop size </label>
         <select
           v-model="fontDesktop"
           class="myPrimarySelect"
@@ -150,12 +140,7 @@ watch(
         </select>
       </div>
       <div class="my-3 py-3">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Font tablet size
-        </label>
+        <label class="myPrimaryInputLabel"> Font tablet size </label>
         <select
           v-model="fontTablet"
           class="myPrimarySelect"
@@ -176,12 +161,7 @@ watch(
         </select>
       </div>
       <div class="my-3 py-3">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Font mobile size
-        </label>
+        <label class="myPrimaryInputLabel"> Font mobile size </label>
         <select
           v-model="fontMobile"
           class="myPrimarySelect"
@@ -204,12 +184,7 @@ watch(
       <hr />
       <p class="myPrimaryParagraph font-medium py-0 my-4">Font general</p>
       <div class="my-3 py-3">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Font weight
-        </label>
+        <label class="myPrimaryInputLabel"> Font weight </label>
         <select
           v-model="fontWeight"
           class="myPrimarySelect"
@@ -230,12 +205,7 @@ watch(
         </select>
       </div>
       <div class="my-3 py-3">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Font family
-        </label>
+        <label class="myPrimaryInputLabel"> Font family </label>
         <select
           v-model="fontFamily"
           class="myPrimarySelect"
@@ -256,12 +226,7 @@ watch(
         </select>
       </div>
       <div class="my-3 py-3">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Font Style
-        </label>
+        <label class="myPrimaryInputLabel"> Font Style </label>
         <select
           v-model="fontStyle"
           class="myPrimarySelect"

@@ -301,7 +301,7 @@
   }
 
   .myPrimarySelect {
-    @apply relative w-full cursor-default rounded-md  border border-myPrimaryMediumGrayColor bg-white py-3 pl-3 pr-10 text-left shadow-sm focus:border-myPrimaryBrandColor focus:outline-none focus:ring-1 focus:ring-myPrimaryBrandColor;
+    @apply relative w-full rounded-md border border-myPrimaryMediumGrayColor hover:ring-1 hover:ring-myPrimaryBrandColor cursor-pointer bg-white py-3 pl-3 pr-10 text-left shadow-sm focus:border-myPrimaryBrandColor focus:outline-none focus:ring-1 focus:ring-myPrimaryBrandColor;
   }
   .compiledCSS {
     @apply h-8 min-h-[7];

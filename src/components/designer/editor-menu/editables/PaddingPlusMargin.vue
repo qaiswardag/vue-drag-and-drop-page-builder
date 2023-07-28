@@ -4,12 +4,7 @@
     <template #content>
       <p class="myPrimaryParagraph font-medium py-0 my-4">Padding</p>
       <div class="my-3 py-3">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Padding Y-axis
-        </label>
+        <label class="myPrimaryInputLabel"> Padding Y-axis </label>
         <select
           v-model="fontVerticalPadding"
           class="myPrimarySelect"
@@ -30,12 +25,7 @@
         </select>
       </div>
       <div class="my-3 py-3">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Padding X-axis
-        </label>
+        <label class="myPrimaryInputLabel"> Padding X-axis </label>
         <select
           v-model="fontHorizontalPadding"
           class="myPrimarySelect"
@@ -57,12 +47,7 @@
       </div>
       <p class="myPrimaryParagraph font-medium py-0 my-4">Margin</p>
       <div class="my-3 py-3">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Margin Y-axis
-        </label>
+        <label class="myPrimaryInputLabel"> Margin Y-axis </label>
         <select
           v-model="fontVerticalMargin"
           class="myPrimarySelect"
@@ -83,12 +68,7 @@
         </select>
       </div>
       <div class="my-3 py-3">
-        <label
-          for="meta_title"
-          class="myPrimaryInputLabel"
-        >
-          Margin X-axis
-        </label>
+        <label class="myPrimaryInputLabel"> Margin X-axis </label>
         <select
           v-model="fontHorizontalMargin"
           class="myPrimarySelect"

@@ -81,12 +81,7 @@ watch(
     class="my-2 pb-8"
   >
     <div class="block px-4 ease-linear duration-200 bg-white">
-      <label
-        for="meta_title"
-        class="myPrimaryInputLabel"
-      >
-        Text content
-      </label>
+      <label class="myPrimaryInputLabel"> Text content </label>
 
       <textarea
         v-model="textContentVueModel"
