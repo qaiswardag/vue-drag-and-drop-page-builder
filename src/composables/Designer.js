@@ -57,11 +57,13 @@ class Designer {
       () => this.store.getters['designer/getRestoredElement']
     );
   }
-  #updateStyle(selectedCSS, CSSArray, mutationName) {
+  #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
+    if (this.getElement.value === null) {
+      return;
+    }
+
     const currentCSS = CSSArray.find((CSS) => {
-      if (this.getElement.value !== null) {
-        return this.getElement.value.classList.contains(CSS);
-      }
+      return this.getElement.value.classList.contains(CSS);
     });
 
     // set to 'none' if undefined
@@ -164,35 +166,35 @@ class Designer {
   }
 
   handleFontWeight(userSelectedFontWeight) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       userSelectedFontWeight,
       tailwindFontStyles.fontWeight,
       'setFontWeight'
     );
   }
   handleFontFamily(userSelectedFontFamily) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       userSelectedFontFamily,
       tailwindFontStyles.fontFamily,
       'setFontFamily'
     );
   }
   handleFontStyle(userSelectedFontStyle) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       userSelectedFontStyle,
       tailwindFontStyles.fontStyle,
       'setFontStyle'
     );
   }
   handleVerticalPadding(userSelectedVerticalPadding) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       userSelectedVerticalPadding,
       tailwindPaddingAndMargin.verticalPadding,
       'setFontVerticalPadding'
     );
   }
   handleHorizontalPadding(userSelectedHorizontalPadding) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       userSelectedHorizontalPadding,
       tailwindPaddingAndMargin.horizontalPadding,
       'setFontHorizontalPadding'
@@ -200,14 +202,14 @@ class Designer {
   }
 
   handleVerticalMargin(userSelectedVerticalMargin) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       userSelectedVerticalMargin,
       tailwindPaddingAndMargin.verticalMargin,
       'setFontVerticalMargin'
     );
   }
   handleHorizontalMargin(userSelectedHorizontalMargin) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       userSelectedHorizontalMargin,
       tailwindPaddingAndMargin.horizontalMargin,
       'setFontHorizontalMargin'
@@ -216,21 +218,21 @@ class Designer {
 
   // border style & width / start
   handleBorderStyle(borderStyle) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       borderStyle,
       tailwindBorderStyleWidthPlusColor.borderStyle,
       'setBorderStyle'
     );
   }
   handleBorderWidth(borderWidth) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       borderWidth,
       tailwindBorderStyleWidthPlusColor.borderWidth,
       'setBorderWidth'
     );
   }
   handleBorderColor(borderColor) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       borderColor,
       tailwindBorderStyleWidthPlusColor.borderColor,
       'setBorderColor'
@@ -240,35 +242,35 @@ class Designer {
 
   // border radius / start
   handleBorderRadiusGlobal(borderRadiusGlobal) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       borderRadiusGlobal,
       tailwindBorderRadius.roundedGlobal,
       'setBorderRadiusGlobal'
     );
   }
   handleBorderRadiusTopLeft(borderRadiusTopLeft) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       borderRadiusTopLeft,
       tailwindBorderRadius.roundedTopLeft,
       'setBorderRadiusTopLeft'
     );
   }
   handleBorderRadiusTopRight(borderRadiusTopRight) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       borderRadiusTopRight,
       tailwindBorderRadius.roundedTopRight,
       'setBorderRadiusTopRight'
     );
   }
   handleBorderRadiusBottomleft(borderRadiusBottomleft) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       borderRadiusBottomleft,
       tailwindBorderRadius.roundedBottomLeft,
       'setBorderRadiusBottomleft'
     );
   }
   handleBorderRadiusBottomRight(borderRadiusBottomRight) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       borderRadiusBottomRight,
       tailwindBorderRadius.roundedBottomRight,
       'setBorderRadiusBottomRight'
@@ -418,14 +420,14 @@ class Designer {
   }
 
   handleBackgroundColor(userSelectedColor) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       userSelectedColor,
       this.backgroundColors,
       'setBackgroundColor'
     );
   }
   handleTextColor(userSelectedColor) {
-    this.#updateStyle(userSelectedColor, this.textColors, 'setTextColor');
+    this.#modifyElementCSS(userSelectedColor, this.textColors, 'setTextColor');
   }
   removeCustomColorBackground() {
     this.getElement.value.style.removeProperty('background-color');
@@ -440,14 +442,14 @@ class Designer {
     this.store.commit('designer/setElement', this.getElement.value);
   }
   handleBackgroundOpacity(opacity) {
-    this.#updateStyle(
+    this.#modifyElementCSS(
       opacity,
       tailwindOpacities.backgroundOpacities,
       'setBackgroundOpacity'
     );
   }
   handleOpacity(opacity) {
-    this.#updateStyle(opacity, tailwindOpacities.opacities, 'setOpacity');
+    this.#modifyElementCSS(opacity, tailwindOpacities.opacities, 'setOpacity');
   }
   saveComponentsLocalStorage(components) {
     localStorage.setItem('savedCurrentDesign', JSON.stringify(components));
@@ -716,9 +718,11 @@ class Designer {
   }
 
   previewCurrentDesign() {
+    this.store.commit('designer/setComponent', null);
+    this.store.commit('designer/setElement', null);
+
     const addedHtmlComponents = ref([]);
     // preview current design in external browser tab
-
     // iterate over each top-level section component
     document
       .querySelectorAll('section:not(section section)')

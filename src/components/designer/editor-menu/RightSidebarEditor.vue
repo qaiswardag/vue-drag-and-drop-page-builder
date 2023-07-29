@@ -54,7 +54,7 @@
             <DeleteElement> </DeleteElement>
           </div>
         </article>
-        <article class="min-h-[30em]"></article>
+        <article class="min-h-[20em]"></article>
       </div>
     </div>
   </div>
