@@ -3,6 +3,7 @@ import SlideOverRightParent from '../slidebars/SlideOverRightParent.vue';
 import AdvancedDesignerSettings from './AdvancedDesignerSettings.vue';
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
+import fullHTMLContent from '../../utils/html-doc-declaration-with-components';
 
 const store = useStore();
 const showAdvancedSettingsSlideOverRight = ref(false);
@@ -24,11 +25,11 @@ const getComponents = computed(() => {
   return store.getters['designer/getComponents'];
 });
 
-const downloadHTML = function (filename, text) {
+const downloadHTML = function (filename, HTML) {
   const element = document.createElement('a');
   element.setAttribute(
     'href',
-    'data:text/html;charset=utf-8,' + encodeURIComponent(text)
+    'data:text/html;charset=utf-8,' + encodeURIComponent(fullHTMLContent(HTML))
   );
   element.setAttribute('download', filename);
 
