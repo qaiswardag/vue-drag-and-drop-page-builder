@@ -59,7 +59,9 @@ class Designer {
   }
   #updateStyle(selectedCSS, CSSArray, mutationName) {
     const currentCSS = CSSArray.find((CSS) => {
-      return this.getElement.value.classList.contains(CSS);
+      if (this.getElement.value !== null) {
+        return this.getElement.value.classList.contains(CSS);
+      }
     });
 
     // set to 'none' if undefined
