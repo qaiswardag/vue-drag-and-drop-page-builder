@@ -99,7 +99,7 @@ const cloneComponent = function (cloneComponent) {
 
 // When HTML component is dropped into the DOM
 const onDrop = function (droppedElement, targetIndex, originalEvent) {
-  designer.saveComponentsLocalStorage(getComponents.value);
+  designer.saveCurrentDesignWithTimer();
 };
 const getElement = computed(() => {
   return store.getters['designer/getElement'];
@@ -330,7 +330,7 @@ onMounted(async () => {
               <ComponentTopMenu></ComponentTopMenu>
               <section
                 v-html="element.html"
-                class="p-0.5"
+                class="m-0.5"
               ></section>
             </div>
           </template>

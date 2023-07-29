@@ -4,6 +4,8 @@ import AdvancedDesignerSettings from './AdvancedDesignerSettings.vue';
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import fullHTMLContent from '../../utils/html-doc-declaration-with-components';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const store = useStore();
 const showAdvancedSettingsSlideOverRight = ref(false);
@@ -25,7 +27,8 @@ const getComponents = computed(() => {
   return store.getters['designer/getComponents'];
 });
 
-const downloadHTML = function (filename, HTML) {
+// generate HTML
+const generateHTML = function (filename, HTML) {
   const element = document.createElement('a');
   element.setAttribute(
     'href',
@@ -41,12 +44,40 @@ const downloadHTML = function (filename, HTML) {
   document.body.removeChild(element);
 };
 
-const handleDownloadPageLayout = function () {
+// handle download HTML
+const handleDownloadHTML = function () {
   downloadedComponents.value = getComponents.value.map((component) => {
     return component.html;
   });
 
-  downloadHTML('downloaded_file.html', downloadedComponents.value.join(''));
+  generateHTML('downloaded_html.html', downloadedComponents.value.join(''));
+};
+
+// generate PDF
+const handleDownloadPagePDF = async function () {
+  const doc = new jsPDF();
+
+  // Select the div element with the id 'pagebuilder'
+  const element = document.getElementById('pagebuilder');
+
+  try {
+    const canvas = await html2canvas(element, {
+      useCORS: true,
+      allowTaint: true,
+      dpi: 200,
+      height: 30000,
+      windowHeight: 30000,
+    });
+
+    // Get the image data URL
+    const imageData = canvas.toDataURL('image/jpeg');
+    // Embed the image into the PDF
+    doc.addImage(imageData, 'JPEG', 10, 10, 190, 0);
+    // Save the PDF
+    doc.save('downloaded_file.pdf');
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+  }
 };
 </script>
 
@@ -61,16 +92,33 @@ const handleDownloadPageLayout = function () {
   <!-- Download Layout layout - start -->
   <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
     <div class="flex items-left flex-col gap-1">
-      <h3 class="myFourthHeader">Download Page HTML</h3>
+      <h3 class="myFourthHeader">Download Page as HTML</h3>
       <p class="myPrimaryParagraph text-xs">Download current page layout.</p>
     </div>
     <div class="mt-4">
       <button
-        @click="handleDownloadPageLayout"
+        @click="handleDownloadHTML"
         type="button"
         class="myPrimaryButton text-xs"
       >
-        Download Page
+        Download HTML
+      </button>
+    </div>
+  </div>
+  <!-- Download Layout - end -->
+  <!-- Download Layout layout - start -->
+  <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
+    <div class="flex items-left flex-col gap-1">
+      <h3 class="myFourthHeader">Download Page as PDF</h3>
+      <p class="myPrimaryParagraph text-xs">Download current page as PDF.</p>
+    </div>
+    <div class="mt-4">
+      <button
+        @click="handleDownloadPagePDF"
+        type="button"
+        class="myPrimaryButton text-xs"
+      >
+        Download PDF
       </button>
     </div>
   </div>

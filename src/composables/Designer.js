@@ -581,7 +581,6 @@ class Designer {
   };
 
   cloneComponent(cloneComponent) {
-    this.saveCurrentDesignWithTimer();
     // Hide slider and right menu
     this.store.commit('designer/setMenuPreview', false);
     this.store.commit('designer/setMenuRight', false);
