@@ -1,10 +1,13 @@
 <script setup>
 import SlideOverRightParent from '../slidebars/SlideOverRightParent.vue';
 import AdvancedDesignerSettings from './AdvancedDesignerSettings.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
 const showAdvancedSettingsSlideOverRight = ref(false);
 const titleSettingsSlideOverRight = ref('');
+const downloadedComponents = ref(null);
 
 // handle slideover window
 const handleAdvancedSettingsSlideOver = function () {
@@ -17,8 +20,32 @@ const settingsAdvancedSlideOverButton = function () {
   showAdvancedSettingsSlideOverRight.value = false;
 };
 
+const getComponents = computed(() => {
+  return store.getters['designer/getComponents'];
+});
+
+const downloadHTML = function (filename, text) {
+  const element = document.createElement('a');
+  element.setAttribute(
+    'href',
+    'data:text/html;charset=utf-8,' + encodeURIComponent(text)
+  );
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+};
+
 const handleDownloadPageLayout = function () {
-  //
+  downloadedComponents.value = getComponents.value.map((component) => {
+    return component.html;
+  });
+
+  downloadHTML('downloaded_file.html', downloadedComponents.value.join(''));
 };
 </script>
 
