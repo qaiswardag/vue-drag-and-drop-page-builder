@@ -135,6 +135,8 @@ class Designer {
     this.store.commit('designer/setRestoredElement', element.outerHTML);
     // Store the next sibling of the deleted element
     this.store.commit('designer/setNextSibling', element.nextSibling);
+
+    this.store.commit('designer/setComponent', null);
     this.store.commit('designer/setElement', null);
 
     // Remove the element from the DOM
@@ -142,7 +144,10 @@ class Designer {
   }
   handleRestoreElement() {
     // Get the stored deleted element and its parent
-    if (this.getRestoredElement !== null && this.getParentElement !== null) {
+    if (
+      this.getRestoredElement.value !== null &&
+      this.getParentElement.value !== null
+    ) {
       // Create a new element from the stored outerHTML
       const newElement = document.createElement('div');
       newElement.innerHTML = this.getRestoredElement.value;
@@ -156,13 +161,10 @@ class Designer {
     }
 
     // Clear
-    this.store.commit('designer/setRestoredElement', null);
     this.store.commit('designer/setParentElement', null);
-    this.store.commit('designer/setElement', null);
-  }
-
-  handleClearRestoreElement() {
     this.store.commit('designer/setRestoredElement', null);
+    this.store.commit('designer/setComponent', null);
+    this.store.commit('designer/setElement', null);
   }
 
   handleFontWeight(userSelectedFontWeight) {
@@ -983,8 +985,6 @@ class Designer {
     this.handleBorderRadiusBottomleft();
     // border radius
     this.handleBorderRadiusBottomRight();
-    // handle clear restore element
-    this.handleClearRestoreElement();
     // handle font size
     this.handleFontSize();
     // handle font weight

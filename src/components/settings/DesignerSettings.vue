@@ -53,24 +53,23 @@ const handleDownloadHTML = function () {
   generateHTML('downloaded_html.html', downloadedComponents.value.join(''));
 };
 
-// generate PDF
-const handleDownloadPagePDF = async function () {
+const generatePDF = async function () {
   const doc = new jsPDF();
 
   // Select the div element with the id 'pagebuilder'
-  const element = document.getElementById('pagebuilder');
-
   try {
+    const element = document.getElementById('pagebuilder');
+
     const canvas = await html2canvas(element, {
       useCORS: true,
       allowTaint: true,
       dpi: 200,
-      height: 30000,
-      windowHeight: 30000,
+      scrollY: -window.scrollY, // Capture full content even if not visible on the screen
     });
 
     // Get the image data URL
     const imageData = canvas.toDataURL('image/jpeg');
+
     // Embed the image into the PDF
     doc.addImage(imageData, 'JPEG', 10, 10, 190, 0);
     // Save the PDF
@@ -114,7 +113,7 @@ const handleDownloadPagePDF = async function () {
     </div>
     <div class="mt-4">
       <button
-        @click="handleDownloadPagePDF"
+        @click="generatePDF"
         type="button"
         class="myPrimaryButton text-xs"
       >
