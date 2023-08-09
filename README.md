@@ -1,8 +1,6 @@
-<div style="text-align:center;margin:40px 0 40px 0">
-<a href="https://www.admin.myissue.io" target="_blank">
-<img width="200" src="public/logo-myissue.svg" alt="Logo">
-</a>
-</div>
+<p align="center" dir="auto">
+<img width="200" style="max-width: 100%;" src="public/logo-myissue.svg" alt="Logo">
+</p>
 
 # Intro
 
