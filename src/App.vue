@@ -138,29 +138,13 @@ const handleDesigner = function () {
       Power your vision and build impressive pages with ease using an intuitive
       Vue.js drag-and-drop page builder.
       <br />
-      Feel free to visit my
       <a
         class="text-myPrimaryLinkColor"
-        href="https://github.com/qaiswardag"
+        href="https://github.com/qaiswardag/vue-drag-and-drop-page-builder"
         target="_blank"
-        >GitHub</a
       >
-      profile for more information.
-      <br />
-
-      Contact me to request access to the code. You can reach me through
-      <a
-        class="text-myPrimaryLinkColor"
-        href="mailto:qais.wardag@outlook.com"
-        >Email</a
-      >
-      or
-      <a
-        class="text-myPrimaryLinkColor"
-        href="https://www.linkedin.com/in/qaiswardag/"
-        target="_blank"
-        >LinkedIn</a
-      >.
+        Visit the project's GitHub repository.
+      </a>
     </p>
     <div class="flex justify-center gap-2 my-8">
       <div>
@@ -171,28 +155,41 @@ const handleDesigner = function () {
           Start Builder
         </button>
       </div>
-
-      <div>
-        <a
-          class="myPrimaryButton"
-          href="https://www.admin.myissue.io"
-          target="_blank"
-          >Try Admin Panel</a
-        >
-      </div>
     </div>
   </div>
   <FullWidthElement
     :descriptionArea="true"
     class="bg-red-50"
   >
-    <template #title>All-in-one Builder</template>
+    <template #title>All-in-one Page Builder</template>
     <template #description>
       <span class="block">
         Build responsive pages and manage content easily pages with ease using
         an intuitive Vue drag-and-drop page builder. Elevate your creative
         vision and effortlessly create pages using an intuitive Vue.js
-        drag-and-drop page builder.
+        drag-and-drop Page Builder.
+        <br />
+        <a
+          class="text-myPrimaryLinkColor"
+          href="https://github.com/qaiswardag/vue-drag-and-drop-page-builder"
+          target="_blank"
+        >
+          Visit the project's GitHub repository.
+        </a>
+        <br />
+        Feel free to contact me with any questions. You can reach me through
+        <a
+          class="text-myPrimaryLinkColor"
+          href="mailto:qais.wardag@outlook.com"
+          >Email</a
+        >
+        or
+        <a
+          class="text-myPrimaryLinkColor"
+          href="https://www.linkedin.com/in/qaiswardag/"
+          target="_blank"
+          >LinkedIn</a
+        >.
       </span>
       <div class="flex justify-start gap-2 my-8">
         <div>

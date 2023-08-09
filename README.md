@@ -1,6 +1,10 @@
-# Vue 3 drag and drop page builder
+<div style="text-align:center;margin:40px 0 40px 0">
+<a href="https://www.admin.myissue.io" target="_blank">
+<img width="200" src="public/logo-myissue.svg" alt="Logo">
+</a>
+</div>
 
-## Intro
+# Intro
 
 If you find this project useful or interesting, I would greatly appreciate if you could star ⭐ the [GitHub repository](https://github.com/qaiswardag/vue-drag-and-drop-page-builder). It helps to boost the project's visibility and encourages me to continue adding new features.
 
@@ -10,7 +14,7 @@ To star the repository, simply click on the **Star** button located at the top-r
 
 This app was born out of my desire to make a minimalst page builder with a elegant and intuitive design.
 
-[Play around with the page builder](https://www.builder.myissue.io)
+[Play around with the demo app page builder](https://www.builder.myissue.io)
 
 ## Technologies and Frameworks
 
@@ -79,6 +83,14 @@ Example: VITE_UNSPLASH_KEY="your-unsplash-api-key-here"
 
 [Get your unsplash api key here](https://unsplash.com/developers).
 
+# Contributing
+
+Thank you for considering contributing to this project!
+
+# Security Vulnerabilities
+
+If you discover a security vulnerability, please send me an e-mail.
+
 # Get in Touch
 
 If you have any questions, feel free to connect with me on LinkedIn and send me a message.
@@ -87,3 +99,7 @@ I would love to hear your feedback, suggestions, or any issues you encounter whi
 
 - [Email](mailto:qais.wardag@outlook.com)
 - [LinkedIn](https://www.linkedin.com/in/qaiswardag)
+
+# License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

@@ -86,7 +86,7 @@ const firstButton = function () {
                   class="flex items-center justify-center gap-1 cursor-pointer hover:underline"
                 >
                   <span class="myPrimaryParagraph font-medium">
-                    Close Designer
+                    Close Builder
                   </span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
