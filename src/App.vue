@@ -123,7 +123,7 @@ const handleDesigner = function () {
         @click="handleDesigner"
         class="text-sm font-medium text-myPrimaryDarkGrayColor flex gap-2 items-center cursor-pointer"
       >
-        Start Designer
+        Start Builder
       </p>
     </div>
   </nav>
@@ -168,7 +168,7 @@ const handleDesigner = function () {
           @click="handleDesigner"
           class="myPrimaryButton"
         >
-          Start Designer
+          Start Builder
         </button>
       </div>
 
@@ -186,7 +186,7 @@ const handleDesigner = function () {
     :descriptionArea="true"
     class="bg-red-50"
   >
-    <template #title>All-in-one Designer</template>
+    <template #title>All-in-one Builder</template>
     <template #description>
       <span class="block">
         Build responsive pages and manage content easily pages with ease using
@@ -200,7 +200,7 @@ const handleDesigner = function () {
             @click="handleDesigner"
             class="myPrimaryButton"
           >
-            Start Designer
+            Start Builder
           </button>
         </div>
 

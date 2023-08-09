@@ -11,6 +11,6 @@
     RewriteRule ^ %1 [L,R=301]
 
     # Rdirect the request to www from non-www
-    RewriteCond %{HTTP_HOST} ^designer\.myissue\.io [NC]
-    RewriteRule ^(.*)$ https://www.designer.myissue.io/$1 [L,R=301]
+    RewriteCond %{HTTP_HOST} ^builder\.myissue\.io [NC]
+    RewriteRule ^(.*)$ https://www.builder.myissue.io/$1 [L,R=301]
 </IfModule>
