@@ -19,30 +19,33 @@ This app was born out of my desire to make a minimalst page builder with a elega
 Built using cutting-Edge Technologies and Frameworks.
 Developed with Vue 3, Vite, Vuex and Tailwind CSS.
 
-## Installation
+# Installation
+
+## Getting started
 
 Clone the repository locally:
 
 ```
 git clone https://github.com/qaiswardag/vue-drag-and-drop-page-builder.git
-
 ```
 
 Install packages:
 
 ```
 npm install
-
 ```
 
 Run App
 
 ```
-
 npm run dev
 ```
 
-## Features:
+## Required Software Installation
+
+Please note that these instructions assume you have PHP, Composer, and Node.js installed
+
+# Features
 
 - Live Drag & Drop Builder: Easily drag and drop content on a page to bring it to life.
 
@@ -55,15 +58,6 @@ npm run dev
 - Media Library: Enjoy a beautiful and user-friendly media library for easy image management and updates.
 
 - Minimal and Intuitive Design: Engage users with an elegant and intuitive design that enhances their visual experience.
-
-## Use with Backend
-
-The Page builder's capabilities become infinite when integrated with a backend framework like Laravel or Express.js.
-
-If you are familiar with Laravel, you can integrate the page builder with my open-source Laravel Admin Panel available at:
-[Demo & repo](https://github.com/qaiswardag/myissue-admin).
-
-By utilizing a backend Framework, the HTML components, currently stored in a JSON file at `public/components.json`, can be easily stored in the database, resulting in better management of HTML components.
 
 # Documentation
 
@@ -80,6 +74,15 @@ Please note that if you want to use Unsplash, simply create an .env file in your
 Example: VITE_UNSPLASH_KEY="your-unsplash-api-key-here"
 
 [Get your unsplash api key here](https://unsplash.com/developers).
+
+# Use with Backend
+
+The Page builder's capabilities become infinite when integrated with a backend framework like Laravel or Express.js.
+
+If you are familiar with Laravel, you can integrate the page builder with my open-source Laravel Admin Panel available at:
+[Demo & repo](https://github.com/qaiswardag/myissue-admin).
+
+By utilizing a backend Framework, the HTML components, currently stored in a JSON file at `public/components.json`, can be easily stored in the database, resulting in better management of HTML components.
 
 # Contributing
 
