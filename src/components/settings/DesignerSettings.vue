@@ -52,32 +52,6 @@ const handleDownloadHTML = function () {
 
   generateHTML('downloaded_html.html', downloadedComponents.value.join(''));
 };
-
-const generatePDF = async function () {
-  const doc = new jsPDF();
-
-  // Select the div element with the id 'pagebuilder'
-  try {
-    const element = document.getElementById('pagebuilder');
-
-    const canvas = await html2canvas(element, {
-      useCORS: true,
-      allowTaint: true,
-      dpi: 200,
-      scrollY: -window.scrollY, // Capture full content even if not visible on the screen
-    });
-
-    // Get the image data URL
-    const imageData = canvas.toDataURL('image/jpeg');
-
-    // Embed the image into the PDF
-    doc.addImage(imageData, 'JPEG', 10, 10, 190, 0);
-    // Save the PDF
-    doc.save('downloaded_file.pdf');
-  } catch (error) {
-    console.error('Error generating PDF:', error);
-  }
-};
 </script>
 
 <template>
@@ -88,7 +62,7 @@ const generatePDF = async function () {
   >
     <AdvancedDesignerSettings></AdvancedDesignerSettings>
   </SlideOverRightParent>
-  <!-- Download Layout layout - start -->
+  <!-- Download Layout HTML - start -->
   <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
     <div class="flex items-left flex-col gap-1">
       <h3 class="myFourthHeader">Download Page as HTML</h3>
@@ -104,24 +78,7 @@ const generatePDF = async function () {
       </button>
     </div>
   </div>
-  <!-- Download Layout - end -->
-  <!-- Download Layout layout - start -->
-  <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
-    <div class="flex items-left flex-col gap-1">
-      <h3 class="myFourthHeader">Download Page as PDF</h3>
-      <p class="myPrimaryParagraph text-xs">Download current page as PDF.</p>
-    </div>
-    <div class="mt-4">
-      <button
-        @click="generatePDF"
-        type="button"
-        class="myPrimaryButton text-xs"
-      >
-        Download PDF
-      </button>
-    </div>
-  </div>
-  <!-- Download Layout - end -->
+  <!-- Download Layout HTML - end -->
 
   <!-- Advanced Settings - start -->
   <div class="mt-4 mb-4 py-8 border-b border-myPrimbryLightGrayColor">
