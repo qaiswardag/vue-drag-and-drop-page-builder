@@ -4,8 +4,6 @@ import AdvancedDesignerSettings from './AdvancedDesignerSettings.vue';
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import fullHTMLContent from '../../utils/html-doc-declaration-with-components';
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 
 const store = useStore();
 const showAdvancedSettingsSlideOverRight = ref(false);
