@@ -700,22 +700,28 @@ class Designer {
     }
   }
 
-  async changeText() {
+  decodeHTML(html) {
+    const txt = document.createElement('textarea');
+    txt.innerHTML = html;
+    return txt.value;
+  }
+
+  async changeText(event) {
     await this.nextTick;
 
-    if (this.getTextAreaVueModel.value !== null) {
-      let textContentElementClone = this.getTextAreaVueModel.value;
+    const textContentElementClone = event.target.value;
 
-      // Replace newline characters with <br> tags
-      textContentElementClone = textContentElementClone.replaceAll(
-        /\r?\n/g,
-        '<br>'
-      );
+    // Convert newline characters to <br> tags when saving
+    const textContentWithBr = textContentElementClone.replaceAll(
+      /\r?\n/g,
+      '<br>'
+    );
 
-      // text change
-      this.getElement.value.innerHTML = textContentElementClone;
-      this.store.commit('designer/setElement', this.getElement.value);
-    }
+    // Update both the displayed content and the model
+    this.textContentVueModel = textContentWithBr;
+    this.getElement.value.innerHTML = textContentWithBr;
+
+    this.store.commit('designer/setElement', this.getElement.value);
   }
 
   previewCurrentDesign() {

@@ -84,10 +84,11 @@ watch(
       <label class="myPrimaryInputLabel"> Text content </label>
 
       <textarea
-        v-model="textContentVueModel"
+        v-html="textContentVueModel"
+        :value="designer.decodeHTML(textContentVueModel)"
         rows="12"
         class="myPrimaryTextArea"
-        @input="designer.changeText()"
+        @input="designer.changeText"
       />
     </div>
   </div>
