@@ -810,10 +810,6 @@ class Designer {
   }
 
   #addHyperlinkToElement(hyperlinkEnable, urlInput, openHyperlinkInNewTab) {
-    console.table('hyperlinkEnable:', hyperlinkEnable);
-    console.table('urlInput:', urlInput);
-    console.table('openHyperlinkInNewTab', openHyperlinkInNewTab);
-    // const target = '_blank';
     const parentHyperlink = this.getElement.value.closest('a');
     const hyperlink = this.getElement.value.querySelector('a');
 
