@@ -74,7 +74,7 @@ const handleDownloadHTML = function () {
         type="button"
         class="myPrimaryButton text-xs"
       >
-        Download HTML
+        Download HTML file
       </button>
     </div>
   </div>
