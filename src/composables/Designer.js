@@ -671,14 +671,17 @@ class Designer {
   }
 
   handleTextAreaContent() {
+    const element = this.getElement.value;
+    const elementTag = element.tagName.toLowerCase();
+
     // text content
-    if (typeof this.getElement.value.innerHTML !== 'string') {
+    if (typeof element.innerHTML !== 'string') {
       return;
     }
 
-    if (typeof this.getElement.value.innerHTML === 'string') {
+    if (typeof element.innerHTML === 'string') {
       const textContentElementClone =
-        this.getElement.value.innerHTML.replaceAll('<br>', '\r\n') || '';
+        element.innerHTML.replaceAll('<br>', '\r\n') || '';
 
       this.store.commit(
         'designer/setTextAreaVueModel',
@@ -686,17 +689,24 @@ class Designer {
       );
     }
 
-    if (Number(this.getElement.value.textContent.length) === 0) {
-      // Apply the 'min-h-[2]' class
-      this.getElement.value.classList.add('h-7');
-      this.getElement.value.classList.add('min-h-[7]');
-      this.getElement.value.classList.add('bg-red-50');
+    if (
+      ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(elementTag) &&
+      element.tagName.toLowerCase() !== 'img' &&
+      Number(element.textContent.length) === 0
+    ) {
+      console.log('kom her');
+      element.classList.add('h-7');
+      element.classList.add('min-h-[7]');
+      element.classList.add('bg-red-50');
     }
-    if (Number(this.getElement.value.textContent.length) !== 0) {
-      // Remove the 'min-h-[2]' class if it's present
-      this.getElement.value.classList.remove('h-7');
-      this.getElement.value.classList.remove('min-h-[7]');
-      this.getElement.value.classList.remove('bg-red-50');
+    if (
+      ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(elementTag) &&
+      element.tagName.toLowerCase() !== 'img' &&
+      Number(element.textContent.length) !== 0
+    ) {
+      element.classList.remove('h-7');
+      element.classList.remove('min-h-[7]');
+      element.classList.remove('bg-red-50');
     }
   }
 

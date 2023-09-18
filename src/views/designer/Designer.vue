@@ -213,7 +213,7 @@ onMounted(async () => {
         <!--Preview - start-->
         <aside
           aria-label="saidebar"
-          :class="[!getMenuPreview ? '-left-[30rem]' : 'left-60']"
+          :class="[!getMenuPreview ? '-left-[30rem]' : 'left-56']"
           class="absolute z-10 w-[20rem] h-full duration-200 top-0 rounded-r-2xl shadow-2xl bg-gray-50"
         >
           <div class="flex flex-col gap-4 p-4 h-full font-normal">
