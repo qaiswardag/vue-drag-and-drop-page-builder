@@ -534,11 +534,12 @@ class Designer {
 
   saveCurrentDesignWithTimer = () => {
     setTimeout(() => {
-      this.saveCurrentDesign();
-    }, 100);
+      this.observePlusSyncHTMLElements();
+    }, 1000);
   };
 
-  saveCurrentDesign = async () => {
+  observePlusSyncHTMLElements = async () => {
+    console.log('køre observe....');
     if (document.querySelector('[hovered]') !== null) {
       document.querySelector('[hovered]').removeAttribute('hovered');
     }
@@ -553,6 +554,7 @@ class Designer {
         component.html = section.outerHTML;
       }
     });
+
     this.saveComponentsLocalStorage(this.getComponents.value);
 
     // Initialize the MutationObserver
@@ -578,17 +580,16 @@ class Designer {
       'designer/setElement',
       document.querySelector('[selected]')
     );
-
     this.addClickAndHoverEvents();
   };
 
-  cloneComponent(cloneComponent) {
+  cloneCompObjForDOMInsertion(componentObject) {
     // Hide slider and right menu
     this.store.commit('designer/setMenuPreview', false);
     this.store.commit('designer/setMenuRight', false);
 
     // Deep clone clone component
-    const clonedComponent = { ...cloneComponent };
+    const clonedComponent = { ...componentObject };
 
     // Create a DOMParser instance
     const parser = new DOMParser();

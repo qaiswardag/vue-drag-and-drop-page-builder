@@ -93,8 +93,8 @@ const componentsMenu = computed(() => {
 });
 
 // clone
-const cloneComponent = function (cloneComponent) {
-  return designer.cloneComponent(cloneComponent);
+const cloneComponent = function (componentObject) {
+  return designer.cloneCompObjForDOMInsertion(componentObject);
 };
 
 // When HTML component is dropped into the DOM
