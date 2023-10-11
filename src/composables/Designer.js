@@ -57,6 +57,7 @@ class Designer {
       () => this.store.getters['designer/getRestoredElement']
     );
   }
+
   #modifyElementCSS(selectedCSS, CSSArray, mutationName) {
     if (this.getElement.value === null) {
       return;
@@ -95,6 +96,7 @@ class Designer {
 
     return currentCSS;
   }
+
   currentClasses() {
     // convert classList to array
     let classListArray = Array.from(this.getElement.value.classList);
@@ -116,6 +118,7 @@ class Designer {
       this.store.commit('designer/setClass', userSelectedClass);
     }
   }
+
   handleRemoveClasses(userSelectedClass) {
     // remove selected class from element
     if (this.getElement.value.classList.contains(userSelectedClass)) {
@@ -142,6 +145,7 @@ class Designer {
     // Remove the element from the DOM
     element.remove();
   }
+
   handleRestoreElement() {
     // Get the stored deleted element and its parent
     if (
@@ -968,7 +972,8 @@ class Designer {
   }
 
   handleDesignerMethods() {
-    if (this.getElement.value === null) return;
+    console.log('handleDesignerMethods ran');
+    if (!this.getElement.value) return;
 
     // save current design
     this.saveCurrentDesignWithTimer();
