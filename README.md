@@ -12,7 +12,7 @@ To star the repository, simply click on the **Star** button located at the top-r
 
 This app was born out of my desire to make a minimalst page builder with a elegant and intuitive design.
 
-[Play around with the page builder](https://www.builder.myissue.io)
+[Play around with the page builder](https://www.builder-demo.myissue.dk)
 
 ## Technologies and Frameworks
 
